@@ -225,6 +225,8 @@ plugins/
 *.dll
 *.exe
 Debug.txt
-mysql-log.txt
+mysql_log.txt
 server_log.txt
+*.sql
+*.sql.gz
 
