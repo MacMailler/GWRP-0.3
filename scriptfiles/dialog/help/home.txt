@@ -1,0 +1,5 @@
+{FFFF00}/home - {FFFFFF}найти свой дом
+{FFFF00}/exit - {FFFFFF}выйти из дома
+{FFFF00}/hmenu - {FFFFFF}открыть меню дома
+{FFFF00}/healme - {FFFFFF}восстановить здоровье/броню
+{FFFF00}/sellhouse - {FFFFFF}продать дом

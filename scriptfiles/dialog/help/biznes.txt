@@ -1,0 +1,4 @@
+{FFFF00}/open - {FFFFFF}открыть/закрыть бизнес
+{FFFF00}/bmenu - {FFFFFF}меню бизнеса
+{FFFF00}/sellbiz - {FFFFFF}продать бизнес
+{FFFF00}/buybiz - {FFFFFF}купить бизнес

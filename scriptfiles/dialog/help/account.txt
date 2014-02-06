@@ -1,0 +1,4 @@
+{FFFF00}/stats - {FFFFFF}просмотр статистики
+{FFFF00}/origin - {FFFFFF}сменить место спавна
+{FFFF00}/setpass - {FFFFFF}сменить ваш пароля
+{FFFF00}/buylevel - {FFFFFF}купить следующий уровень

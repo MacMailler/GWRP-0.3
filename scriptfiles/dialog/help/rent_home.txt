@@ -1,0 +1,4 @@
+{FFFF00}/rentroom - {FFFFFF}арендовать дом
+{FFFF00}/unrent - {FFFFFF}прекратить аренду
+{FFFF00}/exit - {FFFFFF}выйти из дома
+{FFFF00}/healme - {FFFFFF}восстановить здоровье/броню

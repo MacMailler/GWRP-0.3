@@ -1,0 +1,21 @@
+{FFFF00}/report - {FFFFFF}отправить жалобу администрации на игрока
+{FFFF00}/vopros - {FFFFFF}задать вопрос хелперам
+{FFFF00}/online - {FFFFFF}список адвокатов, лицензеров, лидеров, хелперов, друзей онлайн
+{FFFF00}/pay - {FFFFFF}передать деньги игроку
+{FFFF00}/charity - {FFFFFF}сдать деньги на благотворительность
+{FFFF00}/time - {FFFFFF}посмотреть время и дату сервера (в тюрьме - оставшееся время заключения)
+{FFFF00}/id - {FFFFFF}узнать ID игрока по нику / ник игрока по ID'у
+{FFFF00}/licenses - {FFFFFF}посмотреть список лицензий
+{FFFF00}/showlicenses - {FFFFFF}показать ваши лицензии игроку
+{FFFF00}/pas - {FFFFFF}показать паспорт игроку
+{FFFF00}/skill - {FFFFFF}посмотреть ваши навыки
+{FFFF00}/eject - {FFFFFF}выкинуть игрока из автомоиля
+{FFFF00}/spawnchange - {FFFFFF}сменить место спавна
+{FFFF00}/service - {FFFFFF}вызвать такси,механика,медика,автобус
+{FFFF00}/accept - {FFFFFF}согласиться на что-либо
+{FFFF00}/fill - {FFFFFF}заправить автомобиль на заправке
+{FFFF00}/contract - {FFFFFF}заказать игрока хитманам
+{FFFF00}/pdd - {FFFFFF}просмотри ПДД
+{FFFF00}/knockdown - {FFFFFF}сбить игрока с ног
+{FFFF00}/passport - {FFFFFF}показать ваш паспорт игроку
+{FFFF00}/toglogins - {FFFFFF}лог подключенй/отключений играков

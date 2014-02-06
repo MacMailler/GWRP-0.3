@@ -1,0 +1,4 @@
+{FFFF00}/rentcar - {FFFFFF}арендовать автомобиль
+{FFFF00}/unrentcar - {FFFFFF}прекратить аренду автомобиля
+{FFFF00}/givekey - {FFFFFF}дать игроку ключи от вашей машины
+{FFFF00}/switchkey - {FFFFFF}взять ключи от автомобиля

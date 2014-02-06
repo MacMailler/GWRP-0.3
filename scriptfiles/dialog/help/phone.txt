@@ -1,0 +1,6 @@
+{FFFF00}/p - {FFFFFF}ответить на звонок
+{FFFF00}/h - {FFFFFF}завершить звонок
+{FFFF00}/sms - {FFFFFF}отправить СМС
+{FFFF00}/call - {FFFFFF}позвонить по телефону
+{FFFF00}/number - {FFFFFF}найти номер в телефонной книге
+{FFFF00}/togphone - {FFFFFF}вкл/выкл ваш телефон

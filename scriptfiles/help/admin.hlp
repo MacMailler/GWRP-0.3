@@ -1,0 +1,37 @@
+{ffa500}/aduty {ffffff}- заступить на дежурство
+
+{ffa500}/a {ffffff}- адмиский чат
+{ffa500}/o {ffffff}- общий OOC чат
+{ffa500}/ot {ffffff}- ответить на жалобу
+{ffa500}/tv {ffffff}- слежка за игроком
+{ffa500}/tp {ffffff}- телепорт по главным местам
+{ffa500}/gg {ffffff}- телепорт по респам банд
+{ffa500}/gf {ffffff}- телепорт по респа фракций
+{ffa500}/veh {ffffff}- создать транспорт
+{ffa500}/agl {ffffff}- выдать лицензию игроку
+{ffa500}/atl {ffffff}- забрать лицензию у игрока
+{ffa500}/exp {ffffff}- взорвать игрока
+{ffa500}/mute {ffffff}- дать мут
+{ffa500}/warn {ffffff}- придупреждение
+{ffa500}/goto {ffffff}- телепорт к игроку
+{ffa500}/slap {ffffff}- дать пинка игроку
+{ffa500}/kick {ffffff}- кик игрока
+{ffa500}/skick {ffffff}- тихий кик
+{ffa500}/ban {ffffff}- бан игрока
+{ffa500}/sban {ffffff}- тихий бан
+{ffa500}/aheal {ffffff}- лечить игрока
+{ffa500}/check {ffffff}- посмотреть статистику игрока
+{ffa500}/togtp {ffffff}- запретить ТП к себе
+{ffa500}/freeze {ffffff}- замарозить
+{ffa500}/getcar {ffffff}- телепортировать к себе авто
+{ffa500}/fixveh {ffffff}- поченить транспорт
+{ffa500}/fillveh {ffffff}- заправить транспорт
+{ffa500}/gethere {ffffff}- телепортировать к себе
+{ffa500}/weather {ffffff}- установить погоду (только для себя)
+{ffa500}/banlist {ffffff}- проверить игрока в бан-листе
+{ffa500}/kickjob {ffffff}- уволить с работы
+{ffa500}/unfreeze {ffffff}- размарозит
+{ffa500}/forceskin {ffffff}- отправить игрока на смену скина
+{ffa500}/kickivite {ffffff}- уволить из фракции
+{ffa500}/clearwarn {ffffff}- снять все придупреждения
+{ffa500}/kickmarriage {ffffff}- развести игрока
