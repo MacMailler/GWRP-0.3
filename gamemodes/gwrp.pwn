@@ -1786,51 +1786,41 @@ static const fightStyle[][] = {
 
 
 enum e_BusRoute {
-	stopID,
+	stopNext,
 	Float:stopX,
 	Float:stopY,
 	Float:stopZ,
+	stopName[18],
 }
-new const BusRoute[][][e_BusRoute] = {
+static const BusRoute[][][e_BusRoute] = {
 	{
-		{1, 2233.6335,-1145.045,25.7969},
-		{2, -97.8188,-1147.8456,1.53520},
-		{3, -1091.4415,-1333.150,129.39},
-		{4, -1851.9949,-568.498,21.3089},
-		{5, -2026.9414,-75.8452,35.3203}
-	},{
-		{5, -2026.9414,-75.8452,35.3203},
-		{6, -1994.7224,314.3866,35.1719},
-		{7, 2080.3950,1679.1343,10.8203},
-		{8, 2637.7947,2345.4346,10.6719},
-		{0, 0.0, 0.0, 0.0}
-	},{
-		{5, -2026.2756,-75.5938,35.3203},
-		{4, -1825.0438,-621.1991,16.497},
-		{3, -1066.8634,-1357.182,129.99},
-		{2, -113.7366,-1150.3976,1.7633},
-		{1, 2214.3008,-1139.4200,25.796}
-	},{
-		{8, 2622.3635,2300.7500,10.8203},
-		{7, 2035.5227,1655.9678,10.8203},
-		{6, -2015.0028,274.7591,32.9499},
-		{5, -2038.8948,-63.9849,35.3138},
-		{0, 0.0, 0.0, 0.0}
+		{1, 2233.6335,-1145.0454,25.7969, "Отель ЛС"},
+		{2, -97.8188,-1147.8456,1.5352, "ДБ"},
+		{3, -1091.4415,-1333.1506,129.3996, "Ферма"},
+		{4, -1851.9949,-568.4989,21.3089, "Аэрапорт СФ"},
+		{0, -2026.9414,-75.8452,35.3203, "Автошкола"}
+	}, {
+		{1, -2026.2756,-75.5938,35.3203, "Автошкола"},
+		{2, -1825.0438,-621.1991,16.4978, "Аэрапорт СФ"},
+		{3, -1066.8634,-1357.1820,129.9968, "Ферма"},
+		{4, -113.7366,-1150.3976,1.7633, "ДБ"},
+		{0, 2214.3008,-1139.4200,25.7969, "Отель ЛС"}
+	}, {
+		{1, 2622.3635,2300.7500,10.8203, "Отель ЛВ"},
+		{2, 2035.5227,1655.9678,10.8203, "Калигула"},
+		{3, 2040.2583,1009.1813,10.8052, "Четыре Дракона"},
+		{4, -2015.0028,274.7591,32.9499, "Автосалон СФ"},
+		{0, -2038.8948,-63.9849,35.3138, "Автошкола"}
+	}, {
+		{1, -2025.6659,-75.7442,35.3203, "Автошкола"},
+		{2, -1994.7224,314.3866,35.1719, "Автосалон СФ"},
+		{3, 2074.9963,997.5345,10.8052, "Четыре Дракона"},
+		{4, 2080.3950,1679.1343,10.8203, "Калигула"},
+		{0, 2637.7947,2345.4346,10.6719, "Отель ЛВ"}
 	}
 };
 
-new BusRouteCount[] = {5, 4, 5, 4};
-new BusRouteStopName[][] = {
-	{"-"},
-	{"Отель ЛС"},
-	{"ДБ"},
-	{"Ферма"},
-	{"Аэрапорт СФ"},
-	{"Автошкола"},
-	{"Автосалон СФ"},
-	{"Калигула"},
-	{"Отель ЛВ"}
-};
+new BusRouteCount[] = {5, 5, 5, 5};
 
 
 enum e_DonateInfo {
@@ -3167,11 +3157,42 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 
 							if(++next < BusRouteCount[route]) {
 								DestroyDynamicRaceCP(checkpointb[playerid]);
-								SetVehicleVelocity(Veh, 0.0, 0.0, 0.0);
-								PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-								format(string, sizeof(string),  "** %s, следующия остановка - %s.", BusRouteStopName[BusRoute[route][next-1][stopID]], BusRouteStopName[BusRoute[route][next][stopID]]);
-								ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
-								checkpointb[playerid] = CreateDynamicRaceCP(2, BusRoute[route][next][stopX], BusRoute[route][next][stopY], BusRoute[route][next][stopZ], 0, 0, 0, 4.0, 0, 0, playerid, 99999.0);
+								if(strcmp(BusRoute[route][next-1][stopName], "NULL", false) != 0) {
+									SetVehicleVelocity(Veh, 0.0, 0.0, 0.0);
+									PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
+									format(string, sizeof(string),  "** %s, следующия остановка - %s.", BusRoute[route][next-1][stopName], BusRoute[route][BusRoute[route][next - 1][stopNext]][stopName]);
+									ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
+								}
+								if((next + 1) >= BusRouteCount[route]) {
+									checkpointb[playerid] = CreateDynamicRaceCP(
+										1,
+										BusRoute[route][next][stopX],
+										BusRoute[route][next][stopY],
+										BusRoute[route][next][stopZ],
+										0, 0, 0, 4.0, 0, 0, playerid, 99999.0
+									);
+								} else {
+									if(BusRoute[route][next][stopNext] != 0) {
+										checkpointb[playerid] = CreateDynamicRaceCP(
+											1,
+											BusRoute[route][next][stopX],
+											BusRoute[route][next][stopY],
+											BusRoute[route][next][stopZ],
+											0, 0, 0, 4.0, 0, 0, playerid, 99999.0
+										);
+									} else {
+										checkpointb[playerid] = CreateDynamicRaceCP(
+											0,
+											BusRoute[route][next][stopX],
+											BusRoute[route][next][stopY],
+											BusRoute[route][next][stopZ],
+											BusRoute[route][next + 1][stopX],
+											BusRoute[route][next + 1][stopY],
+											BusRoute[route][next + 1][stopZ],
+											4.0, 0, 0, playerid, 99999.0
+										);
+									}
+								}
 								SetPVarInt(playerid, "NextCP", next);
 							} else {
 								BusDrivers --;
@@ -3181,7 +3202,7 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 								DestroyDynamic3DTextLabel(AttachText[Veh]);
 								SetVehicleVelocity(Veh, 0.0, 0.0, 0.0);
 								PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-								format(string, sizeof(string),  "** %s, конечная остановка.", BusRouteStopName[BusRoute[route][next-1][stopID]]);
+								format(string, sizeof(string),  "** %s, конечная остановка.", BusRoute[route][next-1][stopName]);
 								ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 								
 								new Float:health;
@@ -13636,7 +13657,7 @@ CMD:fare(playerid, params[]) { new string[144];
 		
 		dialog[0]='\0';
 		for(new i; i < sizeof BusRoute; i++) {
-			scf(dialog, string, "%s - %s\n", BusRouteStopName[BusRoute[i][0][stopID]], BusRouteStopName[BusRoute[i][BusRouteCount[i]-1][stopID]]);
+			scf(dialog, string, "%s - %s\n", BusRoute[i][0][stopName], BusRoute[i][BusRouteCount[i]-1][stopName]);
 		}
 		SPD(playerid, D_FARE, DIALOG_STYLE_LIST, "Выбирете маршрут", dialog, "SELECT", "CANCEL");
 	}
@@ -19954,13 +19975,23 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(IsABusCar(Veh)) {
 					SetPVarInt(playerid, "NextCP", 0);
 					SetPVarInt(playerid, "RouteID", listitem);
-					format(string, sizeof(string), ">> %s - %s <<\nТариф: $%i", BusRouteStopName[BusRoute[listitem][0][stopID]], BusRouteStopName[BusRoute[listitem][BusRouteCount[listitem]-1][stopID]], TransportValue[playerid]);
+					format(string, sizeof(string), "»» %s - %s ««\nТариф: $%i", BusRoute[listitem][0][stopName], BusRoute[listitem][BusRouteCount[listitem]-1][stopName], TransportValue[playerid]);
 					AttachText[Veh] = Add3DText(string, COLOR_BUS_PRICE, 0.0, 3.5, 2.8, 20.0, INVALID_PLAYER_ID, Veh, 0, 0, 0, -1);
-					format(string, sizeof(string), "Вы начали маршрут %s - %s", BusRouteStopName[BusRoute[listitem][0][stopID]], BusRouteStopName[BusRoute[listitem][BusRouteCount[listitem]-1][stopID]]);
+					format(string, sizeof(string), "Вы начали маршрут %s - %s", BusRoute[listitem][0][stopName], BusRoute[listitem][BusRouteCount[listitem]-1][stopName]);
 					Send(playerid, COLOR_TAXI_PRICE, string);
 					Send(playerid,COLOR_LIGHTRED, "Следуете к красному маячку на радаре.");
-					checkpointb[playerid] = CreateDynamicRaceCP(2, BusRoute[listitem][0][stopX], BusRoute[listitem][0][stopY], BusRoute[listitem][0][stopZ], 0, 0, 0, 4.0, 0, 0, playerid, 99999.0);
+					checkpointb[playerid] = CreateDynamicRaceCP(
+						2,
+						BusRoute[listitem][0][stopX],
+						BusRoute[listitem][0][stopY],
+						BusRoute[listitem][0][stopZ],
+						0, 0, 0, 4.0, 0, 0, playerid, 99999.0
+					);
 				}
+			} else {
+				BusDrivers --;
+				TransportDuty[playerid] = 0;
+				TransportValue[playerid] = 0;
 			}
 		}
 
