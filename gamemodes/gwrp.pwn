@@ -161,7 +161,6 @@
 #define JOB_AUTODEALER 			(8)
 #define JOB_BUSMAN 				(9)
 #define JOB_TRUCKER 			(10)
-#define JOB_WHITEWING 			(11)
 
 #define TEAM_CIV				(0)
 #define TEAM_COP				(1)
@@ -217,7 +216,6 @@
 #define D_OFFLINE 				(3500)
 #define D_NETSTAT				(3600)
 #define D_SETSTAT				(3700)
-#define D_GOCLEAN				(3800)
 #define D_RENTCAR				(3900)
 #define D_BANLIST				(4000)
 #define D_WEATHER				(4100)
@@ -298,7 +296,6 @@
 #define IsAMehCar(%0)			(isJobVehicle(JOB_MECHANIC,%0))
 #define IsABusCar(%0)			(isJobVehicle(JOB_BUSMAN,%0))
 #define IsATruckCar(%0)			(isJobVehicle(JOB_TRUCKER,%0))
-#define IsACleanCar(%0)			(isJobVehicle(JOB_WHITEWING,%0))
 #define IsANews(%0)				(isTeamVehicle(TEAM_PRESS,%0))
 #define IsATaxiCar(%0)			(isTeamVehicle(TEAM_TAXI,%0))
 #define IsAnAmbulance(%0)		(isTeamVehicle(TEAM_MEDIC,%0))
@@ -415,7 +412,6 @@ new
 	fire_ext,
 	Parashut,
 	saveTuning,
-	CleaningJob,
 	givepasport
 ;
 
@@ -780,75 +776,6 @@ new HouseInt[][intHouse] = {
 	{7, 800000, 225.8882,1021.8793,1084.0165} // Gold bar
 };
 
-static const RSCCount[2] = { 30, 28 };
-static const Float:RSC[2][31][3] = {
-	{
-		{2675.9734,-2170.7463,10.6548},
-		{2716.9751,-2101.9636,10.7950},
-		{2820.5122,-2051.7690,10.6626},
-		{2800.1895,-1889.2557,10.6423},
-		{2646.0439,-1736.3677,10.4595},
-		{2669.2170,-1659.0438,10.4204},
-		{2877.6787,-1645.4905,10.6001},
-		{2927.4922,-1401.2329,10.6001},
-		{2890.5549,-1139.3823,10.6002},
-		{2674.7742,-1150.1534,53.0209},
-		{2474.5369,-1148.0520,36.3617},
-		{2301.9670,-1166.5615,26.1478},
-		{2300.1526,-1381.3030,23.5726},
-		{2333.9580,-1385.6283,23.5526},
-		{2339.3838,-1650.4384,13.4264},
-		{2339.4316,-1725.3036,13.1039},
-		{2221.4077,-1730.5153,13.1269},
-		{2211.3115,-1966.2025,13.0544},
-		{2407.1572,-1974.3584,13.1353},
-		{2411.6394,-2127.0557,13.0617},
-		{2404.2617,-2163.7661,13.1002},
-		{2332.7725,-2218.1125,13.1002},
-		{2272.0857,-2235.9685,13.4104},
-		{2212.2087,-2173.9609,13.0823},
-		{2156.0378,-2203.9070,13.0524},
-		{2097.7075,-2289.7971,13.1079},
-		{2152.5972,-2343.7654,13.0767},
-		{2240.7090,-2335.9614,13.1001},
-		{2296.4187,-2283.0454,13.1001},
-		{2365.5190,-2214.1345,13.1001},
-		{1646.7676,-1894.4868,13.2783}
-	},{
-		{1602.5139,-1869.8727,12.9542},
-		{1464.1842,-1869.0652,12.9544},
-		{1393.0166,-1870.7654,12.9489},
-		{1392.1519,-1746.2615,12.9542},
-		{1528.9698,-1735.8840,12.9488},
-		{1531.6104,-1604.5107,12.9467},
-		{1441.2416,-1589.6367,12.9550},
-		{1321.4358,-1571.1141,12.9453},
-		{1359.8489,-1419.4757,12.9459},
-		{1359.7896,-1174.2255,22.9572},
-		{1370.6534,-1050.0605,26.1153},
-		{1167.6383,-1036.7496,31.3873},
-		{976.7830,-1036.7621,29.7350},
-		{959.9294,-1126.3380,23.2112},
-		{812.8688,-1140.0526,23.4159},
-		{797.7817,-1065.1509,24.2055},
-		{639.6110,-1200.9233,17.6739},
-		{458.2993,-1308.1866,14.7203},
-		{304.6213,-1400.5004,13.4943},
-		{168.6145,-1529.4987,11.8253},
-		{157.6075,-1592.6676,12.5270},
-		{292.7700,-1710.1968,6.5469},
-		{487.2936,-1726.9939,10.7352},
-		{649.0527,-1752.7397,12.8436},
-		{859.6443,-1786.2938,13.3116},
-		{1038.6519,-1830.2831,13.1336},
-		{1200.0577,-1853.6525,12.9579},
-		{1306.9794,-1855.3300,12.9253},
-		{1646.7676,-1894.4868,13.2783},
-		{0.0,0.0,0.0},
-		{0.0,0.0,0.0}
-	}
-};
-
 
 enum jInfo {
 	jID,
@@ -868,8 +795,7 @@ new JobsInfo[][jInfo] = {
 	{7,	-1,	0,	{1366.4325,-1275.2096, 13.546900}, "Гандилер"},
 	{8,	-1,	0,	{531.79300,-1292.4044, 17.242200}, "Автодилер"},
 	{9,	-1,	0,	{1154.2208,-1770.8203, 16.599200}, "Автобусник"},
-	{10,-1,	0,	{-77.72880,-1136.3896, 1.0781000}, "Дальнобойщик"},
-	{11,-1, 0,	{1653.1656,-1887.4497, 13.555100}, "Уборщик улиц"}
+	{10,-1,	0,	{-77.72880,-1136.3896, 1.0781000}, "Дальнобойщик"}
 };
 enum dInfo {
 	dPrice,
@@ -1183,7 +1109,6 @@ enum pInfo {
 	
 	pWait,
 	pUpdate,
-	pJobPay,
 	pHunger,
 	pCamPos,
 	
@@ -2053,22 +1978,18 @@ public: GameModeInitExitFunc(mode) {
 	SetGameModeText("RESTART");
 	SendRconCommand("hostname Restarting...");
 
-	foreach(new playerid : Player) {
-		if(Pl::isLogged(playerid)) {
-			DeleteAllAttachedObject(playerid);
-			GameTextForPlayer(playerid, "~b~] ~w~PECTAPT CEPBEPA ~b~]", 4000, 5);
-			SetPlayerCameraPos(playerid,1460.0, -1324.0, 287.2);
-			SetPlayerCameraLookAt(playerid,1374.5, -1291.1, 239.0);
+	SendToAll(COLOR_LIGHTRED, "*[RP]GrandWorld: Вы были кикнут сервером, причина: Рестарт сервера");
+	foreach(new p : Player) {
+		if(Pl::isLogged(p)) {
+			DeleteAllAttachedObject(p);
+			GameTextForPlayer(p, "~b~] ~w~PECTAPT CEPBEPA ~b~]", 4000, 5);
+			SetPlayerCameraPos(p, 1460.0, -1324.0, 287.2);
+			SetPlayerCameraLookAt(p, 1374.5, -1291.1, 239.0);
 			
-			updatePlayerData(playerid);
-			PlayerLogged{playerid} = false;
-			SetPlayerColor(playerid, COLOR_GRAD2);
-			if(mode) {
-				GetPlayerName(playerid, plname, 24);
-				format(temp, sizeof(temp), "*[RP]GrandWorld: %s был кикнут сервером, причина: Рестарт сервера", plname);
-				SendToAll(COLOR_LIGHTRED, temp);
-				Kick(playerid);
-			}
+			updatePlayerData(p);
+			PlayerLogged{p} = false;
+			SetPlayerColor(p, COLOR_GRAD2);
+			if(mode) Kick(p);
 		}
 	}
 	KillTimer(serverUpdate);
@@ -3279,45 +3200,6 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 						}
 					}
 				}
-				
-				case JOB_WHITEWING : {
-					if(checkpointb[playerid] == checkpointid && GetPVarInt(playerid, "RouteID") != 0xFFFF) {
-						if(IsACleanCar(Veh)) {
-							new next = GetPVarInt(playerid, "NextCP");
-							new route = GetPVarInt(playerid, "RouteID");
-
-							if(++next == (RSCCount[route]-1)) {
-								checkpointb[playerid] = CreateDynamicRaceCP(1, RSC[route][next][0],RSC[route][next][1],RSC[route][next][2],0.0,0.0,0.0,7.0,0,0,playerid,99999.99);
-								Send(playerid, COLOR_LIGHTBLUE, "* Теперь нужно вернуть машину на место.");
-								PlayerPlaySound(playerid, 1058, 0.0, 0.0, 0.0);
-								
-								SetPVarInt(playerid, "NextCP", next);
-								
-							} else if(next > RSCCount[route]) {
-								Pl::Info[playerid][pJobPay] += 200;
-								DestroyDynamicRaceCP(checkpointb[playerid]);
-								SetVehicleToRespawn(Veh);
-								Send(playerid, COLOR_LIGHTBLUE, "* Вы завершили маршрут.");
-								PlayerPlaySound(playerid, 1058, 0.0, 0.0, 0.0);
-								
-								SetPVarInt(playerid, "RouteID", 0xFFFF);
-								DeletePVar(playerid, "NextCP");
-								
-							} else {
-								Pl::Info[playerid][pJobPay] += 100;
-								DestroyDynamicRaceCP(checkpointb[playerid]);
-								checkpointb[playerid] = CreateDynamicRaceCP(0, RSC[route][next][0],RSC[route][next][1],RSC[route][next][2], RSC[route][next+1][0],RSC[route][next+1][1],RSC[route][next+1][2],7.0,0,0,playerid,99999.99);
-								Send(playerid, COLOR_LIGHTBLUE, "* Следуйте к следующему маячку на радаре!");
-								GameTextForPlayer(playerid, string, 5000, 4);
-								PlayerPlaySound(playerid, 1058, 0.0, 0.0, 0.0);
-								
-								SetPVarInt(playerid, "NextCP", next);
-							}
-						} else {
-							Send(playerid, COLOR_LIGHTRED, "* Вы не на спец. транспорте!");
-						}
-					}
-				}
 			}
 		}
 	}
@@ -3449,21 +3331,6 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 				if(!Rac::CheckPlayerWeapon(playerid, 46)) {
 					Rac::GivePlayerWeapon(playerid, 46, 1);
 				}		
-			}
-	
-			else if(pickupid == CleaningJob) {
-				if(Pl::Info[playerid][pJob] != 11) {
-					Send(playerid, COLOR_GREY, "* Вы не уборщик улиц!");
-				} else {
-					if(OnDuty[playerid]) {
-						if(Pl::Info[playerid][pJobPay] != 0) {
-							format(src, sizeof(src), "Вы заработали:\t$%i!\nХотите уйти с дежурства?", Pl::Info[playerid][pJobPay]);
-							SPD(playerid, D_GOCLEAN+1, 0, "Звавершить смену", src, "Да", "Нет");
-						}
-						else SPD(playerid, D_GOCLEAN+2, 0, "Звавершить смену", "Вы нечиго не заработали!\nХотите уйти с дежурства?", "Да", "Нет");
-					}
-					else SPD(playerid, D_GOCLEAN, 0, "Уборщик улиц ", "Вы хотите начать смену?", "Да", "Нет");
-				}
 			}
 	
 			else if(pickupid == saveTuning) {
@@ -4616,8 +4483,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 								"-", "-", "-", "-", "-", "-",
 								"Механики", "-", "-",
 								"Автобусники",
-								"Дальнобойщики",
-								"Уборщики улиц"
+								"Дальнобойщики"
 							};
 							format(src, sizeof(src), "* Транспорт зареверзирован (%s)", jnames[vehjob]);
 							Send(playerid, COLOR_GREY, src);
@@ -4626,16 +4492,6 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 							switch(vehjob) {
 								case JOB_MECHANIC : {
 									Send(playerid, COLOR_YELLOW, "Используйте /at чтобы взять на буксир автомобиль, и /dt чтобы отцепить его.");
-								}
-								
-								case JOB_WHITEWING : {
-									if(OnDuty[playerid] && GetPVarInt(playerid, "RouteID") == 0xFFFF) {
-										format(dialog, sizeof dialog,"- Первый\t = {33AA33}$%i{ffffff}\n- Второй\t = {33AA33}$%i", RSCCount[0]*100, RSCCount[1]*100);
-										SPD(playerid, D_GOCLEAN+3, DIALOG_STYLE_LIST, "Выбор маршрута", dialog, "Выбор", "Отмена");
-									} else if(OnDuty[playerid]) {
-										Send(playerid, COLOR_LIGHTBLUE, "* Следуйте к маячку на радаре!");
-										GameTextForPlayer(playerid, "~r~Follow the marker", 5000, 1);
-									}
 								}
 							}
 						}
@@ -16836,52 +16692,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			return 1;
 		}
 		
-		case D_GOCLEAN : {
-			if(response) {
-				TempSkin[playerid] = GetPlayerSkin(playerid);
-				SetPlayerSkin(playerid, 16);
-				OnDuty[playerid] = true;
-				Send(playerid, COLOR_LIGHTBLUE, "* Вы заступили на дежурство. Теперь можите приступить к уборке улиц.");
-			}
-		}
-		
-		case D_GOCLEAN+1 : {
-			if(response) {
-				DestroyDynamicRaceCP(checkpointb[playerid]);
-				SetPVarInt(playerid, "RouteID", 0xFFFF);
-				SetPlayerSkin(playerid, TempSkin[playerid]);
-				OnDuty[playerid] = false;
-				format(string, sizeof(string), "~g~+$%i", Pl::Info[playerid][pJobPay]);
-				GameTextForPlayer(playerid, string, 5000, 1);
-				Rac::GivePlayerMoney(playerid, Pl::Info[playerid][pJobPay]);
-				Pl::Info[playerid][pJobPay] = 0;
-			}
-		}
-		
-		case D_GOCLEAN+2 : {
-			if(response) {
-				OnDuty[playerid] = false;
-				DestroyDynamicRaceCP(checkpointb[playerid]);
-				SetPVarInt(playerid, "RouteID", 0xFFFF);
-				SetPlayerSkin(playerid, TempSkin[playerid]);
-				GameTextForPlayer(playerid, "~r~NO PAY", 5000, 1);
-			}
-		}
-		
-		case D_GOCLEAN+3 : {
-			if(response) {
-				if(0 <= listitem < sizeof RSC) {
-					SetPVarInt(playerid, "NextCP", 0);
-					SetPVarInt(playerid, "RouteID", listitem);
-					DestroyDynamicRaceCP(checkpointb[playerid]);
-					checkpointb[playerid] = CreateDynamicRaceCP(0,RSC[listitem][0][0],RSC[listitem][0][1],RSC[listitem][0][2],
-					RSC[listitem][1][0],RSC[listitem][1][1],RSC[listitem][1][2],7.0,0,0,playerid,99999.99);
-					Send(playerid, COLOR_LIGHTBLUE, "* Следуйте к маячку на радаре!");
-					GameTextForPlayer(playerid, "~r~Follow the marker", 5000, 1);
-				}
-			}
-		}
-		
 		case D_BANLIST : {
 			if(response) {
 				new playername[24];
@@ -21741,7 +21551,6 @@ stock Pl::Init(playerid) {
 	Pl::Info[playerid][pFuel]			= 0;
 	Pl::Info[playerid][pRebuke]			= 0;
 	Pl::Info[playerid][pReport]			= 0;
-	Pl::Info[playerid][pJobPay] 		= 0;
 	Pl::Info[playerid][pFightstyle]		= 0;
 	Pl::Info[playerid][pVip]			= 0;
 	Pl::Info[playerid][pPasport][0]	= 0;
@@ -22604,7 +22413,6 @@ stock area::Init() {
 
 stock obj::Init() {
 	map::Load("maps/int_ambulance.map");		// ИНТЕРЬЕР В МАШИНЕ AMBULANCE
-	map::Load("maps/cleaners.map");				// УБОРЩИКИ УЛИЦ
 	map::Load("maps/resp_cnn.map");				// РЕСПА РЕПАРТЕРОВ
 	map::Load("maps/bar_in_pirce.map");			// БАР НА ПИРСЕ
 	map::Load("maps/alhambra.map",11);			// ALHAMBRA
@@ -22700,8 +22508,6 @@ stock obj::Init() {
 }
 
 stock pup::Init() {
-	CleaningJob = AddPickup(1239, 23, 1663.1055,-1887.4653,13.5469, 0, "* Начать работу *", 0x268DAEAA);
-	
 	weapon1 = AddPickup(1239, 23,296.6332,-38.2177,1001.5156, -1); //аммо лс
 	weapon2 = AddPickup(1239, 23,312.2767,-166.1406,999.6010, -1); //аммо лв
 	weapon3 = AddPickup(1239, 23,291.2473,-84.0021,1001.5156, -1); //аммо лв
@@ -22772,8 +22578,7 @@ stock pup::Init() {
 		{"Гандилером"},
 		{"Автодилером"},
 		{"Автобусником"},
-		{"Дальнобойщиком"},
-		{"Уборщиком улиц"}
+		{"Дальнобойщиком"}
 	};
 	for(new i=1; i < sizeof(JobsInfo); i++) {
 		format(temp, sizeof temp, "*** РАБОТА ***\nЗдесь можно устроится\n%s", jnames[JobsInfo[i][jID]]);
