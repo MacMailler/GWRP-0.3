@@ -20687,13 +20687,13 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			case PLAYER_STATE_ONFOOT : {
 				new c = ClosestVeh(playerid, 5.1);
 				if(c != INVALID_VEHICLE_ID) {
-					GetCoordBootVehicle(c, vehx, vehy, vehz);
+					GetCoordVehicleParams(c, 3, vehx, vehy, vehz);
 					if(IsPlayerInRangeOfPoint(playerid, 1.5, vehx, vehy, vehz)) {
 						VehicleBoot{c} = !VehicleBoot{c};
 						GetVehicleParamsEx(c,engine,light,alarm,doors,bonnet,boot,objective);
 						SetVehicleParamsEx(c,engine,light,alarm,doors,bonnet,VehicleBoot{c},objective);
 					} else {
-						GetCoordBonetVehicle(c, vehx, vehy, vehz);
+						GetCoordVehicleParams(c, 2, vehx, vehy, vehz);
 						if(IsPlayerInRangeOfPoint(playerid, 1.4, vehx, vehy, vehz)) {
 							VehicleBonnet{c} = !VehicleBonnet{c};
 							GetVehicleParamsEx(c,engine,light,alarm,doors,bonnet,boot,objective);
