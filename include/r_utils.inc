@@ -23,12 +23,6 @@ stock getsec(timestamp, oldtimestamp=0) {
 	return ((timestamp-oldtimestamp)/SEC);
 }
 
-stock Float:GetPlayerPosAsArray(playerid) {
-	new Float:position[3];
-	GetPlayerPos(playerid, position[0], position[1], position[3]);
-	return position;
-}
-
 stock GetPlayerFrontLookAt(playerid, Float:dist, &Float:x, &Float:y, &Float:z) {
 	new Float:cmrX, Float:cmrY, Float:cmrZ;
 	new Float:vctX, Float:vctY, Float:vctZ;
@@ -339,65 +333,17 @@ stock IsPlayerInSquare3D(playerid, Float:size, Float:x, Float:y, Float:z, virtua
 	return 0;
 }
 
-
-stock GetCoordBonetVehicle(vehicleid, &Float:x, &Float:y, &Float:z) {
-    GetVehicleModelInfo(GetVehicleModel(vehicleid), 1, x, distance, z); 
-    distance = distance/2 + 0.1; 
-    GetVehiclePos(vehicleid, x, y, z); 
-    GetVehicleZAngle(vehicleid, angle); 
-    x -= (distance * floatsin(-angle+180, degrees)); 
-    y -= (distance * floatcos(-angle+180, degrees)); 
-    return 1; 
-}  
-
-stock GetCoordBootVehicle(vehicleid, &Float:x, &Float:y, &Float:z)
-{
-    GetVehicleModelInfo(GetVehicleModel(vehicleid), 1, x, distance, z);
-    distance = distance/2 + 0.1;
-    GetVehiclePos(vehicleid, x, y, z);
-    GetVehicleZAngle(vehicleid, angle);
-    x += (distance * floatsin(-angle+180, degrees));
-    y += (distance * floatcos(-angle+180, degrees));
-    return 1;
-}
-
-stock IsClosestVehicle(Float:radi, vehicleid, closestveh) {
-    if(vehicleid != INVALID_VEHICLE_ID) {
-		GetVehiclePos(vehicleid, vehx, vehy, vehz);
-		return (radi >= GetVehicleDistanceFromPoint(closestveh, vehx, vehy, vehz));
-	}
-	return 0;
-}
-
-
-stock GetClosestVehicle(playerid, Float:radi) {
-	if(IsPlayerConnected(playerid)) {
-		new vehid = 1;
-		do {
-			GetVehiclePos(vehid, vehx, vehy, vehz);
-			GetVehicleModelInfo(GetVehicleModel(vehid), 1, posx, distance, posz);
-			distance = distance/2 + 0.1; distance += radi;
-			if(distance >= GetPlayerDistanceFromPoint(playerid, vehx, vehy, vehz)) return vehid;
-			vehid ++;
-			
-		} while(vehid != MAX_VEHICLES);
-	}
-	return INVALID_VEHICLE_ID;
-}
-
-
 stock GetCoordVehicleParams(vehicleid, paramid, &Float:x, &Float:y, &Float:z) //paramid: 0/1 - левая/правая дверь, 2/3 - капот/багажник 
 {
     new modelid = GetVehicleModel(vehicleid); 
 	
-	if( !modelid ) return 0;
+	if(!modelid) return 0;
 	
     if(paramid > 3) paramid %= 4;
 	
     new Float:a, Float:dist;
 	
-    switch( paramid )
-	{ 
+    switch(paramid) { 
         case 0 : GetVehicleModelInfo(modelid, VEHICLE_MODEL_INFO_SIZE, dist, a, a), modelid = 1; 
         case 1 : GetVehicleModelInfo(modelid, VEHICLE_MODEL_INFO_SIZE, dist, a, a), modelid = -1, paramid = 0; 
         case 2 : GetVehicleModelInfo(modelid, VEHICLE_MODEL_INFO_SIZE, a, dist, a), modelid = 1,  paramid = 1; 
