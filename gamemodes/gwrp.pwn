@@ -16221,7 +16221,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA1_HASH_LEN];
 				KeyProtect(inputtext[0], hash);
-				format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableUsers__"` (`Name`,`Key`,`Fightstyle`) VALUES ('%s', '%s', '%s', '%i')",
+				format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableUsers__"` (`Name`,`Key`,`Fightstyle`) VALUES ('%s', '%s', '%i')",
 				Pl::Info[playerid][pLogin], hash, FightStyles[random(sizeof FightStyles)]);
 				Db::tquery(connDb, query, "onPlayerRegister", "i", playerid);
 			} else {
