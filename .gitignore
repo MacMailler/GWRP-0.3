@@ -222,6 +222,7 @@ filterscritps/*.amx
 gamemodes/*.amx
 pawno/
 plugins/
+scriptfiles/logs/
 *.dll
 *.exe
 Debug.txt
@@ -229,4 +230,5 @@ mysql_log.txt
 server_log.txt
 *.sql
 *.sql.gz
+*.zip
 

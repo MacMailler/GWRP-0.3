@@ -1,0 +1,22 @@
+----------------------------------------------------------
+{d16800}#8693{ffffff} - JoyPad
+{d16800}#0847{ffffff} - Телепортация в транспорт
+{d16800}#1488{ffffff} - Minigun
+{d16800}#4748{ffffff} - DriveBy
+{d16800}#8687{ffffff} - AirBreak/Teleport
+{d16800}#2329{ffffff} - Fly
+{d16800}#1338{ffffff} - CarSpam
+{d16800}#4484{ffffff} - Sanboxie
+{d16800}#8460{ffffff} - Флуд в чат
+{d16800}#2056{ffffff} - Флуд убийствами/смертями
+{d16800}#3714{ffffff} - Спидхак
+{d16800}#5494{ffffff} - CarHack
+{d16800}#8103{ffffff} - HealCar
+{d16800}#5566{ffffff} - Tuning
+{d16800}#7660{ffffff} - ColorHack
+{d16800}#1060{ffffff} - WeaponHack
+{d16800}#0004{ffffff} - SetHP
+{d16800}#3490{ffffff} - SetArmour
+{d16800}#8283{ffffff} - AntiFreeze
+{d16800}#0730{ffffff} - Бесконечные патроны
+{d16800}#6418{ffffff} - Невидимость

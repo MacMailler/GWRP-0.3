@@ -172,9 +172,6 @@ Iterators:
 	NPC - Alias of Bot.
 	Character - All players and bots.
 \*----------------------------------------------------------------------------*/
-#undef MAX_PLAYERS
-#define MAX_PLAYERS 50
-
 #define _FOREACH_LOCAL_VERSION        16
 
 // Foreach is testing us.

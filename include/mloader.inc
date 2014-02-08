@@ -13,7 +13,7 @@
 #define map:: MAP_ 			// fake class
 #define INVALID_MAP_ID		(0xFFFF)
 #define MAX_DYNAMIC_MAP		(255)
-#define MAP_Valid(%0)		(0<=%0<=TotalDynamicMaps)
+#define MAP_IsValid(%0)		(0<=%0<=TotalDynamicMaps)
 
 
 forward map::Load(const mapfile[], worldid=-1, interiorid=-1, playerid=-1, Float:streamdistance=200.0);
@@ -94,7 +94,7 @@ stock map::Load(const mapfile[], worldid=-1, interiorid=-1, playerid=-1, Float:s
 }
 
 stock map::SetWorld(mapid, worldid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		DynamicMaps[mapid][e_MapWorld] = worldid;
 		new objectid = DynamicMaps[mapid][e_MapStart];
 		for(; objectid != DynamicMaps[mapid][e_MapEnd]; objectid++) {
@@ -109,7 +109,7 @@ stock map::SetWorld(mapid, worldid) {
 }
 
 stock map::SetInterior(mapid, interiorid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		DynamicMaps[mapid][e_MapInterior] = interiorid;
 		new objectid = DynamicMaps[mapid][e_MapStart];
 		for(; objectid != DynamicMaps[mapid][e_MapEnd]; objectid++) {
@@ -124,7 +124,7 @@ stock map::SetInterior(mapid, interiorid) {
 }
 
 stock map::SetPlayer(mapid, playerid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		if(IsPlayerConnected(playerid)) {
 			DynamicMaps[mapid][e_MapPlayer] = playerid;
 			new objectid = DynamicMaps[mapid][e_MapStart];
@@ -141,7 +141,7 @@ stock map::SetPlayer(mapid, playerid) {
 }
 
 stock map::SetStreamDist(mapid, Float:streamdistance) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		if(IsPlayerConnected(playerid)) {
 			DynamicMaps[mapid][e_MapStreamDist] = streamdistance;
 			new objectid = DynamicMaps[mapid][e_MapStart];
@@ -159,7 +159,7 @@ stock map::SetStreamDist(mapid, Float:streamdistance) {
 
 
 stock map::GetWorld(mapid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		return DynamicMaps[mapid][e_MapWorld];
 		
 	} else if(map_debug) {
@@ -169,7 +169,7 @@ stock map::GetWorld(mapid) {
 }
 
 stock map::GetInterior(mapid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		return DynamicMaps[mapid][e_MapInterior];
 		
 	} else if(map_debug) {
@@ -179,7 +179,7 @@ stock map::GetInterior(mapid) {
 }
 
 stock map::GetPlayer(mapid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		return DynamicMaps[mapid][e_MapPlayer];
 		
 	} else if(map_debug) {
@@ -189,7 +189,7 @@ stock map::GetPlayer(mapid) {
 }
 
 stock map::Float:GetStreamDist(mapid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		return DynamicMaps[mapid][e_MapStreamDist];
 		
 	} else if(map_debug) {
@@ -203,7 +203,7 @@ stock map::CountMaps() {
 }
 
 stock map::Destroy(mapid) {
-	if(map::Valid(mapid)) {
+	if(map::IsValid(mapid)) {
 		new objectid = DynamicMaps[mapid][e_MapStart];
 		for(; objectid != DynamicMaps[mapid][e_MapEnd]; objectid++) {
 			DestroyDynamicObject(objectid);
@@ -249,7 +249,9 @@ stock strcut(dest[], buffer[], l[], r[], maxlen=sizeof buffer) {
 		new rpos = strfind(dest, r, true, lpos);
 		if(rpos > 0) {
 			if(rpos > maxlen) rpos = maxlen;
-			for(new j, i=lpos+1; i < rpos; i++, j++) buffer[j] = dest[i];
+			for(new j, i=lpos+1; i < rpos; i++, j++) {
+				buffer[j] = dest[i];
+			}
 			return 1;
 		}
 	}

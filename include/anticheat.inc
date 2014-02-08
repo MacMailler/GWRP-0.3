@@ -61,7 +61,7 @@
 #define AC_Speed(%0,%1,%2,%3,%4) 	floatround(floatsqroot((%4)?(%0*%0+%1*%1+%2*%2):(%0*%0+%1*%1))*%3*1.6)
 
 
-#if defined filterscript
+#if defined __filterscript__
 
 #define AC_Redirect					CallRemoteFunction
 #define GivePlayerMoney				AC::GivePlayerMoney
@@ -448,7 +448,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 	return AC::OnPlayerDeath(playerid, killerid, reason);
 }
 
-public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid) {	
+public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart) {	
 	if(AC::isValidPlayer(playerid)) {
 		if((22 <= weaponid <= 38) && weaponid != 37) {
 		
@@ -497,7 +497,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid) {
 				AC::Info[playerid][AC::AimCount] ++;
 			}
 		}
-		AC::OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid);
+		AC::OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
 	}
 	return 1;
 }
@@ -1491,7 +1491,7 @@ forward AC_OnPlayerDeath(playerid, killerid, reason);
 	#define _ALS_OnPlayerGiveDamage
 #endif
 #define OnPlayerGiveDamage AC_OnPlayerGiveDamage
-forward AC_OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid);
+forward AC_OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
 
 #if defined _ALS_OnPlayerInteriorChange
 	#undef OnPlayerInteriorChange

@@ -105,7 +105,7 @@ const
     INI_MAX_OPENED_FILES    = 2,        // максимум, открытых одновременно, файлов
     INI_MAX_FILE_SIZE       = 65536,    // байт,        макс. размер файла
     INI_MAX_FILENAME_SIZE   = 128,      // символов,    макс. размер пути к файлу
-    INI_MAX_KEYS_IN_FILE    = 2048,     // максимум ключей в открытом файле
+    INI_MAX_KEYS_IN_FILE    = 255,     // максимум ключей в открытом файле
 
     // в ОЗУ будет выделено для временного хранения файлов примерно вот столько байт:
     // INI_MAX_OPENED_FILES * ( INI_MAX_FILE_SIZE + INI_MAX_FILENAME_SIZE*4 + INI_MAX_KEYS_IN_FILE*4 )

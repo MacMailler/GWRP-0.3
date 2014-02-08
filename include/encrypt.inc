@@ -52,9 +52,3 @@ native sha2_hmac(const key[], const text[], hesh[], sha2_method:method=sha_256);
 native md5(const text[], hesh[]);
 native md5_file(const filename[], hesh[]);
 native md5_hmac(const key[], const text[], hesh[]);
-
-stock keyProtect(const key[], output[]) {
-	new _tmp_hash[50];
-	sha1(key, _tmp_hash), sha1(_tmp_hash, output);
-	return ;
-}

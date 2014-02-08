@@ -1,3 +1,5 @@
+#define halt; fclose(File:-1);
+
 stock getweek(timestamp, oldtimestamp=0) {
 	#define WEEK (604800)
 	return ((timestamp-oldtimestamp)/WEEK);
@@ -23,14 +25,20 @@ stock getsec(timestamp, oldtimestamp=0) {
 	return ((timestamp-oldtimestamp)/SEC);
 }
 
-stock GetPlayerFrontLookAt(playerid, Float:dist, &Float:x, &Float:y, &Float:z) {
+stock Float:GetPlayerPosAsArray(playerid) {
+	new Float:position[3];
+	GetPlayerPos(playerid, position[0], position[1], position[3]);
+	return position;
+}
+
+stock GetPlayerCameraLookAt(playerid, Float:dist, &Float:x, &Float:y, &Float:z) {
 	new Float:cmrX, Float:cmrY, Float:cmrZ;
 	new Float:vctX, Float:vctY, Float:vctZ;
 	GetPlayerCameraPos(playerid, cmrX, cmrY, cmrZ);
 	GetPlayerCameraFrontVector(playerid, vctX, vctY, vctZ);
-	x = cmrX+dist*vctX;
-	y = cmrY+dist*vctY;
-	z = cmrZ+dist*vctZ;
+	x = cmrX + dist * vctX;
+	y = cmrY + dist * vctY;
+	z = cmrZ + dist * vctZ;
 	return 1;
 }
 
@@ -60,10 +68,10 @@ stock GetVehicleType(model) {
 	return VEHICLE_TYPE_UNKNOWN ;
 }
 
-#define any: {Float, _}:
-stock copyArray(any: buffer[], const any: source[], size) {
+
+stock CopyArray({Float, _}:buffer[], const {Float, _}:source[], size) {
 	for(new i; i < size; i++) {
-		buffer[ i ] = source[ i ];
+		buffer[i] = source[i];
 	}
 }
 
@@ -92,8 +100,9 @@ stock TurnPlayerFaceToPlayer(playerid, facingtoid) {
 	
 	GetPlayerPos(facingtoid, x1, y1, z1);
 	GetPlayerPos(playerid, x2, y2, z2);
-	angle = 180.0-atan2(x2-x1,y2-y1);
-	angle += misc; misc *= -1;
+	angle = 180.0 - atan2(x2 - x1, y2 - y1);
+	angle += misc;
+	misc *= -1;
 	SetPlayerFacingAngle(playerid, angle+misc);
 }
 
@@ -128,6 +137,30 @@ stock binarySearch(const dest[], val, len=sizeof dest) {
 	return -1;
 }
 
+stock binarySearch2D(const dest[][], val, elem, size = sizeof dest) {
+	new f = 0;
+	new l = size;
+	new mid; 
+ 
+	if(dest[0][elem] > val || dest[size - 1][elem] < val) {
+		return -1;
+	}
+ 
+	while(f < l) {
+		mid = f + (l - f) / 2;
+		if(val <= dest[mid][elem]) {
+			l = mid;
+		} else {
+			f = mid + 1;
+		}
+	}
+
+	if(l < size && dest[l][elem] == val) {
+		return l;
+	}
+	return -1;
+}
+
 stock interpolationSearch(const dest[], val, len=sizeof dest) {
 	new mid;
 	new low = 0;
@@ -152,6 +185,32 @@ stock interpolationSearch(const dest[], val, len=sizeof dest) {
 	}
 	return -1;
 }
+
+stock interpolationSearch2D(const dest[][], val, elem, len=sizeof dest) {
+	new mid;
+	new low = 0;
+	new high = len - 1;
+	
+	while(dest[low][elem] < val && dest[high][elem] > val) {
+		mid = low + ((val - dest[low][elem]) * (high - low)) / (dest[high][elem] - dest[low][elem]);
+		
+		if(dest[mid][elem] < val) {
+			low = mid + 1;
+		} else if (dest[mid][elem] > val) {
+			high = mid - 1;
+		} else {
+			return mid;
+		}
+	}
+
+	if(dest[low][elem] == val) {
+		return low;
+	} else if(dest[high][elem] == val) {
+		return high;
+	}
+	return -1;
+}
+
 
 stock linearSearch(const dest[], val, l=0, r=sizeof dest) {
 	if(l < r) {
@@ -191,20 +250,20 @@ stock Float:vehicleSize(vehicleid) {
 }
 
 #if defined Streamer_IncludeFileVersion
-	#define streamer:: Streamer_
+	#define Streamer:: Streamer_
 	
 	stock Float:GetPlayerDistanceFromPickup(playerid, pickupid) {
 		new Float:x, Float:y, Float:z, Float:dist;
 		GetPlayerPos(playerid, x, y, z);
-		streamer::GetDistanceToItem(x, y, z, STREAMER_TYPE_PICKUP, pickupid, dist);
+		Streamer::GetDistanceToItem(x, y, z, STREAMER_TYPE_PICKUP, pickupid, dist);
 		return dist;
 	}
 	
 	stock isPlayerInPickup(playerid, pickupid)
 	{
 		new Float:x, Float:y, Float:z, Float:dist; GetPlayerPos(playerid, x, y, z);
-		new type = streamer::GetIntData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_TYPE);
-		streamer::GetDistanceToItem(x, y, z, STREAMER_TYPE_PICKUP, pickupid, dist);
+		new type = Streamer::GetIntData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_TYPE);
+		Streamer::GetDistanceToItem(x, y, z, STREAMER_TYPE_PICKUP, pickupid, dist);
 		
 		if( type != 14 )
 		{
@@ -221,25 +280,25 @@ stock Float:vehicleSize(vehicleid) {
 	}
 	
 	stock getPickupPos(pickupid, &Float:x, &Float:y, &Float:z) {
-		streamer::GetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_X, x);
-		streamer::GetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Y, y);
-		streamer::GetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Z, z);
+		Streamer::GetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_X, x);
+		Streamer::GetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Y, y);
+		Streamer::GetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Z, z);
 		return 1 ;
 	}
 
 	stock setPickupPos(pickupid, Float:x, Float:y, Float:z) {
-		streamer::SetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_X, x);
-		streamer::SetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Y, y);
-		streamer::SetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Z, z);
+		Streamer::SetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_X, x);
+		Streamer::SetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Y, y);
+		Streamer::SetFloatData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_Z, z);
 		return 1 ;
 	}
 	
 	stock getPickupModel(pickupid) {
-		return streamer::SetIntData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_MODEL_ID);
+		return Streamer::SetIntData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_MODEL_ID);
 	}
 	
 	stock setPickupModel(pickupid, model) {
-		streamer::SetIntData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_MODEL_ID, model);
+		Streamer::SetIntData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_MODEL_ID, model);
 		return 1 ;
 	}
 	
@@ -285,7 +344,6 @@ stock x_Delete3DTextLabel(&Text3D:id) {
 	return 1;
 }
 #define Delete3DTextLabel	x_Delete3DTextLabel
-
 
 stock GetSquarePos(Float:x, Float:y, Float:radius, &Float:minx, &Float:miny, &Float:maxx, &Float:maxy) {
 	minx = x - radius;
@@ -333,6 +391,7 @@ stock IsPlayerInSquare3D(playerid, Float:size, Float:x, Float:y, Float:z, virtua
 	return 0;
 }
 
+
 stock GetCoordVehicleParams(vehicleid, paramid, &Float:x, &Float:y, &Float:z) //paramid: 0/1 - левая/правая дверь, 2/3 - капот/багажник 
 {
     new modelid = GetVehicleModel(vehicleid); 
@@ -343,7 +402,8 @@ stock GetCoordVehicleParams(vehicleid, paramid, &Float:x, &Float:y, &Float:z) //
 	
     new Float:a, Float:dist;
 	
-    switch(paramid) { 
+    switch( paramid )
+	{ 
         case 0 : GetVehicleModelInfo(modelid, VEHICLE_MODEL_INFO_SIZE, dist, a, a), modelid = 1; 
         case 1 : GetVehicleModelInfo(modelid, VEHICLE_MODEL_INFO_SIZE, dist, a, a), modelid = -1, paramid = 0; 
         case 2 : GetVehicleModelInfo(modelid, VEHICLE_MODEL_INFO_SIZE, a, dist, a), modelid = 1,  paramid = 1; 
@@ -357,29 +417,19 @@ stock GetCoordVehicleParams(vehicleid, paramid, &Float:x, &Float:y, &Float:z) //
     return true; 
 }
 
-stock GetVehicleClosest(vehicleid, Float:radi)
-{
-	new vehid = 1;
-	do
-	{
-		if(vehid != vehicleid)
-		{
-			GetVehiclePos(vehid, vehx, vehy, vehz);
-			GetVehicleModelInfo(GetVehicleModel(vehid), 1, posx, distance, posz);
-			distance = distance/2 + 0.1; distance += radi;
-			if(distance >= GetVehicleDistanceFromPoint(vehicleid, vehx, vehy, vehz)) return vehid;
-		}
-		vehid ++;
-	}
-	while(vehid != MAX_VEHICLES);
-	
-	return INVALID_VEHICLE_ID;
-}
-
-
-stock ReturnUser(text[])
-{
+stock ReturnUser(text[]) {
 	new userid;
 	if(sscanf(text, "u", userid)) return INVALID_PLAYER_ID;
 	return userid;
+}
+
+
+#define MD5_HASH_LEN (33)
+#define SHA1_HASH_LEN (41)
+#define SHA2_HASH_LEN (65)
+
+stock KeyProtect(const __key[], __output[]) {
+	new __tmp_key_hash[SHA1_HASH_LEN];
+	sha1(__key, __tmp_key_hash);
+	return sha1(__tmp_key_hash, __output);
 }
