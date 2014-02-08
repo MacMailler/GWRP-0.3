@@ -6,7 +6,7 @@
 #include "..\include\main"
 
 #define __GamemodeName__		"GWRP"
-#define __GamemodeVersion__		"v0.4-beta"
+#define __GamemodeVersion__		"0.3"
 #define __GamemodeCopyright__	"(c) MacMailler, 2012—2014"
 #define __DBPrefix__			""
 
