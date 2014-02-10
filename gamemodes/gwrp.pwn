@@ -20280,7 +20280,7 @@ stock SetPlayerDamage(playerid, damagedid, Float:damage, reason) {
 	GetPlayerHealth(damagedid, health);
 	GetPlayerArmour(damagedid, armour);
 	
-	if(armour > 1) {
+	if(armour > 0) {
 		armour -= damage;
 		if(armour < 0) {
 			health -= -armour;
@@ -20289,16 +20289,18 @@ stock SetPlayerDamage(playerid, damagedid, Float:damage, reason) {
 				SyncInfo[damagedid][sReasonID] = reason;
 			}
 		}
-		Rac::SetPlayerHealth(damagedid, health);
 		Rac::SetPlayerArmour(damagedid, armour);
-	} else if(health > 0) {
+		Rac::SetPlayerHealth(damagedid, health);
+	}
+	
+	else if(health > 0) {
 		health -= damage;
 		if(health < 1) {
 			SyncInfo[damagedid][sKillerID] = playerid;
 			SyncInfo[damagedid][sReasonID] = reason;
 		}
-		Rac::SetPlayerHealth(damagedid, health);
 		Rac::SetPlayerArmour(damagedid, armour);
+		Rac::SetPlayerHealth(damagedid, health);
 	}
 	return 1;
 }
