@@ -20244,18 +20244,6 @@ public onPlayerBan(playerid, reason[], reasonid) {
 #endif
 
 
-public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ) {
-	switch(hittype) {
-		case BULLET_HIT_TYPE_VEHICLE : {
-			/*new Float:x, Float:y, Float:z;
-			GetVehiclePos(hitid, x, y, z);*/
-			format(temp, sizeof temp, "%f, %f, %f", fX, fY, fZ);
-			Send(playerid, COLOR_WHITE, temp);
-		}
-	}
-	return 1;
-}
-
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) {
 	GMTest{playerid} = false;
 }
