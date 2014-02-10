@@ -344,6 +344,9 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 	}
 		
 	switch(oldstate) {
+		case PLAYER_STATE_DRIVER, PLAYER_STATE_PASSENGER : {
+			AC::Info[playerid][AC::Delay][R::SPEED_HACK] = 2;
+		}
 		case PLAYER_STATE_SPECTATING : {
 			if(AC::Info[playerid][AC::ToggleSpec]) {
 				Rac::Kick(playerid, "Использование читов", R::SPECHACK);
@@ -626,7 +629,7 @@ stock AC::OnvehicleSync(playerid) {
 	if(AC::Info[playerid][AC::Delay][R::SPEED_HACK] > 0) {
 		AC::Info[playerid][AC::Delay][R::SPEED_HACK] --;
 	} else {
-		if((playerspeed > 230) || (playerspeed - AC::Info[playerid][AC::OldSpeed]) > 50) {
+		if((playerspeed > 230) || (playerspeed - AC::Info[playerid][AC::OldSpeed]) > 70) {
 			AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
 			switch(GetVehicleType(GetVehicleModel(vehicle))) {
 				case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_BOAT, VEHICLE_TYPE_VELLO, VEHICLE_TYPE_AUTO : {
