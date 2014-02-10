@@ -469,7 +469,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			if(AC::Info[playerid][AC::AmmoI][slot] == p_ammo) {
 				if(!Rac::exec(playerid, damagedid)) {
 					AC::Info[playerid][AC::Warns][R::UNLIM_AMMO] ++;
-					if(AFKInfo[playerid][afk_Time][0] < AFK_TEXT_SET && !Rac::InvalidState(playerid)) {
+					if(AFKInfo[playerid][afk_Time][0] < AFK_TEXT_SET) {
 						if(AC::Info[playerid][AC::Warns][R::UNLIM_AMMO] >= 4) {
 							Rac::ResetPlayerWeapons(playerid);
 							Rac::Kick(playerid, R::Info[R::UNLIM_AMMO], R::UNLIM_AMMO);
@@ -540,7 +540,7 @@ public onAntiCheatUpdate() {
 							if(AC::Info[i][AC::NoHH]) {
 								AC::Info[i][AC::NoHH] = 0;
 							} else {
-								if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET && Rac::InvalidState(i)) {
+								if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET)) {
 									if(Rac::IsAtCandySprunk(i, 4.0)) {
 										Rac::GivePlayerHealth(i, ((fvar - AC::Info[i][AC::HealthArmor][AC::HEALTH]) + 1.0 ), 100.0);
 									} else {
@@ -557,15 +557,13 @@ public onAntiCheatUpdate() {
 				if(AC::Info[i][AC::Delay][R::ARMOUR_HACK] > 0) {
 					AC::Info[i][AC::Delay][R::ARMOUR_HACK] --;
 				} else {
-					if(AC::IsPlayerSync(i)) {
-						GetPlayerArmour(i, fvar);
-						if(fvar > AC::Info[i][AC::HealthArmor][AC::ARMOUR]) {
-							if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET && Rac::InvalidState(i)) {
-								SetPlayerArmour(i, AC::Info[i][AC::HealthArmor][AC::ARMOUR]);
-							}
-						} else {
-							AC::Info[i][AC::HealthArmor][AC::ARMOUR] = fvar;
+					GetPlayerArmour(i, fvar);
+					if(fvar > AC::Info[i][AC::HealthArmor][AC::ARMOUR]) {
+						if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
+							SetPlayerArmour(i, AC::Info[i][AC::HealthArmor][AC::ARMOUR]);
 						}
+					} else {
+						AC::Info[i][AC::HealthArmor][AC::ARMOUR] = fvar;
 					}
 				}
 
@@ -975,32 +973,28 @@ public: AC::SetVehiclePos(vehicleid, Float:x, Float:y, Float:z) {
 }
 
 public: AC::SetPlayerHealth(playerid, Float:health) {
-	AC::Info[playerid][AC::Sync] = false;
 	AC::Info[playerid][AC::HealthArmor][AC::HEALTH] = health;
-	AC::Info[playerid][AC::Delay][R::HEALTH_HACK] = 2;
+	AC::Info[playerid][AC::Delay][R::HEALTH_HACK] = 1;
 	return SetPlayerHealth(playerid, AC::Info[playerid][AC::HealthArmor][AC::HEALTH]);
 }
 
 stock AC::GivePlayerHealth(playerid, Float:health, Float:maxhealth = 200.0) {
-	AC::Info[playerid][AC::Sync] = false;
 	AC::Info[playerid][AC::HealthArmor][AC::HEALTH] += health;
 	floatmax(AC::Info[playerid][AC::HealthArmor][AC::HEALTH], maxhealth);
-	AC::Info[playerid][AC::Delay][R::HEALTH_HACK] = 2;
+	AC::Info[playerid][AC::Delay][R::HEALTH_HACK] = 1;
 	return SetPlayerHealth(playerid, AC::Info[playerid][AC::HealthArmor][AC::HEALTH]);
 }
 
 public: AC::SetPlayerArmour(playerid, Float:armour) {
-	AC::Info[playerid][AC::Sync] = false;
 	AC::Info[playerid][AC::HealthArmor][AC::ARMOUR] = armour;
-	AC::Info[playerid][AC::Delay][R::ARMOUR_HACK] = 2;
+	AC::Info[playerid][AC::Delay][R::ARMOUR_HACK] = 1;
 	return SetPlayerArmour(playerid, AC::Info[playerid][AC::HealthArmor][AC::ARMOUR]);
 }
 
 public: AC::GivePlayerArmour(playerid, Float:armour) {
-	AC::Info[playerid][AC::Sync] = false;
 	AC::Info[playerid][AC::HealthArmor][AC::ARMOUR] += armour;
 	floatmax(AC::Info[playerid][AC::HealthArmor][AC::ARMOUR], 100.0);
-	AC::Info[playerid][AC::Delay][R::ARMOUR_HACK] = 2;
+	AC::Info[playerid][AC::Delay][R::ARMOUR_HACK] = 1;
 	return SetPlayerArmour(playerid, AC::Info[playerid][AC::HealthArmor][AC::ARMOUR]);
 }
 
@@ -1305,13 +1299,6 @@ stock AC::Ban(playerid, reason[], reasonid = R::NONE, color = 0xFF6347AA) {
 		}
 	}
 	return BanEx(playerid, reason);
-}
-
-stock AC::InvalidState(playerid) {
-	switch(GetPlayerState(playerid)) {
-		case 7..9 : return true;
-	}
-	return false;
 }
 
 stock AC::IsValidState(playerid) {
