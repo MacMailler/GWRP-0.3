@@ -540,7 +540,7 @@ public onAntiCheatUpdate() {
 							if(AC::Info[i][AC::NoHH]) {
 								AC::Info[i][AC::NoHH] = 0;
 							} else {
-								if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET)) {
+								if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
 									if(Rac::IsAtCandySprunk(i, 4.0)) {
 										Rac::GivePlayerHealth(i, ((fvar - AC::Info[i][AC::HealthArmor][AC::HEALTH]) + 1.0 ), 100.0);
 									} else {
