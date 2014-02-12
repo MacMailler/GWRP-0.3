@@ -4120,7 +4120,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					
 					new biz = Pl::Info[playerid][pLocal] - OFFSET_BIZZ;
 					AddExtraVehicle(playerid, AutoSolon[vclass][idx][0], 0, 0, 0, 0, random(125), random(125), PARK_GARAGE, 0);
-					BizzInfo[biz][bProfit] += PERCENT(AutoSolon[vclass][idx][1], 20);
+					GiveBizzProfit(biz, PERCENT(AutoSolon[vclass][idx][1], 20));
 					BizzInfo[biz][bProds] --;
 					Rac::GivePlayerMoney(playerid, -AutoSolon[vclass][idx][1]);
 					Rac::TogglePlayerControllable(playerid, true);
@@ -4319,7 +4319,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 		if(Rac::GetPlayerMoney(playerid) >= PizzaInfo[row][bPrice]) {
 			if(health < 100.0) {
 				new biz = Pl::Info[playerid][pLocal] - OFFSET_BIZZ;
-				BizzInfo[biz][bProfit] += PizzaInfo[row][bPrice];
+				GiveBizzProfit(biz, PizzaInfo[row][bPrice]);
 				BizzInfo[biz][bProds] --;
 				Rac::GivePlayerHealth(playerid, PizzaInfo[row][bHP], 100.0);
 				Rac::GivePlayerMoney(playerid, -PizzaInfo[row][bPrice]);
@@ -4350,7 +4350,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 		if(Rac::GetPlayerMoney(playerid) >= BurgerInfo[row][bPrice]) {
 			if(health < 100.0) {
 				new biz = Pl::Info[playerid][pLocal] - OFFSET_BIZZ;
-				BizzInfo[biz][bProfit] += BurgerInfo[row][bPrice];
+				GiveBizzProfit(biz, BurgerInfo[row][bPrice]);
 				BizzInfo[biz][bProds] --;
 				Rac::GivePlayerHealth(playerid, BurgerInfo[row][bHP], 100.0);
 				GetPlayerName(playerid, plname, 24);
@@ -4442,7 +4442,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 		new _bidx = Pl::Info[playerid][pLocal] - OFFSET_BIZZ;
 		if(Rac::GetPlayerMoney(playerid) >= Ammu1Info[row][gPrice]) {
 			Rac::GivePlayerMoney(playerid, -Ammu1Info[row][gPrice]);
-			BizzInfo[_bidx][bProfit] += Ammu1Info[row][gPrice];
+			GiveBizzProfit(_bidx, Ammu1Info[row][gPrice]);
 			BizzInfo[_bidx][bProds]--;
 			Rac::GivePlayerWeapon(playerid, Ammu1Info[row][gID], Ammu1Info[row][gAmmo]);
 			GetPlayerName(playerid, plname, 24);
@@ -4463,7 +4463,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 		if(Rac::GetPlayerMoney(playerid) >= Ammu2Info[row][gPrice]) {
 			Rac::GivePlayerMoney(playerid, -Ammu2Info[row][gPrice]);
 			if(0 <= _bidx < sizeof(BizzInfo)) {
-				BizzInfo[_bidx][bProfit] += Ammu2Info[row][gPrice];
+				GiveBizzProfit(_bidx, Ammu2Info[row][gPrice]);
 				BizzInfo[_bidx][bProds]--;
 			}
 			Rac::GivePlayerWeapon(playerid, Ammu2Info[row][gID], Ammu2Info[row][gAmmo]);
@@ -4490,7 +4490,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					format(temp, sizeof(temp), "~r~-$%d", TelephonePrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
 					Rac::GivePlayerMoney(playerid, -TelephonePrice);
-					BizzInfo[biz][bProfit] += TelephonePrice;
+					GiveBizzProfit(biz, TelephonePrice);
 					BizzInfo[biz][bProds]--;
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					format(temp, sizeof(temp), "Вы купили телефон, номер: %d", randphone);
@@ -4503,8 +4503,8 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				new __bidx = GetIndexFromBizID(Bizz_Lottery);
 			    if(Rac::GetPlayerMoney(playerid) >= ScrathCardPrice) {
 					Rac::GivePlayerMoney(playerid, -ScrathCardPrice);
-					BizzInfo[biz][bProfit] += PERCENT(ScrathCardPrice,10);
-					BizzInfo[__bidx][bProfit] += ScrathCardPrice - PERCENT(ScrathCardPrice,10);
+					GiveBizzProfit(biz, PERCENT(ScrathCardPrice,10));
+					GiveBizzProfit(__bidx, ScrathCardPrice - PERCENT(ScrathCardPrice,10));
 					format(temp, sizeof(temp), "~r~-$%d", ScrathCardPrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
@@ -4552,7 +4552,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 						if(randcard1 <= 4 && randcard1 >= 2) prize = 1500;
 						if(randcard1 < 2) prize = 500;
 						Rac::GivePlayerMoney(playerid, prize);
-						BizzInfo[bidx][bProfit] -= prize;
+						BizzInfo[bidx][bSafe] -= prize;
 						format(temp, sizeof(temp), "%s~n~~n~~w~~g~$%i", temp, prize);
 					} else {
 						strcat(temp, "~n~~n~~w~~r~$0");
@@ -4564,7 +4564,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			case 2 : {
 			    if(Rac::GetPlayerMoney(playerid) >= PhoneBookPrice) {
 					Rac::GivePlayerMoney(playerid, -PhoneBookPrice);
-					BizzInfo[biz][bProfit] += PhoneBookPrice;
+					GiveBizzProfit(biz, PhoneBookPrice);
 					BizzInfo[biz][bProds]--;
 					format(temp, sizeof(temp), "~r~-$%d", PhoneBookPrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
@@ -4580,7 +4580,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			    if(Rac::GetPlayerMoney(playerid) >= DicePrice) {
 					gDice[playerid] = true;
 					Rac::GivePlayerMoney(playerid, -DicePrice);
-					BizzInfo[biz][bProfit] += DicePrice;
+					GiveBizzProfit(biz, DicePrice);
 					BizzInfo[biz][bProds]--;
 					format(temp, sizeof(temp), "~r~-$%d", DicePrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
@@ -4595,7 +4595,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			    if(Rac::GetPlayerMoney(playerid) >= CarKeyPrice) {
 					if(gLastCar[playerid] != INVALID_VEHICLE_ID) {
 						Rac::GivePlayerMoney(playerid, -CarKeyPrice);
-						BizzInfo[biz][bProfit] += CarKeyPrice;
+						GiveBizzProfit(biz, CarKeyPrice);
 						BizzInfo[biz][bProds]--;
 						format(temp, sizeof(temp), "~r~-$%d", CarKeyPrice);
 						GameTextForPlayer(playerid, temp, 5000, 1);
@@ -4611,7 +4611,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			case 5 : {
 			    if(Rac::GetPlayerMoney(playerid) >= CandomPrice) {
 					Condom[playerid] ++;
-					BizzInfo[biz][bProfit] += CandomPrice;
+					GiveBizzProfit(biz, CandomPrice);
 					BizzInfo[biz][bProds]--;
 					Rac::GivePlayerMoney(playerid, -CandomPrice);
 					format(temp, sizeof(temp), "~r~-$%d", CandomPrice);
@@ -4626,7 +4626,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			    if(Rac::GetPlayerMoney(playerid) >= CDPlayerPrice) {
 					Pl::Info[playerid][pCDPlayer] = 1;
 					Rac::GivePlayerMoney(playerid, -CDPlayerPrice);
-					BizzInfo[biz][bProfit] += CDPlayerPrice;
+					GiveBizzProfit(biz, CDPlayerPrice);
 					BizzInfo[biz][bProds]--;
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					format(temp, sizeof(temp), "~r~-$%d", CDPlayerPrice);
@@ -5424,7 +5424,7 @@ public: Fillup(playerid, amount, price, sec) {
 				GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
 			} else {
 				BizzInfo[bidx][bProds] -= floatround(amount / 10);
-				BizzInfo[bidx][bProfit] += price;
+				GiveBizzProfit(bidx, price);
 				new veh = GetPlayerVehicleID(playerid);
 				AutoInfo[veh][aFuel] += float(amount);
 				updateBenzinTD(playerid, veh);
@@ -5494,7 +5494,8 @@ stock PrintBizInfo(playerid, bizid) {
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
 		scf(dialog, src, "{ffa500}Статус: %s\n", BizzInfo[i][bLocked]?("{AA3333}[закрыт]"):("{33AA33}[открыт]"));
 		scf(dialog, src, "{ffa500}Стоимость входа: {33AA33}$%i\n",BizzInfo[i][bEnterCost]);
-		scf(dialog, src, "{ffa500}На счету бизнеса: {33AA33}$%i\n",BizzInfo[i][bProfit]);
+		scf(dialog, src, "{ffa500}Доход за последние 15 минут: {33AA33}$%i\n", BizzInfo[i][bProfit]);
+		scf(dialog, src, "{ffa500}На счету бизнеса: {33AA33}$%i\n", BizzInfo[i][bSafe]);
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
 		scf(dialog, src, "{ffa500}Стоимость продуктов: {33AA33}$%i\n",BizzInfo[i][bPriceProd]);
 		scf(dialog, src, "{ffa500}Продуктов в бизнесе: {ffffff}%i/%i",BizzInfo[i][bProds],BizzInfo[i][bMaxProds]);
@@ -6222,7 +6223,7 @@ public: onPayDay() {
 	}
 
 	GiveFracMoney(7, totaltax);
-	BizzInfo[bidx][bProfit] += totalebill;
+	GiveBizzProfit(bidx, totalebill);
 	
 	format(src, sizeof(src), "PAYDAY STATS: Получивших зарплату: %i, Собрано налога: $%i, Ушло на зарплату: $%i, Счета за электричество: $%i", DEBUG[ TOTAL_PLAYER_PAID ], totaltax, totalchecks, totalebill);
 	SendToAdmin(COLOR_YELLOW, src, 1, 4);
@@ -7596,7 +7597,7 @@ CMD:addbiz(playerid, params[]) {
 		BizzInfo[b][bLevel] = params[0];
 		BizzInfo[b][bPrice] = 500000;
 		BizzInfo[b][bEnterCost] = 500;
-		BizzInfo[b][bProfit] = 10000;
+		BizzInfo[b][bSafe] = 10000;
 		BizzInfo[b][bLocked] = 1;
 		BizzInfo[b][bProds] = 250;
 		BizzInfo[b][bMaxProds] = 500;
@@ -10872,7 +10873,7 @@ CMD:ad(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255
 			new bidx = GetIndexFromBizID(Bizz_TelephoneCompany);
 			GetPlayerName(playerid, sendername, 24);
 			Rac::GivePlayerMoney(playerid, -payout);
-			BizzInfo[bidx][bProfit] += payout;
+			GiveBizzProfit(bidx, payout);
 			regex_replace_exid(params, ADBlock, REPLACE_TEXT, replacecmdtext, sizeof replacecmdtext);
 			if(Pl::FracID(playerid) == 8 && Pl::Info[playerid][pMaskOn]) {
 				format(string, sizeof string, "Объявление: %s. Автор: Неизвестно, телефон: Неизвестно.", replacecmdtext);
@@ -11453,7 +11454,7 @@ CMD:buyhouse(playerid, params[]) { new string[144], sendername[24];
 						Pl::Update(playerid);
 						Pl::SetSpawnInfo(playerid);
 						PlayerPlayMusic(playerid);
-						BizzInfo[bidx][bProfit] += PERCENT(HouseInfo[h][hPrice], 10);
+						GiveBizzProfit(bidx, PERCENT(HouseInfo[h][hPrice], 10));
 					}
 				}
 				
@@ -11726,7 +11727,7 @@ CMD:sms(playerid, params[]) { new string[144], sendername[24];
 				if(!PhoneOnline[i]) return Send(playerid, COLOR_GREY, "* Телефон игрока отключен!");
 				new bidx = GetIndexFromBizID(Bizz_TelephoneCompany);
 				BizzInfo[bidx][bProds]--;
-				BizzInfo[bidx][bProfit] += BizzInfo[bidx][bEnterCost];
+				GiveBizzProfit(bidx, BizzInfo[bidx][bEnterCost]);
 				Rac::GivePlayerMoney(playerid, -BizzInfo[bidx][bEnterCost]);
 				format(string, sizeof string, "~r~$-%i", BizzInfo[bidx][bEnterCost]);
 				GameTextForPlayer(playerid, string, 5000, 1);
@@ -13713,8 +13714,9 @@ CMD:towcar(playerid, params[]) { new string[144];
 	
 	SetVehicleToRespawn(HouseInfo[house][hAuto]);
 	Rac::GivePlayerMoney(playerid,-BizzInfo[bidx][bEnterCost]);
-	BizzInfo[bidx][bProfit] += BizzInfo[bidx][bEnterCost];
-	BizzInfo[bidx][bProds]--; PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
+	GiveBizzProfit(bidx, BizzInfo[bidx][bEnterCost]);
+	BizzInfo[bidx][bProds]--;
+	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 	format(string, sizeof string, "~w~Car~n~~g~Towed Home~n~~r~-$%d", BizzInfo[bidx][bEnterCost]);
 	GameTextForPlayer(playerid, string, 5000, 1);
 	
@@ -13876,7 +13878,7 @@ CMD:mats(playerid, params[]) { new string[144];
 			new bidx = GetIndexFromBizID(Bizz_RifaSklad);
 			Rac::GivePlayerMoney(playerid, -price);
 			MatsHolding[playerid] = params[0];
-			BizzInfo[bidx][bProfit] += price+1000;
+			GiveBizzProfit(bidx, price+1000);
 			format(string, sizeof string, "* Вы купили %d пакетов материалов за $%d.", params[0], price);
 			Send(playerid, COLOR_LIGHTBLUE, string);
 		
@@ -14010,7 +14012,7 @@ CMD:sellprods(playerid, params[]) { new string[144];
 									PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 									return 1;
 								}
-								if(BizzInfo[i][bPriceProd] > BizzInfo[i][bProfit]) {
+								if(BizzInfo[i][bPriceProd] > BizzInfo[i][bSafe]) {
 									GameTextForPlayer(playerid, "~r~We Cant Afford The Deal", 5000, 1);
 									format(string, sizeof string, "Заработано: $%d.", cashmade);
 									Send(playerid, COLOR_GREEN, string);
@@ -14021,7 +14023,7 @@ CMD:sellprods(playerid, params[]) { new string[144];
 								PlayerHaul[vehid-comptruck[0]][pLoad]--;
 								cashmade = cashmade+BizzInfo[i][bPriceProd];
 								Rac::GivePlayerMoney(playerid,BizzInfo[i][bPriceProd]);
-								BizzInfo[i][bProfit] -= BizzInfo[i][bPriceProd];
+								BizzInfo[i][bSafe] -= BizzInfo[i][bPriceProd];
 								if(PlayerHaul[vehid-comptruck[0]][pLoad] == 0) {
 									GameTextForPlayer(playerid, "~r~Truck is empty, return to the stock house", 5000, 1);
 									format(string, sizeof string, "Заработано: $%d.", cashmade);
@@ -14139,7 +14141,7 @@ CMD:get(playerid, params[]) { new string[144];
 			new bidx = GetIndexFromBizID(RefillInfo[gas][brBizID]);
 			if(BizzInfo[bidx][bProds] <= 0) return GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
 			BizzInfo[bidx][bProds]--;
-			BizzInfo[bidx][bProfit] += 40;
+			GiveBizzProfit(bidx, 40);
 			Pl::Info[playerid][pFuel] = 20;
 			Rac::GivePlayerMoney(playerid, -40);
 			Send(playerid, COLOR_LIGHTBLUE, "* Вы взяли 20 литровую канистру бензина за $40");
@@ -14883,7 +14885,7 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 					new price = GetPVarInt(playerid, "HousePrice");
 					if(price > Rac::GetPlayerMoney(playerid)) return Send(playerid, COLOR_GREY, "* У Вас недостаточно средств!");
 					new biz   = GetIndexFromBizID(Bizz_EstateAgency);
-					BizzInfo[biz][bProfit] += PERCENT(price, 10);
+					GiveBizzProfit(biz, PERCENT(price, 10));
 					
 					Rac::GivePlayerMoney(playerid, -price);
 					Rac::GivePlayerMoney(seller, price);
@@ -14918,7 +14920,7 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 					if(price > Rac::GetPlayerMoney(playerid)) return Send(playerid, COLOR_GREY, "* У Вас недостаточно средств для доплаты!");
 					
 					new biz   = GetIndexFromBizID(Bizz_EstateAgency);
-					BizzInfo[biz][bProfit] += PERCENT(price, 10);
+					GiveBizzProfit(biz, PERCENT(price, 10));
 					
 					Rac::GivePlayerMoney(playerid, -price);
 					Rac::GivePlayerMoney(seller, price);
@@ -16711,7 +16713,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								if(amount >= 0) {
 									if(!strcmp(name,"level",true) ) 			BizzInfo[i][bLevel] = amount;
 									else if(!strcmp(name,"price",true))			BizzInfo[i][bPrice] = amount;
-									else if(!strcmp(name,"funds",true))			BizzInfo[i][bProfit] = amount;
+									else if(!strcmp(name,"funds",true))			BizzInfo[i][bSafe] = amount;
 									else if(!strcmp(name,"prods",true))			BizzInfo[i][bProds] = amount;
 									else if(!strcmp(name,"maxprods",true))		BizzInfo[i][bMaxProds] = amount;
 									else if(!strcmp(name,"enterprice",true)) 	BizzInfo[i][bEnterCost] = amount;
@@ -16897,7 +16899,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(HouseInfo[hid][hSafe][0] < 1000) return Send(playerid, COLOR_GREY, "* На счету дома недостаточно средств!");
 						HouseInfo[hid][hSafe][3] ++;
 						HouseInfo[hid][hSafe][0] -= 1000;
-						BizzInfo[bidx][bProfit] += 1000;
+						GiveBizzProfit(bidx, 1000);
 						BizzInfo[bidx][bProds]--;
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 						SPD(playerid, D_HMENU+1, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Аптечки", ""#_GREY_ARROW"Использовать\n"#_GREY_ARROW"Купить {33AA33}[$1000]", "SELECT", "CANCEL");
@@ -16929,7 +16931,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(HouseInfo[hid][hSafe][0] < 3000) return Send(playerid, COLOR_GREY, "* На счету дома недостаточно средств!");
 						HouseInfo[hid][hSafe][4] ++;
 						HouseInfo[hid][hSafe][0] -= 3000;
-						BizzInfo[bidx][bProfit] += 3000;
+						GiveBizzProfit(bidx, 3000);
 						BizzInfo[bidx][bProds]--;
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 						SPD(playerid, D_HMENU+2, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Бронежелеты", ""#_GREY_ARROW"Использовать\n"#_GREY_ARROW"Купить {33AA33}[$1000]", "SELECT", "CANCEL");
@@ -16962,7 +16964,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(HouseInfo[hid][hSafe][0] < 20000) return Send(playerid, COLOR_GREY, "* На счету дома недостаточно средств!");
 						HouseInfo[hid][hTv] = 1;
 						HouseInfo[hid][hSafe][0] -= 20000;
-						BizzInfo[bidx][bProfit] += 20000;
+						GiveBizzProfit(bidx, 20000);
 						BizzInfo[bidx][bProds]--;
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 						Send(playerid, COLOR_GRAD5, "Вы можете теперь смотреть телек, пишите /tv.");
@@ -17168,7 +17170,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				HouseInfo[hid][hExit][1] = HouseInt[idx][intY];
 				HouseInfo[hid][hExit][2] = HouseInt[idx][intZ];
 				HouseInfo[hid][hSafe][0] -= HouseInt[idx][intPrice];
-				BizzInfo[bidx][bProfit] += HouseInt[idx][intPrice];
+				GiveBizzProfit(bidx, HouseInt[idx][intPrice]);
 				BizzInfo[bidx][bProds]--;
 				Rac::SpawnPlayer(playerid);
 				Send(playerid, COLOR_LIGHTBLUE, "* Интерьер был успешно изменен!");
@@ -17194,7 +17196,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(HouseInfo[hid][hSafe][0] < AutoSolon[vclass][listitem][1]) return Send(playerid, COLOR_GREY, "* В сейфе дома нет столько денег!");
 				CarUpgrade(playerid, hid, AutoSolon[vclass][listitem][0]);
 				HouseInfo[hid][hSafe][0] -= AutoSolon[vclass][listitem][1];
-				BizzInfo[bidx][bProfit] += PERCENT(AutoSolon[vclass][listitem][1], 20);
+				GiveBizzProfit(bidx, PERCENT(AutoSolon[vclass][listitem][1], 20));
 				BizzInfo[bidx][bProds] --;
 				format(string, sizeof(string), "* Новая Модернизация: Ваш автомобиль теперь %s", VehicleNames[AutoSolon[vclass][listitem][0] - 400]);
 				Send(playerid, COLOR_LIGHTBLUE, string);
@@ -17521,7 +17523,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 									|| (BizzInfo[i][bID] == Bizz_ProdSkladSF && Pl::Info[playerid][pBizKey] != Bizz_ProdSkladSF))
 									{
 										Rac::GivePlayerMoney(playerid, -hirefee);
-										BizzInfo[i][bProfit] += hirefee;
+										GiveBizzProfit(i, hirefee);
 										PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 										format(string, sizeof(string), "~r~-$%i~n~~w~To open or close using ~g~/lock.~w~successful work!", hirefee);
 										GameTextForPlayer(playerid, string, 5000, 3);
@@ -17584,7 +17586,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new house = Pl::Info[playerid][pHouseKey];
 				UpdateTuning(HouseInfo[house][hAuto], 1, house);
 				Rac::GivePlayerMoney(playerid, -100000);
-				BizzInfo[bidx][bProfit] += 10000;
+				GiveBizzProfit(bidx, 10000);
 				BizzInfo[bidx][bProds]--;
 				Send(playerid, COLOR_LIGHTBLUE, "* Тюнинг был зарегистрирован!");
 			} else {
@@ -17593,12 +17595,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 		case D_TUNING+2: {
 			if(response) {
-				if(Rac::GetPlayerMoney(playerid) < 10000) return Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+				if(Rac::GetPlayerMoney(playerid) < 5000) return Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
 				new bidx = GetIndexFromBizID(Bizz_AutoSolonClassC);
 				new hidx = Pl::Info[playerid][pHouseKey];
 				if(IsValidHouse(hidx)) {
 					Rac::GivePlayerMoney(playerid, -5000);
-					BizzInfo[bidx][bProfit] += 1000;
+					GiveBizzProfit(bidx, 5000);
 					BizzInfo[bidx][bProds]--;
 					ResetTuning(HouseInfo[hidx][hAuto], 1, hidx);
 					Send(playerid, COLOR_LIGHTBLUE, "* Тюнинг был удален!");
@@ -17851,11 +17853,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
 				switch(listitem) {
 					case 0: {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bProfit]);
+						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
 						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 					}
 					case 1: {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bProfit], Rac::GetPlayerMoney(playerid));
+						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
 						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 					}
 				}
@@ -17870,25 +17872,25 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
 				if(sscanf(inputtext, "i", inputtext[0]) == 0) {
 					if(inputtext[0] < 1) {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bProfit]);
+						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
 						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 					}
 					else if(inputtext[0] > 1000000) {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bProfit]);
+						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
 						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 					}
-					else if(BizzInfo[bidx][bProfit] >= inputtext[0]) {
-						BizzInfo[bidx][bProfit] -= inputtext[0];
+					else if(BizzInfo[bidx][bSafe] >= inputtext[0]) {
+						BizzInfo[bidx][bSafe] -= inputtext[0];
 						Rac::GivePlayerMoney(playerid, inputtext[0]);
-						format(string, sizeof(string), "Вы сняли: $%i\nОсталось на счету: $%i", inputtext[0], BizzInfo[bidx][bProfit]);
+						format(string, sizeof(string), "Вы сняли: $%i\nОсталось на счету: $%i", inputtext[0], BizzInfo[bidx][bSafe]);
 						SPD(playerid, D_NONE, 0, "[Biz Menu] > Счет бизнеса", string, "OK", "");
 					}
 					else {
-						format(dialog, sizeof dialog, "Сейчас на счету:\t$%i\nВведите сумму которую хотите снять.", BizzInfo[bidx][bProfit]);
+						format(dialog, sizeof dialog, "Сейчас на счету:\t$%i\nВведите сумму которую хотите снять.", BizzInfo[bidx][bSafe]);
 						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 					}
 				} else {
-					format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bProfit]);
+					format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
 					SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 				}
 			} else {
@@ -17902,21 +17904,21 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
 				if(sscanf(inputtext, "i", inputtext[0]) == 0) {
 					if(inputtext[0] < 1) {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bProfit], Rac::GetPlayerMoney(playerid));
+						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
 						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 					}
 					else if(Rac::GetPlayerMoney(playerid) >= inputtext[0]) {
-						BizzInfo[bidx][bProfit] += inputtext[0];
+						BizzInfo[bidx][bSafe] += inputtext[0];
 						Rac::GivePlayerMoney(playerid, -inputtext[0]);
-						format(string, sizeof(string), "Сумма: $%i\nТекущий баланс: $%i\nНаличные: $%i", inputtext[0], BizzInfo[bidx][bProfit], Rac::GetPlayerMoney(playerid));
+						format(string, sizeof(string), "Сумма: $%i\nТекущий баланс: $%i\nНаличные: $%i", inputtext[0], BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
 						SPD(playerid, D_NONE, 0, "[Biz Menu] > Счет бизнеса", string, "OK", "");
 					}
 					else {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bProfit], Rac::GetPlayerMoney(playerid));
+						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
 						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 					}
 				} else {
-					format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bProfit], Rac::GetPlayerMoney(playerid));
+					format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
 					SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
 				}
 			} else {
@@ -18986,7 +18988,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							
 							if(Pl::Info[playerid][pBizKey] != BizzInfo[bizz][bID]) {
 								BizzInfo[bizz][bProds] --;
-								BizzInfo[bizz][bProfit] += BizzInfo[bizz][bEnterCost];
+								GiveBizzProfit(bizz, BizzInfo[bizz][bEnterCost]);
 								Rac::GivePlayerMoney(playerid, -BizzInfo[bizz][bEnterCost]);
 								format(string, sizeof string, "~r~-$%d", BizzInfo[bizz][bEnterCost]);
 								GameTextForPlayer(playerid, string, 5000, 3);
@@ -19022,7 +19024,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					
 					if(Pl::Info[playerid][pBizKey] != BizzInfo[bizz][bID]) {
 						BizzInfo[bizz][bProds]--;
-						BizzInfo[bizz][bProfit] += BizzInfo[bizz][bEnterCost];
+						GiveBizzProfit(bizz, BizzInfo[bizz][bEnterCost]);
 						Rac::GivePlayerMoney(playerid,-BizzInfo[bizz][bEnterCost]);
 						format(string, sizeof(string), "~r~-$%d", BizzInfo[bizz][bEnterCost]);
 						GameTextForPlayer(playerid, string, 5000, 3);
@@ -19208,7 +19210,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					GivePlayerBankMoney(playerid, -amount);
 					GivePlayerBankMoney(player, amount);
 					new bidx = OFFSET_BIZZ - bidx;
-					if(amount >= 10000 && IsValidBiz(bidx)) BizzInfo[bidx][bProfit] += (amount/99);
+					if(amount >= 10000 && IsValidBiz(bidx)) GiveBizzProfit(bidx, amount/99);
 					format(string, sizeof(string), "* Перевод успешно совершен!\n\
 					Сумма: $%i\nПолучатель: [%i]%s\nОтправитель: [%i]%s", amount, player, GetName(player), playerid, GetName(playerid));
 					SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "DEPOSIT", string, "OK", "CANCEL");
@@ -19280,7 +19282,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				} else {
 					new proc = (cash*3)/100;
 					new babki = cash - proc;
-					BizzInfo[0][bProfit] += proc;
+					GiveBizzProfit(0, proc);
 					GivePlayerBankMoney(playerid, -babki);
 					Rac::GivePlayerMoney(playerid, babki);
 					format(dialog, sizeof dialog, "* Вы сняли $%i со своего счета. Остаток: $%i", babki, Pl::Info[playerid][pBank]);
@@ -19894,7 +19896,7 @@ public: Gm::Thread() {
 			if(BizzInfo[i][bOwned] == 1) {
 				cash = floatround(PERCENT(BizzInfo[i][bProfit], 10));
 				if(cash > 0) {
-					BizzInfo[i][bProfit] -= cash;
+					BizzInfo[i][bSafe] -= cash;
 					totalgains[BizzInfo[i][bFrac]] += cash;
 				}
 			}
@@ -19911,7 +19913,6 @@ public: Gm::Thread() {
 		if(++gainsTime[1] == 4) {
 			gainsTime[1] = 0;
 			foreach(new i : Biznes) {
-				BizzInfo[i][bSafe] += BizzInfo[i][bProfit];
 				BizzInfo[i][bProfit] = 0;
 			}
 		}
@@ -21519,7 +21520,7 @@ public OnVehicleRespray(playerid, vehicleid, color1, color2) {
 					if(Rac::GetPlayerMoney(playerid) < BizzInfo[i][bEnterCost]) {
 						GameTextForPlayer(playerid, "~r~You dont have the cash", 5000, 1);
 					} else {
-						BizzInfo[i][bProfit] += BizzInfo[i][bEnterCost];
+						GiveBizzProfit(i, BizzInfo[i][bEnterCost]);
 						Rac::GivePlayerMoney(playerid, -BizzInfo[i][bEnterCost]);
 						format(src, sizeof(src), "~r~repair price~w~~n~%i$", BizzInfo[i][bEnterCost]);
 						GameTextForPlayer(playerid, src, 5000, 1);
@@ -21528,7 +21529,7 @@ public OnVehicleRespray(playerid, vehicleid, color1, color2) {
 					if(Rac::GetPlayerMoney(playerid) < BizzInfo[i][bEnterCost]) {
 						GameTextForPlayer(playerid, "~r~You dont have the cash", 5000, 1);
 					} else {
-						BizzInfo[i][bProfit] += 500;
+						GiveBizzProfit(i, 500);
 						Rac::GivePlayerMoney(playerid, -500);
 						GameTextForPlayer(playerid, "~r~repair price~w~~n~500$", 5000, 1);
 					}
@@ -24188,4 +24189,11 @@ stock ShowFracBank(playerid) {
 	dialog[0] = '\0';
 	for(new i; i < sizeof(FracID); i++) scf(dialog, temp, "%s\n", FracInfo[ FracID[i] ][ fName ]);
 	return SPD(playerid, D_FBANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", dialog, "ENTER", "CANCLE");
+}
+
+
+stock GiveBizzProfit(biz, money) {
+	BizzInfo[biz][bProfit] += money;
+	BizzInfo[biz][bSafe] += money;
+	return 1;
 }
