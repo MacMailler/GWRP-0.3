@@ -973,8 +973,6 @@ new GangSolderCount[MAX_FRAC];
 
 enum pInfo {
 	pID,
-	pLogin[24],
-	
 	pVip,
 	pLevel,
 	pAdmin,
@@ -6241,49 +6239,15 @@ public: onPlayerRegister(playerid) {
 	if(!IsPlayerConnected(playerid)) return 1;
 	Pl::Info[playerid][pID] = cache_insert_id();
 	if(Pl::Info[playerid][pID] == 1) Pl::Info[playerid][pAdmin] = 5;
-	format(dialog, sizeof dialog, "Вы зашли как %s! Пожалуйста, авторизуйтесь!", Pl::Info[playerid][pLogin]);
-	SPD(playerid, D_AUTH+1, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION. Введите ваш пароль!", dialog, "LOGIN", "CANCEL");
+	ShowLoginForm(playerid, 1);
 	return 1;
 }
 
 public: onPlayerLogin(playerid) {
 	if(!IsPlayerConnected(playerid)) return 1;
-	switch(SetPlayerName(playerid, Pl::Info[playerid][pLogin])) {
-		case -1 : {
-			new targetid = ReturnUser(Pl::Info[playerid][pLogin]);
-			if(Pl::isLogged(targetid)) {
-				Send(playerid, COLOR_RED, "FATAL ERROR: В этот аккаунт уже кто-то залогинился!");
-				Kick(playerid);
-				return 1;
-			}
-			else if(playerid != targetid) {
-				GetPlayerName(playerid, plname, 24);
-				format(temp, sizeof temp, "[%i]%s", playerid, plname);
-				SetPlayerName(targetid, temp);
-				SetPlayerName(playerid, Pl::Info[playerid][pLogin]);
-			}
-		}
-		
-		case 0 : {
-			new targetid = ReturnUser(Pl::Info[playerid][pLogin]);
-			if(Pl::isLogged(targetid)) {
-				Send(playerid, COLOR_RED, "FATAL ERROR: В этот аккаунт уже кто-то залогинился!");
-				Kick(playerid);
-				return 1;
-			}
-			else if(playerid != targetid) {
-				GetPlayerName(playerid, plname, 24);
-				format(temp, sizeof temp, "[%i]%s", playerid, plname);
-				SetPlayerName(targetid, temp);
-				SetPlayerName(playerid, Pl::Info[playerid][pLogin]);
-			}
-		}
-		
-		case 1 : {
-		}
-	}
 	
 	if(cache_get_row_count() == 1) {
+		cache_get_row(0, 1, plname);
 		cache_get_int(0, 3, Pl::Info[playerid][pLevel]);
 		cache_get_int(0, 4, Pl::Info[playerid][pAdmin]);
 		cache_get_int(0, 5, Pl::Info[playerid][pHelper]);
@@ -6335,15 +6299,10 @@ public: onPlayerLogin(playerid) {
 		cache_get_int(0, 51, Pl::Info[playerid][pRebuke]);
 		cache_get_str(0, 52, "p<,>a<i>[3]", Pl::Info[playerid][pPasport]);
 		cache_get_int(0, 53, Pl::Info[playerid][pLastVisit]);
-		/*format(query, sizeof query, "INSERT INTO `login_info` (`user_id`,`login_date`,`user_ip`) VALUES ('%i',NOW()+0,'%s')", Pl::Info[playerid][pID], GetPIP(playerid));
-		Db::query(connDb, query, playerid);*/
 	} else {
 		WrongLogin[playerid]--;
-		Send(playerid, COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Неверный пароль! В случае 3-х кратного неверного ввода выдается ВРЕМЕННЫЙ БАН!");
-		format(dialog, sizeof dialog, "Вы зашли как %s! Пожалуйста, авторизуйтесь!\nВ случаии 3-х кратного неверного ввода выдается ВРЕМЕННЫЙ БАН!\n\
-		Оталось папыток ввода: %i\nПароль необходимо вводить без команды /login", Pl::Info[playerid][pLogin], WrongLogin[playerid]);
-		SPD(playerid, D_AUTH+1, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION. Введите ваш пароль!", dialog, "LOGIN", "CANCEL");
-		
+		Send(playerid, COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Неверный пароль! В случае 3-х кратного неверного ввода КИК!");
+		ShowLoginForm(playerid, 1);
 		return 1;
 	}
 	
@@ -6351,7 +6310,6 @@ public: onPlayerLogin(playerid) {
 		Send(playerid, COLOR_YELLOW, "{ffffff}Введите {e85209}/(q)uit {ffffff}чтобы выйти из игры");
 		SPD(playerid, D_NONE, 0, "• ACCOUNT BLOCKED •", "Этот аккуант был отключен администратором!\nВведите /q чтобы выйти из игры", "Ок", "");
 		Kick(playerid);
-		
 		return 1;
 	}
 	
@@ -6363,18 +6321,14 @@ public: onPlayerLogin(playerid) {
 	
 	if(Pl::Info[playerid][pReg] == 0) {
 		Rac::SetPlayerInterior(playerid, 3);
-		/*Rac::SetPlayerPos(playerid, 198.9982,-129.7869,1003.5152);
-		Rac::SetPlayerFacingAngle(playerid, 177.7717);
-		SetPlayerCameraPos(playerid, 198.9349,-134.0221,1003.4432);
-		SetPlayerCameraLookAt(playerid, 199.1248,-130.0272,1003.5120);*/
 		Rac::SetPlayerPos(playerid, 215.3485, -133.1142, 1003.5078);
 		Rac::SetPlayerFacingAngle(playerid, 92.2598);
 		SetPlayerCameraPos(playerid, 210.4674, -131.8238, 1004.2631);
 		SetPlayerCameraLookAt(playerid, 214.3328, -132.8457, 1004.1403);
 		Rac::TogglePlayerControllable(playerid, false);
-		SPD(playerid, D_REGG+3, 0, "Sex", "Выберете пол вашего персонажа.", "ЖЕН", "МУЖ");
+		SPD(playerid, D_REGG + 2, 0, "Sex", "Выберете пол вашего персонажа.", "ЖЕН", "МУЖ");
 	} else {
-		sendf(playerid, temp, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Мы рады видеть тебя на сервере, %s!", Pl::Info[playerid][pLogin]);
+		sendf(playerid, temp, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Мы рады видеть тебя на сервере, %s!", plname);
 		
 		if(Pl::Info[playerid][pWantedL] > 0) {
 			WantedTime[playerid] = 180;
@@ -6386,13 +6340,13 @@ public: onPlayerLogin(playerid) {
 		Pl::SetFracColor(playerid);
 		DateProp(playerid, 0, 1);
 		
-		format(temp, sizeof temp, "~w~Welcome ~n~~g~   %s", Pl::Info[playerid][pLogin]);
+		format(temp, sizeof temp, "~w~Welcome ~n~~g~   %s", plname);
 		GameTextForPlayer(playerid, temp, 6000, 1);
 		Pl::SetSpawnInfo(playerid);
 		Rac::SpawnPlayer(playerid);
 		
 		if(!Pl::Info[playerid][pAdmin]) {
-			format(temp, sizeof temp, "* %s (ID: %i) прокрался(ась) на ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]", Pl::Info[playerid][pLogin], playerid);
+			format(temp, sizeof temp, "* %s (ID: %i) прокрался(ась) на ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]", plname, playerid);
 			sendToLog(COLOR_GREY, src);
 		}
 		PlayerLogged{playerid} = true;
@@ -6543,7 +6497,7 @@ stock Fc::Update(idx) {
 
 stock UpdateBizz(i) {
 	new safeDescription[24];
-	Db::escape_string(BizzInfo[i][bDescription], safeDescription);
+	Db::escape_string(BizzInfo[i][bDescription], safeDescription, connDb);
 	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableBusines__"` SET ");
 	scf(query, src, "`owned`='%i',", BizzInfo[i][bOwned]);
 	scf(query, src, "`locked`='%i',", BizzInfo[i][bLocked]);
@@ -6693,6 +6647,12 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
     return 1;
 }
 
+
+CMD:charset(playerid, params[]) { new string[144];
+	Db::get_charset(string, connDb);
+	Send(playerid, COLOR_WHITE, string);
+	return 1;
+}
 
 CMD:fracpay(playerid, params[]) { new string[144];
 	if(Pl::Info[playerid][pLeader] != Pl::FracID(playerid)) return Send(playerid, COLOR_GREY, "* Вы не лидер!");
@@ -16098,77 +16058,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_WAIT : {
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);	
 			if(Pl::Info[playerid][pWait] > 0) {
-				format(dialog, sizeof dialog,"Дождитесь полной загрузки игры и нажмите ENTER!\n\
+				format(dialog, sizeof dialog, "Дождитесь полной загрузки игры и нажмите ENTER!\n\
 				Осталось секунд: %i", Pl::Info[playerid][pWait]);
 				SPD(playerid, D_WAIT, 0, "Wait...",dialog, "ENTER", "");
-			} else {
-				ShowLoginForm(playerid);
 			}
 			return 1;
 		}
 		
-		case D_LOGIN : {
-			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);
-			switch(listitem) {
-				case 0 : {
-					SPD(playerid, D_AUTH, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION.", "Введите ваш логин:", "NEXT", "CANCEL");
-				}
-				case 1 : {
-					if(Gm::Info[Gm::EnableReg]) {
-						SPD(playerid, D_REGG+1, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION",
-						"Для регистрации персанажа, введите РП-ник!\nПример: Ivan_Petrov\n\nДлинна ника должна быть не больше 20 символов.", "NEXT", "CANCEL");
-					} else {
-						ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", "list/noregged.lst", "OK", "");
-						Kick(playerid);
-					}
-				}
-				case 2 : {
-					ShowDialog(playerid, D_LOGIN + 1, DIALOG_STYLE_MSGBOX, "Правила сервера", "dialog/rules.txt", "OK", "CANCEL");
-				}
-				
-				case 3 : {
-					LoadFile("about.txt", src);
-					format(dialog, sizeof dialog, ""#__GamemodeName__" {ff0000}"#__GamemodeVersion__"\n \n ");
-					strcat(dialog, src);
-					SPD(playerid, D_LOGIN + 1, DIALOG_STYLE_LIST, "Создатели", dialog, "ENTER", "");
-				}
-			}
-		}
-		
-		case D_LOGIN + 1 : {
-			ShowLoginForm(playerid);
-		}
-		
 		case D_AUTH : {
-			if(!response) return ShowLoginForm(playerid);
-			if(sscanf(inputtext, "s[36]", inputtext[0])) {
-				SPD(playerid, D_AUTH, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION.",
-				"* Произашла ошибка, повторите ввод!\nВведите ваш логин:", "NEXT", "CANCEL");
-			} else {
-				for(new i, len = strlen(inputtext[0]); i < len; i++) {
-					switch(inputtext[i]) {
-						case ' ', '-' : inputtext[i] = '_';
-					}
-				}
-				new user_id = GetIDFromName(inputtext[0]);
-				if(user_id != -1) {
-					if(CheckBan(playerid)) {
-						Kick(playerid);
-						return 1;
-					}
-					Pl::Info[playerid][pID] = user_id;
-					strmid(Pl::Info[playerid][pLogin], inputtext[0], 0, strlen(inputtext[0]), 24);
-					format(dialog, sizeof dialog, "Вы зашли как %s! Пожалуйста, авторизуйтесь!", inputtext[0]);
-					SPD(playerid, D_AUTH+1, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION. Введите ваш пароль!", dialog, "LOGIN", "CANCEL");
-				} else {
-					SPD(playerid, D_AUTH, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION.",
-					"* Аккаунт с таким логином не найден!\nВведите ваш логин:", "NEXT", "CANCEL");
-				}
-			}
-		}
-		
-		case D_AUTH+1 : {
-			if(!WrongLogin[playerid]) return AddBanList(playerid, -1, 30, "Попытка взлома аккаунта", 2);
+			if(!WrongLogin[playerid]) return Rac::Kick(playerid, "Попытка взлома аккаунта");
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA1_HASH_LEN];
@@ -16176,69 +16074,35 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
 				Db::tquery(connDb, query, "onPlayerLogin", "i", playerid);
 			} else {
-				GetPlayerName(playerid, plname, 24);
-				format(dialog, sizeof dialog, "Вы зашли как %s! Пожалуйста, авторизуйтесь!\nВ случаии 3-х кратного неверного ввода выдается ВРЕМЕННЫЙ БАН!\n\
-				Оталось папыток ввода: %i\nПароль необходимо вводить без команды /login", Pl::Info[playerid][pLogin], WrongLogin[playerid]);
-				return SPD(playerid, D_AUTH+1, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION. Введите ваш пароль!", dialog, "LOGIN", "CANCEL");
+				ShowLoginForm(playerid, 1);
 			}
 		}
-		
+
 		case D_REGG : {
-			ShowLoginForm(playerid);
+			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны согласится с правилами игры!", COLOR_LIGHTRED);
+			ShowLoginForm(playerid, 0);
 		}
 		
-		case D_REGG+1 : {
-			if(!response) return ShowLoginForm(playerid);
-			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
-				if(!regex_match_exid(inputtext[0], ValidRPName)) {
-					SPD(playerid, D_REGG+1, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION",
-					"* Вы ввели не РП-ник!\n\nДля регистрации персанажа, введите РП-ник!\nПример: Ivan_Petrov\n\n\
-					Длинна ника должна быть не больше 20 символов.", "NEXT", "CANCEL");
-				}
-				
-				else if(GetIDFromName(inputtext[0]) != -1) {
-					SPD(playerid, D_REGG+1, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION",
-					"* Аккаунт с этим именем уже зарегистрирован!\n\nДля регистрации персанажа, введите РП-ник!\nПример: Ivan_Petrov\n\n\
-					Длинна ника должна быть не больше 20 символов.", "NEXT", "CANCEL");
-				}
-				
-				else {
-					strmid(Pl::Info[playerid][pLogin], inputtext[0], 0, strlen(inputtext[0]), 24);
-					format(dialog, sizeof dialog, "\tДля регистрации персанажа %s\n\
-					\tвведите пароль и нажите \"REGISTER\"\n\nНе рекомендуется использовать простые пароли. Чтобы\n\
-					 Пароль был надежным, он должен содержать цифры,\nзаглавные и малые буквы латинского алфавита.", inputtext[0]);
-					SPD(playerid, D_REGG+2, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", dialog, "REGISTER", "CANCEL");
-				}
-			} else {
-				SPD(playerid, D_REGG+1, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION",
-				"Для регистрации персанажа, введите РП-ник!\nПример: Ivan_Petrov\n\n\
-				Длинна ника должна быть не больше 20 символов.", "NEXT", "CANCEL");
-			}
-		}
-		
-		case D_REGG+2 : {
+		case D_REGG + 1 : {
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны зарегистрироваться!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA1_HASH_LEN];
 				KeyProtect(inputtext[0], hash);
 				format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableUsers__"` (`Name`,`Key`,`Fightstyle`) VALUES ('%s', '%s', '%i')",
-				Pl::Info[playerid][pLogin], hash, FightStyles[random(sizeof FightStyles)]);
+				GetName(playerid), hash, FightStyles[random(sizeof FightStyles)]);
 				Db::tquery(connDb, query, "onPlayerRegister", "i", playerid);
 			} else {
-				format(dialog, sizeof dialog, "\tДля регистрации персанажа %s\n\
-				\tвведите пароль и нажите \"REGISTER\"\n\nНе рекомендуется использовать простые пароли. Чтобы\n\
-				 Пароль был надежным, он должен содержать цифры,\nзаглавные и малые буквы латинского алфавита.", Pl::Info[playerid][pLogin]);
-				SPD(playerid, D_REGG, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", dialog, "REGISTER", "CANCEL");
+				ShowLoginForm(playerid, 0);
 			}
 		}
 		
-		case D_REGG+3 : {
+		case D_REGG + 2 : {
 			Pl::Info[playerid][pSex] = response ? 2 : 1;
-			SPD(playerid, D_REGG+4, 2, "Location", "Los Santos\nLas Venturas", "SELECT", "CANCEL");
+			SPD(playerid, D_REGG + 3, 2, "Location", "Los Santos\nLas Venturas", "SELECT", "CANCEL");
 			return 1;
 		}
 		
-		case D_REGG+4 : {
+		case D_REGG + 3 : {
 			if(response) {
 				Pl::Info[playerid][pOrigin] = (listitem + 1);
 				new skin;
@@ -16246,7 +16110,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SetPlayerSkin(playerid, skin);
 				ShowMenuForPlayer(SkinMenu, playerid);
 			} else {
-				SPD(playerid, D_REGG+3, DIALOG_STYLE_MSGBOX, "Sex", " Выберете пол вашего персонажа.", "ЖЕН", "МУЖ");
+				SPD(playerid, D_REGG + 3, DIALOG_STYLE_MSGBOX, "Sex", " Выберете пол вашего персонажа.", "ЖЕН", "МУЖ");
 			}
 			return 1;
 		}
@@ -18990,7 +18854,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					пароль был надежным, он должен содержать цифры,\n\
 					заглавные и малые буквы латинского алфавита.","ОК","ОТМЕНА");
 				} else {
-					AddBanList(playerid, -1, 60, "Попытка взлома аккаунта", 2);
+					Rac::Kick(playerid, "Попытка взлома аккаунта");
 				}
 				cache_delete(result);
 			}
@@ -20103,9 +19967,28 @@ public: Gm::Thread() {
 	
     foreach(new p : Player) {
 		if(Pl::Info[p][pWait] > 0) {
-			Pl::Info[p][pWait] --;
-			if(Pl::Info[p][pWait] == 0) {
-				ShowLoginForm(p);
+			if(--Pl::Info[p][pWait] == 0) {
+				GetPlayerName(p, plname, 24);
+				if((Pl::Info[p][pID] = GetIDFromName(plname)) != -1) {
+					if(!CheckBan(p)) {
+						ShowLoginForm(p, 1);
+					} else {
+						Kick(p);
+					}
+				} else {
+					if(Gm::Info[Gm::EnableReg]) {
+						if(regex_match_exid(plname, ValidRPName)) {
+							ShowLoginForm(p, 2);
+						} else {
+							Send(p, COLOR_LIGHTRED, "Ваш ник не соответствует правилам нашего сервера");
+							Send(p, COLOR_LIGHTBLUE, "Измените свой ник по типу: Имя_Фамилия. Например: Ivan_Petrov");
+							Kick(p);
+						}
+					} else {
+						ShowDialog(p, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", "list/noregged.lst", "OK", "");
+						Kick(p);
+					}
+				}
 			}
 		} else {
 			if(Pl::isLogged(p)) {
@@ -20817,7 +20700,7 @@ public OnRconLoginAttempt(ip[], password[], success) {
 				GetPlayerIp(playerid, _ip, 16);
 				if(!strcmp(ip, _ip, true)) {
 					if(++Rac::Info[playerid][Rac::BadRconLogin] >= 2) {
-						AddBanList(playerid, -1, 10*1440, "Попытка взлома RCON пароля.", 2);
+						Rac::Kick(playerid, "Попытка взлома RCON пароля.");
 						return 0;
 					} else {
 						GetPlayerName(playerid, plname, 24);
@@ -21099,11 +20982,16 @@ public: Db::Init() {
 		Db::log(Db::Conf[Db::Debug] == 1 ? (LOG_ERROR | LOG_WARNING | LOG_DEBUG) : (LOG_ERROR | LOG_WARNING));
 
 		connDb = Db::connect(Db::Conf[Db::Host], Db::Conf[Db::User], Db::Conf[Db::Base], Db::Conf[Db::Pass]);
-		format(temp, sizeof temp, "%s_general_ci", Db::Conf[Db::Charset]), Db::set_charset(temp);
-		format(temp, sizeof temp, "SET NAMES '%s'", Db::Conf[Db::Charset]), Db::query(connDb, temp, false);
-		format(temp, sizeof temp, "SET CHARACTER SET '%s'", Db::Conf[Db::Charset]), Db::query(connDb, temp, false);
+		
+		Db::FixCharset();
 	}
 	iniClose(iniFile);
+	return 1;
+}
+
+stock Db::FixCharset() {
+	Db::set_charset(Db::Conf[Db::Charset], connDb);
+	Db::query(connDb, "SET SESSION character_set_server='utf8';", false);
 	return 1;
 }
 
@@ -21776,7 +21664,7 @@ stock AddBanList(playerid, adminid, mins, reason[], type = 1) {
 	new unbandate, currdate = gettime();
 	unbandate = currdate + mins * 60;
 	
-	new safestr[36];
+	new safestr[64];
 	Db::escape_string(reason, safestr);
 	format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableBanned__"` (`user_id`,`admin_id`,`ip`,`date`,`unbandate`,`reason`) VALUES (");
 	scf(query, src, "'%i','%i','%s',", Pl::Info[playerid][pID], adminid==-1 ? adminid : Pl::Info[adminid][pID], GetPIP(playerid));
@@ -22158,9 +22046,7 @@ public OnQueryError(errorid, error[], callback[], querystr[], connectionHandle) 
 	switch(errorid) {
 		case CR_SERVER_LOST : {
 			Db::reconnect(connectionHandle);
-			format(temp, sizeof temp, "%s_general_ci", Db::Conf[Db::Charset]), Db::set_charset(temp);
-			format(temp, sizeof temp, "SET NAMES '%s'", Db::Conf[Db::Charset]), Db::query(connDb, temp, false);
-			format(temp, sizeof temp, "SET CHARACTER SET '%s'", Db::Conf[Db::Charset]), Db::query(connDb, temp, false);
+			Db::FixCharset();
 			if(strfind(querystr, "UPDATE", true) != -1) Db::tquery(connDb, querystr, "", "");
 			return 1;
 		}
@@ -23910,9 +23796,26 @@ stock ShowDonateMenu(playerid) {
 	return SPD(playerid, D_DONATE, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Donate", dialog, "SELECT", "CANCEL");
 }
 
-stock ShowLoginForm(playerid) {
-	return SPD(playerid, D_LOGIN, DIALOG_STYLE_LIST, "Добро пожаловать на ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::..!",
-	"{888888}» {ffffff}Login in\n{888888}» {ffffff}Register\n{888888}» {ff0000}Rules\n{888888}» {33AA33}About", "SELECT", "CANCEL");
+stock ShowLoginForm(playerid, id) {
+	switch(id) {
+		case 0 : {
+			format(dialog, sizeof dialog, "\tДля регистрации персанажа %s\n\
+			\tвведите пароль и нажите \"REGISTER\"\n\nНе рекомендуется использовать простые пароли. Чтобы\n\
+			 Пароль был надежным, он должен содержать цифры, \nзаглавные и малые буквы латинского алфавита.", GetName(playerid));
+			SPD(playerid, D_REGG + 1, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", dialog, "REGISTER", "CANCEL");
+		}
+		
+		case 1 : {
+			format(dialog, sizeof dialog, "Вы зашли как %s! Пожалуйста, авторизуйтесь!\nВ случаии 3-х кратного неверного ввода КИК!\n\
+			Оталось папыток ввода: %i", GetName(playerid), WrongLogin[playerid]);
+			SPD(playerid, D_AUTH, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION. Введите ваш пароль!", dialog, "LOGIN", "CANCEL");
+		}
+		
+		case 2 : {
+			ShowDialog(playerid, D_REGG, DIALOG_STYLE_MSGBOX, "Правила сервера", "dialog/rules.txt", "I AGREE", "CANCEL");
+		}
+	}
+	return 1;
 }
 
 public: LoadExtraVehicles(playerid) {
