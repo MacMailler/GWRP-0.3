@@ -1988,7 +1988,7 @@ public OnGameModeExit() {
 	DestroyAllDynamic3DTextLabels();
 	
 	regex_delete_all();
-	Db::close(connDb, Db::unprocessed_queries(connDb) ? true : false);
+	Db::close(connDb);
 	
 	print(" ");
 	print(">> "#__GamemodeName__" "#__GamemodeVersion__" unloaded!");
