@@ -530,7 +530,7 @@ public onAntiCheatUpdate() {
 			}
 			
 			default : {
-				static Float:fvar;
+				new Float:fvar;
 				if(AC::Info[i][AC::Delay][R::HEALTH_HACK] > 0) {
 					AC::Info[i][AC::Delay][R::HEALTH_HACK] --;
 				} else {
@@ -587,8 +587,8 @@ public onAntiCheatUpdate() {
 
 
 stock AC::OnvehicleSync(playerid) {
-	static vehicle, playerspeed, Float:fvar;
-	static Float:x, Float:y, Float:z;
+	new vehicle, playerspeed, Float:fvar;
+	new Float:x, Float:y, Float:z;
 	
 	vehicle = GetPlayerVehicleID(playerid);	
 	playerspeed = Rac::GetPlayerSpeed(playerid, false);
@@ -738,7 +738,13 @@ stock AC::OnfootSync(playerid) {
 	} else {
 		if(playerspeed >= 55) {
 			switch(GetPlayerAnimationIndex(playerid)) {
-				case 959, 971, 963, 965 : {
+				case 958, 959, 962, 961, 971, 963, 965, 978, 976 : {
+					if(!Rac::CheckPlayerWeapon(playerid, 46)) {
+						AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
+						if(Rac::Info[playerid][Rac::Warns][R::SPEED_HACK] >= MAX_WARNS) {
+							Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
+						}
+					}
 				}
 				default : {
 					AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
