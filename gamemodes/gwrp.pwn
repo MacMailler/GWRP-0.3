@@ -17,7 +17,6 @@
 #define __TableSpawns__			"spawns"
 #define __TableBanned__			"banned"
 #define __TableBlacklist__		"blacklist"
-#define __TableDonate__			"donate_info"
 #define __TableFracInfo__		"frac_info"
 #define __TableFracModels__		"frac_models"
 #define __TableFracVehicles__	"frac_vehicles"
@@ -5587,7 +5586,7 @@ public: ShowStats(playerid, statid, mode) {
 
 stock ShowPass(playerid, showforid, dialogid) {
 	if(!Pl::isLogged(showforid)) return 0;
-	new fio[2][12], _date[2][14], fakefrac = GetFakeFracID(playerid);
+	new fio[2][12], _date[2][14], fracid = Pl::FracID(playerid);
 	to_timestamp(_date[0], Pl::Info[playerid][pPasport][1], "%Y-%m-%d");
 	to_timestamp(_date[1], Pl::Info[playerid][pPasport][2], "%Y-%m-%d");
 	GetPlayerName(playerid, plname, 24), sscanf(plname, "p<_>s[12]S(-)[12]", fio[0], fio[1]);
@@ -5598,8 +5597,8 @@ stock ShowPass(playerid, showforid, dialogid) {
 	scf(dialog, src, "{"#FIELD_COL"}Возраст: {ffffff}%s\n", GetPlayerAge(playerid));
 	scf(dialog, src, "{"#FIELD_COL"}Пол: {ffffff}%s\n", GetPlayerSex(playerid));
 	scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Организация: {%h}%s\n", rgb<GetFracColor(fakefrac)>, FracInfo[fakefrac][fName]);
-	scf(dialog, src, "{"#FIELD_COL"}Должность: {ffffff}%s\n", RankInfo[fakefrac][Pl::Info[playerid][pRank]]);
+	scf(dialog, src, "{"#FIELD_COL"}Организация: {%h}%s\n", rgb<GetFracColor(fracid)>, FracInfo[fracid][fName]);
+	scf(dialog, src, "{"#FIELD_COL"}Должность: {ffffff}%s\n", RankInfo[fracid][Pl::Info[playerid][pRank]]);
 	scf(dialog, src, "{"#FIELD_COL"}Преступлений: {ffffff}%i\n", Pl::Info[playerid][pCrimes]);
 	scf(dialog, src, "{"#FIELD_COL"}Проживание в штате: {ffffff}%i(в годах)\n", Pl::Info[playerid][pLevel]);
 	scf(dialog, src, "{"#FIELD_COL"}Работа: {ffffff}%s\n", JobsInfo[Pl::Info[playerid][pJob]][jName]);
@@ -5614,13 +5613,6 @@ stock ShowPass(playerid, showforid, dialogid) {
 		SPD(showforid, dialogid, 0, "Ваш паспорт", dialog, "ENTER","");
 	}
 	return 1;
-}
-
-stock GetFakeFracID(playerid) {
-	switch(Pl::FracID(playerid)) {
-		case 1..4, 7, 9..11, 20 : return Pl::FracID(playerid);
-	}
-	return 0;
 }
 
 stock IsLegalFrac(fracid) {
