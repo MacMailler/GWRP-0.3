@@ -1024,7 +1024,6 @@ enum pInfo {
 	pFightstyle,
 	pPasport[3],
 	pLastVisit,
-	pDonateMoney,
 	
 	pWait,
 	pUpdate,
@@ -1641,16 +1640,6 @@ static const BusRoute[][][e_BusRoute] = {
 new BusRouteCount[] = {5, 5, 5, 5};
 
 
-enum e_DonateInfo {
-	dSkinPrice,
-	dCashPrice,
-	dInvitePrice,
-	dWarnPrice,
-	dVIPPrice
-};
-new DonateInfo[e_DonateInfo];
-
-
 #define PARK_GARAGE (1)
 #define PARK_HOME (2)
 #define PARK_HOME_GARAGE (3)
@@ -1903,7 +1892,6 @@ public OnGameModeInit() {
 	LoadHGarages();
 	LoadPortals();
 	LoadVehicles();
-	LoadDonateInfo();
 	LoadAntiDmZones();
 	LoadFracInfo();
 	LoadGangInfo();
@@ -5709,33 +5697,6 @@ stock SaveStuff() {
 	return 1;
 }
 
-stock LoadDonateInfo() {
-	new time = GetTickCount();
-	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__DBPrefix__""#__TableDonate__"` WHERE 1", true);
-	if(cache_get_row_count()) {
-		cache_get_int(0, 0, DonateInfo[dSkinPrice]);
-		cache_get_int(0, 1, DonateInfo[dCashPrice]);
-		cache_get_int(0, 2, DonateInfo[dInvitePrice]);
-		cache_get_int(0, 3, DonateInfo[dWarnPrice]);
-		cache_get_int(0, 4, DonateInfo[dVIPPrice]);
-		printf("[debug] LoadDonateInfo() - Ok! Run time: %i (ms)", GetTickCount()-time);
-	}
-	cache_delete(result);
-	return 1;
-}
-
-stock SaveDonateInfo() {
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableDonate__"` SET ");
-	scf(query, temp, "`skin_price`='%i',", DonateInfo[dSkinPrice]);
-	scf(query, temp, "`cash_price`='%i',", DonateInfo[dCashPrice]);
-	scf(query, temp, "`invite_price`='%i',", DonateInfo[dInvitePrice]);
-	scf(query, temp, "`warn_price`='%i',", DonateInfo[dWarnPrice]);
-	scf(query, temp, "`vip_price`='%i'", DonateInfo[dVIPPrice]);
-	Db::tquery(connDb, query, "", "");
-	return 1;
-}
-
-
 static LoadHouses() {
 	new time = GetTickCount();
     format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableHouses__"` ORDER BY `id` ASC", true);
@@ -6770,49 +6731,6 @@ CMD:dopcar_del(playerid, params[]) {
 	}
 	if(!strlen(dialog)) return Send(playerid, COLOR_GREY, "* У игрока нет доп. машин!");
 	SPD(playerid, D_EV_MENU+3, DIALOG_STYLE_LIST, "Ваш личный транспорт", dialog, "SELECT", "CANCEL");
-	return 1;
-}
-
-CMD:donate(playerid, params[]) {
-	return ShowDonateMenu(playerid);
-}
-
-CMD:givedp(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
-	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_WHITE, "Введите: /givedp [id/name] [amount]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	Pl::Info[playerid][pDonateMoney] += params[1];
-	getname(playerid -> sendername, params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /givedp к игроку %s[%i][%idp]", sendername, playername, params[0], params[1]);
-	SendToAdmin(COLOR_YELLOW, string, 1, 3);
-	format(string, sizeof string, "* Администратор %s дал вам %i Donate Points", sendername, params[1]);
-	Send(params[0], COLOR_LIGHTBLUE, string);
-	return 1;
-}
-
-CMD:setdp(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
-	if(sscanf(params, "s[24]i", params[1], params[0])) return Send(playerid, COLOR_WHITE, "Введите: /setdp [val] [amount]");
-	if(!(0 <= params[0] <= cellmax)) return Send(playerid, COLOR_WHITE, "* Invalid value!");
-	if(strcmp(params[1], "skin_price", false) == 0) {
-		DonateInfo[dSkinPrice] = params[0];
-	} else if(strcmp(params[1], "cash_price", false) == 0) {
-		DonateInfo[dCashPrice] = params[0];
-	} else if(strcmp(params[1], "invite_price", false) == 0) {
-		DonateInfo[dInvitePrice] = params[0];
-	} else if(strcmp(params[1], "warn_price", false) == 0) {
-		DonateInfo[dWarnPrice] = params[0];
-	} else if(strcmp(params[1], "vip_price", false) == 0) {
-		DonateInfo[dVIPPrice] = params[0];
-	} else {
-		params[0] = -1;
-	}
-	
-	if(params[0] != -1) {
-		SaveDonateInfo();
-		format(string, sizeof string, "* Новое значение для \"%s\" установлено на %i", params[1], params[0]);
-		Send(playerid, COLOR_LIGHTBLUE, string);
-	}
 	return 1;
 }
 
@@ -16122,41 +16040,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			return 1;
 		}
 		
-		case D_DONATE : {
-			if(response) {
-				switch(listitem) {
-					case 1 : {
-						SPD(playerid, D_DONATE + 1, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Donate",
-						"Введите ID скина(1-299):", "ENTER", "CANCEL");
-					}
-					default : SPD(playerid, D_NONE, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Donate", "#ERR", "OK", "");
-				}
-			}
-		}
-		
-		case D_DONATE + 1 : {
-			if(response) {
-				if(sscanf(inputtext, "i", inputtext[0])) {
-					return SPD(playerid, D_DONATE + 1, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Donate",
-					"Введите ID скина(1-299):", "ENTER", "CANCEL");
-				}
-				
-				else if(!(1 <= inputtext[0] <= 299)) {
-					return SPD(playerid, D_DONATE + 1, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Donate",
-					"Введите ID скина(1-299):", "ENTER", "CANCEL");
-				}
-				Pl::Info[playerid][pDonateMoney] -= DonateInfo[dSkinPrice];
-				Pl::Info[playerid][pChar] = inputtext[0];
-				SetPlayerSkin(playerid, inputtext[0]);
-				format(string, sizeof string, "* Вы преобрили скин %i за %idp!", inputtext[0], DonateInfo[dSkinPrice]);
-				Send(playerid, COLOR_LIGHTBLUE, string);
-				format(string, sizeof string, "%s bought skin %i for %idp", GetName(playerid), Pl::Info[playerid][pID], inputtext[0], DonateInfo[dSkinPrice]);
-				SendLog("donate", string);
-			} else {
-				ShowDonateMenu(playerid);
-			}
-		}
-		
 		case D_FACTORY_JOB : {
 			if(response) {
 				if(IsPlayerAttachedObjectSlotUsed(playerid,1)) RemovePlayerAttachedObject(playerid,1);
@@ -23762,16 +23645,6 @@ public: OnPlayerBankTransfer(playerid) {
 			SetPVarInt(playerid, "TransferAmount", 0);
 		}
 	}
-}
-
-stock ShowDonateMenu(playerid) {
-	format(dialog, sizeof dialog, ""#_GREY_ARROW"Донат счет {33AA33}[%i dp]\n", Pl::Info[playerid][pDonateMoney]);
-	scf(dialog, temp, ""#_GREY_ARROW"Купить скин {AA3333}[%i dp]\n", DonateInfo[dSkinPrice]);
-	scf(dialog, temp, ""#_GREY_ARROW"Купить валюту {AA3333}[$100000/%i dp]\n", DonateInfo[dCashPrice]);
-	scf(dialog, temp, ""#_GREY_ARROW"Инвайт в хитманы {AA3333}[%i dp]\n", DonateInfo[dInvitePrice]);
-	scf(dialog, temp, ""#_GREY_ARROW"Снять варны {AA3333}[1 warn/%i dp]\n", DonateInfo[dWarnPrice]);
-	scf(dialog, temp, ""#_GREY_ARROW"Вип статус {AA3333}[%i dp]", DonateInfo[dVIPPrice]);
-	return SPD(playerid, D_DONATE, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Donate", dialog, "SELECT", "CANCEL");
 }
 
 stock ShowLoginForm(playerid, id) {
