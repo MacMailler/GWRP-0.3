@@ -11539,7 +11539,7 @@ CMD:buybiz(playerid, params[]) { new string[144], sendername[24];
 	if(!Pl::Info[playerid][pPasport][0]) return Send(playerid, COLOR_GREY, "* У Вас нет паспорта!");
 	new pbiz = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
 	GetPlayerName(playerid, sendername, 24);
-	if(IsValidBiz(pbiz) && strcmp(sendername, BizzInfo[pbiz][bOwner], true) == 0) {
+	if(IsPlayerBizOwner(playerid, pbiz) || IsPlayerBizExtortion(playerid, pbiz)) {
 		Send(playerid, COLOR_GREY, "* У вас уже есть Бизнес. Сначало продайте его: /sellbiz - ввидите для продажи!");
 	} else {
 		foreach(new i : Biznes) {
@@ -20648,14 +20648,10 @@ stock ChangeName(playerid) {
 				strmid(BizzInfo[bidx][bOwner], newName, 0, nlen, MAX_PLAYER_NAME);
 				UpdateBizz(bidx);
 			}
-		}
-		
-		foreach(new i : Biznes) {
-			if(BizzInfo[i][bOwned] != 0) {
-				if(strcmp(oldName, BizzInfo[i][bExtortion], false) == 0) {
-					strmid(BizzInfo[i][bOwner], newName, 0, nlen, MAX_PLAYER_NAME);
-					UpdateBizz(i);
-				}
+			
+			else if(strcmp(oldName, BizzInfo[bidx][bExtortion], false) == 0) {
+				strmid(BizzInfo[i][bExtortion], newName, 0, nlen, MAX_PLAYER_NAME);
+				UpdateBizz(i);
 			}
 		}
 		
@@ -20991,7 +20987,9 @@ public: Db::Init() {
 }
 
 stock Db::FixCharset() {
-	Db::set_charset(Db::Conf[Db::Charset], connDb);
+	Db::set_charset(Db::Conf[Db::Charset]);
+	format(temp, sizeof temp, "SET NAMES '%s'", Db::Conf[Db::Charset]);
+	Db::query(connDb, temp, false);
 	Db::query(connDb, "SET SESSION character_set_server='utf8';", false);
 	return 1;
 }
