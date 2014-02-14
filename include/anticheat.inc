@@ -1367,6 +1367,26 @@ stock AC::IsSwimAnim(animindex) {
 }
 
 
+#define GivePlayerMoney				AC::GivePlayerMoney
+#define SetPlayerMoney				AC::SetPlayerMoney
+#define ResetPlayerMoney			AC::ResetPlayerMoney
+#define SetPlayerHealth				AC::SetPlayerHealth
+#define SetPlayerArmour				AC::SetPlayerArmour
+#define GivePlayerWeapon			AC::GivePlayerWeapon
+#define ResetPlayerWeapons			AC::ResetPlayerWeapons
+#define TogglePlayerSpectating		AC::TogglePlayerSpectating
+#define TogglePlayerControllable	AC::TogglePlayerControllable
+#define PutPlayerInVehicle			AC::PutPlayerInVehicle
+#define SetPlayerInterior			AC::SetPlayerInterior
+#define SetPlayerVirtualWorld		AC::SetPlayerVirtualWorld
+#define SetPlayerPos				AC::SetPlayerPos
+#define SetVehiclePos				AC::SetVehiclePos
+#define SetVehicleHealth			AC::SetVehicleHealth
+#define RepairVehicle				AC::RepairVehicle
+#define RemovePlayerFromVehicle		AC::RemovePlayerFromVehicle
+#define ChangeVehicleColor			AC::ChangeVehicleColor
+
+
 #if defined _ALS_OnGameModeInit
 #undef OnGameModeInit
 #else
