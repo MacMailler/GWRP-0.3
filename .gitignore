@@ -220,6 +220,8 @@ pip-log.txt
 #############
 filterscritps/*.amx
 gamemodes/*.amx
+gamemodes/*.lst
+gamemodes/*.asm
 pawno/
 plugins/
 scriptfiles/logs/
