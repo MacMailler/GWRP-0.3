@@ -1202,12 +1202,21 @@ enum fInfo {
 	fColor,
 	fSpawn[fSpawnInfo],
 };
+
+enum fGateInfo {
+	GateID,
+	GateRight
+};
 new FracInfo[MAX_FRAC][fInfo];
 new RankInfo[MAX_FRAC][MAX_RANK][36];
 new RankNums[MAX_FRAC];
-new FracGate[MAX_FRAC][10];
-new FracGateCount[MAX_FRAC];
 new FracPay[MAX_FRAC];
+
+new FracGate[50][fGateInfo];
+new FracGateCount;
+
+#define SET_GATE_ACCESS(%0,%1,%2) FracGate[%0][GateRight] += %2 << %1
+#define GET_GATE_ACCESS(%0,%1) (FracGate[%0][GateRight] >>> %1 & 1 != 0)
 
 #define zRANK	(0)
 #define bRANK	(1)
@@ -3439,12 +3448,14 @@ stock AshQueue(playerid, reason) {
 }
 
 public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
-	for(new i; i < FracGateCount[Pl::FracID(playerid)]; i++) {
-		if(FracGate[Pl::FracID(playerid)][i] == gateid) {
-			if(GateOpen(gateid)) {
-				PlayerPlaySound(playerid, 1058, 0, 0, 0);
-				SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
-				//Send(playerid, 0x15AAEAAA, "* Ворота открыты на 10 секунд, проезжайте!");
+	for(new i, fracid = Pl::FracID(playerid); i < FracGateCount; i++) {
+		if(FracGate[i][GateID] == gateid) {
+			if(GET_GATE_ACCESS(gateid, fracid) == true) {
+				if(GateOpen(gateid)) {
+					PlayerPlaySound(playerid, 1058, 0, 0, 0);
+					SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
+					//Send(playerid, 0x15AAEAAA, "* Ворота открыты на 10 секунд, проезжайте!");
+				}
 			}
 			return 1;
 		}
@@ -20549,35 +20560,15 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		switch(GetPlayerState(playerid)) {
 			case PLAYER_STATE_ONFOOT : {
-				if(IsACop(playerid) || Pl::FracID(playerid) == 7) {
-					for(new i = 2; i < FracGateCount[TEAM_FBI]; i++) {
-						if(IsPlayerInRangeOfGate(playerid, 2.0, FracGate[TEAM_FBI][i])) {
-							if(GateOpen(FracGate[TEAM_FBI][i])) {
-								SetTimerEx("GateClose", 5000, false, "i", FracGate[TEAM_FBI][i]);
+				for(new i = 19, fracid = Pl::FracID(playerid); i < FracGateCount; i++) {
+					if(IsPlayerInRangeOfGate(playerid, 2.0, FracGate[i][GateID])) {
+						if(GET_GATE_ACCESS(i, fracid) == true) {
+							if(GateOpen(FracGate[i][GateID])) {
+								SetTimerEx("GateClose", 5000, false, "i", FracGate[i][GateID]);
 								Send(playerid, 0x15AAEAAA, "* Дверь открыта, проходите!");
 							}
-							return 1;
 						}
-					}
-					
-					for(new i = 2; i < FracGateCount[TEAM_COP]; i++) {
-						if(IsPlayerInRangeOfGate(playerid, 2.0, FracGate[TEAM_COP][i])) {
-							if(GateOpen(FracGate[TEAM_COP][i])) {
-								SetTimerEx("GateClose", 5000, false, "i", FracGate[TEAM_COP][i]);
-								Send(playerid, 0x15AAEAAA, "* Дверь открыта, проходите!");
-							}
-							return 1;
-						}
-					}
-					
-					for(new i = 1; i < FracGateCount[TEAM_MEDIC]; i++) {
-						if(IsPlayerInRangeOfGate(playerid, 2.0, FracGate[TEAM_MEDIC][i])) {
-							if(GateOpen(FracGate[TEAM_MEDIC][i])) {
-								SetTimerEx("GateClose", 5000, false, "i", FracGate[TEAM_MEDIC][i]);
-								Send(playerid, 0x15AAEAAA, "* Дверь открыта, проходите!");
-							}
-							return 1;
-						}
+						return 1;
 					}
 				}
 			}
@@ -24032,173 +24023,226 @@ stock GetPlayerPosEx(playerid, &Float:x, &Float:y, &Float:z, &Float:a) {
 }
 
 static LoadGates() {
-	new gateid = FracGateCount[TEAM_LICENZERS]++;
-	FracGate[TEAM_LICENZERS][gateid] = CreateGate();
-	new leafid = AddLeafToGate(FracGate[TEAM_LICENZERS][gateid], 968, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,90.0,90.0}, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,0.0,90.0}, 0);
-	AddPickupToGate(FracGate[TEAM_LICENZERS][gateid], 1239, Float:{-2053.0193,-95.1885,34.8772}, 0);
-	AddPickupToGate(FracGate[TEAM_LICENZERS][gateid], 1239, Float:{-2062.3420,-97.6240,34.8739}, 0);
-	SetLeafType(FracGate[TEAM_LICENZERS][gateid], leafid, TYPE_BARRIER);
+	new gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	new leafid = AddLeafToGate(FracGate[gateid][GateID], 968, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,90.0,90.0}, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,0.0,90.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2053.0193,-95.1885,34.8772}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2062.3420,-97.6240,34.8739}, 0);
+	SetLeafType(FracGate[gateid][GateID], leafid, TYPE_BARRIER);
+	SET_GATE_ACCESS(gateid, TEAM_LICENZERS, 1);
 	
 	
-	gateid = FracGateCount[TEAM_RUSSIAN]++;
-	FracGate[TEAM_RUSSIAN][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_RUSSIAN][gateid], 980, Float:{-2655.23974609,-224.56163025,6.21994114,0.0,0.0,0.0}, Float:{-2655.4502,-226.9722,-2.0665,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_RUSSIAN][gateid], 1239, Float:{-2654.1416,-233.0185,4.7038}, 0);
-	AddPickupToGate(FracGate[TEAM_RUSSIAN][gateid], 1239, Float:{-2656.9939,-220.3907,3.9517}, 0);
-	
-	gateid = FracGateCount[TEAM_RUSSIAN]++;
-	FracGate[TEAM_RUSSIAN][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_RUSSIAN][gateid], 980, Float:{-2801.18750000,-329.59487915,8.81994534,0.0,0.0,88.25}, Float:{-2800.2183,-330.0354,-1.0900,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_RUSSIAN][gateid], 1239, Float:{-2807.0947,-331.3463,6.7380}, 0);
-	AddPickupToGate(FracGate[TEAM_RUSSIAN][gateid], 1239, Float:{-2794.3726,-328.2372,6.7450}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-2655.23974609,-224.56163025,6.21994114,0.0,0.0,0.0}, Float:{-2655.4502,-226.9722,-2.0665,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2654.1416,-233.0185,4.7038}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2656.9939,-220.3907,3.9517}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_RUSSIAN, 1);
 	
 	
-	gateid = FracGateCount[TEAM_BALLAS]++;
-	FracGate[TEAM_BALLAS][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_BALLAS][gateid], 986, Float:{952.16387939,-1098.89575195,24.20000076,0.0,0.0,270.0}, Float:{952.28033447,-1091.89526367,24.20000076,-1000.0,-1000.0,-1000.0}, 0);
-	AddLeafToGate(FracGate[TEAM_BALLAS][gateid], 986, Float:{952.30175781,-1106.84375000,24.21918869,0.0,0.0,271.9}, Float:{952.06695557,-1114.79016113,24.21918869,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_BALLAS][gateid], 1239, Float:{957.4088,-1100.7209,23.7031}, 0);
-	AddPickupToGate(FracGate[TEAM_BALLAS][gateid], 1239, Float:{946.1330,-1104.5739,24.2657}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-2801.18750000,-329.59487915,8.81994534,0.0,0.0,88.25}, Float:{-2800.2183,-330.0354,-1.0900,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2807.0947,-331.3463,6.7380}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2794.3726,-328.2372,6.7450}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_RUSSIAN, 1);
 	
 	
-	gateid = FracGateCount[TEAM_CORONOS]++;
-	FracGate[TEAM_CORONOS][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_CORONOS][gateid], 986, Float:{1810.3319091797,-1885.6104736328,14.4115,0.0,0.0,270.0}, Float:{1810.3319091797,-1880.7103271484,14.41153,-1000.0,-1000.0,-1000.0}, 0);
-	AddLeafToGate(FracGate[TEAM_CORONOS][gateid], 986, Float:{1810.3541259766,-1893.5799560547,14.4054,0.0,0.0,270.0}, Float:{1810.3541259766,-1898.8791503906,14.405469,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_CORONOS][gateid], 1239, Float:{1816.4958,-1886.7698,13.4141}, 0);
-	AddPickupToGate(FracGate[TEAM_CORONOS][gateid], 1239, Float:{1805.3655,-1891.8104,13.4079}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 986, Float:{952.16387939,-1098.89575195,24.20000076,0.0,0.0,270.0}, Float:{952.28033447,-1091.89526367,24.20000076,-1000.0,-1000.0,-1000.0}, 0);
+	AddLeafToGate(FracGate[gateid][GateID], 986, Float:{952.30175781,-1106.84375000,24.21918869,0.0,0.0,271.9}, Float:{952.06695557,-1114.79016113,24.21918869,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{957.4088,-1100.7209,23.7031}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{946.1330,-1104.5739,24.2657}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_BALLAS, 1);
 	
 	
-	gateid = FracGateCount[TEAM_FBI]++;
-	FracGate[TEAM_FBI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FBI][gateid], 980, Float:{-1644.6872558594, 682.34130859375, 9.4969673156738, 0.0, 0.0, 90.0}, Float:{-1644.6865234375, 682.3408203125, 1.9969673156738,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_FBI][gateid], 1239, Float:{-1639.8580,684.3269,7.1875}, 0);
-	AddPickupToGate(FracGate[TEAM_FBI][gateid], 1239, Float:{-1649.8622,679.5843,9.5154}, 0);
-	
-	gateid = FracGateCount[TEAM_FBI]++;
-	FracGate[TEAM_FBI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FBI][gateid], 980, Float:{-1571.8803710938, 661.48571777344, 8.9608917236328, 0.0, 0.0, 270.67565917969}, Float:{-1571.8798828125, 661.4853515625, 1.7108917236328,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_FBI][gateid], 1239, Float:{-1567.8168,663.8288,7.1875}, 0);
-	AddPickupToGate(FracGate[TEAM_FBI][gateid], 1239, Float:{-1577.6217,660.2245,7.1901}, 0);
-	
-	gateid = FracGateCount[TEAM_FBI]++;
-	FracGate[TEAM_FBI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FBI][gateid], 2957, Float:{228.24499512,151.34700012,1003.64300537,0.0,0.0,269.5}, Float:{228.24400330,151.34700012,1006.19598389,0.0,0.0,269.4}, 2);
-	
-	gateid = FracGateCount[TEAM_FBI]++;
-	FracGate[TEAM_FBI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FBI][gateid], 2957, Float:{228.21899414,161.11799622,1003.64300537,0.0,0.0,270.2}, Float:{228.21899414,161.11700439,1006.19598389,0.0,0.0,270.2}, 2);
-	
-	gateid = FracGateCount[TEAM_FBI]++;
-	FracGate[TEAM_FBI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FBI][gateid], 2957, Float:{230.89100647,169.83099365,1003.64300537,0.0,0.0,180.0}, Float:{230.89100647,169.83000183,1006.19598389,0.0,0.0,179.9}, 2);
-	
-	gateid = FracGateCount[TEAM_FBI]++;
-	FracGate[TEAM_FBI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FBI][gateid], 2957, Float:{275.57101440,189.32000732,1007.79199219,0.0,0.0,0.0}, Float:{275.57000732,189.31900024,1010.26898193,0.0,0.0,0.0}, 2);
-	
-	gateid = FracGateCount[TEAM_FBI]++;
-	FracGate[TEAM_FBI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FBI][gateid], 2957, Float:{296.51800537,189.32499695,1007.79199219,0.0,0.0,0.0}, Float:{296.51800537,189.32400513,1010.29400635,0.0,0.0,0.0}, 2);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 986, Float:{1810.3319091797,-1885.6104736328,14.4115,0.0,0.0,270.0}, Float:{1810.3319091797,-1880.7103271484,14.41153,-1000.0,-1000.0,-1000.0}, 0);
+	AddLeafToGate(FracGate[gateid][GateID], 986, Float:{1810.3541259766,-1893.5799560547,14.4054,0.0,0.0,270.0}, Float:{1810.3541259766,-1898.8791503906,14.405469,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1816.4958,-1886.7698,13.4141}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1805.3655,-1891.8104,13.4079}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_CORONOS, 1);
 	
 	
-	gateid = FracGateCount[TEAM_FARMERS]++;
-	FracGate[TEAM_FARMERS][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_FARMERS][gateid], 986, Float:{-1050.39794922,-1345.34973145,131.0,0.0,0.0,335.0}, Float:{-1043.14575195,-1348.43676758,131.0,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_FARMERS][gateid], 1239, Float:{-1049.9319,-1349.2209,129.8002}, 0);
-	AddPickupToGate(FracGate[TEAM_FARMERS][gateid], 1239, Float:{-1050.5951,-1339.5038,130.0538}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-1644.6872558594, 682.34130859375, 9.4969673156738, 0.0, 0.0, 90.0}, Float:{-1644.6865234375, 682.3408203125, 1.9969673156738,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1639.8580,684.3269,7.1875}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1649.8622,679.5843,9.5154}, 0);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
 	
 	
-	gateid = FracGateCount[TEAM_RIFA]++;
-	FracGate[TEAM_RIFA][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_RIFA][gateid], 980, Float:{-2127.4970703125,-80.352951049805,37.093704223633,0.0,0.0,0.0}, Float:{-2127.4970703125,-80.3525390625,30.093704223633,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_RIFA][gateid], 1239, Float:{-2130.9324,-75.0402,34.8844}, 0);
-	AddPickupToGate(FracGate[TEAM_RIFA][gateid], 1239, Float:{-2123.7227,-85.2543,35.0273}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-1571.8803710938, 661.48571777344, 8.9608917236328, 0.0, 0.0, 270.67565917969}, Float:{-1571.8798828125, 661.4853515625, 1.7108917236328,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1567.8168,663.8288,7.1875}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1577.6217,660.2245,7.1901}, 0);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
 	
 	
-	gateid = FracGateCount[TEAM_GROVE]++;
-	FracGate[TEAM_GROVE][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_GROVE][gateid], 986, Float:{2439.3210449219,-1664.3826904297,14.108180999756,0.0,0.0,90.0}, Float:{2439.3210449219,-1668.0817871094,14.108180999756,-1000.0,-1000.0,-1000.0}, 0);
-	AddLeafToGate(FracGate[TEAM_GROVE][gateid], 985, Float:{2439.31640625,-1656.4501953125,14.104577064514,0.0,0.0,90.0}, Float:{2439.31640625,-1649.9501953125,14.104577064514,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_GROVE][gateid], 1239, Float:{2447.4922,-1656.3556,13.3047}, 0);
-	AddPickupToGate(FracGate[TEAM_GROVE][gateid], 1239, Float:{2428.3591,-1661.5132,13.3828}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 986, Float:{-1050.39794922,-1345.34973145,131.0,0.0,0.0,335.0}, Float:{-1043.14575195,-1348.43676758,131.0,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1049.9319,-1349.2209,129.8002}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1050.5951,-1339.5038,130.0538}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_FARMERS, 1);
 	
 	
-	gateid = FracGateCount[TEAM_STREETDOGS]++;
-	FracGate[TEAM_STREETDOGS][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_STREETDOGS][gateid], 980, Float:{1017.50000000,2133.40820312,12.59399986,0.0,0.0,90.0}, Float:{1017.47497559,2133.40698242,6.59399986,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_STREETDOGS][gateid], 1239, Float:{1011.7426,2132.1584,10.6719}, 0);
-	AddPickupToGate(FracGate[TEAM_STREETDOGS][gateid], 1239, Float:{1022.4524,2135.8928,10.8203}, 0);
-	
-	gateid = FracGateCount[TEAM_VAGOS]++;
-	FracGate[TEAM_VAGOS][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_VAGOS][gateid], 985, Float:{2797.19482422,-1599.36096191,11.63015938,0.0,0.0,1.25}, Float:{2802.63452148,-1598.97546387,11.63015938,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_VAGOS][gateid], 1239, Float:{2797.1755,-1604.2877,10.9304}, 0);
-	AddPickupToGate(FracGate[TEAM_VAGOS][gateid], 1239, Float:{2797.2551,-1592.6169,10.9290}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-2127.4970703125,-80.352951049805,37.093704223633,0.0,0.0,0.0}, Float:{-2127.4970703125,-80.3525390625,30.093704223633,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2130.9324,-75.0402,34.8844}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2123.7227,-85.2543,35.0273}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_RIFA, 1);
 	
 	
-	gateid = FracGateCount[TEAM_LCN]++;
-	FracGate[TEAM_LCN][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_LCN][gateid], 980, Float:{1264.04602051,-2048.85009766,61.09500122,0.0,0.0,0.0}, Float:{1264.04602051,-2048.85009766,65.87000275,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_LCN][gateid], 1239, Float:{1265.8107,-2052.7319,59.2848}, 0);
-	AddPickupToGate(FracGate[TEAM_LCN][gateid], 1239, Float:{1261.8234,-2041.6759,59.3539}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 986, Float:{2439.3210449219,-1664.3826904297,14.108180999756,0.0,0.0,90.0}, Float:{2439.3210449219,-1668.0817871094,14.108180999756,-1000.0,-1000.0,-1000.0}, 0);
+	AddLeafToGate(FracGate[gateid][GateID], 985, Float:{2439.31640625,-1656.4501953125,14.104577064514,0.0,0.0,90.0}, Float:{2439.31640625,-1649.9501953125,14.104577064514,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{2447.4922,-1656.3556,13.3047}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{2428.3591,-1661.5132,13.3828}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_GROVE, 1);
+	
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{1017.50000000,2133.40820312,12.59399986,0.0,0.0,90.0}, Float:{1017.47497559,2133.40698242,6.59399986,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1011.7426,2132.1584,10.6719}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1022.4524,2135.8928,10.8203}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_STREETDOGS, 1);
+	
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 985, Float:{2797.19482422,-1599.36096191,11.63015938,0.0,0.0,1.25}, Float:{2802.63452148,-1598.97546387,11.63015938,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{2797.1755,-1604.2877,10.9304}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{2797.2551,-1592.6169,10.9290}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_VAGOS, 1);
+	
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{1264.04602051,-2048.85009766,61.09500122,0.0,0.0,0.0}, Float:{1264.04602051,-2048.85009766,65.87000275,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1265.8107,-2052.7319,59.2848}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1261.8234,-2041.6759,59.3539}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_LCN, 1);
 	
 
-	gateid = FracGateCount[TEAM_YAKUZA]++;
-	FracGate[TEAM_YAKUZA][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_YAKUZA][gateid], 980, Float:{1525.08374023,2773.18920898,12.44526672,0.0,0.0,90.0}, Float:{1524.80664062,2773.15625000,6.44526672,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_YAKUZA][gateid], 1239, Float:{1516.4744,2770.6680,10.6719}, 0);
-	AddPickupToGate(FracGate[TEAM_YAKUZA][gateid], 1239, Float:{1531.0181,2775.5930,10.6719}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{1525.08374023,2773.18920898,12.44526672,0.0,0.0,90.0}, Float:{1524.80664062,2773.15625000,6.44526672,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1516.4744,2770.6680,10.6719}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1531.0181,2775.5930,10.6719}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_YAKUZA, 1);
 	
 	
-	gateid = FracGateCount[TEAM_PRESS]++;
-	FracGate[TEAM_PRESS][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_PRESS][gateid], 10184, Float:{773.53601074,-1330.10705566,13.92199993,0.0,0.0,268.75}, Float:{765.56298828,-1329.99401855,13.92199993,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_PRESS][gateid], 1239, Float:{779.1375,-1336.2466,13.7000}, 0);
-	AddPickupToGate(FracGate[TEAM_PRESS][gateid], 1239, Float:{775.9797,-1325.6351,13.5469}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 10184, Float:{773.53601074,-1330.10705566,13.92199993,0.0,0.0,268.75}, Float:{765.56298828,-1329.99401855,13.92199993,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{779.1375,-1336.2466,13.7000}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{775.9797,-1325.6351,13.5469}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_PRESS, 1);
 	
 	
-	gateid = FracGateCount[TEAM_PRESS]++;
-	FracGate[TEAM_PRESS][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_PRESS][gateid], 10184, Float:{773.53601074,-1330.10705566,13.92199993,0.0,0.0,268.75}, Float:{765.56298828,-1329.99401855,13.92199993,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_PRESS][gateid], 1239, Float:{779.1375,-1336.2466,13.7000}, 0);
-	AddPickupToGate(FracGate[TEAM_PRESS][gateid], 1239, Float:{775.9797,-1325.6351,13.5469}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 10184, Float:{363.94100952148,187.08000183105,1020.125,0.0,0.0,90.0}, Float:{-2666.6979980469, 577.875, 20.325000762939,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2669.3008,583.7839,14.4545}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2665.1614,573.7731,14.4621}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_MEDIC, 1);
 	
 	
-	gateid = FracGateCount[TEAM_MEDIC]++;
-	FracGate[TEAM_MEDIC][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_MEDIC][gateid], 10184, Float:{363.94100952148,187.08000183105,1020.125,0.0,0.0,90.0}, Float:{-2666.6979980469, 577.875, 20.325000762939,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_MEDIC][gateid], 1239, Float:{-2669.3008,583.7839,14.4545}, 0);
-	AddPickupToGate(FracGate[TEAM_MEDIC][gateid], 1239, Float:{-2665.1614,573.7731,14.4621}, 0);
-	
-	gateid = FracGateCount[TEAM_MEDIC]++;
-	FracGate[TEAM_MEDIC][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_MEDIC][gateid], 1566, Float:{363.94100952148,187.08000183105,1020.125,0.0,0.0,0.0}, Float:{362.40301513672,187.05000305176,1020.125,-1000.0,-1000.0,-1000.0}, 4);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-1771.3582763672, 985.01013183594,25.74254989624,0.0,0.0,91.309509277344}, Float:{-1771.3575439453,985.03479003906,32.24254989624,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1763.2059,987.0810,21.6091}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1776.1466,981.9849,23.2704}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_TAXI, 1);
 	
 	
-	gateid = FracGateCount[TEAM_TAXI]++;
-	FracGate[TEAM_TAXI][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_TAXI][gateid], 980, Float:{-1771.3582763672, 985.01013183594,25.74254989624,0.0,0.0,91.309509277344}, Float:{-1771.3575439453,985.03479003906,32.24254989624,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_TAXI][gateid], 1239, Float:{-1763.2059,987.0810,21.6091}, 0);
-	AddPickupToGate(FracGate[TEAM_TAXI][gateid], 1239, Float:{-1776.1466,981.9849,23.2704}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	leafid = AddLeafToGate(FracGate[gateid][GateID], 968, Float:{1544.69995117, -1630.80004883,13.10000038,0.0,270.0,270.0}, Float:{1544.69921875,-1630.79980469,13.10000038, 0.0,0.0,270.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1537.6506,-1629.3037,13.0889}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1549.0046,-1626.0970,13.0881}, 0);
+	SetLeafType(FracGate[gateid][GateID], leafid, TYPE_BARRIER);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
 	
 	
-	gateid = FracGateCount[TEAM_COP]++;
-	FracGate[TEAM_COP][gateid] = CreateGate();
-	leafid = AddLeafToGate(FracGate[TEAM_COP][gateid], 968, Float:{1544.69995117, -1630.80004883,13.10000038,0.0,270.0,270.0}, Float:{1544.69921875,-1630.79980469,13.10000038, 0.0,0.0,270.0}, 0);
-	AddPickupToGate(FracGate[TEAM_COP][gateid], 1239, Float:{1537.6506,-1629.3037,13.0889}, 0);
-	AddPickupToGate(FracGate[TEAM_COP][gateid], 1239, Float:{1549.0046,-1626.0970,13.0881}, 0);
-	SetLeafType(FracGate[TEAM_COP][gateid], leafid, TYPE_BARRIER);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{1544.07495117,-1841.32495117,15.31999969,0.0,0.0,268.75}, Float:{1544.00305176,-1848.04101562,15.31999969, -1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1548.6178,-1837.7350,13.5469}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1538.5789,-1840.9468,13.5469}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_GOV, 1);
 	
-	gateid = FracGateCount[TEAM_COP]++;
-	FracGate[TEAM_COP][gateid] = CreateGate();
-	leafid = AddLeafToGate(FracGate[TEAM_COP][gateid], 980, Float:{1590.0573730469, -1637.974609375, 14.743314743042,0.0,0.0,0.0}, Float:{1590.056640625,-1637.974609375,7.3683304786682,-1000.0,-1000.0,-1000.0}, 0);
-	AddPickupToGate(FracGate[TEAM_COP][gateid], 1239, Float:{1590.2843,-1641.8308,12.9507}, 0);
-	AddPickupToGate(FracGate[TEAM_COP][gateid], 1239, Float:{1586.6178,-1634.0077,13.3828}, 0);
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 988, Float:{96.800,1920.376,18.183,0.0,0.0,-90.000}, Float:{96.934,1920.112,13.026, -1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{98.7371,1922.6504,18.2074}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{93.5390,1919.1776,18.0495}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_ARMY, 1);
 	
-	gateid = FracGateCount[TEAM_COP]++;
-	FracGate[TEAM_COP][gateid] = CreateGate();
-	AddLeafToGate(FracGate[TEAM_COP][gateid], 2957, Float:{247.005905,72.448440,1003.640625,0.0,0.0,1260.0}, Float:{247.005905,72.448440,1006.912902,-1000.0,-1000.0,-1000.0}, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2927, Float:{211.95550537,1875.55676270,13.93265820,0.0,0.0,0.0}, Float:{207.70809937,1875.70617676,13.93265820, -1000.0,-1000.0,-1000.0}, 0);
+	AddLeafToGate(FracGate[gateid][GateID], 2927, Float:{216.06652832,1875.56518555,13.93265820,0.0,0.0,0.0}, Float:{220.31614685,1875.51049805,13.93265820, -1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{212.1943,1879.5664,13.1406}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{215.3050,1871.1914,13.1406}, 0);
+	SET_GATE_ACCESS(gateid, TEAM_ARMY, 1);
+	
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{1590.0573730469, -1637.974609375, 14.743314743042,0.0,0.0,0.0}, Float:{1590.056640625,-1637.974609375,7.3683304786682,-1000.0,-1000.0,-1000.0}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1590.2843,-1641.8308,12.9507}, 0);
+	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1586.6178,-1634.0077,13.3828}, 0);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{228.24499512,151.34700012,1003.64300537,0.0,0.0,269.5}, Float:{228.24400330,151.34700012,1006.19598389,0.0,0.0,269.4}, 2);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{228.21899414,161.11799622,1003.64300537,0.0,0.0,270.2}, Float:{228.21899414,161.11700439,1006.19598389,0.0,0.0,270.2}, 2);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{230.89100647,169.83099365,1003.64300537,0.0,0.0,180.0}, Float:{230.89100647,169.83000183,1006.19598389,0.0,0.0,179.9}, 2);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{275.57101440,189.32000732,1007.79199219,0.0,0.0,0.0}, Float:{275.57000732,189.31900024,1010.26898193,0.0,0.0,0.0}, 2);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{296.51800537,189.32499695,1007.79199219,0.0,0.0,0.0}, Float:{296.51800537,189.32400513,1010.29400635,0.0,0.0,0.0}, 2);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{247.005905,72.448440,1003.640625,0.0,0.0,1260.0}, Float:{247.005905,72.448440,1006.912902,-1000.0,-1000.0,-1000.0}, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 1566, Float:{363.94100952148,187.08000183105,1020.125,0.0,0.0,0.0}, Float:{362.40301513672,187.05000305176,1020.125,-1000.0,-1000.0,-1000.0}, 4);
+	SET_GATE_ACCESS(gateid, TEAM_MEDIC, 1);
+	
+	gateid = FracGateCount++;
+	FracGate[gateid][GateID] = CreateGate();
+	AddLeafToGate(FracGate[gateid][GateID], 2949, Float:{372.75192261,166.50007629,1007.38281250,0.0,0.0,270.0}, Float:{374.19226074, 166.50007629, 1007.38281250,-1000.0,-1000.0,-1000.0}, 7);
+	SET_GATE_ACCESS(gateid, TEAM_GOV, 1);
 	
 	return 1;
 }
