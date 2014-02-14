@@ -17623,7 +17623,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 					case 1: {
 						dialog[0] = '\0';
-						static const family[] = {5, 6, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+						static const family[] = {5, 6, 8, 12, 13, 14, 15, 16, 17, 18};
 						for(new i; i < sizeof family; i++) {
 							scf(dialog, string, "— %s\n", FracInfo[family[i]][fName]);
 						}
@@ -17631,7 +17631,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 					case 2: {
 						dialog[0] = '\0';
-						static const team[] = {1, 2, 3, 4, 7, 8, 9, 10, 11};
+						static const team[] = {1, 2, 3, 4, 7, 9, 10, 11};
 						for(new i; i < sizeof team; i++) {
 							scf(dialog, string, "— %s\n", FracInfo[team[i]][fName]);
 						}
@@ -17694,15 +17694,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				static const Float:gg_respInfo[][4] = {
 					{1141.9388,-2035.1228,69.0078,178.7023},
 					{1462.1758,2768.4282,10.8203,267.1316},
-					{686.6165,-444.1621,16.3359,268.7059},
+					{-1038.2272,-1222.7651,129.2188,89.8312},
+					{1060.6426,2159.7278,10.8203,92.2892},
 					{-2740.4331,-333.2186,7.1792,314.0976},
 					{2474.6370,-1679.3092,13.3365,231.6960},
 					{1757.7224,-1895.2913,13.5561,266.3302},
 					{876.3609,-1102.0140,24.2969,268.9612},
 					{-2156.4856,-197.4804,35.3203,179.7661},
 					{2773.9526,-1607.6476,10.9219,268.2025},
-					{1063.1372,2159.8367,10.8203,87.9544},
-					{-1029.3975,-1189.2582,129.2188,88.9968}
+					{1063.1372,2159.8367,10.8203,87.9544}
 				};
 				if(0 <= listitem <= sizeof(gg_respInfo)) {
 					new tmpcar = GetPlayerVehicleID(playerid);
@@ -17731,9 +17731,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					{223.8246,1889.4766,17.6406},
 					{-2681.4397,638.0493,14.453},
 					{1469.1552,-1771.1403,18.7958},
-					{1072.5293,-290.5870,76.9300},
 					{752.0109,-1356.0024,13.7000},
-					{-2044.9961,-119.2935,34.9892},
+					{-1719.3878,1028.7029,17.5859},
 					{-2044.9961,-119.2935,34.9892}
 				};
 				if(0 <= listitem <= sizeof(gf_respInfo)) {
@@ -20650,8 +20649,8 @@ stock ChangeName(playerid) {
 			}
 			
 			else if(strcmp(oldName, BizzInfo[bidx][bExtortion], false) == 0) {
-				strmid(BizzInfo[i][bExtortion], newName, 0, nlen, MAX_PLAYER_NAME);
-				UpdateBizz(i);
+				strmid(BizzInfo[bidx][bExtortion], newName, 0, nlen, MAX_PLAYER_NAME);
+				UpdateBizz(bidx);
 			}
 		}
 		
