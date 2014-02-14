@@ -2716,6 +2716,7 @@ public OnPlayerDisconnect(playerid, reason) {
 	}
 	
 	foreach(new i : ExtraVehicles[playerid]) {
+		
 		Veh::Destroy(ExtraVehicles[playerid][i][evID2]);
 	}
 	
