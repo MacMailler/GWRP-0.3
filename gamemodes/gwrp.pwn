@@ -15040,9 +15040,9 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 			if(TaxiCallTime[playerid] > 0) return Send(playerid, COLOR_GREY, "* Вы уже приняли вызов!");
 			if(TaxiCall == INVALID_PLAYER_ID) return Send(playerid, COLOR_GREY, "* Никто еще не вызывал такси!");
 			if(!Pl::isLogged(TaxiCall)) return 1;
-			format(string, sizeof string, "* Вы вызвали Такси от %s, Вы будете видеть маркер, пока Вы не достигли его.", GetName(TaxiCall));
+			format(string, sizeof string, "* Вы приняли вызов от %s, Вы будете видеть маркер, пока не достигнете его.", GetName(TaxiCall));
 			Send(playerid, COLOR_LIGHTBLUE, string);
-			format(string, sizeof string, "* Таксист %s принял Вашу Призыву Такси, пожалуйста ждите на своем настоящем положении.", GetName(playerid));
+			format(string, sizeof string, "* Таксист %s принял ваш вызов, пожалуйста ждите на своем настоящем положении.", GetName(playerid));
 			Send(TaxiCall, COLOR_LIGHTBLUE, string);
 			GameTextForPlayer(playerid, "~w~Taxi Caller~n~~r~Goto redmarker", 5000, 1);
 			TaxiCallTime[playerid] = 1;
@@ -15054,9 +15054,9 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 			if(BusCallTime[playerid] > 0) return Send(playerid, COLOR_GREY, "* Вы уже приняли вызов!");
 			if(BusCall == INVALID_PLAYER_ID) return Send(playerid, COLOR_GREY, "* Никто еще не вызывал автобус!");
 			if(!Pl::isLogged(BusCall)) return 1;
-			format(string, sizeof string, "* Вы вняли Автобусному Призыву от %s, Вы будете видеть маркер, непока Вы не достигли этого.", GetName(BusCall));
+			format(string, sizeof string, "* Вы приняли вызов от %s, Вы будете видеть маркер, пока не достигнете его.", GetName(BusCall));
 			Send(playerid, COLOR_LIGHTBLUE, string);
-			format(string, sizeof string, "* Автобусный Водитель %s принял Вашу Автобусную Призыву, пожалуйста ждите в своем настоящем положении.", GetName(playerid));
+			format(string, sizeof string, "* Водитель Автобуса %s принял ваш вызов, пожалуйста ждите в своем настоящем положении.", GetName(playerid));
 			Send(BusCall, COLOR_LIGHTBLUE, string);
 			new Float:X,Float:Y,Float:Z;
 			GetPlayerPos(BusCall, X, Y, Z);
