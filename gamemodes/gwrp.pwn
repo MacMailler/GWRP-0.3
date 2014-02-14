@@ -2716,7 +2716,6 @@ public OnPlayerDisconnect(playerid, reason) {
 	}
 	
 	foreach(new i : ExtraVehicles[playerid]) {
-		
 		Veh::Destroy(ExtraVehicles[playerid][i][evID2]);
 	}
 	
@@ -5510,7 +5509,6 @@ stock PrintBizInfo(playerid, bizid) {
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
 		scf(dialog, src, "{ffa500}Статус: %s\n", BizzInfo[i][bLocked]?("{AA3333}[закрыт]"):("{33AA33}[открыт]"));
 		scf(dialog, src, "{ffa500}Стоимость входа: {33AA33}$%i\n",BizzInfo[i][bEnterCost]);
-		scf(dialog, src, "{ffa500}Доход за последние 15 минут: {33AA33}$%i\n", BizzInfo[i][bProfit]);
 		scf(dialog, src, "{ffa500}На счету бизнеса: {33AA33}$%i\n", BizzInfo[i][bSafe]);
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
 		scf(dialog, src, "{ffa500}Стоимость продуктов: {33AA33}$%i\n",BizzInfo[i][bPriceProd]);
@@ -5633,15 +5631,6 @@ stock ShowPass(playerid, showforid, dialogid) {
 stock GetFakeFracID(playerid) {
 	switch(Pl::FracID(playerid)) {
 		case 1..4, 7, 9..11, 20 : return Pl::FracID(playerid);
-		case 8 : {
-			if(Pl::Info[playerid][pMaskOn]) {
-				switch(GetPlayerSkin(playerid)) {
-					case 280 : return 1;
-					case 286 : return 2;
-					case 287 : return 3;
-				}
-			}
-		}
 	}
 	return 0;
 }
