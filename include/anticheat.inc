@@ -156,7 +156,6 @@ enum AC::PlayerEnum {
 	bool:AC::ToggleSpec,
 	
 	AC::NoAB,
-	AC::NoHH,
 	
 	AC::OldVeh,
 	AC::OldState,
@@ -347,11 +346,6 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 		case PLAYER_STATE_DRIVER, PLAYER_STATE_PASSENGER : {
 			AC::Info[playerid][AC::Delay][R::SPEED_HACK] = 2;
 		}
-		case PLAYER_STATE_SPECTATING : {
-			if(AC::Info[playerid][AC::ToggleSpec]) {
-				Rac::Kick(playerid, "Использование читов", R::SPECHACK);
-			}
-		}
 	}
 	return AC::OnPlayerStateChange(playerid, newstate, oldstate);
 }
@@ -537,15 +531,11 @@ public onAntiCheatUpdate() {
 					if(AC::IsPlayerSync(i)) {
 						GetPlayerHealth(i, fvar);
 						if(fvar > AC::Info[i][AC::HealthArmor][AC::HEALTH]) {
-							if(AC::Info[i][AC::NoHH]) {
-								AC::Info[i][AC::NoHH] = 0;
-							} else {
-								if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
-									if(Rac::IsAtCandySprunk(i, 4.0)) {
-										Rac::GivePlayerHealth(i, ((fvar - AC::Info[i][AC::HealthArmor][AC::HEALTH]) + 1.0 ), 100.0);
-									} else {
-										SetPlayerHealth(i, AC::Info[i][AC::HealthArmor][AC::HEALTH]);
-									}
+							if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
+								if(Rac::IsAtCandySprunk(i, 4.0)) {
+									Rac::GivePlayerHealth(i, ((fvar - AC::Info[i][AC::HealthArmor][AC::HEALTH]) + 1.0 ), 100.0);
+								} else {
+									SetPlayerHealth(i, AC::Info[i][AC::HealthArmor][AC::HEALTH]);
 								}
 							}
 						} else {
