@@ -2715,6 +2715,10 @@ public OnPlayerDisconnect(playerid, reason) {
 		DestroyObject(PlayerObject[playerid]);
 	}
 	
+	foreach(new i : ExtraVehicles[playerid]) {
+		Veh::Destroy(ExtraVehicles[playerid][i][evID2]);
+	}
+	
 	AshQueue(playerid, 1);
 	Del_Of_Iterator(playerid);
 	
@@ -21251,7 +21255,7 @@ stock Pl::Init(playerid) {
 	
 	TotalExtraVehicles[playerid] = 0;
 	TotalVehicleInGarage[playerid] = 0;
-	Iter_Clear(ExtraVehicles[playerid]);
+	Iter::Clear(ExtraVehicles[playerid]);
 
 	Rac::SetPlayerMoney(playerid, 0);
 	Rac::SetPlayerHealth(playerid, 100.0);
