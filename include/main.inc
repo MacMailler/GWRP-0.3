@@ -92,6 +92,23 @@ stock writeFile(const filename[], dest[], bool:is_rus=false) {
 	return 0;
 }
 
+stock LoadFile(const path[], dest[], len = sizeof dest) {
+	if(fexist(path)) {
+		new File:handle, hBuf[256];
+		handle = fopen(path, io_read);
+		if(handle) {
+			dest[0] = '\0';
+			while(fread(handle, hBuf)) {
+				strcat(dest, hBuf, len);
+			}
+			fclose(handle);
+		}
+	} else {
+		printf("[debug] LoadFile(): File \"%s\" is not found!", path);
+	}
+	return 1;
+}
+
 stock SendLog(const log[], dest[]) {
 	static patch[64], buffer[255];
 	static h, m, s; gettime(h, m, s);
