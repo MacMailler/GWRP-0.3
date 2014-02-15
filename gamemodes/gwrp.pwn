@@ -5620,7 +5620,6 @@ stock IsLegalFrac(fracid) {
 		case 1..4	: return 1;
 		case 7		: return 1;
 		case 9..11	: return 1;
-		case 20		: return 1;
 	}
 	return 0;
 }
@@ -7337,8 +7336,7 @@ CMD:addpic(playerid, params[]) { new string[144];
 		Portal::Info[ i ][ Portal::Model ][ 0 ] = params[0];
 		Portal::Info[ i ][ Portal::Inter ][ 0 ] = GetPlayerInterior(playerid);
 		Portal::Info[ i ][ Portal::World ][ 0 ] = params[1];
-		GetPlayerPos
-		(
+		GetPlayerPos(
 			playerid,
 			Portal::Info[ i ][ Portal::Portal1 ][ 0 ],
 			Portal::Info[ i ][ Portal::Portal1 ][ 1 ],
@@ -15742,7 +15740,7 @@ public OnPlayerText(playerid, text[]) {
 
 	new replacetext[144], tmp[32], string[144], sendername[24];
 	regex_replace_exid(text, ADBlock, REPLACE_TEXT, replacetext, sizeof replacetext);
-
+	
 	if(OnAir[playerid]) {
 		new veh = GetPlayerVehicleID(playerid);
 		if(IsPlayerInRangeOfPoint(playerid,5.0,353.4343,272.8408,1008.6656)) {
@@ -16890,11 +16888,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						Максемальная сумма: $99999","ENTER", "CANCEL");
 					}
 				}
-			}
-			else
-			{
-				LoadFile("list/hmenu.lst", dialog);
-				return SPD(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", dialog, "SELECT", "CANCEL");
+			} else {
+				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "list/hmenu.lst", "SELECT", "CANCEL");
 			}
 		}
 		case D_HMENU+5:
@@ -17024,8 +17019,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(!(400 <= HouseInfo[hid][hvModel] <= 611)) {
 							SPD(playerid, D_NONE, 0, "[House Menu] > Авто", "У Вас нет домашнего авто!", "OK", "");
 						} else {
-							LoadFile("list/colors.lst", dialog);
-							SPD(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", dialog, "SELECT", "CANCEL");
+							ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
 						}
 					}
 				}
@@ -17091,16 +17085,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				if(sscanf(inputtext, "p<,>ii", inputtext[0], inputtext[1])) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					LoadFile("list/colors.lst", dialog);
-					return SPD(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", dialog, "SELECT", "CANCEL");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 127) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					LoadFile("list/colors.lst", dialog);
-					return SPD(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", dialog, "SELECT", "CANCEL");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
 				} else if(inputtext[1] < 0 || inputtext[1] > 127) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					LoadFile("list/colors.lst", dialog);
-					return SPD(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", dialog, "SELECT", "CANCEL");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
 				}
 				new hid = Pl::Info[playerid][pHouseKey];
 				new bidx = GetIndexFromBizID(Bizz_HouseService);
@@ -18074,11 +18065,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
 		case D_LMENU+1 : {
 			if(response) {
-				LoadFile("dialog/lmenu/colors.lst", dialog);
-				SPD(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", dialog, "OK", "CANCEL");
+				ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
 			} else {
-				LoadFile("dialog/lmenu/colors.lst", dialog);
-				SPD(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", dialog, "OK", "CANCEL");
+				ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
 			}
 			return 1;
 		}
@@ -18087,14 +18076,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response && Pl::Info[playerid][pLeader]) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
 					Send(playerid, COLOR_GREY, "* Вы оставили поле ввода пустым!");
-					LoadFile("dialog/lmenu/colors.lst", dialog);
-					SPD(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", dialog, "OK", "CANCEL");
-				
+					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 256) {
 					Send(playerid, COLOR_GREY, "* Вы ввели не правельный ID цвета!");
-					LoadFile("dialog/lmenu/colors.lst", dialog);
-					SPD(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", dialog, "OK", "CANCEL");
-				
+					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 					if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
@@ -18132,41 +18117,27 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			return 1;
 		}
 		
-		case D_LMENU+3 :
-		{
-			if( response )
-			{
-				if( sscanf(inputtext, "i", inputtext[0]) )
-				{
+		case D_LMENU+3 : {
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
 					Send(playerid, COLOR_GREY, "* Вы оставили поле ввода пустым!");
-					LoadFile("dialog/lmenu/colors.lst", dialog);
-					SPD(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", dialog, "Enter", "Cancel");
-				}
-				else if( inputtext[0] < 0 || inputtext[0] > 256 )
-				{
+					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+				} else if(inputtext[0] < 0 || inputtext[0] > 256) {
 					Send(playerid, COLOR_GREY, "* Вы ввели не правельный ID цвета!");
-					LoadFile("dialog/lmenu/colors.lst", dialog);
-					SPD(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", dialog, "Enter", "Cancel");
-				}
-				else
-				{
+					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-					if( !Pl::isAdmin(playerid, 5) ) if( !IsInRespawn(Pl::FracID(playerid), carid) )
+					if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 						return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 						
-					if( Fc::GetInfo( carid, "fi", v_frac, idx ) )
-					{
-						if( v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode( playerid ) )
-						{
-							new Float: posa, fracmoney = GetFracMoney(v_frac), cost = ( ModelCost( GetVehicleModel( carid ) ) / 10 );
-							if( !Fc::IsEditMode( playerid ) ) if( cost > fracmoney )
-							{
+					if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
+						if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
+							new Float: posa, fracmoney = GetFracMoney(v_frac), cost = (ModelCost(GetVehicleModel(carid)) / 10);
+							if(!Fc::IsEditMode(playerid)) if( cost > fracmoney) {
 								format(string, sizeof(string), "* Недостаточно средств! Необходимо: $%i", cost);
 								Send(playerid, COLOR_GREY, string);
-							}
-							else
-							{
-								if( !Fc::IsEditMode( playerid ) ) GiveFracMoney(v_frac, -cost);
+							} else {
+								if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
 								GetVehiclePos(carid, posx, posy, posz); GetVehicleZAngle(carid, posa);
 								AutoInfo[0][aMileage] = AutoInfo[ carid ][aMileage];
 								Fc::Info[ idx ][ Fc::Color ][ 1 ] = inputtext[0];
@@ -18180,17 +18151,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								format(string, sizeof(string), "~r~-$%i", cost);
 								GameTextForPlayer(playerid, string, 5000, 1);
 							}
-						}
-						else
-						{
-							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
+						} else {
+							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 							Send(playerid, COLOR_GREY, string);
 						}
 					}
 				}
 			}
-			
-			return 1;
 		}
 		
 		case D_LMENU+4 : {
@@ -18211,42 +18178,30 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						}
 					}
 				}
+			} else {
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
 			}
-			else
-			{
-				LoadFile("dialog/lmenu/main.lst", dialog);
-				SPD(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", dialog, "SELECT", "CANCEL");
-			}
-			
-			return 1;
 		}
 		
-		case D_LMENU+5 :
-		{
-			if( response )
-			{
+		case D_LMENU+5 : {
+			if(response) {
 				new number[10];
-				if( sscanf(inputtext, "s[10]", number) ) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
-				if( strlen(number) < 1 || strlen(number) > 8 ) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
+				if(sscanf(inputtext, "s[10]", number)) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
+				if(strlen(number) < 1 || strlen(number) > 8) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
 				if(!regex_match_exid(number, ValidText)) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
 				
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-				if( !Pl::isAdmin(playerid, 5) ) if( !IsInRespawn(Pl::FracID(playerid), carid) )
+				if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 				
-				if( Fc::GetInfo( carid, "fi", v_frac, idx ) )
-				{
-					if( v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode( playerid ) )
-					{
-						new Float: posa, fracmoney = GetFracMoney(v_frac), cost = ( ModelCost( GetVehicleModel( carid ) ) / 10 );
-						if( !Fc::IsEditMode( playerid ) ) if( cost > fracmoney )
-						{
+				if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
+					if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
+						new Float: posa, fracmoney = GetFracMoney(v_frac), cost = (ModelCost(GetVehicleModel(carid)) / 10);
+						if(!Fc::IsEditMode(playerid)) if(cost > fracmoney) {
 							format(string, sizeof(string), "* Недостаточно средств! Необходимо: $%i", cost);
 							Send(playerid, COLOR_GREY, string);
-						}
-						else
-						{
-							if( !Fc::IsEditMode( playerid ) ) GiveFracMoney(v_frac, -cost);
+						} else {
+							if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
 							format(Fc::Info[ idx ][ Fc::Number ], 10, "%s", number);
 							GetVehiclePos(carid, posx, posy, posz); GetVehicleZAngle(carid, posa);
 							AutoInfo[0][aMileage] = AutoInfo[ carid ][aMileage];
@@ -18259,34 +18214,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							format(string, sizeof(string), "~r~-$%i", cost);
 							GameTextForPlayer(playerid, string, 5000, 1);
 						}
-					}
-					else
-					{
+					} else {
 						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
+			} else {
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
 			}
-			else
-			{
-				LoadFile("dialog/lmenu/main.lst", dialog);
-				SPD(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", dialog, "SELECT", "CANCEL");
-			}
-			return 1;
 		}
 		
-		case D_LMENU+6 :
-		{
-			if( response )
-			{
+		case D_LMENU+6 : {
+			if(response) {
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-				if( !Pl::isAdmin(playerid, 5) ) if( !IsInRespawn(Pl::FracID(playerid), carid) )
+				if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 				
-				if( Fc::GetInfo( carid, "fi", v_frac, idx ) )
-				{
-					if( v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode( playerid ) )
-					{
+				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
+					if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
 						AutoInfo[0][aMileage] = AutoInfo[ carid ][aMileage];
 						GetVehiclePos(carid, Fc::Info[ idx ][ Fc::RespPos ][ 0 ], Fc::Info[ idx ][ Fc::RespPos ][ 1 ], Fc::Info[ idx ][ Fc::RespPos ][ 2 ]);
 						GetVehicleZAngle(carid, Fc::Info[ idx ][ Fc::RespPos ][ 3 ]);	
@@ -18295,50 +18240,36 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						AutoInfo[Fc::Info[ idx ][ Fc::Id ][ 1 ]][aMileage] = AutoInfo[0][aMileage];
 						Rac::PutPlayerInVehicle(playerid, Fc::Info[ idx ][ Fc::Id ][ 1 ], 0);
 						Send(playerid, COLOR_WHITE, "* Машина была припаркована!");
-					}
-					else
-					{
+					} else {
 						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
+			} else {
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
 			}
-			else
-			{
-				LoadFile("dialog/lmenu/main.lst", dialog);
-				SPD(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", dialog, "SELECT", "CANCEL");
-			}
-			
-			return 1;
 		}
 		
-		case D_LMENU+7 :
-		{
-			if( response )
-			{
+		case D_LMENU+7 : {
+			if(response) {
 				new model_id;
-				name_to_id( inputtext, model_id );
+				name_to_id(inputtext, model_id);
 				
-				if( model_id < 400 || model_id > 611 ) return Send(playerid, COLOR_GREY, "* Unknown model id!");
-				if( Fc::IsForbiddenVeh( model_id ) ) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
+				if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
+				if(Fc::IsForbiddenVeh(model_id)) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
 				
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-				if( !Pl::isAdmin(playerid, 5) ) if( !IsInRespawn(Pl::FracID(playerid), carid) )
+				if(!Pl::isAdmin(playerid, 5) ) if(!IsInRespawn(Pl::FracID(playerid), carid))
 					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 				
-				if( Fc::GetInfo( carid, "fi", v_frac, idx ) )
-				{
-					if( v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode( playerid ) )
-					{
+				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
+					if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
 						new Float: posa, fracmoney = GetFracMoney(v_frac), cost = ModelCost( model_id );
-						if( !Fc::IsEditMode( playerid ) ) if( cost > fracmoney )
-						{
+						if(!Fc::IsEditMode(playerid)) if(cost > fracmoney) {
 							format(string, sizeof(string), "* Недостаточно средств! Необходимо: $%i", cost);
 							Send(playerid, COLOR_GREY, string);
-						}
-						else
-						{
-							if( !Fc::IsEditMode( playerid ) ) GiveFracMoney(v_frac, -cost);
+						} else {
+							if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
 							GetVehiclePos(carid, posx, posy, posz); GetVehicleZAngle(carid, posa);
 							Fc::Info[ idx ][ Fc::Model ] = model_id;
 							Fc::RecreateVehicle( idx ); Fc::Update( idx );
@@ -18350,18 +18281,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							format(string, sizeof(string), "~r~-$%i", cost);
 							GameTextForPlayer(playerid, string, 5000, 1);
 						}
-					}
-					else
-					{
+					} else {
 						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
-			}
-			else
-			{
-				LoadFile("dialog/lmenu/main.lst", dialog);
-				SPD(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", dialog, "SELECT", "CANCEL");
+			} else {
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -18417,14 +18343,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_SHOW_MODEL : {
 			if(response) {
 				if(!strcmp(inputtext, "Добавить", true)) {
-					LoadFile("dialog/lmenu/addmodel.lst", dialog);
-					SPD( playerid, D_ADD_MODEL, 1, "Добавить", dialog, "Ok", "Cancel");
+					ShowDialog( playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.lst", "Ok", "Cancel");
 				}
 				else if(strcmp(inputtext, "------------", true)){
 					new model_id;
 					name_to_id( inputtext, model_id );
-					if( model_id < 400 || model_id > 611 ) return Send(playerid, COLOR_GREY, "* Unknown model id!");
-					if( Fc::IsForbiddenVeh( model_id ) ) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
+					if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
+					if(Fc::IsForbiddenVeh(model_id)) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
 					
 					SetPVarInt( playerid, "SelectModel", model_id);
 					SPD( playerid, D_EDIT_MODEL, 2, "Options", "Изменить\nУдалить", "Ok", "Cancel");
@@ -18784,14 +18709,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						} else {
 							SetPVarInt(playerid, "SelectedItem", i);
 							format(string, sizeof string, "dialog/pddtest/pdd_test_%i.lst", i);
-							LoadFile(string, dialog);
-							return SPD(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", dialog, "Ответ", "Отмена");
+							return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", string, "Ответ", "Отмена");
 						}
 					}
 				}
 				format(string, sizeof string, "dialog/pddtest/pdd_test_%i.lst", i);
-				LoadFile(string, dialog);
-				SPD(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": PDD TEST", dialog,"Ответить","Отмена");
+				ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": PDD TEST", string, "Ответить","Отмена");
 			} else {
 				Pl::Info[playerid][pTest] = 0;
 				SetPVarInt(playerid, "SelectedItem", -1);
@@ -19519,19 +19442,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(!Pl::Info[playerid][pAdmin]) strcat(dialog, "Вы не админ!");
 						else
 						{
-							LoadFile("help/admin.hlp", dialog);
-							return SPD(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > Команды админов", dialog, "Закрыть", "");
+							return ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > Команды админов", "help/admin.hlp", "CANCEL", "");
 						}
 					}
 				}
 				format(tittle, sizeof(tittle), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > %s", category);
-				SPD(playerid, D_HELP+33, 0, tittle, dialog, "НАЗАД", "Закрыть");
+				SPD(playerid, D_HELP+33, 0, tittle, dialog, "BACK", "CANCEL");
 			}
 		}
 		
 		case D_HELP+33 : { 
-			LoadFile("list/help.lst", dialog);
-			SPD(playerid, D_HELP, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь", dialog, "ВЫБРАТЬ", "Закрыть");
+			ShowDialog(playerid, D_HELP, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь", "list/help.lst", "SELECT", "CANCEL");
 		}
 		
 		case D_ARMOUR: {
@@ -22343,7 +22264,7 @@ stock ShowOnline(playerid, id) {
 		}
 		case 1: {
 			Send(playerid, COLOR_LIGHTRED, "Лицензиары онлайн:");
-			foreach(new i: TeamPlayers[11]) {
+			foreach(new i: TeamPlayers[TEAM_LICENZERS]) {
 				GetPlayerName(i, plname, 24);
 				format(temp, sizeof temp, "* Лицензиар: %s. Позвонить /call %i", plname, Pl::Info[i][pNumber]);
 				Send(playerid, COLOR_YELLOW, temp);
@@ -22718,10 +22639,7 @@ stock ClearHouse(houseid) {
 		HouseInfo[houseid][hvModel] = 0;
 		HouseInfo[houseid][hvColor][0] = -1;
 		HouseInfo[houseid][hvColor][1] = -1;
-		HouseInfo[houseid][hvSpawn][0] = 0.0;
-		HouseInfo[houseid][hvSpawn][1] = 0.0;
-		HouseInfo[houseid][hvSpawn][2] = 0.0;
-		HouseInfo[houseid][hvSpawn][3] = 0.0;
+		for(new i; i < 4; i++) HouseInfo[houseid][hvSpawn][i] = 0.0;
 		AutoInfo[HouseInfo[houseid][hAuto]][aMileage] = 0.0;
 		ResetTuning(HouseInfo[houseid][hAuto], 1, houseid);
 		Veh::Destroy(HouseInfo[houseid][hAuto]);
@@ -22754,13 +22672,9 @@ stock ClearHouse(houseid) {
 		}
 	}
 	HouseInfo[houseid][hTv] = 0;
-	HouseInfo[houseid][hSafe][3] = 0;
-	HouseInfo[houseid][hSafe][4] = 0;
 	HouseInfo[houseid][hLock] = 1;
 	HouseInfo[houseid][hOwned] = 0;
-	HouseInfo[houseid][hSafe][2] = 0;
-	HouseInfo[houseid][hSafe][1] = 0;
-	HouseInfo[houseid][hSafe][0] = 0;
+	for(new i; i < 5; i++) HouseInfo[houseid][hSafe][i] = 0;
 	HouseInfo[houseid][hvPark] = NONE_VEHICLE;
 	for(new i; i < MAX_HWEAP; i++) {
 		HouseInfo[houseid][hGuns][i] = 0;
@@ -22781,18 +22695,8 @@ stock GetClosestBiz(playerid, Float:radi) {
 	return -1;
 }
 
-stock LoadFile(const patch[], dest[], len = sizeof dest) {
-	if(!fexist(patch)) return printf ( "File \"%s\" is not found!", patch);
-	new File: hFile, hBuf[256];
-	hFile = fopen( patch, filemode: io_read );
-	dest[0] = '\0';
-	while(fread(hFile, hBuf)) strcat( dest, hBuf, len );
-	fclose(hFile);
-	return 1;
-}
-
 stock ShowDialog(playerid, dialogid, style, title[], filename[], buttom1[], buttom2[]) {
-	static textbuff[3000];
+	static textbuff[2048];
 	if(LoadFile(filename, textbuff)) {
 		return SPD(playerid, dialogid, style, title, textbuff, buttom1, buttom2);
 	}
