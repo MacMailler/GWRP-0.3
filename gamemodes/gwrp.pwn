@@ -4905,7 +4905,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				}
 				
 				switch(fc_frac) {
-					case 17 : {
+					case TEAM_RIFA : {
 						if(model == 482) {
 							format(src, sizeof(src), "* Материалы: %i/%i", AutoInfo[vehid][aMats], AutoInfo[vehid][aMaxMats]);
 							Send(playerid, COLOR_GREEN, src);
@@ -4913,7 +4913,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 						}
 					}
 					
-					case 20 : {
+					case TEAM_FARMERS : {
 						switch(vehtype) {
 							case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
 								format(src, sizeof(src), "* Мак: %i/%i", AutoInfo[vehid][aDrugs], AutoInfo[vehid][aMaxDrugs]);
@@ -19853,7 +19853,7 @@ stock vehicleStatusUpdate(playerid) {
 }
 
 stock PoppyCollection(i) {
-	if(Pl::FracID(i) == 20) {
+	if(Pl::FracID(i) == TEAM_FARMERS) {
 		if(IsPlayerInDynamicArea(i, Area::poppyField)) {
 			new vehid = GetPlayerVehicleID(i);
 			if(vehid && GetVehicleModel(vehid) == 532) {
