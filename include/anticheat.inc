@@ -576,17 +576,17 @@ public onAntiCheatUpdate() {
 }
 
 
-stock AC::OnvehicleSync(playerid) {
-	new vehicle, playerspeed, Float:fvar;
+stock AC::OnvehicleSync(playerid) {	
+	new vehicle = GetPlayerVehicleID(playerid);	
+	new playerspeed = Rac::GetPlayerSpeed(playerid, false);
 	new Float:x, Float:y, Float:z;
-	
-	vehicle = GetPlayerVehicleID(playerid);	
-	playerspeed = Rac::GetPlayerSpeed(playerid, false);
+	GetVehiclePos(vehicle, x, y, z);
 	
 	if(AC::VehicleInfo[vehicle][AC::Delay] != 0) {
 		AC::VehicleInfo[vehicle][AC::Delay]--;
 	} else {
 		if(AC::IsPlayerSync(playerid)) {
+			new Float:fvar;
 			GetVehicleHealth(vehicle, fvar);
 			if(fvar > AC::VehicleInfo[vehicle][AC::VehHealth]) {
 				if(AC::IsPlayerAtPnSpray(playerid)) {
@@ -628,8 +628,7 @@ stock AC::OnvehicleSync(playerid) {
 			}
 		}
 	}
-		
-	GetVehiclePos(vehicle, x, y, z);
+
 	if(x > 10000.0 || y > 10000.0 || x > 10000.0 || x < -10000.0 || y < -10000.0 || z < -10000.0) {
 		SetVehicleToRespawn(vehicle);
 		Rac::Kick(playerid, "Выход за границы мира");
@@ -637,7 +636,7 @@ stock AC::OnvehicleSync(playerid) {
 	
 	new Float:xd = x - AC::Info[playerid][AC::OldPos][0];
 	new Float:yd = y - AC::Info[playerid][AC::OldPos][1];
-	fvar = ((xd * xd) + (yd * yd)) / (8 + (GetPlayerPing(playerid) >>> 3));
+	new Float:fvar = ((xd * xd) + (yd * yd)) / (8 + (GetPlayerPing(playerid) >>> 3));
 	
 	if(AC::Info[playerid][AC::Delay][R::TELEPORT] > 0) {
 		AC::Info[playerid][AC::Delay][R::TELEPORT] --;
@@ -681,17 +680,17 @@ stock AC::OnvehicleSync(playerid) {
 
 
 stock AC::OnfootSync(playerid) {
-	static playerspeed, surfveh, Float:fvar;
-	static Float:x, Float:y, Float:z;
+	new Float:x, Float:y, Float:z;
+	GetPlayerPos(playerid, x, y, z);
 	
-	playerspeed = AC::GetPlayerSpeed(playerid, false);
-	surfveh = GetPlayerSurfingVehicleID(playerid);
+	new surfveh = GetPlayerSurfingVehicleID(playerid);
+	new playerspeed = AC::GetPlayerSpeed(playerid, false);
 	
 	if(AC::Info[playerid][AC::Delay][R::WEAPON_HACK] > 0) {
 		AC::Info[playerid][AC::Delay][R::WEAPON_HACK] --;
 	} else {
 		if(AC::IsPlayerSync(playerid)) {
-			static slot, weapon, ammo;
+			new slot, weapon, ammo;
 			if((weapon = GetPlayerWeapon(playerid)) != 0) {
 				slot = AC::GetWeaponSlot(weapon);
 				GetPlayerWeaponData(playerid, slot, weapon, ammo);
@@ -745,24 +744,20 @@ stock AC::OnfootSync(playerid) {
 			}
 		}
 	}
-	
+
 	if(surfveh == INVALID_VEHICLE_ID) {
-		if(!Rac::IsPlayerInPool(playerid)) {
-			switch(GetPlayerAnimationIndex(playerid)) {
-				case 1543, 1538, 1539 : {
-					if(z >= 2.0) {
-						Rac::Kick(playerid, "Использование читов", R::FLY_HACK);
-					}
+		switch(GetPlayerAnimationIndex(playerid)) {
+			case 1543, 1538, 1539 : {
+				if(z >= 2.0 && !Rac::IsPlayerInPool(playerid)) {
+					Rac::Kick(playerid, "Использование читов", R::FLY_HACK);
 				}
 			}
 		}
 	}
-	
-	
-	GetPlayerPos(playerid, x, y, z);
+
 	new Float:xd = x - AC::Info[playerid][AC::OldPos][0];
 	new Float:yd = y - AC::Info[playerid][AC::OldPos][1];
-	fvar = ((xd * xd) + (yd * yd)) / (8 + (GetPlayerPing(playerid) >>> 3));
+	new Float:fvar = ((xd * xd) + (yd * yd)) / (8 + (GetPlayerPing(playerid) >>> 3));
 	
 	if(AC::Info[playerid][AC::Delay][R::ANTI_FREEZE] != 0) {
 		AC::Info[playerid][AC::Delay][R::ANTI_FREEZE]--;
@@ -1132,8 +1127,8 @@ public: AC::IsPlayerInPool(playerid) {
 		{30.0,1237.01,-2378.30,10.0},
 		{50.0,2108.07,1907.37,10.0},
 		{50.0,1962.66,-1190.69,17.45},
-		{28.0,1095.2384,-672.5684,111.4500},
-		{28.0,1277.8842,-805.4534,86.1230},
+		{38.0,1095.2384,-672.5684,111.4500},
+		{38.0,1277.8842,-805.4534,86.1230},
 		{56.0,2532.0527,1571.6040,8.4171},
 		{54.0,2159.9509,1283.8008,7.3372},
 		{54.0,1240.1476,-2383.6343,8.3145},
