@@ -30,6 +30,19 @@
 #define __TableExtraVehicles__	"extra_vehicles"
 #define __TableHouseGarages__	"houses_garage"
 
+#define LOG_ANTICHEAT		"anticheat"
+#define LOG_ADMINCHAT		"adminchat"
+#define LOG_REPORT			"report"
+#define LOG_ADMWARN			"admwarn"
+#define LOG_PAYDAY_STATS	"debug"
+#define LOG_MYSQL_ERROR		"sqlerror"
+#define LOG_GOV_CHAT		"gov"
+#define LOG_AD_CHAT			"ad"
+#define LOG_CHANGENAME		"changename"
+#define LOG_HELPER_CHAT		"helperchat"
+#define LOG_HOUSE			"houses"
+#define LOG_PAY				"pay"
+
 #define __SERVER_NAME_LC		"GrandWorld"
 #define __SERVER_NAME_L			"grandworld"
 #define __SERVER_NAME_C			"GRANDWORLD"
@@ -2246,19 +2259,19 @@ stock SendToAdmin(color, string[], lvl = 1, log = 0) {
 		}
 	}
 	switch(log) {
-		case 0: SendLog("adminchat",	string);
-		case 1: SendLog("anticheat",	string);
-		case 2: SendLog("report",		string);
-		case 3: SendLog("admwarn",		string);
-		case 4: SendLog("debug",		string);
-		case 5: SendLog("sqlerror",		string);
+		case 0: SendLog(LOG_ANTICHEAT, string);
+		case 1: SendLog(LOG_ANTICHEAT, string);
+		case 2: SendLog(LOG_REPORT, string);
+		case 3: SendLog(LOG_ADMWARN, string);
+		case 4: SendLog(LOG_PAYDAY_STATS, string);
+		case 5: SendLog(LOG_MYSQL_ERROR, string);
 	}
 	return 1;
 }
 
 stock SendToHelper(color, string[], lvl = 1) {
 	foreach(new i : HelperPlayers) if(IsPHelper(i, lvl) && IsAHelperDuty(i)) Send(i, color, string);
-	SendLog("helperchat", string);
+	SendLog(LOG_HELPER_CHAT, string);
 }
 
 stock SendToLeader(color, string[]) {
@@ -5938,23 +5951,23 @@ public: ClearBanList(currtime) {
 
 
 public: Checkprop() {
-	SendLog("houses", "[Debug] Checkprop starting...");
+	SendLog(LOG_HOUSE, "[Debug] Checkprop starting...");
 	new count;
 	foreach(new i : Houses) {
 		if(HouseInfo[i][hOwned] && getday(gettime(), HouseInfo[i][hDate]) >= 15) {
 			format(query, sizeof query, "[Debug] Home sold! HouseID: %i; Owner: %s; Price: %i", HouseInfo[i][hID], HouseInfo[i][hOwner], HouseInfo[i][hPrice]);
-			SendLog("houses", query);
+			SendLog(LOG_HOUSE, query);
 			ClearHouse(i);
 			count++;
 		}
 	}
 	format(query, sizeof query, "[Debug] Total sales of houses: %i", count);
-	SendLog("houses", query);
+	SendLog(LOG_HOUSE, query);
 	return 1;
 }
 
 public: onPayDay() {
-	SendLog("debug", "[Debug] PayDay starting...");
+	SendLog(LOG_PAYDAY_STATS, "[Debug] PayDay starting...");
 
 	new
 		tax,
@@ -7646,7 +7659,7 @@ CMD:pay(playerid, params[]) { new string[144], sendername[24], playername[24];
 		format(string, sizeof string, "* Вы получили $%d от %s (игрока: %d).", params[1], sendername, playerid);
 		Send(params[0], COLOR_GRAD1, string);
 		format(string, sizeof string, "%s заплатил $%d %s", sendername, params[1], playername);
-		SendLog("pay", string);
+		SendLog(LOG_PAY, string);
 	}
 	else Send(playerid, COLOR_GRAD1, "* Недействительное операционное количество.");
 	
@@ -7660,7 +7673,7 @@ CMD:charity(playerid, params[]) { new string[144], sendername[24];
 	Rac::GivePlayerMoney(playerid, -params[0]); GetPlayerName(playerid, sendername, 24);
 	format(string, sizeof string, "* %s спасибо вам за пожертвование, $%d.", sendername, params[0]);
 	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-	Send(playerid, COLOR_GRAD1, string), SendLog("pay",string);
+	Send(playerid, COLOR_GRAD1, string), SendLog(LOG_PAY,string);
 	return 1;
 }
 
@@ -8016,7 +8029,7 @@ CMD:ad(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255
 				format(string, sizeof string, "Объявление: %s. Автор: %s, телефон: %i.", replacecmdtext, sendername, Pl::Info[playerid][pNumber]);
 			}
 			OOCNews(COLOR_GROVE,string);
-			SendLog("ad",string);
+			SendLog(LOG_AD_CHAT,string);
 			format(string, sizeof string, "~r~Paid $%d~n~~w~Message contained: %d Characters", payout, len);
 			GameTextForPlayer(playerid, string, 7000, 5);
 		}
@@ -8040,7 +8053,7 @@ CMD:gov(playerid, params[]) { new string[144], sendername[24];
 				SendToAll(COLOR_WHITE, "______________| Городские новости |______________");
 				format(string, sizeof string, "*%s %s: %s", RankInfo[fracid][Pl::Info[playerid][pRank]], sendername, params);
 				SendToAll(COLOR_DBLUE, string);
-				SendLog("gov", string);
+				SendLog(LOG_GOV_CHAT, string);
 			} else {
 				format(string, sizeof string, "* Доступно только с %i ранга", GetGRank(fracid));
 				Send(playerid, COLOR_GREY, string);
@@ -8653,7 +8666,7 @@ CMD:sellhouse(playerid, params[]) { new string[144], sendername[24], playername[
 			GameTextForPlayer(playerid, string, 10000, 3);
 			format(string, sizeof string, "[Debug] %s продал дом. Price: $%i; SellPrice: $%i; Safe: $%i",
 			sendername, HouseInfo[house][hPrice], sellprice, HouseInfo[house][hSafe][0]);
-			SendLog("houses", string);
+			SendLog(LOG_HOUSE, string);
 		}
 		if(Pl::Info[playerid][pLocal] == OFFSET_HOUSE + house) {
 			ExitHouse(playerid, house)
@@ -12006,7 +12019,7 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 					getname(playerid -> sendername, seller -> playername);
 					format(string, sizeof string, "[Debug] %s продал дом %s. Price: $%i; SellPrice: $%i; Safe: $%i",
 					playername, sendername, HouseInfo[house][hPrice], price, HouseInfo[house][hSafe][0]);
-					SendLog("houses", string);
+					SendLog(LOG_HOUSE, string);
 				}
 				
 				case 1 : {
@@ -12042,7 +12055,7 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 					getname(playerid -> sendername, seller -> playername);
 					format(string, sizeof string, "[Debug] %s обменялся домом с %s. Price: $%i|%i; Surcharge: $%i; Safe: $%i|%i",
 					playername, sendername, HouseInfo[h1][hPrice], HouseInfo[h2][hPrice], price, HouseInfo[h1][hSafe][0], HouseInfo[h2][hSafe][0]);
-					SendLog("houses", string);
+					SendLog(LOG_HOUSE, string);
 				}
 			}
 		}
@@ -17091,7 +17104,7 @@ public onPlayerKick(playerid, reason[], reasonid) {
 			}
 		}
 	}
-	SendLog("anticheat", temp);
+	SendLog(LOG_ANTICHEAT, temp);
 	
 	return 1;
 }
@@ -17106,7 +17119,7 @@ public onPlayerBan(playerid, reason[], reasonid) {
 			}
 		}
 	}
-	SendLog("anticheat", temp);
+	SendLog(LOG_ANTICHEAT, temp);
 	
 	return 1;
 }
@@ -17571,6 +17584,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source) {
 	}
 	return 1;
 }
+
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ) {
 	if(Pl::isAdmin(playerid, ADMINISTRATOR)) {
 		if(GetPlayerState(playerid) == 2) {
@@ -17619,7 +17633,7 @@ stock ChangeName(playerid) {
 			Db::tquery(connDb, query, "", "");
 		
 		format(temp, sizeof temp, "** %s теперь изветен как %s (userid:%i)", oldName, newName, Pl::Info[playerid][pID]),
-			SendLog("changename", temp);
+			SendLog(LOG_CHANGENAME, temp);
 			
 		format(temp, sizeof temp,"*"#__SERVER_PREFIX""#__SERVER_NAME_LC": %s теперь изветен как %s", oldName, newName),
 			SendToAll(COLOR_LIGHTRED, temp);	
@@ -19016,7 +19030,7 @@ public OnQueryError(errorid, error[], callback[], querystr[], connectionHandle) 
 	format(temp, sizeof temp, "(SQL) Error: %s", error),
 		SendToAdmin(COLOR_LIGHTBLUE, temp, 4, 5);
 		
-	SendLog("sqlerror",	querystr);
+	SendLog(LOG_MYSQL_ERROR,	querystr);
 	DEBUG[TOTAL_QUERY_ERRORS]++;
 	return 1;
 }
