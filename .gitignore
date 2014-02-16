@@ -226,6 +226,7 @@ pawno/
 plugins/
 scriptfiles/logs/
 Debug.txt
+crashinfo.txt
 mysql_log.txt
 server_log.txt
 samp.ban
