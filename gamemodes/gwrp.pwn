@@ -2110,28 +2110,10 @@ public: onZahvatBizz(biz, attack, defend) {
 			Td::SetString(BizzInfo[biz][bZahvatTD], temp), Td::ShowForPlayer(p, BizzInfo[biz][bZahvatTD]);
 		}
 	} else {		
-		if((GangSolderCount[attack] == 0 && GangSolderCount[defend] > 0) && (!ZahvatKills{attack} && !ZahvatKills{defend})) {
-			//ZahvatScore[defend] += defendped;
-			if(ZahvatScore[defend] < 1) {
-				ZahvatScore[defend] ++;
-				GiveGangRespect(defend, ZahvatScore[defend]);
-			}
-			BizzInfo[biz][bFrac] = defend;
-			Gz::StopFlashForAll(BizzInfo[biz][bZone]);
-			Gz::HideForAll(BizzInfo[biz][bZone]);
-			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
-			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
-			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию бизнеса %s, без боя, %s[%d] повержены!",
-			GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
-			sendToTeam(GetFracColor(defend), temp, Gangs);
-		
-		} else if((GangSolderCount[defend] == 0 && GangSolderCount[attack] > 0) && (!ZahvatKills{attack} && !ZahvatKills{defend})) {
-			//ZahvatScore[attack] += attackped;
-			if(ZahvatScore[attack] < 1) {
-				ZahvatScore[attack] ++;
-				GiveGangRespect(attack, ZahvatScore[attack]);
-			}
+		if((GangSolderCount[defend] == 0 && GangSolderCount[attack] > 0) && (!ZahvatKills{attack} && !ZahvatKills{defend})) {
+			ZahvatScore[attack] += GangSolderCount[attack];
+			GiveGangRespect(attack, ZahvatScore[attack]);
+
 			GangBiznes{attack} ++;
 			GangBiznes{defend} --;
 			BizzInfo[biz][bFrac] = attack;
@@ -2145,23 +2127,20 @@ public: onZahvatBizz(biz, attack, defend) {
 			sendToTeam(GetFracColor(attack), temp, Gangs);
 			
 		} else if(!ZahvatKills{attack} && !ZahvatKills{defend}) {
-			if(ZahvatScore[defend] < 1) {
-				ZahvatScore[defend] ++;
-				GiveGangRespect(defend, ZahvatScore[defend]);
-			}
+			ZahvatScore[defend] += GangSolderCount[defend];
+			GiveGangRespect(defend, ZahvatScore[defend]);
 			BizzInfo[biz][bFrac] = defend;
 			Gz::StopFlashForAll(BizzInfo[biz][bZone]);
 			Gz::HideForAll(BizzInfo[biz][bZone]);
 			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
-			GiveGangRespect(defend, ZahvatScore[defend]);
 			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию бизнеса %s, без боя, %s[%d] повержены!",
+			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию бизнеса %s, %s[%d] повержены!",
 			GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 			sendToTeam(GetFracColor(defend), temp, Gangs);
 		
 		} else {
-			new totalscore = (ZahvatScore[attack]-ZahvatScore[defend]);
+			new totalscore = (ZahvatScore[attack] - ZahvatScore[defend]);
 			if(totalscore == 0) {
 				if(ZahvatKills{attack} < ZahvatKills{defend}) {
 					BizzInfo[biz][bFrac] = defend;
@@ -2190,10 +2169,7 @@ public: onZahvatBizz(biz, attack, defend) {
 				
 				} else {
 					BizzInfo[biz][bFrac] = defend;
-					if(ZahvatScore[defend] < 1) {
-						ZahvatScore[defend] ++;
-						GiveGangRespect(defend, ZahvatScore[defend]);
-					}
+					GiveGangRespect(defend, ZahvatScore[defend]);
 					Gz::StopFlashForAll(BizzInfo[biz][bZone]);
 					Gz::HideForAll(BizzInfo[biz][bZone]);
 					Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
@@ -2206,10 +2182,7 @@ public: onZahvatBizz(biz, attack, defend) {
 				
 			} else if(totalscore < 0) {
 				BizzInfo[biz][bFrac] = defend;
-				if(ZahvatScore[defend] < 1) {
-					ZahvatScore[defend] ++;
-					GiveGangRespect(defend, ZahvatScore[defend]);
-				}
+				GiveGangRespect(defend, ZahvatScore[defend]);
 				Gz::StopFlashForAll(BizzInfo[biz][bZone]);
 				Gz::HideForAll(BizzInfo[biz][bZone]);
 				Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
@@ -2223,10 +2196,7 @@ public: onZahvatBizz(biz, attack, defend) {
 				GangBiznes{attack} ++;
 				GangBiznes{defend} --;
 				BizzInfo[biz][bFrac] = attack;
-				if(ZahvatScore[attack] < 1) {
-					ZahvatScore[attack] ++;
-					GiveGangRespect(attack, ZahvatScore[attack]);
-				}
+				GiveGangRespect(attack, ZahvatScore[attack]);
 				Gz::StopFlashForAll(BizzInfo[biz][bZone]);
 				Gz::HideForAll(BizzInfo[biz][bZone]);
 				Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
@@ -22480,7 +22450,7 @@ public: _ShowOffline(playerid, id) {
 			new num, rows = cache_get_row_count(rows);
 			if(rows > 0) {
 				new leaderid, leader;
-				strcat(dialogtext, "Лидер\t\t\tПоследний везит\tФракция\n\n");
+				strcat(dialogtext, "Лидер\t\tПоследний везит\tФракция\n\n");
 				while(rows--) {
 					cache_get_row(rows, 0, name);
 					cache_get_int(rows, 1, leader);
