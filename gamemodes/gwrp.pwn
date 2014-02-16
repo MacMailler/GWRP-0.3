@@ -97,81 +97,6 @@
 #define CandomPrice 			50
 #define CDPlayerPrice 			2500
 
-#define COLOR_BOX   			0x00000050
-#define COLOR_OOC				0xE0FFFFAA
-#define COLOR_USE				0x60A000AA
-#define COLOR_GOV				0xEA8DF7AA
-#define COLOR_RED				0xAA3333AA
-#define COLOR_ADD				0x63FF60AA
-#define COLOR_TELA				0x17302FFF
-#define COLOR_PINK				0xFF66FFAA
-#define COLOR_GREY				0xAFAFAFAA
-#define COLOR_LRED				0xF65B00AA
-#define COLOR_BLUE				0x1111BBAA
-#define COLOR_LIME				0x10F441AA
-#define COLOR_NAVY				0x100080AA
-#define COLOR_AQUA				0xF0F8FFAA
-#define COLOR_GOLD				0xB8860BAA
-#define COLOR_NEWS				0xFFA500AA
-#define COLOR_SPEC				0xBFC0C200
-#define COLOR_CYAN				0xFF8282AA
-#define COLOR_ALPHA				0xFFFFFF00
-#define COLOR_IVORY				0xFFFF82AA
-#define COLOR_OLIVE				0x808000AA
-#define COLOR_DBLUE				0x2641FEAA
-#define COLOR_BROWN				0xA52A2AAA
-#define COLOR_CORAL				0xFF7F50AA
-#define COLOR_BLACK				0x000000AA
-#define COLOR_WHITE				0xFFFFFFAA
-#define COLOR_FADE1				0xE6E6E6E6
-#define COLOR_FADE2				0xC8C8C8C8
-#define COLOR_FADE3				0xAAAAAAAA
-#define COLOR_FADE4				0x8C8C8C8C
-#define COLOR_FADE5				0x6E6E6E6E
-#define COLOR_GRAD1				0xB4B5B7FF
-#define COLOR_GRAD2				0xBFC0C2FF
-#define COLOR_GRAD3				0xCBCCCEFF
-#define COLOR_GRAD4				0xD8D8D8FF
-#define COLOR_GRAD5				0xE3E3E3FF
-#define COLOR_GRAD6				0xF0F0F0FF
-#define COLOR_GREEN				0x33AA33AA
-#define COLOR_INVIS				0xAFAFAF00
-#define COLOR_RADIO				0x8D8DFF00
-#define COLOR_GROVE				0x00D900C8
-#define COLOR_FLBLUE			0x6495EDAA
-#define COLOR_BISQUE			0xFFE4C4AA
-#define COLOR_SYSTEM			0xEFEFF7AA
-#define COLOR_FRENCH			0x29DBFFFF
-#define COLOR_CHEATS			0xCDFFFFFF
-#define COLOR_YELLOW			0xFFFF00AA
-#define COLOR_PURPLE			0xC2A2DAAA
-#define COLOR_ORANGE			0xFF9900AA
-#define COLOR_INDIGO			0x4B00B0AA
-#define COLOR_TOMATO			0xFF6347AA
-#define COLOR_MAROON			0x800000AA
-#define COLOR_AZTECAS			0x01FCFFC8
-#define COLOR_ALLDEPT			0xFF8282AA
-#define COLOR_MAGENTA			0xFF00FFFF
-#define COLOR_CRIMSON			0xDC143CAA
-#define COLOR_BANKOMAT			0x6053F3FF
-#define COLOR_LIGHTRED			0xFF6347AA
-#define COLOR_LIGHTRED2			0xFF0000FF
-#define COLOR_LIGHTBLUE			0x33CCFFAA
-#define COLOR_ORANGERED			0xFF4500AA
-#define COLOR_LAWNGREEN			0x7CFC00AA
-#define COLOR_LIMEGREEN			0x32CD32AA
-#define COLOR_BRIGHTRED			0xDC143CAA
-#define COLOR_BUS_PRICE			0x00AAFFEE
-#define COLOR_TAXI_PRICE		0xFFCC00FF
-#define COLOR_CHARTREUSE		0x7FFF00AA
-#define COLOR_MEDIUMAQUA		0x83BFBFAA
-#define COLOR_LIGHTGREEN		0x9ACD32AA
-#define COLOR_GREENYELLOW		0xADFF2FAA
-#define COLOR_YELLOWGREEN		0x9ACD32AA
-#define COLOR_SPRINGGREEN		0x10FF7FAA
-#define COLOR_MIDNIGHTBLUE		0x191970AA
-#define COLOR_MEDIUMMAGENTA		0x8B008BAA
-
 #define JOB_NONE 				(0)
 #define JOB_DETECTIVE 			(1)
 #define JOB_LAWYER 				(2)
@@ -402,7 +327,7 @@ new RegEx:ValidText;
 #define	TOTAL_SAVE_ACCOUNT		(3)
 #define	TOTAL_QUERY_ERRORS		(4)
 #define	TOTAL_RCON_LOGINS		(5)
-new DEBUG[ 6 ];
+new DEBUG[6];
 
 // Pickup`s
 new boj;
@@ -520,7 +445,6 @@ new RadioInfo[][rInfo] = {
 new CP						[MAX_PLAYERS];
 new MG2						[MAX_PLAYERS];
 new Fixr					[MAX_PLAYERS char];
-new pddo					[MAX_PLAYERS];
 new Fell					[MAX_PLAYERS];
 new Wait					[MAX_PLAYERS char];
 new Music					[MAX_PLAYERS];
@@ -631,7 +555,7 @@ new bool:VehicleBoot		[MAX_VEHICLES char] = {false, ...};
 new bool:VehicleLight		[MAX_VEHICLES char] = {false, ...};
 new bool:VehicleBonnet		[MAX_VEHICLES char] = {false, ...};
 
-new Iterator:Queue<MAX_PLAYERS>;
+new Iterator:AshQueue<MAX_PLAYERS>;
 new Iterator:CreatedCars<MAX_VEHICLES>;
 new Iterator:ToglogPlayers<MAX_PLAYERS>;
 new Iterator:AdminPlayers<MAX_PLAYERS>;
@@ -1304,7 +1228,7 @@ enum respI
 	Float:rMaxX,
 	Float:rMaxY,
 }
-new RespCoord[ ][respI] = {
+new RespCoord[][respI] = {
 	{1,1523.4375,-1738.28125,1593.75,-1599.6},
 	{2,-1703.1,642.5,-1562.5,742.1},
 	{3,78.125,1750.0,388.6,2128.9},
@@ -1337,7 +1261,7 @@ enum camEnum
 	Float:c_pos[3],
 	Float:c_lookAt[3],
 }
-new EnterPos[ ][ camEnum ] = {
+new EnterPos[][camEnum] = {
 	//{{0000}, {0}, {99}, {-1657.5237,1207.6644,13.6719,357.6906},	{-1657.4678,1211.2292,13.6781},		{-1657.5237,1207.6644,13.6719}}
 	{{1187}, {0}, {99}, {-1494.7579,985.1379,7.1875,120.9491},		{-1399.0210,976.2402,179.3737},		{-1754.3281, 669.2344, 62.8203}}
 	/*{{1185}, {0}, {99}, {-1564.6333,701.9891,7.0391,0.0000},		{-1564.6333,701.8426,146.6249},		{-1700.9147,834.9225,170.3657}},
@@ -1934,7 +1858,7 @@ public OnGameModeInit() {
 		GangOnBattle[i] = INVALID_BIZ_ID;
 	}
 	
-	ValidText = regex_build("[а-яА-Яa-zA-Z0-9_,!\\.\\?\\-\\+\\(\\)\\ ]+");
+	ValidText = regex_build("[а-яА-Яa-zA-Z0-9_,!\\.\\?\\-\\+\\(\\)\\]+");
 	ValidRPName = regex_build("([A-Z]{1,1})[a-z]{2,9}+_([A-Z]{1,1})[a-z]{2,9}");
 	ADBlock = regex_build("(((\\w+):\\/\\/)|(www\\.|\\,|))+(([\\w\\.\\,_-]{2,}(\\.|\\,)[\\w]{2,6})|(([\\d]{1,3}(\\b))(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}))(((\\s+|)(\\:|\\;|\\s)(\\s+|)[\\d\\s]{2,}(\\b))|\\b)(\\/[\\w\\&amp\\;\\%_\\.\\/\\-\\~\\-]*)?");
 	
@@ -2566,13 +2490,11 @@ public OnPlayerConnect(playerid) {
 		return 1;
 	}
 	
-	static currtime, ip[16];
 	static playerIp[MAX_PLAYERS][16];
 	
-	currtime = gettime();
+	new ip[16], currtime = gettime();
 	GetPlayerIp(playerid, ip, 16);
 	if(slotused{playerid} && strcmp(playerIp[playerid], ip, false) == 0) {
-		//printf("%i:%s - %s", playerid, playerIp[playerid], ip);
 		return Rac::Ban(playerid, "Флуд коннектами");
 	}
 	if(currtime-timeleft[playerid] < 5) {
@@ -3369,40 +3291,29 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 stock AshQueue(playerid, reason) {
 	switch(reason) {
 		case 0 : {
-			if(!Pl::Info[playerid][pLic][0]) {
-				if(Pl::Info[playerid][pTest] == 999) {
-					if(pddo[playerid] == 0) {
-						if(!TakingLesson[playerid]) {
-							Iter::Add(Queue, playerid);
-							pddo[playerid] = Iter::Count(Queue);
-							GetPlayerName(playerid, plname, 24);
-							scf(string_ah, src, "%i.%s\n", pddo[playerid], plname);
-							UpdateDynamic3DTextLabelText(ah_text, 0x42aaffFF, string_ah);
-							Send(playerid, COLOR_WHITE,"* Вы заняли место в очереди.");
-						}
-					}
+			if(!Iter::Contains(AshQueue, playerid)) {
+				if(!TakingLesson[playerid]) {
+					Iter::Add(AshQueue, playerid);
+					GetPlayerName(playerid, plname, 24);
+					scf(string_ah, temp, "%i.%s\n", Iter::Count(AshQueue), plname);
+					UpdateDynamic3DTextLabelText(ah_text, 0x42aaffFF, string_ah);
+					Send(playerid, COLOR_WHITE,"* Вы заняли место в очереди.");
 				}
 			}
 		}
 		
 		case 1 : {
-			if(!Pl::Info[playerid][pLic][0]) {
-				if(Pl::Info[playerid][pTest] == 999) {
-					if(pddo[playerid] != 0) {
-						new pddp;
-						pddo[playerid] = 0;
-						Iter::Remove(Queue, playerid);
-						format(string_ah,sizeof(string_ah),">> Очередь допущенных к практической части экзамена: <<\n");
-						foreach(new i : Queue) {
-							pddp++;
-							pddo[i] = pddp;
-							GetPlayerName(i, plname, 24);
-							scf(string_ah, temp, "%i.%s\n", pddp, plname);
-						}
-						UpdateDynamic3DTextLabelText(ah_text, 0x42aaffFF, string_ah);
-						Send(playerid, COLOR_WHITE, "* Вы покинули очередь.");
-					}
+			if(Iter::Contains(AshQueue, playerid)) {
+				new pddp;
+				Iter::Remove(AshQueue, playerid);
+				format(string_ah,sizeof(string_ah),">> Очередь допущенных к практической части экзамена: <<\n");
+				foreach(new i : AshQueue) {
+					pddp++;
+					GetPlayerName(i, plname, 24);
+					scf(string_ah, temp, "%i.%s\n", pddp, plname);
 				}
+				UpdateDynamic3DTextLabelText(ah_text, 0x42aaffFF, string_ah);
+				Send(playerid, COLOR_WHITE, "* Вы покинули очередь.");
 			}
 		}
 	}
@@ -3416,13 +3327,11 @@ public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
 				if(GateOpen(gateid)) {
 					PlayerPlaySound(playerid, 1058, 0, 0, 0);
 					SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
-					//Send(playerid, 0x15AAEAAA, "* Ворота открыты на 10 секунд, проезжайте!");
 				}
 			}
 			return 1;
 		}
 	}
-	//Send(playerid, COLOR_GREY, "* Для вас проезд закрыт!");
 	return 1;
 }
 
@@ -3738,7 +3647,7 @@ stock PickupHndlr::Portal(playerid, pickupid) {
 					Rac::SetVehiclePos(veh, Portal::Info[i][Portal::Portal2][0]+x,Portal::Info[i][Portal::Portal2][1]+y,Portal::Info[i][Portal::Portal2][2]);
 					SetVehicleZAngle(veh, Portal::Info[i][Portal::Portal2][3]);
 					LinkVehicleToInterior(veh, Portal::Info[i][Portal::Inter][1]);
-					SetVehicleVirtualWorld(veh, Portal::Info[i][Portal::World ][1]);
+					SetVehicleVirtualWorld(veh, Portal::Info[i][Portal::World][1]);
 				}
 				Rac::SetPlayerInterior(playerid, Portal::Info[i][Portal::Inter][1]);
 				Rac::SetPlayerVirtualWorld(playerid, Portal::Info[i][Portal::World][1]);
@@ -3920,11 +3829,10 @@ stock PickupHndlr::Houses(playerid, pickupid) {
 }
 
 public: onPlayerPortal(playerid, portalid, pickupid) {
-	new result = 0;
 	switch(portalid) {
 		case 11 : {
 			if(Pl::FracID(playerid) == 11) {
-				result = 1;
+				return 1;
 			}
 		}
 		case 12 : {
@@ -3932,18 +3840,18 @@ public: onPlayerPortal(playerid, portalid, pickupid) {
 				case 1 : {
 					if(!TakingLesson[playerid]) {
 						Send(playerid, COLOR_WHITE, "* Дождитесь начала экзамена!");
-						result = -1;
+						return -1;
 					} else {
-						result = 1;
+						return 1;
 					}
 				}
 				case 2 : {
-					result = 1;
+					return 1;
 				}
 			}
 		}
 	}
-	return result;
+	return 0;
 }
 
 public OnPlayerSelectedMenuRow(playerid, row) {
@@ -4793,7 +4701,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 									return Rac::RemovePlayerFromVehicle(playerid);
 								}
 							} else {
-								format(src, sizeof(src), "* Транспорт зареверзирован (%s)", FracInfo[ fc_frac ][ fName ]);
+								format(src, sizeof(src), "* Транспорт зареверзирован (%s)", FracInfo[fc_frac][fName]);
 								Send(playerid,COLOR_GREY, src);
 								return Rac::RemovePlayerFromVehicle(playerid);
 							}
@@ -4805,7 +4713,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 							return Rac::RemovePlayerFromVehicle(playerid);
 						}
 					} else {
-						format(src, sizeof(src), "* Транспорт зареверзирован (%s)", FracInfo[ fc_frac ][ fName ]);
+						format(src, sizeof(src), "* Транспорт зареверзирован (%s)", FracInfo[fc_frac][fName]);
 						Send(playerid,COLOR_GREY, src);
 						return Rac::RemovePlayerFromVehicle(playerid);
 					}
@@ -5005,9 +4913,11 @@ stock HireCost(carid) {
 }
 
 stock ModelCost(model) {
-	for(new i; i < 4; i++) for(new j; j < ASModelCount[i]; j++) {
-		if(model == AutoSolon[i][j][1]) {
-			return AutoSolon[i][j][1];
+	for(new i; i < 4; i++) {
+		for(new j; j < ASModelCount[i]; j++) {
+			if(model == AutoSolon[i][j][1]) {
+				return AutoSolon[i][j][1];
+			}
 		}
 	}
 	return 50000;
@@ -5165,7 +5075,7 @@ stock Update(i) {
 			GetNetworkStats(dialog, sizeof dialog);
 			SPD(i, D_NETSTAT, 0, "Server stat", dialog, "OK", "");
 		
-		} else if(Pl::NetStats[ i ] == 1000) {
+		} else if(Pl::NetStats[i] == 1000) {
 			Db::stat(dialog, connDb);
 			SPD(i, D_NETSTAT, 0, "Mysql stat", dialog, "OK", "");
 		
@@ -5608,7 +5518,7 @@ stock Pl::SetFracColor(playerid) {
 	return SetPlayerColor(playerid, GetFracColor(Pl::FracID(playerid)));
 }
 
-static LoadSpawns() {
+stock LoadSpawns() {
 	new time = GetTickCount();
 	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__DBPrefix__""#__TableSpawns__"` ORDER BY `id` ASC");
 	new rows = cache_get_row_count();
@@ -5629,7 +5539,7 @@ static LoadSpawns() {
 	return 1;
 }
 
-static LoadGMInfo() {
+stock LoadGMInfo() {
 	new time = GetTickCount();
 	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__DBPrefix__""#__TableStuffs__"` WHERE 1", true);
 	if(cache_get_row_count()) {
@@ -5659,7 +5569,7 @@ stock SaveStuff() {
 	return 1;
 }
 
-static LoadHouses() {
+stock LoadHouses() {
 	new time = GetTickCount();
     format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableHouses__"` ORDER BY `id` ASC", true);
 	new Cache:result = Db::query(connDb, query, true);
@@ -5735,7 +5645,7 @@ static LoadHouses() {
 	return 1;
 }
 
-static LoadHGarages() {
+stock LoadHGarages() {
 	HGaragePickup[0] = AddPickup(1318, 23, HGaragePickupPos[0][0], HGaragePickupPos[0][1], HGaragePickupPos[0][2], 0);
 	HGaragePickup[1] = AddPickup(1318, 23, HGaragePickupPos[1][0], HGaragePickupPos[1][1], HGaragePickupPos[1][2], 0);
 	
@@ -5762,7 +5672,7 @@ static LoadHGarages() {
 	return 1;
 }
 
-static LoadBizz() {
+stock LoadBizz() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableBusines__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
@@ -5815,7 +5725,7 @@ static LoadBizz() {
 	return 1;
 }
 
-static LoadGas() {
+stock LoadGas() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableRefills__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
@@ -5834,7 +5744,7 @@ static LoadGas() {
 	return 1;
 }
 
-static LoadGangInfo() {
+stock LoadGangInfo() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableGangInfo__"` ORDER BY `gRespect` DESC");
 	new Cache:result = Db::query(connDb, query, true);
@@ -5866,7 +5776,7 @@ stock SaveGI() {
 	return;
 }
 
-static LoadFracInfo() {
+stock LoadFracInfo() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableFracInfo__"` ORDER BY `fID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
@@ -5904,7 +5814,7 @@ stock UpdateFracInfo(fracid) {
 	return 0;
 }
 
-static LoadFracVehicles( ) {
+stock LoadFracVehicles( ) {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableFracVehicles__"` ORDER BY `ID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
@@ -5931,7 +5841,7 @@ static LoadFracVehicles( ) {
 				600
 			);
 			
-			if(!strlen(Fc::Info[i][Fc::Number])) strmid(Fc::Info[i][ Fc::Number], Fc::DEF_NUMBER, 0, strlen(Fc::DEF_NUMBER), 255);
+			if(!strlen(Fc::Info[i][Fc::Number])) strmid(Fc::Info[i][Fc::Number], Fc::DEF_NUMBER, 0, strlen(Fc::DEF_NUMBER), 255);
 			SetVehicleNumberPlate(Fc::Info[i][Fc::Id][1], Fc::Info[i][Fc::Number]);
 			AutoInfo[Fc::Info[i][Fc::Id][1]][aMileage] = AutoInfo[0][aMileage];
 			Iter::Add(TeamVehicles[Fc::Info[i][Fc::FracId]], Fc::Info[i][Fc::Id][1]);
@@ -5963,7 +5873,7 @@ public: UpdateProp() {
 }
 
 stock Float:GetDistanceBetweenPlayers(p1,p2) {
-	new Float:xyz[ 3 ];
+	new Float:xyz[3];
 	GetPlayerPos(p2, xyz[0], xyz[1], xyz[2]);
 	return GetPlayerDistanceFromPoint(p1, xyz[0], xyz[1], xyz[2]);
 }
@@ -6118,7 +6028,7 @@ public: onPayDay() {
 					sendf(i, src, COLOR_GREY, "* Текущий баланс: $%i", Pl::Info[i][pBank]);
 					GameTextForPlayer(i, "~y~Bank~n~~w~Paycheck", 5000, 1);
 					PlayerPlayMusic(i);
-					DEBUG[ TOTAL_PLAYER_PAID ] ++;
+					DEBUG[TOTAL_PLAYER_PAID] ++;
 					
 					Pl::Info[i][pPayDay] = 0;
 					Pl::Info[i][pPayCheck] = 0;
@@ -6153,13 +6063,13 @@ public: onPayDay() {
 	GiveFracMoney(7, totaltax);
 	GiveBizzProfit(bidx, totalebill);
 	
-	format(src, sizeof(src), "PAYDAY STATS: Получивших зарплату: %i, Собрано налога: $%i, Ушло на зарплату: $%i, Счета за электричество: $%i", DEBUG[ TOTAL_PLAYER_PAID ], totaltax, totalchecks, totalebill);
+	format(src, sizeof(src), "PAYDAY STATS: Получивших зарплату: %i, Собрано налога: $%i, Ушло на зарплату: $%i, Счета за электричество: $%i", DEBUG[TOTAL_PLAYER_PAID], totaltax, totalchecks, totalebill);
 	SendToAdmin(COLOR_YELLOW, src, 1, 4);
 	format(src, sizeof(src), "PAYDAY STATS: Сохранений аккаунтов: %i, houses:%i/biznes:%i, MySQL-ошибок: %i, Сейчас играют: %i",
-	DEBUG[ TOTAL_SAVE_ACCOUNT ], DEBUG[ TOTAL_SAVE_HOUSES ], DEBUG[ TOTAL_SAVE_BIZNES ], DEBUG[ TOTAL_QUERY_ERRORS ], Iter::Count(Player));
+	DEBUG[TOTAL_SAVE_ACCOUNT], DEBUG[TOTAL_SAVE_HOUSES], DEBUG[TOTAL_SAVE_BIZNES], DEBUG[TOTAL_QUERY_ERRORS], Iter::Count(Player));
 	SendToAdmin(COLOR_YELLOW, src, 1, 4);
 
-	for(new i; i < sizeof(DEBUG); i++) DEBUG[ i ] = 0; // Clear debug
+	for(new i; i < sizeof(DEBUG); i++) DEBUG[i] = 0; // Clear debug
 	
 	return 1;
 }
@@ -6353,7 +6263,7 @@ public: Pl::Update(playerid) {
 		scf(query, src, "`Online`='%i' ", Pl::Info[playerid][pLastVisit]);
 		scf(query, src, "WHERE `ID`='%i'", Pl::Info[playerid][pID]);
 		Db::tquery(connDb, query, "", "");
-		DEBUG[ TOTAL_SAVE_ACCOUNT ] ++;
+		DEBUG[TOTAL_SAVE_ACCOUNT] ++;
 	}
 	return 1;
 }
@@ -6447,7 +6357,7 @@ stock UpdateBizz(i) {
 	scf(query, src, "`exit`='%.3f,%.3f,%.3f,%.3f' ", BizzInfo[i][bExit][0], BizzInfo[i][bExit][1], BizzInfo[i][bExit][2], BizzInfo[i][bExit][3]);
 	scf(query, src, "WHERE `id` = '%i'", BizzInfo[i][bID]);
 	Db::tquery(connDb, query, "", "");
-	DEBUG[ TOTAL_SAVE_BIZNES ]++;
+	DEBUG[TOTAL_SAVE_BIZNES]++;
 	return 1;
 }
 
@@ -6799,7 +6709,7 @@ CMD:ptmcheck(playerid, params[]) { new string[144], sendername[24], playername[2
 		Rac::SetPlayerPos(targetid, x[0], y[0], z[0]);
 		SetTimerEx("onPTMCheck", 2000, false, "iifff", params[0], targetid, x[1], y[1], z[1]);
 		getname(playerid -> sendername, params[0] -> playername);
-		format(string, sizeof string, "[AdmWarn] * %s применил команду /ptmpcheck к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+		format(string, sizeof string, "[AdmWarn] * %s применил команду /ptmpcheck к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 3, 3);
 	} else {
 		Send(playerid, COLOR_GREY, "* Недостаточно условий!");
@@ -6945,26 +6855,22 @@ CMD:velocity(playerid, params[]) { new string[144], sendername[24], playername[2
 	if(GetPlayerState(params[0]) == 2 || GetPlayerState(params[0]) == 3) {
 		new v_id = GetPlayerVehicleID(params[0]);
 		GetVehicleVelocity(v_id, posx, posy, posz);
-		switch(params[1])
-		{
+		switch(params[1]) {
 			case 'x' : SetVehicleVelocity(v_id, distance, posy, posz);
 			case 'y' : SetVehicleVelocity(v_id, posx, distance, posz);
 			case 'z' : SetVehicleVelocity(v_id, posx, posy, distance);
 			
 		}
-	}
-	else
-	{
+	} else {
 		GetPlayerVelocity(params[0], posx, posy, posz);
-		switch(params[1])
-		{
+		switch(params[1]) {
 			case 'x' : SetPlayerVelocity(params[0], distance, posy, posz);
 			case 'y' : SetPlayerVelocity(params[0], posx, distance, posz);
 			case 'z' : SetPlayerVelocity(params[0], posx, posy, distance);
 		}
 	}
 	getname(playerid -> sendername, params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /velocity к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /velocity к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 3, 3);
 	return 1;
 }
@@ -7302,20 +7208,20 @@ CMD:addpic(playerid, params[]) { new string[144];
 		if(params[1] == -1) params[1] = GetPlayerVirtualWorld(playerid);
 		
 		new i = TOTAL_PORTAL; TOTAL_PORTAL++;
-		Portal::Info[ i ][ Portal::Id ] = cache_insert_id();
-		Portal::Info[ i ][ Portal::Type ][ 0 ] = params[2];
-		Portal::Info[ i ][ Portal::Model ][ 0 ] = params[0];
-		Portal::Info[ i ][ Portal::Inter ][ 0 ] = GetPlayerInterior(playerid);
-		Portal::Info[ i ][ Portal::World ][ 0 ] = params[1];
+		Portal::Info[i][Portal::Id] = cache_insert_id();
+		Portal::Info[i][Portal::Type][0] = params[2];
+		Portal::Info[i][Portal::Model][0] = params[0];
+		Portal::Info[i][Portal::Inter][0] = GetPlayerInterior(playerid);
+		Portal::Info[i][Portal::World][0] = params[1];
 		GetPlayerPos(
 			playerid,
-			Portal::Info[ i ][ Portal::Portal1 ][ 0 ],
-			Portal::Info[ i ][ Portal::Portal1 ][ 1 ],
-			Portal::Info[ i ][ Portal::Portal1 ][ 2 ]
+			Portal::Info[i][Portal::Portal1][0],
+			Portal::Info[i][Portal::Portal1][1],
+			Portal::Info[i][Portal::Portal1][2]
 		);
-		if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[ i ][ Portal::Portal1 ][ 3 ]);
-		else GetPlayerFacingAngle(playerid, Portal::Info[ i ][ Portal::Portal1 ][ 3 ]);
-		Portal::Info[ i ][ Portal::Pickup ][ 0 ]=_AddPickup(Portal::Info[ i ][ Portal::Model ][ 0 ],Portal::Info[ i ][ Portal::Type ][ 0 ],Portal::Info[ i ][ Portal::Portal1 ],Portal::Info[ i ][ Portal::World ][ 0 ]);
+		if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[i][Portal::Portal1][3]);
+		else GetPlayerFacingAngle(playerid, Portal::Info[i][Portal::Portal1][3]);
+		Portal::Info[i][Portal::Pickup][0]=_AddPickup(Portal::Info[i][Portal::Model][0],Portal::Info[i][Portal::Type][0],Portal::Info[i][Portal::Portal1],Portal::Info[i][Portal::World][0]);
 		updatePickup( i );
 		Send(playerid, -1, "* Пикап входа создан!");
 	}
@@ -7331,21 +7237,20 @@ CMD:setpic1(playerid, params[]) {
 		return Send(playerid, COLOR_GREY, "Введите: /setpic1 [modelid]");
 		
 	if( params[1] == -1 ) params[1] = GetPlayerVirtualWorld(playerid);
-	Portal::Info[ teleport ][ Portal::Type ][ 0 ] = params[2];
-	Portal::Info[ teleport ][ Portal::Model ][ 0 ] = params[0];
-	Portal::Info[ teleport ][ Portal::Inter ][ 0 ] = GetPlayerInterior(playerid);
-	Portal::Info[ teleport ][ Portal::World ][ 0 ] = params[1];
-	GetPlayerPos
-	(
+	Portal::Info[teleport][Portal::Type][0] = params[2];
+	Portal::Info[teleport][Portal::Model][0] = params[0];
+	Portal::Info[teleport][Portal::Inter][0] = GetPlayerInterior(playerid);
+	Portal::Info[teleport][Portal::World][0] = params[1];
+	GetPlayerPos(
 		playerid,
-		Portal::Info[ teleport ][ Portal::Portal1 ][ 0 ],
-		Portal::Info[ teleport ][ Portal::Portal1 ][ 1 ],
-		Portal::Info[ teleport ][ Portal::Portal1 ][ 2 ]
+		Portal::Info[teleport][Portal::Portal1][0],
+		Portal::Info[teleport][Portal::Portal1][1],
+		Portal::Info[teleport][Portal::Portal1][2]
 	);
-	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[ teleport ][ Portal::Portal1 ][ 3 ]);
-	else GetPlayerFacingAngle(playerid, Portal::Info[ teleport ][ Portal::Portal1 ][ 3 ]);
-	DestroyDynamicPickup(Portal::Info[ teleport ][ Portal::Pickup ][ 0 ]);
-	Portal::Info[ teleport ][ Portal::Pickup ][ 0 ]=_AddPickup(Portal::Info[ teleport ][ Portal::Model ][ 0 ],Portal::Info[ teleport ][ Portal::Type ][ 0 ],Portal::Info[ teleport ][ Portal::Portal1 ],Portal::Info[ teleport ][ Portal::World ][ 0 ]);
+	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[teleport][Portal::Portal1][3]);
+	else GetPlayerFacingAngle(playerid, Portal::Info[teleport][Portal::Portal1][3]);
+	DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][0]);
+	Portal::Info[teleport][Portal::Pickup][0]=_AddPickup(Portal::Info[teleport][Portal::Model][0],Portal::Info[teleport][Portal::Type][0],Portal::Info[teleport][Portal::Portal1],Portal::Info[teleport][Portal::World][0]);
 	updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,params[1]), SetPVarInt(playerid, "selectTeleport", 0xffff);
 	Send(playerid, COLOR_GREY, "Позиция пикапа изменина!");
 
@@ -7360,21 +7265,21 @@ CMD:setpic2(playerid, params[]) {
 		return Send(playerid, COLOR_GREY, "Введите: /setpic2 [modelid]");
 	
 	if( params[1] == -1 ) params[1] = GetPlayerVirtualWorld(playerid);
-	Portal::Info[ teleport ][ Portal::Type ][ 1 ] = params[2];
-	Portal::Info[ teleport ][ Portal::Model ][ 1 ] = params[0];
-	Portal::Info[ teleport ][ Portal::Inter ][ 1 ] = GetPlayerInterior(playerid);
-	Portal::Info[ teleport ][ Portal::World ][ 1 ] = params[1];
+	Portal::Info[teleport][Portal::Type][1] = params[2];
+	Portal::Info[teleport][Portal::Model][1] = params[0];
+	Portal::Info[teleport][Portal::Inter][1] = GetPlayerInterior(playerid);
+	Portal::Info[teleport][Portal::World][1] = params[1];
 	GetPlayerPos
 	(
 		playerid,
-		Portal::Info[ teleport ][ Portal::Portal2 ][ 0 ],
-		Portal::Info[ teleport ][ Portal::Portal2 ][ 1 ],
-		Portal::Info[ teleport ][ Portal::Portal2 ][ 2 ]
+		Portal::Info[teleport][Portal::Portal2][0],
+		Portal::Info[teleport][Portal::Portal2][1],
+		Portal::Info[teleport][Portal::Portal2][2]
 	);
-	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[ teleport ][ Portal::Portal2 ][ 3 ]);
-	else GetPlayerFacingAngle(playerid, Portal::Info[ teleport ][ Portal::Portal2 ][ 3 ]);
-	DestroyDynamicPickup(Portal::Info[ teleport ][ Portal::Pickup ][ 1 ]);
-	Portal::Info[ teleport ][ Portal::Pickup ][ 1 ]=_AddPickup(Portal::Info[ teleport ][ Portal::Model ][ 1 ],Portal::Info[ teleport ][ Portal::Type ][ 1 ],Portal::Info[ teleport ][ Portal::Portal2 ],Portal::Info[ teleport ][ Portal::World ][ 1 ]);
+	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[teleport][Portal::Portal2][3]);
+	else GetPlayerFacingAngle(playerid, Portal::Info[teleport][Portal::Portal2][3]);
+	DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][1]);
+	Portal::Info[teleport][Portal::Pickup][1]=_AddPickup(Portal::Info[teleport][Portal::Model][1],Portal::Info[teleport][Portal::Type][1],Portal::Info[teleport][Portal::Portal2],Portal::Info[teleport][Portal::World][1]);
 	updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,params[1]), SetPVarInt(playerid, "selectTeleport", 0xffff);
 	Send(playerid, COLOR_GREY, "Позиция пикапа изменина!");
 
@@ -7523,7 +7428,7 @@ CMD:leaders(playerid, params[]) {
 }
 
 CMD:licenzers(playerid, params[]) {
-	ShowOnline(playerid,1);
+	return ShowOnline(playerid,1);
 }
 
 CMD:members(playerid, params[]) {
@@ -7539,7 +7444,7 @@ CMD:admins(playerid, params[]) {
 }
 
 CMD:helpers(playerid, params[]) {
-	ShowOnline(playerid,5);
+	return ShowOnline(playerid,5);
 }
 
 CMD:lodgers(playerid, params[]) {
@@ -7694,2656 +7599,6 @@ CMD:dance(playerid, params[]) {
 	return 1;
 }
 
-CMD:animbar(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY ,"Введите: /animbar [1-12]");
-	if(params[0] < 1 || params[0] > 12) return Send(playerid,COLOR_GREY ,"Введите: /animbar [1-12]");
-	switch(params[0]) {
-		case 1: ApplyAnimation(playerid,"BAR","Barcustom_get",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BAR","Barcustom_loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BAR","Barcustom_order",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BAR","Barserve_bottle",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BAR","Barserve_give",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BAR","Barserve_glass",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BAR","Barserve_in",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BAR","Barserve_loop",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BAR","Barserve_order",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BAR","dnk_stndF_loop",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BAR","dnk_stndM_loop",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BAR","BARman_idle",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animball(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"*{ffffff}Введите: /animball [1-11]");
-	if(params[0] < 1 || params[0] > 11) return Send(playerid,COLOR_GREY,"*{ffffff}Введите: /animball [1-11]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BASEBALL","Bat_1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BASEBALL","Bat_2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BASEBALL","Bat_2",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BASEBALL","Bat_4",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BASEBALL","Bat_block",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BASEBALL","Bat_Hit_1",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BASEBALL","Bat_Hit_2",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BASEBALL","Bat_Hit_3",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BASEBALL","Bat_IDLE",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BASEBALL","Bat_M",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BASEBALL","BAT_PART",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animfire(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_GREY,"Введите: /animfire [1-13]");
-	if(params[0] < 1 || params[0] > 13) return Send(playerid, COLOR_GREY,"Введите: /animfire [1-13]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BD_FIRE","BD_Fire1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BD_FIRE","BD_Fire2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BD_FIRE","BD_Fire3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BD_FIRE","BD_GF_Wave",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BD_FIRE","BD_Panic_01",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BD_FIRE","BD_Panic_02",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BD_FIRE","BD_Panic_03",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BD_FIRE","BD_Panic_04",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BD_FIRE","BD_Panic_Loop",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BD_FIRE","M_smklean_loop",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BD_FIRE","M_smklean_loop",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BD_FIRE","Playa_Kiss_03",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"BD_FIRE","wash_up",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animbeach(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_GREY,"}Введите: /animbeach [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animbeach [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BEACH","bather",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BEACH","Lay_Bac_Loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BEACH","BD_Fire3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BEACH","ParkSit_W_loop",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BEACH","SitnWait_loop_W",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animinf(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) Send(playerid,COLOR_GREY,"Введите: /animinf [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animinf [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BF_injection","BF_getin_LHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BF_injection","BF_getin_RHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BF_injection","BF_getout_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BF_injection","BF_getout_RHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-
-CMD:animbp(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) Send(playerid,COLOR_GREY,"Введите: /animbp [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animbp [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"benchpress","gym_bp_celebrate",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"benchpress","gym_bp_down",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"benchpress","gym_bp_getoff",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"benchpress","gym_bp_geton",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"benchpress","gym_bp_up_A",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"benchpress","gym_bp_up_B",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"benchpress","gym_bp_up_smooth",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animbh(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbh [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animbh [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BIKEH","BIKEh_Back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BIKEH","BIKEh_drivebyFT",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BIKEH","BIKEh_drivebyLHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BIKEH","BIKEh_drivebyRHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BIKEH","BIKEh_Fwd",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BIKEH","BIKEh_getoffBACK",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BIKEH","BIKEh_getoffLHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BIKEH","BIKEh_getoffRHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BIKEH","BIKEh_hit",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BIKEH","BIKEh_jumponL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BIKEH","BIKEh_jumponR",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BIKEH","BIKEh_kick",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"BIKEH","BIKEh_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"BIKEH","BIKEh_passenger",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"BIKEH","BIKEh_pushes",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"BIKEH","BIKEh_Ride",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"BIKEH","BIKEh_Right",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"BIKEH","BIKEh_Still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animfood(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfood [1-33]");
-	if(params[0] < 1 || params[0] > 33) return Send(playerid,COLOR_GREY,"Введите: /animfood [1-33]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FOOD","EAT_Burger",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FOOD","EAT_Chicken",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FOOD","EAT_Pizza",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FOOD","EAT_Vomit_P",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"FOOD","EAT_Vomit_SK",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"FOOD","FF_Dam_Bkw",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"FOOD","FF_Dam_Fwd",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"FOOD","FF_Dam_Left",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"FOOD","FF_Dam_Right",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"FOOD","FF_Die_Bkw",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"FOOD","FF_Die_Fwd",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"FOOD","FF_Die_Left",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"FOOD","FF_Die_Right",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"FOOD","FF_Sit_Eat1",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"FOOD","FF_Sit_Eat2",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"FOOD","FF_Sit_Eat3",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"FOOD","FF_Sit_In",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"FOOD","FF_Sit_In_L",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"FOOD","FF_Sit_In_R",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"FOOD","FF_Sit_Look",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"FOOD","FF_Sit_Loop",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"FOOD","FF_Sit_Out_180",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"FOOD","FF_Sit_Out_L_180",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"FOOD","FF_Sit_Out_R_180",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"FOOD","SHP_Thank",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"FOOD","SHP_Tray_In",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"FOOD","SHP_Tray_Lift",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"FOOD","SHP_Tray_Lift_In",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"FOOD","SHP_Tray_Lift_Loop",4.1,0,1,1,1,1);
-		case 30: ApplyAnimation(playerid,"FOOD","SHP_Tray_Lift_Out",4.1,0,1,1,1,1);
-		case 31: ApplyAnimation(playerid,"FOOD","SHP_Tray_Out",4.1,0,1,1,1,1);
-		case 32: ApplyAnimation(playerid,"FOOD","SHP_Tray_Pose",4.1,0,1,1,1,1);
-		case 33: ApplyAnimation(playerid,"FOOD","SHP_Tray_Return",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animms(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animms [1-41]");
-	if(params[0] < 1 || params[0] > 33) return Send(playerid,COLOR_GREY,"Введите: /animms [1-41]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"MISC","bitchslap",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"MISC","BMX_celebrate",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"MISC","BMX_comeon",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"MISC","bmx_idleloop_01",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"MISC","bmx_idleloop_02",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"MISC","bmx_talkleft_in",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"MISC","bmx_talkleft_loop",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"MISC","bmx_talkleft_out",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"MISC","bmx_talkright_in",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"MISC","bmx_talkright_loop",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"MISC","bmx_talkright_out",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"MISC","bng_wndw",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"MISC","bng_wndw_02",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"MISC","Case_pickup",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"MISC","door_jet",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"MISC","GRAB_L",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"MISC","GRAB_R",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"MISC","Hiker_Pose",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"MISC","Hiker_Pose_L",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"MISC","Idle_Chat_02",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"MISC","KAT_Throw_K",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"MISC","KAT_Throw_O",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"MISC","KAT_Throw_P",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"MISC","PASS_Rifle_O",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"MISC","PASS_Rifle_Ped",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"MISC","PASS_Rifle_Ply",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"MISC","pickup_box",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"MISC","Plane_door",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"MISC","Plane_exit",4.1,0,1,1,1,1);
-		case 30: ApplyAnimation(playerid,"MISC","Plane_hijack",4.1,0,1,1,1,1);
-		case 31: ApplyAnimation(playerid,"MISC","Plunger_01",4.1,0,1,1,1,1);
-		case 32: ApplyAnimation(playerid,"MISC","Plyrlean_loop",4.1,0,1,1,1,1);
-		case 33: ApplyAnimation(playerid,"MISC","plyr_shkhead",4.1,0,1,1,1,1);
-		case 34: ApplyAnimation(playerid,"MISC","Run_Dive",4.1,0,1,1,1,1);
-		case 35: ApplyAnimation(playerid,"MISC","Scratchballs_01",4.1,0,1,1,1,1);
-		case 36: ApplyAnimation(playerid,"MISC","SEAT_LR",4.1,0,1,1,1,1);
-		case 37: ApplyAnimation(playerid,"MISC","Seat_talk_01",4.1,0,1,1,1,1);
-		case 38: ApplyAnimation(playerid,"MISC","Seat_talk_02",4.1,0,1,1,1,1);
-		case 39: ApplyAnimation(playerid,"MISC","SEAT_watch",4.1,0,1,1,1,1);
-		case 40: ApplyAnimation(playerid,"MISC","smalplane_door",4.1,0,1,1,1,1);
-		case 41: ApplyAnimation(playerid,"MISC","smlplane_door",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animbikelp(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbikelp [1-9]");
-	if(params[0] < 1 || params[0] > 9) return Send(playerid,COLOR_GREY,"*{ffffff}Введите: /animbikelp [1-9]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BIKELEAP","bk_blnce_in",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BIKELEAP","bk_blnce_out",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BIKELEAP","bk_jmp",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BIKELEAP","bk_rdy_in",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BIKELEAP","bk_rdy_out",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BIKELEAP","struggle_cesar",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BIKELEAP","struggle_driver",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BIKELEAP","truck_driver",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BIKELEAP","truck_getin",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animbikes(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbikes [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animbikes [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BIKES","BIKEs_Back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BIKES","BIKEs_drivebyFT",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BIKES","BIKEs_drivebyLHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BIKES","BIKEs_drivebyRHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BIKES","BIKEs_Fwd",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BIKES","BIKEs_getoffBACK",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BIKES","BIKEs_getoffLHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BIKES","BIKEs_getoffRHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BIKES","BIKEs_hit",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BIKES","BIKEs_jumponL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BIKES","BIKEs_jumponR",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BIKES","BIKEs_kick",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"BIKES","BIKEs_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"BIKES","BIKEs_passenger",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"BIKES","BIKEs_pushes",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"BIKES","BIKEs_Ride",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"BIKES","BIKEs_Right",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"BIKES","BIKEs_Still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbikev(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbikev [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"*{ffffff}Введите: /animbikev [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BIKEV","BIKEv_Back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BIKEV","BIKEv_drivebyFT",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BIKEV","BIKEv_drivebyLHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BIKEV","BIKEv_drivebyRHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BIKEV","BIKEv_Fwd",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BIKEV","BIKEv_getoffBACK",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BIKEV","BIKEv_getoffLHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BIKEV","BIKEv_getoffRHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BIKEV","BIKEv_hit",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BIKEV","BIKEv_jumponL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BIKEV","BIKEv_jumponR",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BIKEV","BIKEv_kick",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"BIKEV","BIKEv_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"BIKEV","BIKEv_passenger",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"BIKEV","BIKEv_pushes",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"BIKEV","BIKEv_Ride",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"BIKEV","BIKEv_Right",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"BIKEV","BIKEv_Still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbmx(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbmx [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animbmx [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BMX","BMX_back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BMX","BMX_bunnyhop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BMX","BMX_drivebyFT",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BMX","BMX_driveby_LHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BMX","BMX_driveby_RHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BMX","BMX_fwd",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BMX","BMX_getoffBACK",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BMX","BMX_pushes",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BMX","BMX_getoffLHS",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BMX","BMX_getoffRHS",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BMX","BMX_jumponL",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BMX","BMX_jumponR",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"BMX","BMX_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"BMX","BMX_pedal",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"BMX","BMX_Ride",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"BMX","BMX_Right",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"BMX","BMX_sprint",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"BMX","BMX_still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbikedbz(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbikedbz [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animbikedbz [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BIKE_DBZ","Pass_Driveby_BWD",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BIKE_DBZ","Pass_Driveby_FWD",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BIKE_DBZ","Pass_Driveby_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BIKE_DBZ","Pass_Driveby_RHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animchase(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animchase [1-25]");
-	if(params[0] < 1 || params[0] > 25) return Send(playerid,COLOR_GREY,"Введите: /animchase [1-25]");
-	switch(params[0])
-	{
-		case 1:	ApplyAnimation(playerid,"MD_CHASE","Carhit_Hangon",4.1,0,1,1,1,1);
-		case 2:	ApplyAnimation(playerid,"MD_CHASE","Carhit_Tumble",4.1,0,1,1,1,1);
-		case 3:	ApplyAnimation(playerid,"MD_CHASE","donutdrop",4.1,0,1,1,1,1);
-		case 4:	ApplyAnimation(playerid,"MD_CHASE","Fen_Choppa_L1",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"MD_CHASE","Fen_Choppa_L2",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"MD_CHASE","Fen_Choppa_L3",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"MD_CHASE","Fen_Choppa_R1",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"MD_CHASE","Fen_Choppa_R2",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"MD_CHASE","Fen_Choppa_R3",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"MD_CHASE","Hangon_Stun_loop",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"MD_CHASE","Hangon_Stun_Turn",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_2_HANG",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Jmp_BL",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Jmp_F",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Lnd_BL",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Lnd_Die_BL",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Lnd_Die_F",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Lnd_F",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Lnd_Roll",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Lnd_Roll_F",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Punch",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Punch_F",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"MD_CHASE","MD_BIKE_Shot_F",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"MD_CHASE","MD_HANG_Lnd_Roll",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"MD_CHASE","MD_HANG_Loop",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbox(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbox [1-10]");
-	if(params[0] < 1 || params[0] > 10) Send(playerid,COLOR_GREY,"Введите: /animbox [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BOX","boxhipin",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BOX","boxhipup",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BOX","boxshdwn",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BOX","boxshup",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BOX","bxhipwlk",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BOX","bxhwlki",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BOX","bxshwlk",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BOX","bxshwlki",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BOX","bxwlko",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BOX","catch_box",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbomber(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbomber [1-6]");
-	if(params[0] < 1 || params[0] > 6) return Send(playerid,COLOR_GREY,"Введите: /animbomber [1-6]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BOMBER","BOM_Plant",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BOMBER","BOM_Plant_2Idle",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BOMBER","BOM_Plant_Crouch_In",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BOMBER","BOM_Plant_Crouch_Out",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BOMBER","BOM_Plant_In",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BOMBER","BOM_Plant_Loop",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbsp(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbsp [1-41]");
-	if(params[0] < 1 || params[0] > 41) return Send(playerid,COLOR_GREY,"Введите: /animbsp [1-41]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BSKTBALL","BBALL_def_jump_shot",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BSKTBALL","BBALL_def_loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BSKTBALL","BBALL_def_stepL",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BSKTBALL","BBALL_def_stepR",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk_Gli",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk_Gli_O",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk_Lnch",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk_Lnch_O",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk_Lnd",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk_O",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BSKTBALL","BBALL_idle",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"BSKTBALL","BBALL_idle2",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"BSKTBALL","BBALL_idle2_O",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"BSKTBALL","BBALL_idleloop",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"BSKTBALL","BBALL_idleloop_O",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"BSKTBALL","BBALL_idle_O",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"BSKTBALL","BBALL_Jump_Cancel",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"BSKTBALL","BBALL_Jump_Cancel_0",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"BSKTBALL","BBALL_Jump_End",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"BSKTBALL","BBALL_Jump_Shot",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"BSKTBALL","BBALL_Jump_Shot_O",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"BSKTBALL","BBALL_Net_Dnk_O",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"BSKTBALL","BBALL_pickup",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"BSKTBALL","BBALL_pickup_O",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"BSKTBALL","BBALL_react_miss",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"BSKTBALL","BBALL_react_score",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"BSKTBALL","BBALL_run",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"BSKTBALL","BBALL_run_O",4.1,0,1,1,1,1);
-		case 30: ApplyAnimation(playerid,"BSKTBALL","BBALL_SkidStop_L",4.1,0,1,1,1,1);
-		case 31: ApplyAnimation(playerid,"BSKTBALL","BBALL_SkidStop_L_O",4.1,0,1,1,1,1);
-		case 32: ApplyAnimation(playerid,"BSKTBALL","BBALL_SkidStop_R",4.1,0,1,1,1,1);
-		case 33: ApplyAnimation(playerid,"BSKTBALL","BBALL_SkidStop_R_O",4.1,0,1,1,1,1);
-		case 34: ApplyAnimation(playerid,"BSKTBALL","BBALL_walk",4.1,0,1,1,1,1);
-		case 35: ApplyAnimation(playerid,"BSKTBALL","BBALL_WalkStop_L",4.1,0,1,1,1,1);
-		case 36: ApplyAnimation(playerid,"BSKTBALL","BBALL_WalkStop_L_O",4.1,0,1,1,1,1);
-		case 37: ApplyAnimation(playerid,"BSKTBALL","BBALL_WalkStop_R",4.1,0,1,1,1,1);
-		case 38: ApplyAnimation(playerid,"BSKTBALL","BBALL_WalkStop_R_O",4.1,0,1,1,1,1);
-		case 39: ApplyAnimation(playerid,"BSKTBALL","BBALL_walk_O",4.1,0,1,1,1,1);
-		case 40: ApplyAnimation(playerid,"BSKTBALL","BBALL_walk_start",4.1,0,1,1,1,1);
-		case 41: ApplyAnimation(playerid,"BSKTBALL","BBALL_walk_start_O",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcamera(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcamera [1-14]");
-	if(params[0] < 1 || params[0] > 14) return Send(playerid,COLOR_GREY,"Введите: /animcamera [1-14]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CAMERA","camcrch_cmon",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CAMERA","camcrch_idleloop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CAMERA","camcrch_stay",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CAMERA","camcrch_to_camstnd",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CAMERA","camstnd_cmon",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CAMERA","camstnd_idleloop",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CAMERA","camstnd_lkabt",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CAMERA","camstnd_to_camcrch",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CAMERA","piccrch_in",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"CAMERA","piccrch_out",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"CAMERA","piccrch_take",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"CAMERA","picstnd_in",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"CAMERA","picstnd_out",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"CAMERA","picstnd_take",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animgym(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"*{ffffff}Введите: /animgym [1-24]");
-	if(params[0] < 1 || params[0] > 24) Send(playerid,COLOR_GREY,"Введите: /animgym [1-24]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"GYMNASIUM","GYMshadowbox",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_celebrate",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_fast",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_faster",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_getoff",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_geton",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_pedal",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_slow",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"GYMNASIUM","gym_bike_still",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"GYMNASIUM","gym_jog_falloff",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"GYMNASIUM","gym_shadowbox",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_celebrate",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_falloff",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_getoff",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_geton",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_jog",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_sprint",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_tired",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"GYMNASIUM","gym_tread_walk",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"GYMNASIUM","gym_walk_falloff",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"GYMNASIUM","Pedals_fast",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"GYMNASIUM","Pedals_med",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"GYMNASIUM","Pedals_slow",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"GYMNASIUM","Pedals_still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animpara(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animpara [1-22]");
-	if(params[0] < 1 || params[0] > 22) return Send(playerid,COLOR_GREY,"Введите: /animpara [1-22]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"PARACHUTE","FALL_skyDive",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"PARACHUTE","FALL_SkyDive_Accel",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"PARACHUTE","FALL_skyDive_DIE",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"PARACHUTE","FALL_SkyDive_L",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"PARACHUTE","FALL_SkyDive_R",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"PARACHUTE","PARA_decel",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"PARACHUTE","PARA_decel_O",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"PARACHUTE","PARA_float",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"PARACHUTE","PARA_float_O",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"PARACHUTE","PARA_Land",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"PARACHUTE","PARA_Land_O",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"PARACHUTE","PARA_Land_Water",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"PARACHUTE","PARA_Land_Water_O",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"PARACHUTE","PARA_open",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"PARACHUTE","PARA_open_O",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"PARACHUTE","PARA_Rip_Land_O",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"PARACHUTE","PARA_Rip_Loop_O",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"PARACHUTE","PARA_Rip_O",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"PARACHUTE","PARA_steerL",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"PARACHUTE","PARA_steerL_O",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"PARACHUTE","PARA_steerR",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"PARACHUTE","PARA_steerR_O",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animgangs(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animgangs [1-35]");
-	if(params[0] < 1 || params[0] > 35) return Send(playerid,COLOR_GREY,"Введите: /animgangs [1-35]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"GANGS","DEALER_DEAL",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"GANGS","DEALER_IDLE",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"GANGS","drnkbr_prtl",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"GANGS","drnkbr_prtl_F",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"GANGS","DRUGS_BUY",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"GANGS","hndshkaa",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"GANGS","hndshkba",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"GANGS","hndshkca",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"GANGS","hndshkcb",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"GANGS","hndshkda",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"GANGS","hndshkea",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"GANGS","hndshkfa",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"GANGS","hndshkfa_swt",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"GANGS","Invite_No",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"GANGS","Invite_Yes",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"GANGS","leanIDLE",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"GANGS","leanIN",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"GANGS","leanOUT",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"GANGS","prtial_gngtlkA",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"GANGS","prtial_gngtlkB",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"GANGS","prtial_gngtlkCt",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"GANGS","prtial_gngtlkD",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"GANGS","prtial_gngtlkE",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"GANGS","prtial_gngtlkF",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"GANGS","prtial_gngtlkG",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"GANGS","prtial_gngtlkH",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"GANGS","prtial_hndshk_01",4.1,0,1,1,1,1);
-		case 30: ApplyAnimation(playerid,"GANGS","prtial_hndshk_biz_01",4.1,0,1,1,1,1);
-		case 31: ApplyAnimation(playerid,"GANGS","shake_cara",4.1,0,1,1,1,1);
-		case 32: ApplyAnimation(playerid,"GANGS","shake_carK",4.1,0,1,1,1,1);
-		case 33: ApplyAnimation(playerid,"GANGS","shake_carSH",4.1,0,1,1,1,1);
-		case 34: ApplyAnimation(playerid,"GANGS","smkcig_prtl",4.1,0,1,1,1,1);
-		case 35: ApplyAnimation(playerid,"GANGS","smkcig_prtl_F",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animlowrider(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_GREY,"Введите: /animlowrider [1-39]");
-	if(params[0] < 1 || params[0] > 39) return Send(playerid, COLOR_GREY,"Введите: /animlowrider [1-39]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"LOWRIDER","F_smklean_loop",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"LOWRIDER","lrgirl_bdbnce",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"LOWRIDER","lrgirl_hair",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"LOWRIDER","lrgirl_hurry",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"LOWRIDER","lrgirl_idleloop",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"LOWRIDER","lrgirl_idle_to_l0",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l0_bnce",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l0_loop",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l0_to_l1",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l12_to_l0",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l1_bnce",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l1_loop",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l1_to_l2",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l2_bnce",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l2_loop",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l2_to_l3",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l345_to_l1",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l3_bnce",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l3_loop",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l3_to_l4",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l4_bnce",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l4_loop",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l4_to_l5",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l5_bnce",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"LOWRIDER","lrgirl_l5_loop",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"LOWRIDER","M_smklean_loop",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"LOWRIDER","M_smkstnd_loop",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"LOWRIDER","prtial_gngtlkB",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"LOWRIDER","prtial_gngtlkC",4.1,0,1,1,1,1);
-		case 30: ApplyAnimation(playerid,"LOWRIDER","prtial_gngtlkD",4.1,0,1,1,1,1);
-		case 31: ApplyAnimation(playerid,"LOWRIDER","prtial_gngtlkE",4.1,0,1,1,1,1);
-		case 32: ApplyAnimation(playerid,"LOWRIDER","prtial_gngtlkF",4.1,0,1,1,1,1);
-		case 33: ApplyAnimation(playerid,"LOWRIDER","prtial_gngtlkG",4.1,0,1,1,1,1);
-		case 34: ApplyAnimation(playerid,"LOWRIDER","prtial_gngtlkH",4.1,0,1,1,1,1);
-		case 35: ApplyAnimation(playerid,"LOWRIDER","RAP_A_Loop",4.1,0,1,1,1,1);
-		case 36: ApplyAnimation(playerid,"LOWRIDER","RAP_B_Loop",4.1,0,1,1,1,1);
-		case 37: ApplyAnimation(playerid,"LOWRIDER","RAP_C_Loop",4.1,0,1,1,1,1);
-		case 38: ApplyAnimation(playerid,"LOWRIDER","Sit_relaxed",4.1,0,1,1,1,1);
-		case 39: ApplyAnimation(playerid,"LOWRIDER","Tap_hand",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animlookers(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animlookers [1-29]");
-	if(params[0] < 1 || params[0] > 29) return Send(playerid,COLOR_GREY,"Введите: /animlookers [1-29]");
-
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"ON_LOOKERS","lkaround_in",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"ON_LOOKERS","lkaround_loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"ON_LOOKERS","lkaround_out",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"ON_LOOKERS","lkup_in",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"ON_LOOKERS","lkup_loop",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"ON_LOOKERS","lkup_out",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"ON_LOOKERS","lkup_point",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"ON_LOOKERS","panic_cower",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"ON_LOOKERS","panic_hide",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"ON_LOOKERS","panic_in",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"ON_LOOKERS","panic_loop",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"ON_LOOKERS","panic_out",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"ON_LOOKERS","panic_point",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"ON_LOOKERS","panic_shout",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"ON_LOOKERS","Pointup_in",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"ON_LOOKERS","Pointup_loop",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"ON_LOOKERS","Pointup_out",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"ON_LOOKERS","Pointup_shout",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"ON_LOOKERS","point_in",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"ON_LOOKERS","point_loop",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"ON_LOOKERS","point_out",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"ON_LOOKERS","shout_01",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"ON_LOOKERS","shout_02",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"ON_LOOKERS","shout_in",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"ON_LOOKERS","shout_loop",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"ON_LOOKERS","shout_out",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"ON_LOOKERS","wave_in",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"ON_LOOKERS","wave_loop",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"ON_LOOKERS","wave_out",4.1,0,1,1,1,1);
-	}
-
-	return 1;
-}
-CMD:animcarchat(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcarchat [1-20]");
-	if(params[0] < 1 || params[0] > 20) return Send(playerid,COLOR_GREY,"Введите: /animcarchat [1-20]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CAR_CHAT","carfone_in",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CAR_CHAT","carfone_loopA",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CAR_CHAT","carfone_loopA_to_B",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CAR_CHAT","carfone_loopB",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CAR_CHAT","carfone_loopB_to_A",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CAR_CHAT","carfone_out",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc1_BR",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc1_FL",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc1_FR",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc2_FL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc3_BR",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc3_FL",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc3_FR",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc4_BL",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc4_BR",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc4_FL",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"CAR_CHAT","CAR_Sc4_FR",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"CAR_CHAT","car_talkm_in",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"CAR_CHAT","car_talkm_loop",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"CAR_CHAT","car_talkm_out",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcasino(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcasino [1-23]");
-	if(params[0] < 1 || params[0] > 23) return Send(playerid,COLOR_GREY,"Введите: /animcasino [1-23]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CASINO","cards_in",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CASINO","cards_loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CASINO","cards_lose",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CASINO","cards_out",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CASINO","cards_pick_01",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CASINO","cards_pick_02",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CASINO","cards_raise",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CASINO","cards_win",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CASINO","manwinb",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"CASINO","manwind",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"CASINO","Roulette_bet",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"CASINO","Roulette_in",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"CASINO","Roulette_loop",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"CASINO","Roulette_lose",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"CASINO","Roulette_out",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"CASINO","Roulette_win",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"CASINO","Slot_bet_02",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"CASINO","Slot_in",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"CASINO","Slot_lose_out",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"CASINO","Slot_Plyr",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"CASINO","Slot_wait",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"CASINO","Slot_win_out",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"CASINO","wof",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbuddy(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbuddy [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"*{ffffff}Введите: /animbuddy [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BUDDY","buddy_crouchfire",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BUDDY","buddy_crouchreload",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BUDDY","buddy_fire",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BUDDY","buddy_fire_poor",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BUDDY","buddy_reload",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbus(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbus [1-9]");
-	if(params[0] < 1 || params[0] > 9) return Send(playerid,COLOR_GREY,"Введите: /animbus [1-9]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BUS","BUS_close",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BUS","BUS_getin_LHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BUS","BUS_getin_RHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BUS","BUS_getout_LHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BUS","BUS_getout_RHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BUS","BUS_jacked_LHS",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BUS","BUS_open",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BUS","BUS_open_RHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BUS","BUS_pullout_LHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcar(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcar [1-11]");
-	if(params[0] < 1 || params[0] > 11) return Send(playerid,COLOR_GREY,"Введите: /animcar [1-11]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CAR","Fixn_Car_Loop",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CAR","Fixn_Car_Out",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CAR","flag_drop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CAR","Sit_relaxed",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CAR","Tap_hand",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CAR","Tyd2car_bump",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CAR","Tyd2car_high",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CAR","Tyd2car_low",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CAR","Tyd2car_med",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"CAR","Tyd2car_TurnL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"CAR","Tyd2car_TurnR",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcarry(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcarry [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animcarry [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CARRY","crry_prtial",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CARRY","liftup",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CARRY","liftup05",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CARRY","liftup105",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CARRY","putdwn",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CARRY","putdwn05",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CARRY","putdwn105",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animintshop(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animintshop [1-8]");
-	if(params[0] < 1 || params[0] > 8) return Send(playerid,COLOR_GREY,"Введите: /animintshop [1-8]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"INT_SHOP","shop_cashier",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"INT_SHOP","shop_in",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"INT_SHOP","shop_lookA",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"INT_SHOP","shop_lookB",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"INT_SHOP","shop_loop",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"INT_SHOP","shop_out",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"INT_SHOP","shop_pay",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"INT_SHOP","shop_shelf",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animjst(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animjst [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animjst [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"JST_BUISNESS","girl_01",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"JST_BUISNESS","girl_02",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"JST_BUISNESS","player_01",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"JST_BUISNESS","smoke_01",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animkart(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animkart [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animkart [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"KART","KART_getin_LHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"KART","KART_getin_RHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"KART","KART_getout_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"KART","KART_getout_RHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animkissing(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animkissing [1-14]");
-	if(params[0] < 1 || params[0] > 14) return Send(playerid,COLOR_GREY,"Введите: /animkissing [1-14]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"KISSING","BD_GF_Wave",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"KISSING","gfwave2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"KISSING","GF_CarArgue_01",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"KISSING","GF_CarArgue_02",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"KISSING","GF_CarSpot",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"KISSING","GF_StreetArgue_01",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"KISSING","GF_StreetArgue_02",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"KISSING","gift_give",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"KISSING","Grlfrd_Kiss_01",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"KISSING","Grlfrd_Kiss_02",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"KISSING","Grlfrd_Kiss_03",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"KISSING","Playa_Kiss_01",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"KISSING","Playa_Kiss_02",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"KISSING","Playa_Kiss_03",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animknife(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animknife [1-14]");
-	if(params[0] < 1 || params[0] > 14) return Send(playerid,COLOR_GREY,"Введите: /animknife [1-14]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"KNIFE","KILL_Knife_Ped_Damage",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"KNIFE","KILL_Knife_Ped_Die",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"KNIFE","KILL_Knife_Player",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"KNIFE","KILL_Partial",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"KNIFE","knife_2",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"KNIFE","knife_3",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"KNIFE","knife_4",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"KNIFE","Knife_G",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"KNIFE","knife_hit_1",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"KNIFE","knife_hit_2",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"KNIFE","knife_IDLE",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"KNIFE","knife_hit_3",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"KNIFE","knife_part",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"KNIFE","WEAPON_knifeidle",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animlapdan(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animlapdan [1-6]");
-	if(params[0] < 1 || params[0] > 6) return Send(playerid,COLOR_GREY,"Введите: /animlapdan [1-6]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"LAPDAN1","LAPDAN_D",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"LAPDAN1","LAPDAN_P",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"LAPDAN2","LAPDAN_D",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"LAPDAN2","LAPDAN_P",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"LAPDAN3","LAPDAN_D",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"LAPDAN3","LAPDAN_P",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animdend(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animdend [1-8]");
-	if(params[0] < 1 || params[0] > 8) return Send(playerid,COLOR_GREY,"Введите: /animdend [1-8]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"MD_END","END_SC1_PLY",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"MD_END","END_SC1_RYD",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"MD_END","END_SC1_SMO",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"MD_END","END_SC1_SWE",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"MD_END","END_SC2_PLY",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"MD_END","END_SC2_RYD",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"MD_END","END_SC2_SMO",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"MD_END","END_SC2_SWE",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animmedic(playerid, params[]) {
-	ApplyAnimation(playerid,"MEDIC","CPR",4.1,0,1,1,1,1);
-	return 1;
-}
-CMD:animmtb(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animmtb [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animmtb [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"MTB","MTB_back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"MTB","MTB_bunnyhop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"MTB","MTB_drivebyFT",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"MTB","MTB_driveby_LHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"MTB","MTB_driveby_RHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"MTB","MTB_fwd",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"MTB","MTB_getoffBACK",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"MTB","MTB_pushes",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"MTB","MTB_getoffLHS",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"MTB","MTB_getoffRHS",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"MTB","MTB_jumponL",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"MTB","MTB_jumponR",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"MTB","MTB_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"MTB","MTB_pedal",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"MTB","MTB_Ride",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"MTB","MTB_Right",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"MTB","MTB_sprint",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"MTB","MTB_still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animmusc(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animmusc [1-17]");
-	if(params[0] < 1 || params[0] > 17) return Send(playerid,COLOR_GREY,"Введите: /animmtb [1-17]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"MUSCULAR","MscleWalkst_armed",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"MUSCULAR","MscleWalkst_Csaw",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"MUSCULAR","Mscle_rckt_run",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"MUSCULAR","Mscle_rckt_walkst",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"MUSCULAR","Mscle_run_Csaw",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"MUSCULAR","MuscleIdle",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"MUSCULAR","MuscleIdle_armed",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"MUSCULAR","MuscleIdle_Csaw",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"MUSCULAR","MuscleIdle_rocket",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"MUSCULAR","MuscleRun",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"MUSCULAR","MuscleRun_armed",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"MUSCULAR","MuscleSprint",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"MUSCULAR","MuscleWalk",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"MUSCULAR","MuscleWalkstart",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"MUSCULAR","MuscleWalk_armed",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"MUSCULAR","Musclewalk_Csaw",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"MUSCULAR","Musclewalk_rocket",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animotb(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animotb [1-17]");
-	if(params[0] < 1 || params[0] > 17) return Send(playerid,COLOR_GREY,"Введите: /animotb [1-17]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"OTB","betslp_in",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"OTB","betslp_lkabt",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"OTB","betslp_loop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"OTB","betslp_out",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"OTB","betslp_tnk",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"OTB","wtchrace_cmon",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"OTB","wtchrace_in",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"OTB","wtchrace_loop",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"OTB","wtchrace_lose",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"OTB","wtchrace_out",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"OTB","wtchrace_win",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animpark(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animpark [1-3]");
-		if(params[0] < 1 || params[0] > 3) return Send(playerid,COLOR_GREY,"Введите: /animpark [1-3]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"PARK","Tai_Chi_in",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"PARK","Tai_Chi_Loop",4.1,0,1,1,1,1);
-			case 3: ApplyAnimation(playerid,"PARK","Tai_Chi_Out",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-
-CMD:animpaul(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animpaul [1-12]");
-	if(params[0] < 1 || params[0] > 12) return Send(playerid,COLOR_GREY,"Введите: /animpaul [1-12]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"PAULNMAC","Piss_in",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"PAULNMAC","Piss_loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"PAULNMAC","Piss_out",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"PAULNMAC","PnM_Argue1_A",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"PAULNMAC","PnM_Argue1_B",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"PAULNMAC","PnM_Argue2_A",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"PAULNMAC","PnM_Argue2_B",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"PAULNMAC","PnM_Loop_A",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"PAULNMAC","PnM_Loop_B",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"PAULNMAC","wank_in",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"PAULNMAC","wank_loop",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"PAULNMAC","wank_out",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animsaw(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animsaw [1-12]");
-	if(params[0] < 1 || params[0] > 12) return Send(playerid,COLOR_GREY,"Введите: /animsaw [1-12]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CHAINSAW","CSAW_1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CHAINSAW","CSAW_2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CHAINSAW","CSAW_3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CHAINSAW","CSAW_G",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CHAINSAW","CSAW_Hit_1",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CHAINSAW","CSAW_Hit_2",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CHAINSAW","CSAW_Hit_3",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CHAINSAW","IDLE_csaw",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CHAINSAW","WEAPON_csaw",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"CHAINSAW","WEAPON_csawlo",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animchoppa(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animchoppa [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animchoppa [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CHOPPA","CHOPPA_back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CHOPPA","CHOPPA_bunnyhop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CHOPPA","CHOPPA_drivebyFT",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CHOPPA","CHOPPA_driveby_LHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CHOPPA","CHOPPA_driveby_RHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CHOPPA","CHOPPA_fwd",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CHOPPA","CHOPPA_getoffBACK",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CHOPPA","CHOPPA_getoffLHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CHOPPA","CHOPPA_getoffRHS",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"CHOPPA","CHOPPA_jumponL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"CHOPPA","CHOPPA_jumponR",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"CHOPPA","CHOPPA_Left",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"CHOPPA","CHOPPA_pedal",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"CHOPPA","CHOPPA_Pushes",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"CHOPPA","CHOPPA_ride",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"CHOPPA","CHOPPA_Right",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"CHOPPA","CHOPPA_sprint",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"CHOPPA","CHOPPA_Still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animclothes(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animclothes [1-13]");
-	if(params[0] < 1 || params[0] > 13) return Send(playerid,COLOR_GREY,"Введите: /animclothes [1-13]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CLOTHES","CLO_Buy",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CLOTHES","CLO_In",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CLOTHES","CLO_Out",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Hat",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_In",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_In_O",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Legs",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Loop",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Out",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Out_O",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Shoes",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Torso",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"CLOTHES","CLO_Pose_Watch",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcoach(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcoach [1-6]");
-	if(params[0] < 1 || params[0] > 6) return Send(playerid,COLOR_GREY,"Введите: /animcoach [1-6]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"COACH","COACH_inL",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"COACH","COACH_inR",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"COACH","COACH_opnL",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"COACH","COACH_opnR",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"COACH","COACH_outL",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"COACH","COACH_outR",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
-CMD:animcolt(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcolt [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animcolt [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"COLT45","2guns_crouchfire",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"COLT45","colt45_crouchfire",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"COLT45","colt45_crouchreload",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"COLT45","colt45_fire",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"COLT45","colt45_fire_2hands",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"COLT45","colt45_reload",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"COLT45","sawnoff_reload",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcopa(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcopa [1-12]");
-	if(params[0] < 1 || params[0] > 12) return Send(playerid,COLOR_GREY,"Введите: /animcopa [1-12]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"COP_AMBIENT","Copbrowse_in",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"COP_AMBIENT","Copbrowse_loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"COP_AMBIENT","Copbrowse_nod",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"COP_AMBIENT","Copbrowse_out",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"COP_AMBIENT","Copbrowse_shake",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"COP_AMBIENT","Coplook_in",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"COP_AMBIENT","Coplook_loop",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"COP_AMBIENT","Coplook_nod",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"COP_AMBIENT","Coplook_out",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"COP_AMBIENT","Coplook_shake",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"COP_AMBIENT","Coplook_think",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"COP_AMBIENT","Coplook_watch",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcod(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcod [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animcod [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"COP_DVBYZ","COP_Dvby_B",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"COP_DVBYZ","COP_Dvby_FT",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"COP_DVBYZ","COP_Dvby_L",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"COP_DVBYZ","COP_Dvby_R",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcrack(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcrack [1-9]");
-	if(params[0] < 1 || params[0] > 9) return Send(playerid,COLOR_GREY,"Введите: /animcrack [1-9]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CRACK","Bbalbat_Idle_01",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CRACK","Bbalbat_Idle_02",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CRACK","crckdeth1",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CRACK","crckdeth2",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CRACK","crckdeth3",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"CRACK","crckdeth4",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"CRACK","crckidle1",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"CRACK","crckidle2",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"CRACK","crckidle3",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animcrib(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animcrib [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animcrib [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"CRIB","CRIB_Console_Loop",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"CRIB","CRIB_Use_Switch",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"CRIB","PED_Console_Loop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"CRIB","PED_Console_Loose",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"CRIB","PED_Console_Win",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animdance(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animdance [1-13]");
-	if(params[0] < 1 || params[0] > 13) return Send(playerid,COLOR_GREY,"Введите: /animdance [1-13]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"DANCING","bd_clap",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"DANCING","bd_clap1",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"DANCING","dance_loop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"DANCING","DAN_Down_A",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"DANCING","DAN_Left_A",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"DANCING","DAN_Loop_A",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"DANCING","DAN_Right_A",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"DANCING","DAN_Up_A",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"DANCING","dnce_M_a",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"DANCING","dnce_M_b",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"DANCING","dnce_M_c",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"DANCING","dnce_M_d",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"DANCING","dnce_M_e",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animdealer(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animdealer [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animdealer [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"DEALER","DEALER_DEAL",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"DEALER","DEALER_IDLE",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"DEALER","DEALER_IDLE_01",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"DEALER","DEALER_IDLE_02",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"DEALER","DEALER_IDLE_03",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"DEALER","DRUGS_BUY",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"DEALER","shop_pay",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animdildo(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animdildo [1-9]");
-	if(params[0] < 1 || params[0] > 9) return Send(playerid,COLOR_GREY,"Введите: /animdildo [1-9]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"DILDO","DILDO_1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"DILDO","DILDO_2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"DILDO","DILDO_3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"DILDO","DILDO_block",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"DILDO","DILDO_G",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"DILDO","DILDO_Hit_1",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"DILDO","DILDO_Hit_2",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"DILDO","DILDO_Hit_3",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"DILDO","DILDO_IDLE",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animdozer(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animdozer [1-9]");
-	if(params[0] < 1 || params[0] > 9) return Send(playerid,COLOR_GREY,"Введите: /animdozer [1-9]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"DOZER","DOZER_Align_LHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"DOZER","DOZER_Align_RHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"DOZER","DOZER_getin_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"DOZER","DOZER_getin_RHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"DOZER","DOZER_getout_LHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"DOZER","DOZER_getout_RHS",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"DOZER","DOZER_Jacked_LHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"DOZER","DOZER_Jacked_RHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"DOZER","DOZER_pullout_LHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animdrivebys(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animdrivebys [1-8]");
-	if(params[0] < 1 || params[0] > 8) return Send(playerid,COLOR_GREY,"Введите: /animdrivebys [1-8]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyLHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyLHS_Bwd",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyLHS_Fwd",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyRHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyRHS_Bwd",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyRHS_Fwd",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyTop_LHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"DRIVEBYS","Gang_DrivebyTop_RHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfat(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfat [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animfat [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FAT","FatIdle",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FAT","FatIdle_armed",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FAT","FatIdle_Csaw",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FAT","FatIdle_Rocket",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"FAT","FatRun",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"FAT","FatRun_armed",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"FAT","FatRun_Csaw",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"FAT","FatRun_Rocket",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"FAT","FatSprint",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"FAT","FatWalk",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"FAT","FatWalkstart",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"FAT","FatWalkstart_Csaw",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"FAT","FatWalkSt_armed",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"FAT","FatWalkSt_Rocket",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"FAT","FatWalk_armed",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"FAT","FatWalk_Csaw",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"FAT","FatWalk_Rocket",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"FAT","IDLE_tired",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfightb(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfightb [1-10]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animfightb [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FIGHT_B","FightB_1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FIGHT_B","FightB_2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FIGHT_B","FightB_3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FIGHT_B","FightB_block",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"FIGHT_B","FightB_G",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"FIGHT_B","FightB_IDLE",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"FIGHT_B","FightB_M",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"FIGHT_B","HitB_1",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"FIGHT_B","HitB_2",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"FIGHT_B","HitB_3",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfightc(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfightc [1-12]");
-	if(params[0] < 1 || params[0] > 12) return Send(playerid,COLOR_GREY,"Введите: /animfightc [1-12]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FIGHT_C","FightC_1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FIGHT_C","FightC_2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FIGHT_C","FightC_3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FIGHT_C","FightC_block",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"FIGHT_C","FightC_blocking",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"FIGHT_C","FightC_G",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"FIGHT_C","FightC_IDLE",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"FIGHT_C","FightC_M",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"FIGHT_C","FightC_Spar",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"FIGHT_C","HitC_1",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"FIGHT_C","HitC_2",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"FIGHT_C","HitC_3",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfightd(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfightd [1-10]");
-	if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animfightd [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FIGHT_D","FightD_1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FIGHT_D","FightD_2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FIGHT_D","FightD_3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FIGHT_D","FightD_block",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"FIGHT_D","FightD_G",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"FIGHT_D","FightD_IDLE",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"FIGHT_D","FightD_M",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"FIGHT_D","HitD_1",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"FIGHT_D","HitD_2",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"FIGHT_D","HitD_3",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfighte(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfighte [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animfighte [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FIGHT_E","FightKick",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FIGHT_E","FightKick_B",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FIGHT_E","Hit_fightkick",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FIGHT_E","Hit_fightkick_B",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfinale(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfinale [1-16]");
-	if(params[0] < 1 || params[0] > 16) return Send(playerid,COLOR_GREY,"Введите: /animfinale [1-16]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FINALE","FIN_Climb_In",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FINALE","FIN_Cop1_ClimbOut2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FINALE","FIN_Cop1_Loop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FINALE","FIN_Cop1_Stomp",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"FINALE","FIN_Hang_L",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"FINALE","FIN_Hang_Loop",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"FINALE","FIN_Hang_R",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"FINALE","FIN_Hang_L",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"FINALE","FIN_Jump_On",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"FINALE","FIN_Land_Car",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"FINALE","FIN_Land_Die",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"FINALE","FIN_LegsUp",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"FINALE","FIN_LegsUp_L",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"FINALE","FIN_LegsUp_Loop",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"FINALE","FIN_LegsUp_R",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"FINALE","FIN_Let_Go",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfinale2(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfinale2 [1-8]");
-	if(params[0] < 1 || params[0] > 8) return Send(playerid,COLOR_GREY,"Введите: /animfinale2 [1-8]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"FINALE2","FIN_Cop1_ClimbOut",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"FINALE2","FIN_Cop1_Fall",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"FINALE2","FIN_Cop1_Loop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"FINALE2","FIN_Cop1_Shot",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"FINALE2","FIN_Cop1_Swing",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"FINALE2","FIN_Cop2_ClimbOut",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"FINALE2","FIN_Switch_P",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"FINALE2","FIN_Switch_S",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animflamef(playerid, params[]) {
-	ApplyAnimation(playerid,"FLAME","FLAME_fire",4.1,0,1,1,1,1);
-	return 1;
-}
-CMD:animflowers(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animflowers [1-3]");
-		if(params[0] < 1 || params[0] > 3) return Send(playerid,COLOR_GREY,"Введите: /animflowers [1-3]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"Flowers","Flower_attack",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"Flowers","Flower_attack_M",4.1,0,1,1,1,1);
-			case 3: ApplyAnimation(playerid,"Flowers","Flower_Hit",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-CMD:animghands(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animghands [1-20]");
-	if(params[0] < 1 || params[0] > 20) return Send(playerid,COLOR_GREY,"Введите: /animghands [1-20]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"GHANDS","gsign1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"GHANDS","gsign1LH",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"GHANDS","gsign2",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"GHANDS","gsign2LH",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"GHANDS","gsign3",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"GHANDS","gsign3LH",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"GHANDS","gsign4",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"GHANDS","gsign4LH",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"GHANDS","gsign5",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"GHANDS","gsign5LH",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"GHANDS","LHGsign1",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"GHANDS","LHGsign2",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"GHANDS","LHGsign3",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"GHANDS","LHGsign4",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"GHANDS","LHGsign5",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"GHANDS","RHGsign1",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"GHANDS","RHGsign2",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"GHANDS","RHGsign3",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"GHANDS","RHGsign4",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"GHANDS","RHGsign5",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animfw(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animfw [1-9]");
-	if(params[0] < 1 || params[0] > 9) return Send(playerid,COLOR_GREY,"Введите: /animfw [1-9]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"Freeweights","gym_barbell",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"Freeweights","gym_free_A",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"Freeweights","gym_free_B",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"Freeweights","gym_free_celebrate",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"Freeweights","gym_free_down",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"Freeweights","gym_free_loop",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"Freeweights","gym_free_pickup",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"Freeweights","gym_free_putdown",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"Freeweights","gym_free_up_smooth",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animghetto(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animghetto [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animghetto [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"GHETTO_DB","Gbd_Car2_PLY",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"GHETTO_DB","Gbd_Car2_SMO",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"GHETTO_DB","Gbd_Car2_SWE",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"GHETTO_DB","Gbd_Car_PLY",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"GHETTO_DB","Gbd_Car_RYD",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"GHETTO_DB","Gbd_Car_SMO",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"GHETTO_DB","Gbd_Car_SWE",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animgog(playerid, params[]) {
-	ApplyAnimation(playerid,"goggles","goggles_put_on",4.1,0,1,1,1,1);
-	return 1;
-}
-CMD:animgraffity(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animgraffity [1-2]");
-		if(params[0] < 1 || params[0] > 2) return Send(playerid,COLOR_GREY,"Введите: /animgraffity [1-2]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"GRAFFITI","graffiti_Chkout",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"GRAFFITI","spraycan_fire",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-CMD:animgreya(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animgreya [1-3]");
-		if(params[0] < 1 || params[0] > 3) return Send(playerid,COLOR_GREY,"Введите: /animgreya [1-3]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"GRAVEYARD","mrnF_loop",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"GRAVEYARD","mrnM_loop",4.1,0,1,1,1,1);
-			case 3: ApplyAnimation(playerid,"GRAVEYARD","prst_loopa",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-CMD:animgren(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animgren [1-3]");
-		if(params[0] < 1 || params[0] > 3) return Send(playerid,COLOR_GREY,"Введите: /animgren [1-3]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"GRENADE","WEAPON_start_throw",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"GRENADE","WEAPON_throw",4.1,0,1,1,1,1);
-			case 3: ApplyAnimation(playerid,"GRENADE","WEAPON_throwu",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-CMD:animhaircut(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animhaircut [1-13]");
-	if(params[0] < 1 || params[0] > 13) return Send(playerid,COLOR_GREY,"Введите: /animhaircut [1-13]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"HAIRCUTS","BRB_Beard_01",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"HAIRCUTS","BRB_Buy",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"HAIRCUTS","BRB_Cut",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"HAIRCUTS","BRB_Cut_In",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"HAIRCUTS","BRB_Cut_Out",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"HAIRCUTS","BRB_Hair_01",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"HAIRCUTS","BRB_Hair_02",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"HAIRCUTS","BRB_In",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"HAIRCUTS","BRB_Out",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"HAIRCUTS","BRB_Loop",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"HAIRCUTS","BRB_Sit_In",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"HAIRCUTS","BRB_Sit_Loop",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"HAIRCUTS","BRB_Sit_Out",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animheist(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animheist [1-10]");
-	if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animheist [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"HEIST9","CAS_G2_GasKO",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"HEIST9","swt_wllpk_L",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"HEIST9","swt_wllpk_L_back",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"HEIST9","swt_wllpk_R",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"HEIST9","swt_wllpk_R_back",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"HEIST9","swt_wllshoot_in_L",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"HEIST9","swt_wllshoot_in_R",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"HEIST9","swt_wllshoot_out_L",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"HEIST9","swt_wllshoot_out_R",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"HEIST9","Use_SwipeCard",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animinthouse(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animinthouse [1-10]");
-	if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animinthouse [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"INT_HOUSE","BED_In_L",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"INT_HOUSE","BED_In_R",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"INT_HOUSE","BED_Loop_L",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"INT_HOUSE","BED_Loop_R",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"INT_HOUSE","BED_Out_L",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"INT_HOUSE","BED_Out_R",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"INT_HOUSE","LOU_In",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"INT_HOUSE","LOU_Loop",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"INT_HOUSE","LOU_Out",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"INT_HOUSE","wash_up",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animintoffice(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animintoffice [1-10]");
-	if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animintoffice [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"INT_OFFICE","FF_Dam_Fwd",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_2Idle_180",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_Bored_Loop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_Crash",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_Drink",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_Idle_Loop",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_In",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_Read",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_Type_Loop",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"INT_OFFICE","OFF_Sit_Watch",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animplayerdbf(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animplayerdbf [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animplayerdbf [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"PLAYER_DVBYS","Plyr_DrivebyBwd",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"PLAYER_DVBYS","Plyr_DrivebyFwd",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"PLAYER_DVBYS","Plyr_DrivebyLHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"PLAYER_DVBYS","Plyr_DrivebyRHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animplayidles(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animplayidles [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animplayidles [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"PLAYIDLES","shift",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"PLAYIDLES","shldr",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"PLAYIDLES","stretch",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"PLAYIDLES","strleg",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"PLAYIDLES","time",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animpolice(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animpolice [1-10]");
-	if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animpolice [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"POLICE","CopTraf_Away",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"POLICE","CopTraf_Come",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"POLICE","CopTraf_Left",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"POLICE","CopTraf_Stop",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"POLICE","COP_getoutcar_LHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"POLICE","Cop_move_FWD",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"POLICE","crm_drgbst_01",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"POLICE","Door_Kick",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"POLICE","plc_drgbst_01",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"POLICE","plc_drgbst_02",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animpool(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animpool [1-21]");
-	if(params[0] < 1 || params[0] > 21) return Send(playerid,COLOR_GREY,"Введите: /animpool [1-21]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"POOL","POOL_ChalkCue",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"POOL","POOL_Idle_Stance",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"POOL","POOL_Long_Shot",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"POOL","POOL_Long_Shot_O",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"POOL","POOL_Long_Start",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"POOL","POOL_Long_Start_O",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"POOL","POOL_Med_Shot",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"POOL","POOL_Med_Shot_O",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"POOL","POOL_Med_Start",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"POOL","POOL_Med_Start_O",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"POOL","POOL_Place_White",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"POOL","POOL_Short_Shot",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"POOL","POOL_Short_Shot_O",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"POOL","POOL_Short_Start",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"POOL","POOL_Short_Start_O",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"POOL","POOL_Walk",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"POOL","POOL_Walk_Start",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"POOL","POOL_XLong_Shot",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"POOL","POOL_XLong_Shot_O",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"POOL","POOL_XLong_Start",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"POOL","POOL_XLong_Start_O",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animpoor(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animpoor [1-2]");
-	if(params[0] < 1 || params[0] > 2) return Send(playerid,COLOR_GREY,"Введите: /animpoor [1-2]");
-	switch( params[0] )
-	{
-		case 1: ApplyAnimation(playerid,"POOR","WINWASH_Start",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"POOR","WINWASH_Wash2Beg",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animpython(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animpython [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animpython [1-5]");
-	switch(params[0])
-	{
-		case 1:ApplyAnimation(playerid,"PYTHON","python_crouchfire",4.1,0,1,1,1,1);
-		case 2:ApplyAnimation(playerid,"PYTHON","python_crouchreload",4.1,0,1,1,1,1);
-		case 3:ApplyAnimation(playerid,"PYTHON","python_fire",4.1,0,1,1,1,1);
-		case 4:ApplyAnimation(playerid,"PYTHON","python_fire_poor",4.1,0,1,1,1,1);
-		case 5:ApplyAnimation(playerid,"PYTHON","python_reload",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animquad(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animquad [1-17]");
-	if(params[0] < 1 || params[0] > 17) return Send(playerid,COLOR_GREY,"Введите: /animquad [1-17]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"QUAD","QUAD_back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"QUAD","QUAD_driveby_FT",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"QUAD","QUAD_driveby_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"QUAD","QUAD_driveby_RHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"QUAD","QUAD_FWD",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"QUAD","QUAD_getoff_B",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"QUAD","QUAD_getoff_LHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"QUAD","QUAD_getoff_RHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"QUAD","QUAD_geton_LHS",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"QUAD","QUAD_geton_RHS",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"QUAD","QUAD_hit",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"QUAD","QUAD_kick",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"QUAD","QUAD_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"QUAD","QUAD_passenger",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"QUAD","QUAD_reverse",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"QUAD","QUAD_ride",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"QUAD","QUAD_Right",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animquadbz(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animquadbz [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animquadbz [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"QUAD_DBZ","Pass_Driveby_BWD",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"QUAD_DBZ","Pass_Driveby_FWD",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"QUAD_DBZ","Pass_Driveby_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"QUAD_DBZ","Pass_Driveby_RHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animrapping(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animrapping [1-8]");
-	if(params[0] < 1 || params[0] > 8) return Send(playerid,COLOR_GREY,"Введите: /animrapping [1-8]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"RAPPING","Laugh_01",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"RAPPING","RAP_A_IN",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"RAPPING","RAP_A_Loop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"RAPPING","RAP_A_OUT",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"RAPPING","RAP_B_IN",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"RAPPING","RAP_B_Loop",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"RAPPING","RAP_B_OUT",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"RAPPING","RAP_C_Loop",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animrifle(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animrifle [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animrifle [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"RIFLE","RIFLE_crouchfire",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"RIFLE","RIFLE_crouchload",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"RIFLE","RIFLE_fire",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"RIFLE","RIFLE_fire_poor",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"RIFLE","RIFLE_load",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animriot(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animrifle [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animrifle [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"RIOT","RIOT_ANGRY",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"RIOT","RIOT_ANGRY_B",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"RIOT","RIOT_challenge",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"RIOT","RIOT_CHANT",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"RIOT","RIOT_FUKU",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"RIOT","RIOT_PUNCHES",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"RIOT","RIOT_shout",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animrobbank(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animrobbank [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animrobbank [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"ROB_BANK","CAT_Safe_End",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"ROB_BANK","CAT_Safe_Open",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"ROB_BANK","CAT_Safe_Open_O",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"ROB_BANK","CAT_Safe_Rob",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"ROB_BANK","SHP_HandsUp_Scr",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animrocket(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animrocket [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animrocket [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"ROCKET","idle_rocket",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"ROCKET","RocketFire",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"ROCKET","run_rocket",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"ROCKET","walk_rocket",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"ROCKET","WALK_start_rocket",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animrustler(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animrustler [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animrustler [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"RUSTLER","Plane_align_LHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"RUSTLER","Plane_close",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"RUSTLER","Plane_getin",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"RUSTLER","Plane_getout",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"RUSTLER","Plane_open",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbiked(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbiked [1-19]");
-	if(params[0] < 1 || params[0] > 19) return Send(playerid,COLOR_GREY,"Введите: /animbiked [1-19]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"BIKED","BIKEd_Back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"BIKED","BIKEd_drivebyFT",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"BIKED","BIKEd_drivebyLHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"BIKED","BIKEd_drivebyRHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"BIKED","BIKEd_Fwd",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"BIKED","BIKEd_getoffBACK",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"BIKED","BIKEd_getoffLHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"BIKED","BIKEd_getoffRHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"BIKED","BIKEd_hit",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"BIKED","BIKEd_jumponL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"BIKED","BIKEd_jumponR",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"BIKED","BIKEd_kick",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"BIKED","BIKEd_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"BIKED","BIKEd_passenger",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"BIKED","BIKEd_pushes",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"BIKED","BIKEd_Ride",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"BIKED","BIKEd_Right",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"BIKED","BIKEd_shuffle",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"BIKED","BIKEd_Still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animryder(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animryder [1-15]");
-	if(params[0] < 1 || params[0] > 15) return Send(playerid,COLOR_GREY,"Введите: /animryder [1-15]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"RYDER","RYD_Beckon_01",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"RYDER","RYD_Beckon_02",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"RYDER","RYD_Beckon_03",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"RYDER","RYD_Die_PT1",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"RYDER","RYD_Die_PT2",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"RYDER","Van_Crate_L",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"RYDER","Van_Crate_R",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"RYDER","Van_Fall_L",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"RYDER","Van_Fall_R",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"RYDER","Van_Lean_L",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"RYDER","Van_Lean_R",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"RYDER","VAN_PickUp_S",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"RYDER","Van_Stand",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"RYDER","Van_Stand_Crate",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"RYDER","Van_Throw",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animscrat(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animscrat [1-12]");
-	if(params[0] < 1 || params[0] > 12) return Send(playerid,COLOR_GREY,"Введите: /animscrat [1-12]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SCRATCHING","scdldlp",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SCRATCHING","scdlulp",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SCRATCHING","scdrdlp",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SCRATCHING","scdrulp",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"SCRATCHING","sclng_l",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"SCRATCHING","sclng_r",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"SCRATCHING","scmid_l",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"SCRATCHING","scmid_r",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"SCRATCHING","scshrtl",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"SCRATCHING","scshrtr",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"SCRATCHING","sc_ltor",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"SCRATCHING","sc_rtol",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animshamal(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animshamal [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animshamal [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SHAMAL","SHAMAL_align",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SHAMAL","SHAMAL_getin_LHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SHAMAL","SHAMAL_getout_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SHAMAL","SHAMAL_open",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animshop(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animshop [1-24]");
-	if(params[0] < 1 || params[0] > 24) return Send(playerid,COLOR_GREY,"Введите: /animshop [1-24]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SHOP","ROB_2Idle",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SHOP","ROB_Loop",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SHOP","donutdrop",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SHOP","ROB_Loop_Threat",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"SHOP","ROB_Shifty",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"SHOP","ROB_StickUp_In",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"SHOP","SHP_Duck_Fire",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"SHOP","SHP_Gun_Aim",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"SHOP","SHP_Gun_Duck",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"SHOP","SHP_Gun_Fire",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"SHOP","SHP_Gun_Grab",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"SHOP","SHP_Gun_Threat",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"SHOP","SHP_HandsUp_Scr",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"SHOP","SHP_Jump_Glide",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"SHOP","SHP_Jump_Land",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"SHOP","SHP_Jump_Launch",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"SHOP","SHP_Rob_GiveCash",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"SHOP","SHP_Rob_HandsUp",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"SHOP","SHP_Rob_React",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"SHOP","SHP_Serve_End",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"SHOP","SHP_Serve_Idle",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"SHOP","SHP_Serve_Loop",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"SHOP","SHP_Serve_Start",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"SHOP","Smoke_RYD",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animshotgun(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animshotgun [1-3]");
-		if(params[0] < 1 || params[0] > 3) return Send(playerid,COLOR_GREY,"Введите: /animshotgun [1-3]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"SHOTGUN","shotgun_crouchfire",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"SHOTGUN","shotgun_fire",4.1,0,1,1,1,1);
-			case 3: ApplyAnimation(playerid,"SHOTGUN","shotgun_fire_poor",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-CMD:animskate(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animskate [1-3]");
-		if(params[0] < 1 || params[0] > 3) return Send(playerid,COLOR_GREY,"Введите: /animskate [1-3]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"SKATE","skate_idle",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"SKATE","skate_run",4.1,0,1,1,1,1);
-			case 3: ApplyAnimation(playerid,"SKATE","skate_sprint",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-CMD:animvortex(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animvortex [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animvortex [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"VORTEX","CAR_jumpin_LHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"VORTEX","CAR_jumpin_RHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"VORTEX","vortex_getout_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"VORTEX","vortex_getout_RHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animtec(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animtec [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animtec [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"TEC","TEC_crouchfire",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"TEC","TEC_crouchreload",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"TEC","TEC_fire",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"TEC","TEC_reload",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animtrain(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animtrain [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animtrain [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"TRAIN","tran_gtup",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"TRAIN","tran_hng",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"TRAIN","tran_ouch",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"TRAIN","tran_stmb",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animsil(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animsil [1-4]");
-	if(params[0] < 1 || params[0] > 4) return Send(playerid,COLOR_GREY,"Введите: /animsil [1-4]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SILENCED","CrouchReload",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SILENCED","SilenceCrouchfire",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SILENCED","Silence_fire",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SILENCED","Silence_reload",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animtattoo(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animtattoo [1-57]");
-	if(params[0] < 1 || params[0] > 57) return Send(playerid,COLOR_GREY,"Введите: /animtattoo [1-57]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_In_O",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_In_P",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_In_T",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_Out_O",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"TATTOOS","TA_ArmL_Out_P",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_Out_T",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_Pose_O",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_Pose_P",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"TATTOOS","TAT_ArmL_Pose_T",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_In_O",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_In_P",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_In_T",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_Out_O",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_Out_P",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_Out_T",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_Pose_O",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_Pose_P",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"TATTOOS","TAT_ArmR_Pose_T",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"TATTOOS","TAT_Back_In_O",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"TATTOOS","TAT_Back_In_P",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"TATTOOS","TAT_Back_In_T",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Out_O",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Out_P",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Out_T",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Pose_O",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Pose_P",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Pose_T",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Sit_In_P",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Sit_Loop_P",4.1,0,1,1,1,1);
-		case 30: ApplyAnimation(playerid,"TATTOOS","TAT_Back_Sit_Out_P",4.1,0,1,1,1,1);
-		case 31: ApplyAnimation(playerid,"TATTOOS","TAT_Bel_In_O",4.1,0,1,1,1,1);
-		case 32: ApplyAnimation(playerid,"TATTOOS","TAT_Bel_In_T",4.1,0,1,1,1,1);
-		case 33: ApplyAnimation(playerid,"TATTOOS","TAT_Bel_Out_O",4.1,0,1,1,1,1);
-		case 34: ApplyAnimation(playerid,"TATTOOS","TAT_Bel_Out_T",4.1,0,1,1,1,1);
-		case 35: ApplyAnimation(playerid,"TATTOOS","TAT_Bel_Pose_O",4.1,0,1,1,1,1);
-		case 36: ApplyAnimation(playerid,"TATTOOS","TAT_Bel_Pose_T",4.1,0,1,1,1,1);
-		case 37: ApplyAnimation(playerid,"TATTOOS","TAT_Che_In_O",4.1,0,1,1,1,1);
-		case 38: ApplyAnimation(playerid,"TATTOOS","Sit_relaxed",4.1,0,1,1,1,1);
-		case 39: ApplyAnimation(playerid,"TATTOOS","TAT_Che_In_P",4.1,0,1,1,1,1);
-		case 40: ApplyAnimation(playerid,"TATTOOS","TAT_Che_In_T",4.1,0,1,1,1,1);
-		case 41: ApplyAnimation(playerid,"TATTOOS","TAT_Che_Out_O",4.1,0,1,1,1,1);
-		case 42: ApplyAnimation(playerid,"TATTOOS","TAT_Che_Out_P",4.1,0,1,1,1,1);
-		case 43: ApplyAnimation(playerid,"TATTOOS","TAT_Che_Out_T",4.1,0,1,1,1,1);
-		case 44: ApplyAnimation(playerid,"TATTOOS","TAT_Che_Pose_O",4.1,0,1,1,1,1);
-		case 45: ApplyAnimation(playerid,"TATTOOS","TAT_Che_Pose_P",4.1,0,1,1,1,1);
-		case 46: ApplyAnimation(playerid,"TATTOOS","TAT_Che_Pose_T",4.1,0,1,1,1,1);
-		case 47: ApplyAnimation(playerid,"TATTOOS","TAT_Idle_Loop_O",4.1,0,1,1,1,1);
-		case 48: ApplyAnimation(playerid,"TATTOOS","TAT_Idle_Loop_T",4.1,0,1,1,1,1);
-		case 49: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_In_O",4.1,0,1,1,1,1);
-		case 50: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_In_P",4.1,0,1,1,1,1);
-		case 51: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_In_T",4.1,0,1,1,1,1);
-		case 52: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_Loop_O",4.1,0,1,1,1,1);
-		case 53: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_Loop_P",4.1,0,1,1,1,1);
-		case 54: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_Loop_T",4.1,0,1,1,1,1);
-		case 55: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_Out_O",4.1,0,1,1,1,1);
-		case 56: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_Out_P",4.1,0,1,1,1,1);
-		case 57: ApplyAnimation(playerid,"TATTOOS","TAT_Sit_Out_T",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animsmoking(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animtattoo [1-8]");
-	if(params[0] < 1 || params[0] > 8) return Send(playerid,COLOR_GREY,"Введите: /animtattoo [1-8]");
-	switch(params[0])
-	{
-		case 1:ApplyAnimation(playerid,"SMOKING","F_smklean_loop",4.1,0,1,1,1,1);
-		case 2:ApplyAnimation(playerid,"SMOKING","M_smklean_loop",4.1,0,1,1,1,1);
-		case 3:ApplyAnimation(playerid,"SMOKING","M_smkstnd_loop",4.1,0,1,1,1,1);
-		case 4:ApplyAnimation(playerid,"SMOKING","M_smk_drag",4.1,0,1,1,1,1);
-		case 5:ApplyAnimation(playerid,"SMOKING","M_smk_in",4.1,0,1,1,1,1);
-		case 6:ApplyAnimation(playerid,"SMOKING","M_smk_loop",4.1,0,1,1,1,1);
-		case 7:ApplyAnimation(playerid,"SMOKING","M_smk_out",4.1,0,1,1,1,1);
-		case 8:ApplyAnimation(playerid,"SMOKING","M_smk_tap",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animsniper(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animsniper [1-2]");
-	if(params[0] < 1 || params[0] > 2) return Send(playerid,COLOR_GREY,"Введите: /animsniper [1-2]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SPRAYCAN","spraycan_fire",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SPRAYCAN","spraycan_full",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animstrip(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animstrip [1-20]");
-	if(params[0] < 1 || params[0] > 20) return Send(playerid,COLOR_GREY,"Введите: /animstrip [1-20]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"STRIP","PLY_CASH",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"STRIP","PUN_CASH",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"STRIP","PUN_HOLLER",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"STRIP","PUN_LOOP",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"STRIP","strip_A",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"STRIP","strip_B",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"STRIP","strip_C",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"STRIP","strip_D",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"STRIP","strip_E",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"STRIP","strip_F",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"STRIP","strip_G",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"STRIP","STR_A2B",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"STRIP","STR_B2A",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"STRIP","STR_B2C",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"STRIP","STR_C1",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"STRIP","STR_C2",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"STRIP","STR_C2B",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"STRIP","STR_Loop_A",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"STRIP","STR_Loop_B",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"STRIP","STR_Loop_C",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animbath(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animbath [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animbath [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SUNBATHE","batherdown",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SUNBATHE","batherup",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SUNBATHE","Lay_Bac_in",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SUNBATHE","Lay_Bac_out",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"SUNBATHE","ParkSit_M_IdleA",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"SUNBATHE","ParkSit_M_IdleB",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"SUNBATHE","ParkSit_M_IdleC",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"SUNBATHE","ParkSit_M_in",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"SUNBATHE","ParkSit_M_out",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"SUNBATHE","ParkSit_W_idleA",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"SUNBATHE","ParkSit_W_idleB",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"SUNBATHE","ParkSit_W_idleC",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"SUNBATHE","ParkSit_W_in",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"SUNBATHE","ParkSit_W_out",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"SUNBATHE","SBATHE_F_LieB2Sit",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"SUNBATHE","SBATHE_F_Out",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"SUNBATHE","SitnWait_in_W",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"SUNBATHE","SitnWait_out_W",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animsweet(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animsweet [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animsweet [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SWEET","ho_ass_slapped",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SWEET","LaFin_Player",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SWEET","LaFin_Sweet",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SWEET","plyr_hndshldr_01",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"SWEET","sweet_ass_slap",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"SWEET","sweet_hndshldr_01",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"SWEET","Sweet_injuredloop",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animswim(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animswim [1-7]");
-	if(params[0] < 1 || params[0] > 7) return Send(playerid,COLOR_GREY,"Введите: /animswim [1-7]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SWIM","Swim_Breast",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SWIM","SWIM_crawl",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SWIM","Swim_Dive_Under",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SWIM","Swim_Glide",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"SWIM","Swim_jumpout",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"SWIM","Swim_Tread",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"SWIM","Swim_Under",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animsword(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animsword [1-10]");
-	if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animsword [1-10]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"SWORD","sword_1",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"SWORD","sword_2",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"SWORD","sword_3",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"SWORD","sword_4",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"SWORD","sword_block",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"SWORD","Sword_Hit_1",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"SWORD","Sword_Hit_2",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"SWORD","Sword_Hit_3",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"SWORD","sword_IDLE",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"SWORD","sword_part",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animtank(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animtank [1-6]");
-	if(params[0] < 1 || params[0] > 6) return Send(playerid,COLOR_GREY,"Введите: /animtank [1-6]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"TANK","TANK_align_LHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"TANK","TANK_close_LHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"TANK","TANK_doorlocked",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"TANK","TANK_getin_LHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"TANK","TANK_getout_LHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"TANK","TANK_open_LHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animtruck(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animtruck [1-17]");
-	if(params[0] < 1 || params[0] > 17) return Send(playerid,COLOR_GREY,"Введите: /animtruck [1-17]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"TRUCK","TRUCK_ALIGN_LHS",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"TRUCK","TRUCK_ALIGN_RHS",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"TRUCK","TRUCK_closedoor_LHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"TRUCK","TRUCK_closedoor_RHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"TRUCK","TRUCK_close_LHS",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"TRUCK","TRUCK_close_RHS",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"TRUCK","TRUCK_getin_LHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"TRUCK","TRUCK_getin_RHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"TRUCK","TRUCK_getout_LHS",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"TRUCK","TRUCK_getout_RHS",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"TRUCK","TRUCK_jackedLHS",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"TRUCK","TRUCK_jackedRHS",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"TRUCK","TRUCK_open_LHS",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"TRUCK","TRUCK_open_RHS",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"TRUCK","TRUCK_pullout_LHS",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"TRUCK","TRUCK_pullout_RHS",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"TRUCK","TRUCK_Shuffle",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animuzi(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animuzi [1-5]");
-	if(params[0] < 1 || params[0] > 5) return Send(playerid,COLOR_GREY,"Введите: /animuzi [1-5]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"UZI","UZI_crouchfire",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"UZI","UZI_crouchreload",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"UZI","UZI_fire",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"UZI","UZI_fire_poor",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"UZI","UZI_reload",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animvan(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animvan [1-8]");
-	if(params[0] < 1 || params[0] > 8) return Send(playerid,COLOR_GREY,"Введите: /animvan [1-8]");
-	switch(params[0])
-	{
-		case 1:ApplyAnimation(playerid,"VAN","VAN_close_back_LHS",4.1,0,1,1,1,1);
-		case 2:ApplyAnimation(playerid,"VAN","VAN_close_back_RHS",4.1,0,1,1,1,1);
-		case 3:ApplyAnimation(playerid,"VAN","VAN_getin_Back_LHS",4.1,0,1,1,1,1);
-		case 4:ApplyAnimation(playerid,"VAN","VAN_getin_Back_RHS",4.1,0,1,1,1,1);
-		case 5:ApplyAnimation(playerid,"VAN","VAN_getout_back_LHS",4.1,0,1,1,1,1);
-		case 6:ApplyAnimation(playerid,"VAN","VAN_getout_back_RHS",4.1,0,1,1,1,1);
-		case 7:ApplyAnimation(playerid,"VAN","VAN_open_back_LHS",4.1,0,1,1,1,1);
-		case 8:ApplyAnimation(playerid,"VAN","VAN_open_back_RHS",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animvending(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animsword [1-10]");
-	if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animsword [1-10]");
-	switch(params[0])
-	{
-		case 1:ApplyAnimation(playerid,"VENDING","VEND_Drink2_P",4.1,0,1,1,1,1);
-		case 2:ApplyAnimation(playerid,"VENDING","VEND_Drink_P",4.1,0,1,1,1,1);
-		case 3:ApplyAnimation(playerid,"VENDING","vend_eat1_P",4.1,0,1,1,1,1);
-		case 4:ApplyAnimation(playerid,"VENDING","VEND_Eat_P",4.1,0,1,1,1,1);
-		case 5:ApplyAnimation(playerid,"VENDING","VEND_Use",4.1,0,1,1,1,1);
-		case 6:ApplyAnimation(playerid,"VENDING","VEND_Use_pt2",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animway(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animway [1-18]");
-	if(params[0] < 1 || params[0] > 18) return Send(playerid,COLOR_GREY,"Введите: /animway [1-18]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"WAYFARER","WF_Back",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"WAYFARER","WF_drivebyFT",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"WAYFARER","WF_drivebyLHS",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"WAYFARER","WF_drivebyRHS",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"WAYFARER","WF_Fwd",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"WAYFARER","WF_getoffBACK",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"WAYFARER","WF_getoffLHS",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"WAYFARER","WF_getoffRHS",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"WAYFARER","WF_hit",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"WAYFARER","WF_jumponL",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"WAYFARER","WF_jumponR",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"WAYFARER","WF_kick",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"WAYFARER","WF_Left",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"WAYFARER","WF_passenger",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"WAYFARER","WF_pushes",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"WAYFARER","WF_Ride",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"WAYFARER","WF_Right",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"WAYFARER","WF_Still",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animweap(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animweap [1-17]");
-	if(params[0] < 1 || params[0] > 17) return Send(playerid,COLOR_GREY,"Введите: /animweap [1-17]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"WEAPONS","SHP_1H_Lift",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"WEAPONS","SHP_1H_Lift_End",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"WEAPONS","SHP_1H_Ret",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"WEAPONS","SHP_1H_Ret_S",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"WEAPONS","SHP_2H_Lift",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"WEAPONS","SHP_2H_Lift_End",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"WEAPONS","SHP_2H_Ret",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"WEAPONS","SHP_2H_Ret_S",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"WEAPONS","SHP_Ar_Lift",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"WEAPONS","SHP_Ar_Lift_End",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"WEAPONS","SHP_Ar_Ret",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"WEAPONS","SHP_Ar_Ret_S",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"WEAPONS","SHP_G_Lift_In",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"WEAPONS","SHP_G_Lift_Out",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"WEAPONS","SHP_Tray_In",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"WEAPONS","SHP_Tray_Out",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"WEAPONS","SHP_Tray_Pose",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animwuzi(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animwuzi [1-12]");
-	if(params[0] < 1 || params[0] > 12) return Send(playerid,COLOR_GREY,"Введите: /animwuzi [1-12]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"WUZI","CS_Dead_Guy",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"WUZI","CS_Plyr_pt1",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"WUZI","CS_Plyr_pt2",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"WUZI","CS_Wuzi_pt1",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"WUZI","CS_Wuzi_pt2",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"WUZI","Walkstart_Idle_01",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"WUZI","Wuzi_follow",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"WUZI","Wuzi_Greet_Plyr",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"WUZI","Wuzi_Greet_Wuzi",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"WUZI","Wuzi_grnd_chk",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"WUZI","Wuzi_stand_loop",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"WUZI","Wuzi_Walk",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-CMD:animat(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-	{
-		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animat [1-3]");
-		if(params[0] < 1 || params[0] > 10) return Send(playerid,COLOR_GREY,"Введите: /animat [1-3]");
-		switch(params[0])
-		{
-			case 1: ApplyAnimation(playerid,"Attractors","Stepsit_in",4.1,0,1,1,1,1);
-			case 2: ApplyAnimation(playerid,"Attractors","Stepsit_loop",4.1,0,1,1,1,1);
-			case 3: ApplyAnimation(playerid,"Attractors","Stepsit_out",4.1,0,1,1,1,1);
-		}
-	}
-	return 1;
-}
-CMD:animairport(playerid, params[]) {
-	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) ApplyAnimation(playerid,"AIRPORT","thrw_barl_thrw",4.1,0,1,1,1,1);
-	return 1;
-}
-CMD:animped(playerid, params[]) {
-	if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY,"Введите: /animped [1-301]");
-	if(params[0] < 1 || params[0] > 301) return Send(playerid,COLOR_GREY,"Введите: /animped [1-301]");
-	switch(params[0])
-	{
-		case 1: ApplyAnimation(playerid,"PED","IDLE_CHAT",4.1,0,1,1,1,1);
-		case 2: ApplyAnimation(playerid,"PED","WALK_DRUNK",4.1,0,1,1,1,1);
-		case 3: ApplyAnimation(playerid,"PED","abseil",4.1,0,1,1,1,1);
-		case 4: ApplyAnimation(playerid,"PED","ARRESTgun",4.1,0,1,1,1,1);
-		case 5: ApplyAnimation(playerid,"PED","ATM",4.1,0,1,1,1,1);
-		case 6: ApplyAnimation(playerid,"PED","BIKE_elbowL",4.1,0,1,1,1,1);
-		case 7: ApplyAnimation(playerid,"PED","BIKE_fallR",4.1,0,1,1,1,1);
-		case 8: ApplyAnimation(playerid,"PED","BIKE_fall_off",4.1,0,1,1,1,1);
-		case 9: ApplyAnimation(playerid,"PED","BIKE_pickupL",4.1,0,1,1,1,1);
-		case 10: ApplyAnimation(playerid,"PED","BIKE_pickupR",4.1,0,1,1,1,1);
-		case 11: ApplyAnimation(playerid,"PED","BIKE_pullupL",4.1,0,1,1,1,1);
-		case 12: ApplyAnimation(playerid,"PED","BIKE_pullupR",4.1,0,1,1,1,1);
-		case 13: ApplyAnimation(playerid,"PED","bomber",4.1,0,1,1,1,1);
-		case 14: ApplyAnimation(playerid,"PED","CAR_alignHI_LHS",4.1,0,1,1,1,1);
-		case 15: ApplyAnimation(playerid,"PED","CAR_alignHI_RHS",4.1,0,1,1,1,1);
-		case 16: ApplyAnimation(playerid,"PED","CAR_align_LHS",4.1,0,1,1,1,1);
-		case 17: ApplyAnimation(playerid,"PED","CAR_align_RHS",4.1,0,1,1,1,1);
-		case 18: ApplyAnimation(playerid,"PED","CAR_closedoorL_LHS",4.1,0,1,1,1,1);
-		case 19: ApplyAnimation(playerid,"PED","CAR_closedoorL_RHS",4.1,0,1,1,1,1);
-		case 20: ApplyAnimation(playerid,"PED","CAR_closedoor_LHS",4.1,0,1,1,1,1);
-		case 21: ApplyAnimation(playerid,"PED","CAR_closedoor_RHS",4.1,0,1,1,1,1);
-		case 22: ApplyAnimation(playerid,"PED","CAR_close_LHS",4.1,0,1,1,1,1);
-		case 23: ApplyAnimation(playerid,"PED","CAR_crawloutRHS",4.1,0,1,1,1,1);
-		case 24: ApplyAnimation(playerid,"PED","CAR_dead_LHS",4.1,0,1,1,1,1);
-		case 25: ApplyAnimation(playerid,"PED","CAR_dead_RHS",4.1,0,1,1,1,1);
-		case 26: ApplyAnimation(playerid,"PED","CAR_doorlocked_LHS",4.1,0,1,1,1,1);
-		case 27: ApplyAnimation(playerid,"PED","CAR_fallout_LHS",4.1,0,1,1,1,1);
-		case 28: ApplyAnimation(playerid,"PED","CAR_fallout_RHS",4.1,0,1,1,1,1);
-		case 29: ApplyAnimation(playerid,"PED","CAR_getinL_LHS",4.1,0,1,1,1,1);
-		case 30: ApplyAnimation(playerid,"PED","CAR_getinL_RHS",4.1,0,1,1,1,1);
-		case 31: ApplyAnimation(playerid,"PED","CAR_getin_LHS",4.1,0,1,1,1,1);
-		case 32: ApplyAnimation(playerid,"PED","CAR_getin_RHS",4.1,0,1,1,1,1);
-		case 33: ApplyAnimation(playerid,"PED","CAR_getoutL_LHS",4.1,0,1,1,1,1);
-		case 34: ApplyAnimation(playerid,"PED","CAR_getout_LHS",4.1,0,1,1,1,1);
-		case 35: ApplyAnimation(playerid,"PED","CAR_getout_RHS",4.1,0,1,1,1,1);
-		case 36: ApplyAnimation(playerid,"PED","car_hookertalk",4.1,0,1,1,1,1);
-		case 37: ApplyAnimation(playerid,"PED","CAR_jackedLHS",4.1,0,1,1,1,1);
-		case 38: ApplyAnimation(playerid,"PED","CAR_jackedRHS",4.1,0,1,1,1,1);
-		case 39: ApplyAnimation(playerid,"PED","CAR_jumpin_LHS",4.1,0,1,1,1,1);
-		case 302: ApplyAnimation(playerid,"PED","CAR_LB",4.1,0,1,1,1,1);
-		case 303: ApplyAnimation(playerid,"PED","CAR_LB_pro",4.1,0,1,1,1,1);
-		case 40: ApplyAnimation(playerid,"PED","CAR_LB_weak",4.1,0,1,1,1,1);
-		case 41: ApplyAnimation(playerid,"PED","CAR_LjackedLHS",4.1,0,1,1,1,1);
-		case 42: ApplyAnimation(playerid,"PED","CAR_Lshuffle_RHS",4.1,0,1,1,1,1);
-		case 43: ApplyAnimation(playerid,"PED","CAR_Lsit",4.1,0,1,1,1,1);
-		case 44: ApplyAnimation(playerid,"PED","CAR_open_LHS",4.1,0,1,1,1,1);
-		case 45: ApplyAnimation(playerid,"PED","CAR_open_RHS",4.1,0,1,1,1,1);
-		case 46: ApplyAnimation(playerid,"PED","CAR_pulloutL_LHS",4.1,0,1,1,1,1);
-		case 47: ApplyAnimation(playerid,"PED","CAR_pulloutL_RHS",4.1,0,1,1,1,1);
-		case 48: ApplyAnimation(playerid,"PED","CAR_pullout_LHS",4.1,0,1,1,1,1);
-		case 49: ApplyAnimation(playerid,"PED","CAR_pullout_RHS",4.1,0,1,1,1,1);
-		case 305: ApplyAnimation(playerid,"PED","CAR_Qjacked",4.1,0,1,1,1,1);
-		case 50: ApplyAnimation(playerid,"PED","CAR_rolldoor",4.1,0,1,1,1,1);
-		case 51: ApplyAnimation(playerid,"PED","CAR_rolldoorLO",4.1,0,1,1,1,1);
-		case 52: ApplyAnimation(playerid,"PED","CAR_rollout_LHS",4.1,0,1,1,1,1);
-		case 53: ApplyAnimation(playerid,"PED","CAR_rollout_RHS",4.1,0,1,1,1,1);
-		case 54: ApplyAnimation(playerid,"PED","CAR_shuffle_RHS",4.1,0,1,1,1,1);
-		case 55: ApplyAnimation(playerid,"PED","CAR_sit",4.1,0,1,1,1,1);
-		case 56: ApplyAnimation(playerid,"PED","CAR_sitp",4.1,0,1,1,1,1);
-		case 57: ApplyAnimation(playerid,"PED","CAR_sitpLO",4.1,0,1,1,1,1);
-		case 58: ApplyAnimation(playerid,"PED","CAR_sit_pro",4.1,0,1,1,1,1);
-		case 59: ApplyAnimation(playerid,"PED","CAR_sit_weak",4.1,0,1,1,1,1);
-		case 60: ApplyAnimation(playerid,"PED","CAR_tune_radio",4.1,0,1,1,1,1);
-		case 61: ApplyAnimation(playerid,"PED","CLIMB_idle",4.1,0,1,1,1,1);
-		case 62: ApplyAnimation(playerid,"PED","CLIMB_jump",4.1,0,1,1,1,1);
-		case 63: ApplyAnimation(playerid,"PED","CLIMB_jump2fall",4.1,0,1,1,1,1);
-		case 64: ApplyAnimation(playerid,"PED","CLIMB_jump_B",4.1,0,1,1,1,1);
-		case 65: ApplyAnimation(playerid,"PED","CLIMB_Pull",4.1,0,1,1,1,1);
-		case 66: ApplyAnimation(playerid,"PED","CLIMB_Stand",4.1,0,1,1,1,1);
-		case 67: ApplyAnimation(playerid,"PED","CLIMB_Stand_finish",4.1,0,1,1,1,1);
-		case 68: ApplyAnimation(playerid,"PED","cower",4.1,0,1,1,1,1);
-		case 69: ApplyAnimation(playerid,"PED","Crouch_Roll_L",4.1,0,1,1,1,1);
-		case 70: ApplyAnimation(playerid,"PED","Crouch_Roll_R",4.1,0,1,1,1,1);
-		case 71: ApplyAnimation(playerid,"PED","DAM_armL_frmBK",4.1,0,1,1,1,1);
-		case 72: ApplyAnimation(playerid,"PED","DAM_armL_frmFT",4.1,0,1,1,1,1);
-		case 73: ApplyAnimation(playerid,"PED","DAM_armL_frmLT",4.1,0,1,1,1,1);
-		case 74: ApplyAnimation(playerid,"PED","DAM_armR_frmBK",4.1,0,1,1,1,1);
-		case 75: ApplyAnimation(playerid,"PED","DAM_armR_frmFT",4.1,0,1,1,1,1);
-		case 76: ApplyAnimation(playerid,"PED","DAM_armR_frmRT",4.1,0,1,1,1,1);
-		case 77: ApplyAnimation(playerid,"PED","DAM_LegL_frmBK",4.1,0,1,1,1,1);
-		case 78: ApplyAnimation(playerid,"PED","DAM_LegL_frmFT",4.1,0,1,1,1,1);
-		case 79: ApplyAnimation(playerid,"PED","DAM_LegL_frmLT",4.1,0,1,1,1,1);
-		case 80: ApplyAnimation(playerid,"PED","DAM_LegR_frmBK",4.1,0,1,1,1,1);
-		case 81: ApplyAnimation(playerid,"PED","DAM_LegR_frmFT",4.1,0,1,1,1,1);
-		case 82: ApplyAnimation(playerid,"PED","DAM_LegR_frmRT",4.1,0,1,1,1,1);
-		case 83: ApplyAnimation(playerid,"PED","DAM_stomach_frmBK",4.1,0,1,1,1,1);
-		case 84: ApplyAnimation(playerid,"PED","DAM_stomach_frmFT",4.1,0,1,1,1,1);
-		case 85: ApplyAnimation(playerid,"PED","DAM_stomach_frmLT",4.1,0,1,1,1,1);
-		case 86: ApplyAnimation(playerid,"PED","DAM_stomach_frmRT",4.1,0,1,1,1,1);
-		case 87: ApplyAnimation(playerid,"PED","DOOR_LHinge_O",4.1,0,1,1,1,1);
-		case 88: ApplyAnimation(playerid,"PED","DOOR_RHinge_O",4.1,0,1,1,1,1);
-		case 89: ApplyAnimation(playerid,"PED","DrivebyL_L",4.1,0,1,1,1,1);
-		case 90: ApplyAnimation(playerid,"PED","DrivebyL_R",4.1,0,1,1,1,1);
-		case 91: ApplyAnimation(playerid,"PED","Driveby_L",4.1,0,1,1,1,1);
-		case 92: ApplyAnimation(playerid,"PED","Driveby_R",4.1,0,1,1,1,1);
-		case 93: ApplyAnimation(playerid,"PED","DRIVE_BOAT",4.1,0,1,1,1,1);
-		case 94: ApplyAnimation(playerid,"PED","DRIVE_BOAT_back",4.1,0,1,1,1,1);
-		case 95: ApplyAnimation(playerid,"PED","DRIVE_BOAT_L",4.1,0,1,1,1,1);
-		case 96: ApplyAnimation(playerid,"PED","DRIVE_BOAT_R",4.1,0,1,1,1,1);
-		case 97: ApplyAnimation(playerid,"PED","Drive_L",4.1,0,1,1,1,1);
-		case 98: ApplyAnimation(playerid,"PED","Drive_LO_l",4.1,0,1,1,1,1);
-		case 99: ApplyAnimation(playerid,"PED","Drive_LO_R",4.1,0,1,1,1,1);
-		case 100: ApplyAnimation(playerid,"PED","Drive_L_pro",4.1,0,1,1,1,1);
-		case 101: ApplyAnimation(playerid,"PED","Drive_L_pro_slow",4.1,0,1,1,1,1);
-		case 102: ApplyAnimation(playerid,"PED","Drive_L_slow",4.1,0,1,1,1,1);
-		case 103: ApplyAnimation(playerid,"PED","Drive_L_weak",4.1,0,1,1,1,1);
-		case 105: ApplyAnimation(playerid,"PED","Drive_L_weak_slow",4.1,0,1,1,1,1);
-		case 106: ApplyAnimation(playerid,"PED","Drive_R",4.1,0,1,1,1,1);
-		case 107: ApplyAnimation(playerid,"PED","Drive_R_pro",4.1,0,1,1,1,1);
-		case 108: ApplyAnimation(playerid,"PED","Drive_R_pro_slow",4.1,0,1,1,1,1);
-		case 109: ApplyAnimation(playerid,"PED","Drive_R_slow",4.1,0,1,1,1,1);
-		case 110: ApplyAnimation(playerid,"PED","Drive_R_weak",4.1,0,1,1,1,1);
-		case 111: ApplyAnimation(playerid,"PED","Drive_R_weak_slow",4.1,0,1,1,1,1);
-		case 112: ApplyAnimation(playerid,"PED","Drive_truck",4.1,0,1,1,1,1);
-		case 113: ApplyAnimation(playerid,"PED","DRIVE_truck_back",4.1,0,1,1,1,1);
-		case 114: ApplyAnimation(playerid,"PED","DRIVE_truck_L",4.1,0,1,1,1,1);
-		case 115: ApplyAnimation(playerid,"PED","DRIVE_truck_R",4.1,0,1,1,1,1);
-		case 116: ApplyAnimation(playerid,"PED","Drown",4.1,0,1,1,1,1);
-		case 117: ApplyAnimation(playerid,"PED","DUCK_cower",4.1,0,1,1,1,1);
-		case 118: ApplyAnimation(playerid,"PED","endchat_01",4.1,0,1,1,1,1);
-		case 119: ApplyAnimation(playerid,"PED","endchat_02",4.1,0,1,1,1,1);
-		case 120: ApplyAnimation(playerid,"PED","endchat_03",4.1,0,1,1,1,1);
-		case 121: ApplyAnimation(playerid,"PED","DRIVE_truck_back",4.1,0,1,1,1,1);
-		case 123: ApplyAnimation(playerid,"PED","EV_dive",4.1,0,1,1,1,1);
-		case 124: ApplyAnimation(playerid,"PED","EV_step",4.1,0,1,1,1,1);
-		case 125: ApplyAnimation(playerid,"PED","facanger",4.1,0,1,1,1,1);
-		case 127: ApplyAnimation(playerid,"PED","facgum",4.1,0,1,1,1,1);
-		case 128: ApplyAnimation(playerid,"PED","facsurp",4.1,0,1,1,1,1);
-		case 129: ApplyAnimation(playerid,"PED","facsurpm",4.1,0,1,1,1,1);
-		case 130: ApplyAnimation(playerid,"PED","factalk",4.1,0,1,1,1,1);
-		case 131: ApplyAnimation(playerid,"PED","facurios",4.1,0,1,1,1,1);
-		case 132: ApplyAnimation(playerid,"PED","FALL_back",4.1,0,1,1,1,1);
-		case 133: ApplyAnimation(playerid,"PED","FALL_collapse",4.1,0,1,1,1,1);
-		case 134: ApplyAnimation(playerid,"PED","FALL_fall",4.1,0,1,1,1,1);
-		case 135: ApplyAnimation(playerid,"PED","FALL_front",4.1,0,1,1,1,1);
-		case 136: ApplyAnimation(playerid,"PED","FALL_glide",4.1,0,1,1,1,1);
-		case 137: ApplyAnimation(playerid,"PED","FALL_land",4.1,0,1,1,1,1);
-		case 138: ApplyAnimation(playerid,"PED","FALL_skyDive",4.1,0,1,1,1,1);
-		case 139: ApplyAnimation(playerid,"PED","Fight2Idle",4.1,0,1,1,1,1);
-		case 140: ApplyAnimation(playerid,"PED","FightA_1",4.1,0,1,1,1,1);
-		case 141: ApplyAnimation(playerid,"PED","FightA_2",4.1,0,1,1,1,1);
-		case 142: ApplyAnimation(playerid,"PED","FightA_3",4.1,0,1,1,1,1);
-		case 143: ApplyAnimation(playerid,"PED","FightA_block",4.1,0,1,1,1,1);
-		case 144: ApplyAnimation(playerid,"PED","FightA_G",4.1,0,1,1,1,1);
-		case 145: ApplyAnimation(playerid,"PED","FightA_M",4.1,0,1,1,1,1);
-		case 146: ApplyAnimation(playerid,"PED","FIGHTIDLE",4.1,0,1,1,1,1);
-		case 147: ApplyAnimation(playerid,"PED","FightShB",4.1,0,1,1,1,1);
-		case 148: ApplyAnimation(playerid,"PED","FightShF",4.1,0,1,1,1,1);
-		case 149: ApplyAnimation(playerid,"PED","FightSh_BWD",4.1,0,1,1,1,1);
-		case 150: ApplyAnimation(playerid,"PED","FightSh_FWD",4.1,0,1,1,1,1);
-		case 151: ApplyAnimation(playerid,"PED","FightSh_Left",4.1,0,1,1,1,1);
-		case 152: ApplyAnimation(playerid,"PED","FightSh_Right",4.1,0,1,1,1,1);
-		case 153: ApplyAnimation(playerid,"PED","flee_lkaround_01",4.1,0,1,1,1,1);
-		case 154: ApplyAnimation(playerid,"PED","FLOOR_hit",4.1,0,1,1,1,1);
-		case 155: ApplyAnimation(playerid,"PED","FLOOR_hit_f",4.1,0,1,1,1,1);
-		case 156: ApplyAnimation(playerid,"PED","fucku",4.1,0,1,1,1,1);
-		case 157: ApplyAnimation(playerid,"PED","gang_gunstand",4.1,0,1,1,1,1);
-		case 158: ApplyAnimation(playerid,"PED","gas_cwr",4.1,0,1,1,1,1);
-		case 159: ApplyAnimation(playerid,"PED","getup",4.1,0,1,1,1,1);
-		case 160: ApplyAnimation(playerid,"PED","getup_front",4.1,0,1,1,1,1);
-		case 161: ApplyAnimation(playerid,"PED","gum_eat",4.1,0,1,1,1,1);
-		case 162: ApplyAnimation(playerid,"PED","GunCrouchBwd",4.1,0,1,1,1,1);
-		case 163: ApplyAnimation(playerid,"PED","GunCrouchFwd",4.1,0,1,1,1,1);
-		case 164: ApplyAnimation(playerid,"PED","GunMove_BWD",4.1,0,1,1,1,1);
-		case 165: ApplyAnimation(playerid,"PED","GunMove_FWD",4.1,0,1,1,1,1);
-		case 166: ApplyAnimation(playerid,"PED","GunMove_L",4.1,0,1,1,1,1);
-		case 167: ApplyAnimation(playerid,"PED","GunMove_R",4.1,0,1,1,1,1);
-		case 168: ApplyAnimation(playerid,"PED","Gun_2_IDLE",4.1,0,1,1,1,1);
-		case 169: ApplyAnimation(playerid,"PED","GUN_BUTT",4.1,0,1,1,1,1);
-		case 170: ApplyAnimation(playerid,"PED","GUN_BUTT_crouch",4.1,0,1,1,1,1);
-		case 171: ApplyAnimation(playerid,"PED","Gun_stand",4.1,0,1,1,1,1);
-		case 172: ApplyAnimation(playerid,"PED","handscower",4.1,0,1,1,1,1);
-		case 173: ApplyAnimation(playerid,"PED","handsup",4.1,0,1,1,1,1);
-		case 174: ApplyAnimation(playerid,"PED","HitA_1",4.1,0,1,1,1,1);
-		case 175: ApplyAnimation(playerid,"PED","HitA_2",4.1,0,1,1,1,1);
-		case 176: ApplyAnimation(playerid,"PED","HitA_3",4.1,0,1,1,1,1);
-		case 177: ApplyAnimation(playerid,"PED","HIT_back",4.1,0,1,1,1,1);
-		case 178: ApplyAnimation(playerid,"PED","HIT_behind",4.1,0,1,1,1,1);
-		case 179: ApplyAnimation(playerid,"PED","HIT_front",4.1,0,1,1,1,1);
-		case 180: ApplyAnimation(playerid,"PED","HIT_GUN_BUTT",4.1,0,1,1,1,1);
-		case 181: ApplyAnimation(playerid,"PED","HIT_L",4.1,0,1,1,1,1);
-		case 182: ApplyAnimation(playerid,"PED","HIT_R",4.1,0,1,1,1,1);
-		case 183: ApplyAnimation(playerid,"PED","HIT_walk",4.1,0,1,1,1,1);
-		case 184: ApplyAnimation(playerid,"PED","HIT_wall",4.1,0,1,1,1,1);
-		case 185: ApplyAnimation(playerid,"PED","Idlestance_fat",4.1,0,1,1,1,1);
-		case 186: ApplyAnimation(playerid,"PED","idlestance_old",4.1,0,1,1,1,1);
-		case 187: ApplyAnimation(playerid,"PED","IDLE_armed",4.1,0,1,1,1,1);
-		case 188: ApplyAnimation(playerid,"PED","IDLE_chat",4.1,0,1,1,1,1);
-		case 189: ApplyAnimation(playerid,"PED","IDLE_csaw",4.1,0,1,1,1,1);
-		case 190: ApplyAnimation(playerid,"PED","Idle_Gang1",4.1,0,1,1,1,1);
-		case 191: ApplyAnimation(playerid,"PED","IDLE_HBHB",4.1,0,1,1,1,1);
-		case 192: ApplyAnimation(playerid,"PED","IDLE_ROCKET",4.1,0,1,1,1,1);
-		case 193: ApplyAnimation(playerid,"PED","IDLE_stance",4.1,0,1,1,1,1);
-		case 194: ApplyAnimation(playerid,"PED","IDLE_taxi",4.1,0,1,1,1,1);
-		case 195: ApplyAnimation(playerid,"PED","IDLE_tired",4.1,0,1,1,1,1);
-		case 196: ApplyAnimation(playerid,"PED","Jetpack_Idle",4.1,0,1,1,1,1);
-		case 197: ApplyAnimation(playerid,"PED","JOG_femaleA",4.1,0,1,1,1,1);
-		case 198: ApplyAnimation(playerid,"PED","JOG_maleA",4.1,0,1,1,1,1);
-		case 199: ApplyAnimation(playerid,"PED","JUMP_glide",4.1,0,1,1,1,1);
-		case 200: ApplyAnimation(playerid,"PED","JUMP_land",4.1,0,1,1,1,1);
-		case 201: ApplyAnimation(playerid,"PED","JUMP_launch",4.1,0,1,1,1,1);
-		case 202: ApplyAnimation(playerid,"PED","JUMP_launch_R",4.1,0,1,1,1,1);
-		case 203: ApplyAnimation(playerid,"PED","KART_drive",4.1,0,1,1,1,1);
-		case 204: ApplyAnimation(playerid,"PED","KART_L",4.1,0,1,1,1,1);
-		case 205: ApplyAnimation(playerid,"PED","KART_LB",4.1,0,1,1,1,1);
-		case 206: ApplyAnimation(playerid,"PED","KART_R",4.1,0,1,1,1,1);
-		case 207: ApplyAnimation(playerid,"PED","KD_left",4.1,0,1,1,1,1);
-		case 208: ApplyAnimation(playerid,"PED","KD_right",4.1,0,1,1,1,1);
-		case 209: ApplyAnimation(playerid,"PED","KO_shot_face",4.1,0,1,1,1,1);
-		case 210: ApplyAnimation(playerid,"PED","KO_shot_front",4.1,0,1,1,1,1);
-		case 211: ApplyAnimation(playerid,"PED","KO_shot_stom",4.1,0,1,1,1,1);
-		case 212: ApplyAnimation(playerid,"PED","KO_skid_back",4.1,0,1,1,1,1);
-		case 213: ApplyAnimation(playerid,"PED","KO_skid_front",4.1,0,1,1,1,1);
-		case 214: ApplyAnimation(playerid,"PED","KO_spin_L",4.1,0,1,1,1,1);
-		case 215: ApplyAnimation(playerid,"PED","KO_spin_R",4.1,0,1,1,1,1);
-		case 216: ApplyAnimation(playerid,"PED","pass_Smoke_in_car",4.1,0,1,1,1,1);
-		case 217: ApplyAnimation(playerid,"PED","phone_in",4.1,0,1,1,1,1);
-		case 218: ApplyAnimation(playerid,"PED","phone_out",4.1,0,1,1,1,1);
-		case 219: ApplyAnimation(playerid,"PED","phone_talk",4.1,0,1,1,1,1);
-		case 220: ApplyAnimation(playerid,"PED","Player_Sneak",4.1,0,1,1,1,1);
-		case 221: ApplyAnimation(playerid,"PED","Player_Sneak_walkstart",4.1,0,1,1,1,1);
-		case 222: ApplyAnimation(playerid,"PED","roadcross",4.1,0,1,1,1,1);
-		case 223: ApplyAnimation(playerid,"PED","roadcross_female",4.1,0,1,1,1,1);
-		case 224: ApplyAnimation(playerid,"PED","roadcross_gang",4.1,0,1,1,1,1);
-		case 225: ApplyAnimation(playerid,"PED","roadcross_old",4.1,0,1,1,1,1);
-		case 226: ApplyAnimation(playerid,"PED","run_1armed",4.1,0,1,1,1,1);
-		case 227: ApplyAnimation(playerid,"PED","run_armed",4.1,0,1,1,1,1);
-		case 228: ApplyAnimation(playerid,"PED","run_civi",4.1,0,1,1,1,1);
-		case 229: ApplyAnimation(playerid,"PED","run_csaw",4.1,0,1,1,1,1);
-		case 230: ApplyAnimation(playerid,"PED","run_fat",4.1,0,1,1,1,1);
-		case 240: ApplyAnimation(playerid,"PED","run_fatold",4.1,0,1,1,1,1);
-		case 241: ApplyAnimation(playerid,"PED","run_gang1",4.1,0,1,1,1,1);
-		case 242: ApplyAnimation(playerid,"PED","run_left",4.1,0,1,1,1,1);
-		case 243: ApplyAnimation(playerid,"PED","run_old",4.1,0,1,1,1,1);
-		case 244: ApplyAnimation(playerid,"PED","run_player",4.1,0,1,1,1,1);
-		case 245: ApplyAnimation(playerid,"PED","run_right",4.1,0,1,1,1,1);
-		case 246: ApplyAnimation(playerid,"PED","run_rocket",4.1,0,1,1,1,1);
-		case 247: ApplyAnimation(playerid,"PED","Run_stop",4.1,0,1,1,1,1);
-		case 248: ApplyAnimation(playerid,"PED","Run_stopR",4.1,0,1,1,1,1);
-		case 249: ApplyAnimation(playerid,"PED","Run_Wuzi",4.1,0,1,1,1,1);
-		case 250: ApplyAnimation(playerid,"PED","SEAT_down",4.1,0,1,1,1,1);
-		case 251: ApplyAnimation(playerid,"PED","SEAT_idle",4.1,0,1,1,1,1);
-		case 252: ApplyAnimation(playerid,"PED","SEAT_up",4.1,0,1,1,1,1);
-		case 253: ApplyAnimation(playerid,"PED","SHOT_leftP",4.1,0,1,1,1,1);
-		case 254: ApplyAnimation(playerid,"PED","SHOT_partial",4.1,0,1,1,1,1);
-		case 255: ApplyAnimation(playerid,"PED","SHOT_partial_B",4.1,0,1,1,1,1);
-		case 256: ApplyAnimation(playerid,"PED","SHOT_rightP",4.1,0,1,1,1,1);
-		case 257: ApplyAnimation(playerid,"PED","Shove_Partial",4.1,0,1,1,1,1);
-		case 258: ApplyAnimation(playerid,"PED","Smoke_in_car",4.1,0,1,1,1,1);
-		case 259: ApplyAnimation(playerid,"PED","sprint_civi",4.1,0,1,1,1,1);
-		case 260: ApplyAnimation(playerid,"PED","sprint_panic",4.1,0,1,1,1,1);
-		case 261: ApplyAnimation(playerid,"PED","Sprint_Wuzi",4.1,0,1,1,1,1);
-		case 262: ApplyAnimation(playerid,"PED","swat_run",4.1,0,1,1,1,1);
-		case 263: ApplyAnimation(playerid,"PED","Swim_Tread",4.1,0,1,1,1,1);
-		case 264: ApplyAnimation(playerid,"PED","Tap_hand",4.1,0,1,1,1,1);
-		case 265: ApplyAnimation(playerid,"PED","Tap_handP",4.1,0,1,1,1,1);
-		case 266: ApplyAnimation(playerid,"PED","turn_180",4.1,0,1,1,1,1);
-		case 267: ApplyAnimation(playerid,"PED","Turn_L",4.1,0,1,1,1,1);
-		case 268: ApplyAnimation(playerid,"PED","Turn_R",4.1,0,1,1,1,1);
-		case 269: ApplyAnimation(playerid,"PED","WALK_armed",4.1,0,1,1,1,1);
-		case 270: ApplyAnimation(playerid,"PED","WALK_civi",4.1,0,1,1,1,1);
-		case 271: ApplyAnimation(playerid,"PED","WALK_csaw",4.1,0,1,1,1,1);
-		case 272: ApplyAnimation(playerid,"PED","Walk_DoorPartial",4.1,0,1,1,1,1);
-		case 273: ApplyAnimation(playerid,"PED","WALK_drunk",4.1,0,1,1,1,1);
-		case 274: ApplyAnimation(playerid,"PED","WALK_fat",4.1,0,1,1,1,1);
-		case 275: ApplyAnimation(playerid,"PED","WALK_fatold",4.1,0,1,1,1,1);
-		case 276: ApplyAnimation(playerid,"PED","WALK_gang1",4.1,0,1,1,1,1);
-		case 277: ApplyAnimation(playerid,"PED","WALK_gang2",4.1,0,1,1,1,1);
-		case 278: ApplyAnimation(playerid,"PED","WALK_old",4.1,0,1,1,1,1);
-		case 279: ApplyAnimation(playerid,"PED","WALK_player",4.1,0,1,1,1,1);
-		case 280: ApplyAnimation(playerid,"PED","WALK_rocket",4.1,0,1,1,1,1);
-		case 281: ApplyAnimation(playerid,"PED","WALK_shuffle",4.1,0,1,1,1,1);
-		case 282: ApplyAnimation(playerid,"PED","WALK_start",4.1,0,1,1,1,1);
-		case 283: ApplyAnimation(playerid,"PED","WALK_start_armed",4.1,0,1,1,1,1);
-		case 284: ApplyAnimation(playerid,"PED","WALK_start_csaw",4.1,0,1,1,1,1);
-		case 285: ApplyAnimation(playerid,"PED","WALK_start_rocket",4.1,0,1,1,1,1);
-		case 286: ApplyAnimation(playerid,"PED","Walk_Wuzi",4.1,0,1,1,1,1);
-		case 287: ApplyAnimation(playerid,"PED","WEAPON_crouch",4.1,0,1,1,1,1);
-		case 288: ApplyAnimation(playerid,"PED","woman_idlestance",4.1,0,1,1,1,1);
-		case 289: ApplyAnimation(playerid,"PED","woman_run",4.1,0,1,1,1,1);
-		case 290: ApplyAnimation(playerid,"PED","WOMAN_runbusy",4.1,0,1,1,1,1);
-		case 291: ApplyAnimation(playerid,"PED","WOMAN_runfatold",4.1,0,1,1,1,1);
-		case 292: ApplyAnimation(playerid,"PED","woman_runpanic",4.1,0,1,1,1,1);
-		case 293: ApplyAnimation(playerid,"PED","WOMAN_runsexy",4.1,0,1,1,1,1);
-		case 294: ApplyAnimation(playerid,"PED","WOMAN_walkbusy",4.1,0,1,1,1,1);
-		case 295: ApplyAnimation(playerid,"PED","WOMAN_walkfatold",4.1,0,1,1,1,1);
-		case 296: ApplyAnimation(playerid,"PED","WOMAN_walknorm",4.1,0,1,1,1,1);
-		case 297: ApplyAnimation(playerid,"PED","WOMAN_walkold",4.1,0,1,1,1,1);
-		case 298: ApplyAnimation(playerid,"PED","WOMAN_walkpro",4.1,0,1,1,1,1);
-		case 299: ApplyAnimation(playerid,"PED","WOMAN_walksexy",4.1,0,1,1,1,1);
-		case 300: ApplyAnimation(playerid,"PED","WOMAN_walkshop",4.1,0,1,1,1,1);
-		case 301: ApplyAnimation(playerid,"PED","XPRESSscratch",4.1,0,1,1,1,1);
-	}
-	return 1;
-}
-
 CMD:setname(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_LIGHTRED2, "* Ники не меняем!");
 	if(sscanf(params, "us[24]", params[0], params[1])) return Send(playerid, COLOR_GRAD1, "Введите: /setname [playerid] [newname]");
@@ -10467,7 +7722,7 @@ CMD:agl(playerid, params[]) { new string[144], sendername[24], playername[24];
 		Pl::Info[params[0]][pLic][2] = 1;
 		
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /agl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s дал вам все лицензии.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -10479,7 +7734,7 @@ CMD:agl(playerid, params[]) { new string[144], sendername[24], playername[24];
 		Pl::Info[params[0]][pLic][0] = 1;
 		
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /agl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s Дал вам лицензию на вождение.", sendername);
 		Send(params[1], COLOR_LIGHTBLUE, string);
@@ -10487,7 +7742,7 @@ CMD:agl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	} else if(strcmp(params[1],"pilots",true) == 0) {
 		Pl::Info[params[0]][pLic][1] = 1;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /agl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s Дал вам лицензию на управление воздушным транспортом.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -10495,7 +7750,7 @@ CMD:agl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	} else if(strcmp(params[1],"sailing",true) == 0) {
 		Pl::Info[params[1]][pLic][2] = 1;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /agl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s Дал вам лицензию на управление водным транспортом.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -10503,7 +7758,7 @@ CMD:agl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	} else if(strcmp(params[1],"weapon",true) == 0) {
 		Pl::Info[params[0]][pLic][3] = 1;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /agl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s Дал вам лицензию на оружие.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -10528,7 +7783,7 @@ CMD:atl(playerid, params[]) { new string[144], sendername[24], playername[24];
 		Pl::Info[params[0]][pLic][3] = 0;
 		Pl::Info[params[0]][pLic][2] = 0;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /atl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s забрал у Вас все лицензии.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -10536,7 +7791,7 @@ CMD:atl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	} else if(strcmp(params[1], "driving",true) == 0) {
 		Pl::Info[params[0]][pLic][0] = 0;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /atl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s забрал у вас лицензию на вождение.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -10544,7 +7799,7 @@ CMD:atl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	} else if(strcmp(params[1], "pilots",true) == 0) {
 		Pl::Info[params[0]][pLic][1] = 0;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /atl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], params[1]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], params[1]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s забрал у вас лицензию на управление воздушным транспортом.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -10552,7 +7807,7 @@ CMD:atl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	} else if(strcmp(temp,"sailing",true) == 0) {
 		Pl::Info[params[0]][pLic][2] = 0;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /atl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], temp);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], temp);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s забрал у вас лицензию на управление водным транспортом.", sendername);
 		Send(params[1], COLOR_LIGHTBLUE, string);
@@ -10560,7 +7815,7 @@ CMD:atl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	} else if(strcmp(temp, "weapon",true) == 0) {
 		Pl::Info[params[0]][pLic][3] = 0;
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /atl к игроку %s[%s]. Тип: %s",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], temp);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName], temp);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 		format(string, sizeof string, "* Администратор %s забрал у вас лицензию на оружие.", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
@@ -11001,7 +8256,7 @@ CMD:m(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255]
 	if(!Fc::GetInfo(GetPlayerVehicleID(playerid))) return Send(playerid, COLOR_GREY, "* Вы не в служебной машине!");
 	GetPlayerName(playerid, sendername, 24);
 	regex_replace_exid(params, ADBlock, REPLACE_TEXT, replacecmdtext, sizeof replacecmdtext);
-	format(string, sizeof string, "[ %s %s %s:o< %s ]", FracInfo[fracid][fTag], RankInfo[fracid][Pl::Info[playerid][pRank]], sendername, replacecmdtext);
+	format(string, sizeof string, "[%s %s %s:o< %s]", FracInfo[fracid][fTag], RankInfo[fracid][Pl::Info[playerid][pRank]], sendername, replacecmdtext);
 	ProxDetector(60.0, playerid, string,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW);
 	return 1;
 }
@@ -11013,7 +8268,7 @@ CMD:r(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255]
 	new fracid = Pl::FracID(playerid);
 	GetPlayerName(playerid, sendername, 24);
 	regex_replace_exid(params, ADBlock, REPLACE_TEXT, replacecmdtext, sizeof replacecmdtext);
-	format(string, sizeof string, "[R] %s %s: %s. **", RankInfo[ fracid ][ Pl::Info[playerid][pRank] ], sendername, replacecmdtext);
+	format(string, sizeof string, "[R] %s %s: %s. **", RankInfo[fracid][Pl::Info[playerid][pRank]], sendername, replacecmdtext);
 	sendToFamily(fracid, COLOR_RADIO, string);
 	return 1;
 }
@@ -11778,7 +9033,7 @@ CMD:bizname(playerid, params[]) { new string[144];
 	if(sscanf(params, "is[24]", params[0], temp)) return Send(playerid, COLOR_GREY, "Введите: /bizname [biz] [name]");
 	new i = GetIndexFromBizID(params[0]);
 	strmid(BizzInfo[i][bDescription], temp, 0, strlen(temp), 24);
-	format(string, sizeof string, "Названия бизнеса номер %d изменино на [ %s ]", BizzInfo[i][bID], BizzInfo[i][bDescription]);
+	format(string, sizeof string, "Названия бизнеса номер %d изменино на [%s]", BizzInfo[i][bID], BizzInfo[i][bDescription]);
 	Send(playerid, COLOR_WHITE, string)
 	;
 	return 1;
@@ -11996,9 +9251,9 @@ CMD:ainvite(playerid, params[]) { new string[144], sendername[24], playername[24
 	Pl::SetFracColor(params[0]);
 	Iter::Add(TeamPlayers[params[1]], params[0]);
 	getname(playerid->sendername,params[0]->playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /ainvite к игроку %s[%d][%s]", sendername, playername, params[0], FracInfo[ params[1] ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /ainvite к игроку %s[%d][%s]", sendername, playername, params[0], FracInfo[params[1]][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3);
-	format(string, sizeof string, "* Вы были приняты в %s админом %s", FracInfo[ params[1] ][ fName ], sendername);
+	format(string, sizeof string, "* Вы были приняты в %s админом %s", FracInfo[params[1]][fName], sendername);
 	Send(params[0], COLOR_LIGHTBLUE, string);
 	return 1;
 }
@@ -12011,9 +9266,9 @@ CMD:invite(playerid, params[]) { new string[144], sendername[24], playername[24]
 	if(IsLegalFrac(Pl::FracID(params[0])) && !Pl::Info[params[0]][pPasport][0]) return Send(playerid, COLOR_GREY, "* У этого человека нет паспорта!");
 	getname(playerid -> sendername, params[0] -> playername);
 	SetPVarInt(params[0], "InvateFrac", Pl::Info[playerid][pLeader]);
-	format(string, sizeof string, "* Вы были приглашены в %s лидером %s (пишите /accept invite чтобы согласится)", FracInfo[ Pl::Info[playerid][pLeader] ][ fName ], sendername);
+	format(string, sizeof string, "* Вы были приглашены в %s лидером %s (пишите /accept invite чтобы согласится)", FracInfo[Pl::Info[playerid][pLeader]][fName], sendername);
 	Send(params[0], COLOR_LIGHTBLUE, string);
-	format(string, sizeof string, "* Вы пригласили %s в %s.", playername, FracInfo[ Pl::Info[playerid][pLeader] ][ fName ]);
+	format(string, sizeof string, "* Вы пригласили %s в %s.", playername, FracInfo[Pl::Info[playerid][pLeader]][fName]);
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
@@ -12040,7 +9295,7 @@ CMD:uninvite(playerid, params[]) { new string[144], sendername[24], playername[2
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "* Вы выкинули %s из своей фракции.", playername);
 	Send(playerid, COLOR_LIGHTBLUE, string);
-	format(string, sizeof string, "* Вы были уволены из фракции %s, лидером %s.", FracInfo[ Pl::Info[playerid][pLeader] ][ fName ], sendername);
+	format(string, sizeof string, "* Вы были уволены из фракции %s, лидером %s.", FracInfo[Pl::Info[playerid][pLeader]][fName], sendername);
 	Send(params[0], COLOR_LIGHTBLUE, string);
 	Send(params[0], COLOR_LIGHTBLUE, "* Вы теперь гражданское лицо.");
 	return 1;
@@ -12162,11 +9417,11 @@ CMD:makeleader(playerid, params[]) { new string[144], sendername[24], playername
 		Pl::SetFracColor(params[0]);
 		Pl::SetSpawnInfo(params[0]);
 		
-		format(string, sizeof string, "* Вы были назначены лидером фракции %s, администратором %s", FracInfo[ params[1] ][ fName ], sendername);
+		format(string, sizeof string, "* Вы были назначены лидером фракции %s, администратором %s", FracInfo[params[1]][fName], sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
 	}
 	format(string, sizeof string, "[AdmWarn] * %s применил команду /makeleader к игроку %s[%s]",
-	sendername, playername, FracInfo[ params[1] ][ fName ]);
+	sendername, playername, FracInfo[params[1]][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 4, 3);
 
 	return 1;
@@ -12179,7 +9434,7 @@ CMD:agiverank(playerid, params[]) { new string[144], sendername[24], playername[
 	new fracid = Pl::FracID(params[0]);
 	if(fracid <= 0) return Send(playerid, COLOR_GREY, "* Этот игрок не состоит в организациях!");
 	if(params[1] <= 0 || params[1] > RankNums[fracid]) {
-		format(string, sizeof string, "* В этой фракции всего %d рангов!", RankNums[ fracid ]);
+		format(string, sizeof string, "* В этой фракции всего %d рангов!", RankNums[fracid]);
 		Send(playerid, COLOR_GREY, string);
 		return 1;
 	}
@@ -12187,7 +9442,7 @@ CMD:agiverank(playerid, params[]) { new string[144], sendername[24], playername[
 	getname(playerid->sendername,params[0]->playername);
 	format(string, sizeof string, "* Вы были повышены/понижены в ранге админом %s, ваш ранг: %i", sendername, params[1]);
 	Send(params[0], COLOR_LIGHTBLUE, string);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /agiverank к игроку %s[%d][%s]", sendername, playername, params[0], FracInfo[fracid][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /agiverank к игроку %s[%d][%s]", sendername, playername, params[0], FracInfo[fracid][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	return 1;
 }
@@ -12199,7 +9454,7 @@ CMD:giverank(playerid, params[]) { new string[144], sendername[24], playername[2
 	new fracid = Pl::FracID(params[0]);
 	if(fracid != Pl::Info[playerid][pLeader]) return Send(playerid, COLOR_GREY, "* Этот игрок не состоит в вашей фракции!");
 	if(params[1] <= 0 || params[1] > RankNums[fracid]) {
-		format(string, sizeof string, "* В вашей фракции всего %d рангов", RankNums[ fracid ]);
+		format(string, sizeof string, "* В вашей фракции всего %d рангов", RankNums[fracid]);
 		Send(playerid, COLOR_GREY, string);
 		return 1;
 	}
@@ -12404,7 +9659,7 @@ CMD:gethere(playerid, params[]) { new string[144], sendername[24], playername[24
 	Send(params[0], COLOR_LIGHTRED2, "* Вы были телепортированы администрацией!");
 	
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /gethere к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /gethere к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	
 	return 1;
@@ -12442,7 +9697,7 @@ CMD:givegun(playerid, params[]) { new string[144], sendername[24], playername[24
 		if(params[2] < 1 || params[2] > 999 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Не ниже 1 и не выше 999 патронов!");
 		Rac::GivePlayerWeapon(params[0], params[1], params[2]);
 		getname(playerid -> sendername, params[0] -> playername);
-		format(string, sizeof string, "[AdmWarn] * %s применил команду /givegun к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+		format(string, sizeof string, "[AdmWarn] * %s применил команду /givegun к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	} else {
 		ShowDialog(playerid, D_GGUN, DIALOG_STYLE_INPUT, "GIVEGUN", "dialog/ggun.lst", "Ввод", "Отмена");
@@ -12455,7 +9710,7 @@ CMD:resetgun(playerid, params[]) { new string[144], sendername[24], playername[2
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /resetgun [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /resetgun к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /resetgun к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 1);
 	Rac::ResetPlayerWeapons(params[0]);
 	return 1;
@@ -12467,7 +9722,7 @@ CMD:sethp(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	Rac::SetPlayerHealth(params[0], params[1]);
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /sethp к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /sethp к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, SUPERMODER);
 	return 1;
 }
@@ -12479,7 +9734,7 @@ CMD:setarmour(playerid, params[]) { new string[144], sendername[24], playername[
 	if(!IsACop(params[0]) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Только для закона!");
 	Rac::SetPlayerArmour(params[0], params[1]);
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /setarmour к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /setarmour к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, SUPERMODER);
 	return 1;
 }
@@ -12496,7 +9751,7 @@ CMD:veh(playerid, params[]) { new string[144];
 	vehid = Veh::Create(params[0], x, y, z, 0.0, params[1], params[2], 1200);
 	Iter::Add(CreatedCars, vehid);
 	SetVehicleNumber(vehid);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /veh. Созданный транспорт [ ID: %i; Model: %s ]", GetName(playerid), vehid, VehicleNames[GetVehicleModel(vehid)-400]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /veh. Созданный транспорт [ID: %i; Model: %s]", GetName(playerid), vehid, VehicleNames[GetVehicleModel(vehid)-400]);
 	SendToAdmin(COLOR_YELLOW, string, 1, SUPERMODER);
 	return 1;
 }
@@ -12532,7 +9787,7 @@ CMD:fixveh(playerid, params[]) { new string[144], sendername[24], playername[24]
 		format(string, sizeof string, "* Администратор %s починил ваш транспорт!", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /fixveh к игроку %s[%s]",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	}
 	return 1;
@@ -12555,7 +9810,7 @@ CMD:fillveh(playerid, params[]) { new string[144], sendername[24], playername[24
 		format(string, sizeof string, "* Администратор %s починил ваш транспорт!", sendername);
 		Send(params[0], COLOR_LIGHTBLUE, string);
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /fillveh к игроку %s[%s]",
-		sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+		sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	}
 	return 1;
@@ -12618,7 +9873,7 @@ CMD:slap(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(params[0] != playerid)
 	{
 		getname(playerid -> sendername,params[0] -> playername);
-		format(string, sizeof string, "[AdmWarn] * %s применил команду /slap к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+		format(string, sizeof string, "[AdmWarn] * %s применил команду /slap к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	}
 	return 1;
@@ -12669,7 +9924,7 @@ CMD:exp(playerid, params[]) { new string[144], sendername[24], playername[24];
 	GetPlayerPos(params[0], posx, posy, posz);
 	CreateExplosion(posx, posy, posz, 7, 10);
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /exp к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /exp к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	return 1;
 }
@@ -12684,7 +9939,7 @@ CMD:gmtest(playerid, params[]) { new string[144], sendername[24], playername[24]
 	CreateExplosion(posx, posy, posz, 7, 10);
 	SetTimerEx("onGMTest", 1000, false, "i", params[0]);
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /gmtest к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /gmtest к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	return 1;
 }
@@ -12775,11 +10030,11 @@ CMD:vehid(playerid, params[]) { new string[144];
 	new vehicle;
 	if(IsPlayerInAnyVehicle(playerid)) {
 		vehicle = GetPlayerVehicleID(playerid);
-		format(string, sizeof string, "Vehicle [ Model: %i; ID: %i ]", GetVehicleModel(vehicle), vehicle);
+		format(string, sizeof string, "Vehicle [Model: %i; ID: %i]", GetVehicleModel(vehicle), vehicle);
 		Send(playerid, COLOR_YELLOW, string);
 	} else {
 		vehicle = ClosestVeh(playerid, 3.0);
-		format(string, sizeof string, "Vehicle [ Model: %i; ID: %i ]", GetVehicleModel(vehicle), vehicle);
+		format(string, sizeof string, "Vehicle [Model: %i; ID: %i]", GetVehicleModel(vehicle), vehicle);
 		Send(playerid, COLOR_YELLOW, string);
 	}
 	return 1;
@@ -13036,7 +10291,7 @@ CMD:freeze(playerid, params[]) { new string[144], sendername[24], playername[24]
 	if(Pl::isAdmin(params[0], 1) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Администратор не может быть заморожен!");
 	getname(playerid -> sendername,params[0] -> playername);
 	if(params[0] != playerid) {
-		format(string, sizeof string, "[AdmWarn] * %s применил команду /freeze к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+		format(string, sizeof string, "[AdmWarn] * %s применил команду /freeze к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	}
 	Rac::TogglePlayerControllable(params[0], 0);
@@ -13052,7 +10307,7 @@ CMD:unfreeze(playerid, params[]) { new string[144], sendername[24], playername[2
 	Rac::TogglePlayerControllable(params[0], 1);
 	getname(playerid->sendername,params[0]->playername);
 	if(params[0] != playerid) {
-		format(string, sizeof string, "[AdmWarn] * %s применил команду /unfreeze к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+		format(string, sizeof string, "[AdmWarn] * %s применил команду /unfreeze к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	}
 	format(string, sizeof string, "* Вы были разморожены администратором %s", sendername);
@@ -13069,7 +10324,7 @@ CMD:gmx(playerid, params[]) {
 
 CMD:makeadmin(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!Pl::isAdmin(playerid, 4) && !IsPlayerAdmin(playerid)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
-	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Введите: /makeadmin [id/Name] [ level(1-4) ]");
+	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Введите: /makeadmin [id/Name] [level(1-4)]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[1] > 3 && !IsPlayerAdmin(playerid)) return Send(playerid, COLOR_GREY, "* Уровень админа может быть от 0 до 3!");
 	if(!params[1] && Pl::Info[params[0]][pAdmin]) Iter::Remove(AdminPlayers, params[0]);
@@ -13088,7 +10343,7 @@ CMD:gangtop(playerid, params[]) { new string[144];
 	Send(playerid, COLOR_WHITE, "_____________________|GANG TOP|_____________________");
 	for(new i; i < sizeof(GangInfo); i++) {
 		format(string, sizeof string,
-			"%i. %s  [ Уважение: %i; Бизнесы: %i; Казна: $%i; Онлайн: %i]",
+			"%i. %s  [Уважение: %i; Бизнесы: %i; Казна: $%i; Онлайн: %i]",
 			i+1,
 			GetGangName(GangInfo[i][fID]),
 			GangInfo[i][gRespect],
@@ -13277,7 +10532,7 @@ CMD:fracs(playerid, params[]) { new string[144];
 	Send(playerid, COLOR_WHITE, "______________|FRAC|______________");
 	for(new i; i < sizeof FracID; i++) {
 		format(string, sizeof string,
-			"%i. %s [ Казна: $%i; Онлайн: %i ]",
+			"%i. %s [Казна: $%i; Онлайн: %i]",
 			i+1,
 			FracInfo[FracID[i]][fName],
 			GetFracMoney(FracID[i]),
@@ -13362,7 +10617,7 @@ CMD:spawn(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /spawn [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /spawn к игроку %s[%s]", sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /spawn к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 3, 3); Rac::SpawnPlayer(params[0]);
 	
 	return 1;
@@ -15229,7 +12484,7 @@ CMD:f(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255]
 	if(!IsAFamily(playerid)) return Send(playerid, COLOR_GREY, "* Вы не член семьи!");
 	GetPlayerName(playerid, sendername, 24);
 	regex_replace_exid(params, ADBlock, REPLACE_TEXT, replacecmdtext, sizeof replacecmdtext);
-	format(string, sizeof string, "[F] %s %s: %s.**", RankInfo[ Pl::FracID(playerid) ][ Pl::Info[playerid][pRank] ], sendername, replacecmdtext);
+	format(string, sizeof string, "[F] %s %s: %s.**", RankInfo[Pl::FracID(playerid)][Pl::Info[playerid][pRank]], sendername, replacecmdtext);
 	sendToFamily(Pl::FracID(playerid), COLOR_AZTECAS, string);
 	return 1;
 }
@@ -15332,7 +12587,7 @@ CMD:setmats(playerid, params[]) { new string[144], sendername[24], playername[24
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "[AdmWarn] * %s применил команду /setmats к игроку %s[%s]. Было: %i; Стало: %i",
-	sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], Pl::Info[params[0]][pMats], params[1]);
+	sendername, playername, FracInfo[Pl::FracID(params[0])][fName], Pl::Info[params[0]][pMats], params[1]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3); Pl::Info[params[0]][pMats] = params[1];
 	return 1;
 }
@@ -15343,7 +12598,7 @@ CMD:setdrugs(playerid, params[]) { new string[144], sendername[24], playername[2
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "[AdmWarn] * %s применил команду /makedrugs к игроку %s[%s]. Было: %i; Стало: %i",
-	sendername, playername, FracInfo[ Pl::FracID(params[0]) ][ fName ], Pl::Info[params[0]][pDrugs], params[1]);
+	sendername, playername, FracInfo[Pl::FracID(params[0])][fName], Pl::Info[params[0]][pDrugs], params[1]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3); Pl::Info[params[0]][pDrugs] = params[1];
 	return 1;
 }
@@ -15442,7 +12697,7 @@ CMD:uval(playerid, params[]) { new string[144], sendername[24], playername[24];
 	Rac::SpawnPlayer(params[0]);
 	Iter::Remove(TeamPlayers[fracid], params[0]);
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /uval к игроку %s[%d][%s]", sendername, playername, params[0], FracInfo[ fracid ][ fName ]);
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /uval к игроку %s[%d][%s]", sendername, playername, params[0], FracInfo[fracid][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	format(string, sizeof string, "* Администратор %s уволил вас из фракции!", sendername);
 	Send(params[0], COLOR_LIGHTBLUE, string);
@@ -15584,7 +12839,7 @@ CMD:clear(playerid, params[]) { new string[144], sendername[24], playername[24];
 			getname(playerid -> sendername,params[0] -> playername);
 			format(string, sizeof string, "* Вы очистили розыск подозреваемого %s за 5000$.", playername);
 			Send(playerid, COLOR_LIGHTBLUE, string);
-			format(string, sizeof string, "* Член семьи %s %s, очистил Ваш розыск.", RankInfo[ Pl::FracID(playerid) ][ Pl::Info[playerid][pRank] ], sendername);
+			format(string, sizeof string, "* Член семьи %s %s, очистил Ваш розыск.", RankInfo[Pl::FracID(playerid)][Pl::Info[playerid][pRank]], sendername);
 			Send(params[0], COLOR_LIGHTBLUE, string);
 		
 		} else if(IsAGang(playerid)) {
@@ -15601,7 +12856,7 @@ CMD:clear(playerid, params[]) { new string[144], sendername[24], playername[24];
 			getname(playerid -> sendername,params[0] -> playername);
 			format(string, sizeof string, "* Вы очистили розыск подозреваемого %s за 5000$.", playername);
 			Send(playerid, COLOR_LIGHTBLUE, string);
-			format(string, sizeof string, "* Член семьи %s %s, очистил Ваш розыск.", RankInfo[ Pl::FracID(playerid) ][ Pl::Info[playerid][pRank] ], sendername);
+			format(string, sizeof string, "* Член семьи %s %s, очистил Ваш розыск.", RankInfo[Pl::FracID(playerid)][Pl::Info[playerid][pRank]], sendername);
 			Send(params[0], COLOR_LIGHTBLUE, string);
 		}
 	}
@@ -16336,7 +13591,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if(IsWrongWeponID(weaponid) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD1, "* Не правельный ID оружия!");
 					if(amount < 1 || amount > 999 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD1, "* Не ниже 1 и не выше 999 патронов!");
 					if( Rac::GetPlayerAmmo(setid, weaponid) >= 999 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD1, "* У этого игрока слишком много оружия!");
-					format(string, sizeof(string), "[AdmWarn] * %s применил команду /ggun к игроку %s[%s]", GetName(playerid), GetName(setid), FracInfo[ Pl::FracID(setid) ][ fName ]);
+					format(string, sizeof(string), "[AdmWarn] * %s применил команду /ggun к игроку %s[%s]", GetName(playerid), GetName(setid), FracInfo[Pl::FracID(setid)][fName]);
 					SendToAdmin(COLOR_YELLOW, string, 1, 3); Rac::GivePlayerWeapon(setid, weaponid, amount);
 				}
 				else
@@ -16428,7 +13683,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						}
 					}
 					format(string, sizeof(string), "[AdmWarn] * %s применил команду /setstat к игроку %s[%s]. Statcode: %i",
-					GetName(playerid), GetName(setid), FracInfo[ Pl::FracID(setid) ][ fName ], statcode); SendToAdmin(COLOR_YELLOW, string, 1, 3);
+					GetName(playerid), GetName(setid), FracInfo[Pl::FracID(setid)][fName], statcode); SendToAdmin(COLOR_YELLOW, string, 1, 3);
 				}
 				else
 				{
@@ -17631,7 +14886,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new frac = GetPVarInt(playerid, "SelectedFrac"), rank = GetPVarInt(playerid, "SelectedRank");
 				if(isnull(inputtext) || inputtext[0] == ' ') {
 					Send(playerid, COLOR_GREY, "* Поле ввода пустое!");
-					format(dialog, sizeof dialog, "* Неверный ввод!\nТекущее: %s\nВведите новое название ранга.\n", RankInfo[ frac ][ rank ] );
+					format(dialog, sizeof dialog, "* Неверный ввод!\nТекущее: %s\nВведите новое название ранга.\n", RankInfo[frac][rank] );
 					SPD(playerid, D_CRANK+1, 1, "Название ранга", dialog, "OK", "CANCEL");
 				} else if(!len || len > 36) {
 					Send(playerid, COLOR_GREY, "* Макс. длина ранга состовляет 36 символов!");
@@ -18065,20 +15320,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							} else {
 								if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
 								GetVehiclePos(carid, posx, posy, posz); GetVehicleZAngle(carid, posa);
-								AutoInfo[0][aMileage] = AutoInfo[ carid ][aMileage];
-								Fc::Info[ idx ][ Fc::Color ][ 0 ] = inputtext[0];
+								AutoInfo[0][aMileage] = AutoInfo[carid][aMileage];
+								Fc::Info[idx][Fc::Color][0] = inputtext[0];
 								Fc::RecreateVehicle( idx ); Fc::Update( idx );
-								AutoInfo[ carid ][aMileage] = AutoInfo[0][aMileage];
-								SetVehiclePos(Fc::Info[ idx ][ Fc::Id ][ 1 ], posx, posy, posz); SetVehicleZAngle(carid, posa);
-								SetVehicleNumberPlate(Fc::Info[ idx ][ Fc::Id ][ 1 ], Fc::Info[ idx ][ Fc::Number ]);
-								Rac::PutPlayerInVehicle(playerid, Fc::Info[ idx ][ Fc::Id ][ 1 ], 0);
+								AutoInfo[carid][aMileage] = AutoInfo[0][aMileage];
+								SetVehiclePos(Fc::Info[idx][Fc::Id][1], posx, posy, posz); SetVehicleZAngle(carid, posa);
+								SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
+								Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
 								format(string, sizeof(string),"* Цвет машины был изминен на: %d", inputtext[0]);
 								Send(playerid, COLOR_WHITE, string);
 								format(string, sizeof(string), "~r~-$%i", cost);
 								GameTextForPlayer(playerid, string, 5000, 1);
 							}
 						} else {
-							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
+							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 							Send(playerid, COLOR_GREY, string);
 						}
 					}
@@ -18110,13 +15365,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							} else {
 								if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
 								GetVehiclePos(carid, posx, posy, posz); GetVehicleZAngle(carid, posa);
-								AutoInfo[0][aMileage] = AutoInfo[ carid ][aMileage];
-								Fc::Info[ idx ][ Fc::Color ][ 1 ] = inputtext[0];
+								AutoInfo[0][aMileage] = AutoInfo[carid][aMileage];
+								Fc::Info[idx][Fc::Color][1] = inputtext[0];
 								Fc::RecreateVehicle( idx ); Fc::Update( idx );
-								SetVehiclePos(Fc::Info[ idx ][ Fc::Id ][ 1 ], posx, posy, posz); SetVehicleZAngle(carid, posa);
-								SetVehicleNumberPlate(Fc::Info[ idx ][ Fc::Id ][ 1 ], Fc::Info[ idx ][ Fc::Number ]);
-								AutoInfo[ carid ][aMileage] = AutoInfo[0][aMileage];
-								Rac::PutPlayerInVehicle(playerid, Fc::Info[ idx ][ Fc::Id ][ 1 ], 0);
+								SetVehiclePos(Fc::Info[idx][Fc::Id][1], posx, posy, posz); SetVehicleZAngle(carid, posa);
+								SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
+								AutoInfo[carid][aMileage] = AutoInfo[0][aMileage];
+								Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
 								format(string, sizeof(string),"* Цвет машины был изминен на: %d", inputtext[0]);
 								Send(playerid, COLOR_WHITE, string);
 								format(string, sizeof(string), "~r~-$%i", cost);
@@ -18144,7 +15399,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							format(string, sizeof(string),"* Теперь машина доступна с %d-го ранга!", inputtext[0]);
 							Send(playerid, COLOR_WHITE, string); 
 						} else {
-							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
+							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 							Send(playerid, COLOR_GREY, string);
 						}
 					}
@@ -18173,20 +15428,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							Send(playerid, COLOR_GREY, string);
 						} else {
 							if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
-							format(Fc::Info[ idx ][ Fc::Number ], 10, "%s", number);
+							format(Fc::Info[idx][Fc::Number], 10, "%s", number);
 							GetVehiclePos(carid, posx, posy, posz); GetVehicleZAngle(carid, posa);
-							AutoInfo[0][aMileage] = AutoInfo[ carid ][aMileage];
+							AutoInfo[0][aMileage] = AutoInfo[carid][aMileage];
 							Fc::RecreateVehicle( idx ); Fc::Update( idx );
-							SetVehiclePos(Fc::Info[ idx ][ Fc::Id ][ 1 ], posx, posy, posz); SetVehicleZAngle(Fc::Info[ idx ][ Fc::Id ][ 1 ], posa);
-							SetVehicleNumberPlate(Fc::Info[ idx ][ Fc::Id ][ 1 ], Fc::Info[ idx ][ Fc::Number ]);
-							AutoInfo[Fc::Info[ idx ][ Fc::Id ][ 1 ]][aMileage] = AutoInfo[0][aMileage];
-							Rac::PutPlayerInVehicle(playerid, Fc::Info[ idx ][ Fc::Id ][ 1 ], 0);
+							SetVehiclePos(Fc::Info[idx][Fc::Id][1], posx, posy, posz); SetVehicleZAngle(Fc::Info[idx][Fc::Id][1], posa);
+							SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
+							AutoInfo[Fc::Info[idx][Fc::Id][1]][aMileage] = AutoInfo[0][aMileage];
+							Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
 							Send(playerid, COLOR_WHITE, "* Номер был изменен!");
 							format(string, sizeof(string), "~r~-$%i", cost);
 							GameTextForPlayer(playerid, string, 5000, 1);
 						}
 					} else {
-						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
+						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
@@ -18203,16 +15458,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				
 				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
 					if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
-						AutoInfo[0][aMileage] = AutoInfo[ carid ][aMileage];
-						GetVehiclePos(carid, Fc::Info[ idx ][ Fc::RespPos ][ 0 ], Fc::Info[ idx ][ Fc::RespPos ][ 1 ], Fc::Info[ idx ][ Fc::RespPos ][ 2 ]);
-						GetVehicleZAngle(carid, Fc::Info[ idx ][ Fc::RespPos ][ 3 ]);	
+						AutoInfo[0][aMileage] = AutoInfo[carid][aMileage];
+						GetVehiclePos(carid, Fc::Info[idx][Fc::RespPos][0], Fc::Info[idx][Fc::RespPos][1], Fc::Info[idx][Fc::RespPos][2]);
+						GetVehicleZAngle(carid, Fc::Info[idx][Fc::RespPos][3]);	
 						Fc::RecreateVehicle( idx ); Fc::Update( idx );
-						SetVehicleNumberPlate(Fc::Info[ idx ][ Fc::Id ][ 1 ], Fc::Info[ idx ][ Fc::Number ]);
-						AutoInfo[Fc::Info[ idx ][ Fc::Id ][ 1 ]][aMileage] = AutoInfo[0][aMileage];
-						Rac::PutPlayerInVehicle(playerid, Fc::Info[ idx ][ Fc::Id ][ 1 ], 0);
+						SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
+						AutoInfo[Fc::Info[idx][Fc::Id][1]][aMileage] = AutoInfo[0][aMileage];
+						Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
 						Send(playerid, COLOR_WHITE, "* Машина была припаркована!");
 					} else {
-						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
+						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
@@ -18242,18 +15497,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						} else {
 							if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
 							GetVehiclePos(carid, posx, posy, posz); GetVehicleZAngle(carid, posa);
-							Fc::Info[ idx ][ Fc::Model ] = model_id;
+							Fc::Info[idx][Fc::Model] = model_id;
 							Fc::RecreateVehicle( idx ); Fc::Update( idx );
-							AutoInfo[Fc::Info[ idx ][ Fc::Id ][ 1 ]][aMileage] = 0.0000;
-							SetVehiclePos(Fc::Info[ idx ][ Fc::Id ][ 1 ], posx, posy, posz); SetVehicleZAngle(carid, posa);
-							SetVehicleNumberPlate(Fc::Info[ idx ][ Fc::Id ][ 1 ], Fc::Info[ idx ][ Fc::Number ]);
-							Rac::PutPlayerInVehicle(playerid, Fc::Info[ idx ][ Fc::Id ][ 1 ], 0);
+							AutoInfo[Fc::Info[idx][Fc::Id][1]][aMileage] = 0.0000;
+							SetVehiclePos(Fc::Info[idx][Fc::Id][1], posx, posy, posz); SetVehicleZAngle(carid, posa);
+							SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
+							Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
 							Send(playerid, COLOR_WHITE, "* Вы изменили марку машины!");
 							format(string, sizeof(string), "~r~-$%i", cost);
 							GameTextForPlayer(playerid, string, 5000, 1);
 						}
 					} else {
-						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[ Fc::Info[ idx ][ Fc::FracId ] ][ fName ]);
+						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
@@ -18278,33 +15533,33 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(cache_affected_rows()) {
 					new id = Fc::TOTAL; Fc::TOTAL++;
 					
-					Fc::Info[ id ][ Fc::Id ][ 0 ] 		= cache_insert_id();
-					Fc::Info[ id ][ Fc::Model ] 		= model_id;
-					Fc::Info[ id ][ Fc::FracId ]		= frac_id;
-					Fc::Info[ id ][ Fc::Color ][ 0 ] 	= random( 100 );
-					Fc::Info[ id ][ Fc::Color ][ 1 ] 	= random( 100 );
-					Fc::Info[ id ][ Fc::RespPos ][ 0 ]	= r_pos[0];
-					Fc::Info[ id ][ Fc::RespPos ][ 1 ]	= r_pos[1];
-					Fc::Info[ id ][ Fc::RespPos ][ 2 ]	= r_pos[2];
-					Fc::Info[ id ][ Fc::RespPos ][ 3 ]	= r_pos[3];
+					Fc::Info[id][Fc::Id][0] 		= cache_insert_id();
+					Fc::Info[id][Fc::Model] 		= model_id;
+					Fc::Info[id][Fc::FracId]		= frac_id;
+					Fc::Info[id][Fc::Color][0] 	= random( 100 );
+					Fc::Info[id][Fc::Color][1] 	= random( 100 );
+					Fc::Info[id][Fc::RespPos][0]	= r_pos[0];
+					Fc::Info[id][Fc::RespPos][1]	= r_pos[1];
+					Fc::Info[id][Fc::RespPos][2]	= r_pos[2];
+					Fc::Info[id][Fc::RespPos][3]	= r_pos[3];
 					
-					strmid(Fc::Info[ id ][ Fc::Number ], Fc::DEF_NUMBER, 0, strlen(Fc::DEF_NUMBER), 255);
+					strmid(Fc::Info[id][Fc::Number], Fc::DEF_NUMBER, 0, strlen(Fc::DEF_NUMBER), 255);
 					
-					Fc::Info[ id ][ Fc::Id ][ 1 ] =
+					Fc::Info[id][Fc::Id][1] =
 					Veh::Create(
-						Fc::Info[ id ][ Fc::Model ],
-						Fc::Info[ id ][ Fc::RespPos ][ 0 ],
-						Fc::Info[ id ][ Fc::RespPos ][ 1 ],
-						Fc::Info[ id ][ Fc::RespPos ][ 2 ],
-						Fc::Info[ id ][ Fc::RespPos ][ 3 ],
-						Fc::Info[ id ][ Fc::Color ][ 0 ],
-						Fc::Info[ id ][ Fc::Color ][ 1 ],
+						Fc::Info[id][Fc::Model],
+						Fc::Info[id][Fc::RespPos][0],
+						Fc::Info[id][Fc::RespPos][1],
+						Fc::Info[id][Fc::RespPos][2],
+						Fc::Info[id][Fc::RespPos][3],
+						Fc::Info[id][Fc::Color][0],
+						Fc::Info[id][Fc::Color][1],
 						1200
 					);
 					
-					SetVehicleNumberPlate(Fc::Info[ id ][ Fc::Id ][ 1 ], Fc::Info[ id ][ Fc::Number ]);
-					Rac::PutPlayerInVehicle(playerid, Fc::Info[ id ][ Fc::Id ][ 1 ], 0); Fc::Update( id );
-					Iter::Add(TeamVehicles[frac_id], Fc::Info[ id ][ Fc::Id ][ 1 ]);
+					SetVehicleNumberPlate(Fc::Info[id][Fc::Id][1], Fc::Info[id][Fc::Number]);
+					Rac::PutPlayerInVehicle(playerid, Fc::Info[id][Fc::Id][1], 0); Fc::Update( id );
+					Iter::Add(TeamVehicles[frac_id], Fc::Info[id][Fc::Id][1]);
 					Send( playerid, COLOR_YELLOW, "* Машина добавлена!");
 				}
 				cache_delete(result);
@@ -18396,7 +15651,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						new portal = GetPVarInt(playerid, "selectTeleport");
 						for(new i; i < MAX_FRAC; i++)
 						{
-							if( Portal::Info[ portal ][ Portal::Allowed ][ i ] )
+							if( Portal::Info[portal][Portal::Allowed][i] )
 								scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 							else
 								scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
@@ -18407,18 +15662,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					{
 						TOTAL_PORTAL --;
 						new i = GetPVarInt(playerid, "selectTeleport");
-						DestroyDynamicPickup(Portal::Info[ i ][ Portal::Pickup ][ 0 ]);
-						DestroyDynamicPickup(Portal::Info[ i ][ Portal::Pickup ][ 1 ]);
-						format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TablePickups__"` WHERE `id`='%i'", Portal::Info[ i ][ Portal::Id ]);
+						DestroyDynamicPickup(Portal::Info[i][Portal::Pickup][0]);
+						DestroyDynamicPickup(Portal::Info[i][Portal::Pickup][1]);
+						format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TablePickups__"` WHERE `id`='%i'", Portal::Info[i][Portal::Id]);
 						Db::tquery(connDb, query, "", "");
 						
-						CopyArray(Portal::Info[ i ][ Portal::Model ], Portal::Info[ TOTAL_PORTAL ][ Portal::Model ], 2);
-						CopyArray(Portal::Info[ i ][ Portal::Type ], Portal::Info[ TOTAL_PORTAL ][ Portal::Type ], 2);
-						CopyArray(Portal::Info[ i ][ Portal::Inter ], Portal::Info[ TOTAL_PORTAL ][ Portal::Inter ], 2);
-						CopyArray(Portal::Info[ i ][ Portal::World ], Portal::Info[ TOTAL_PORTAL ][ Portal::World ], 2);
-						CopyArray(Portal::Info[ i ][ Portal::Pickup ], Portal::Info[ TOTAL_PORTAL ][ Portal::Pickup ], 2);
-						CopyArray(Portal::Info[ i ][ Portal::Portal1 ], Portal::Info[ TOTAL_PORTAL ][ Portal::Portal1 ], 4);
-						CopyArray(Portal::Info[ i ][ Portal::Portal2 ], Portal::Info[ TOTAL_PORTAL ][ Portal::Portal2 ], 4);
+						CopyArray(Portal::Info[i][Portal::Model], Portal::Info[TOTAL_PORTAL][Portal::Model], 2);
+						CopyArray(Portal::Info[i][Portal::Type], Portal::Info[TOTAL_PORTAL][Portal::Type], 2);
+						CopyArray(Portal::Info[i][Portal::Inter], Portal::Info[TOTAL_PORTAL][Portal::Inter], 2);
+						CopyArray(Portal::Info[i][Portal::World], Portal::Info[TOTAL_PORTAL][Portal::World], 2);
+						CopyArray(Portal::Info[i][Portal::Pickup], Portal::Info[TOTAL_PORTAL][Portal::Pickup], 2);
+						CopyArray(Portal::Info[i][Portal::Portal1], Portal::Info[TOTAL_PORTAL][Portal::Portal1], 4);
+						CopyArray(Portal::Info[i][Portal::Portal2], Portal::Info[TOTAL_PORTAL][Portal::Portal2], 4);
 					}
 				}
 			}
@@ -18470,8 +15725,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				else
 				{
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[ teleport ][ Portal::Model ][ 0 ] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[ teleport ][ Portal::Pickup ][ 0 ], E_STREAMER_MODEL_ID, inputtext[0]);
+					Portal::Info[teleport][Portal::Model][0] = inputtext[0];
+					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][0], E_STREAMER_MODEL_ID, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
 			}
@@ -18490,8 +15745,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				else
 				{
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[ teleport ][ Portal::Model ][ 1 ] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[ teleport ][ Portal::Pickup ][ 1 ], E_STREAMER_MODEL_ID, inputtext[0]);
+					Portal::Info[teleport][Portal::Model][1] = inputtext[0];
+					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][1], E_STREAMER_MODEL_ID, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
 			}
@@ -18514,8 +15769,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				else
 				{
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[ teleport ][ Portal::Type ][ 0 ] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[ teleport ][ Portal::Pickup ][ 0 ], E_STREAMER_TYPE, inputtext[0]);
+					Portal::Info[teleport][Portal::Type][0] = inputtext[0];
+					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][0], E_STREAMER_TYPE, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
 			}
@@ -18538,8 +15793,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				else
 				{
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[ teleport ][ Portal::Type ][ 1 ] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[ teleport ][ Portal::Pickup ][ 1 ], E_STREAMER_TYPE, inputtext[0]);
+					Portal::Info[teleport][Portal::Type][1] = inputtext[0];
+					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][1], E_STREAMER_TYPE, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
 			}
@@ -18562,9 +15817,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				else
 				{
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[ teleport ][ Portal::World ][ 0 ] = inputtext[0];
-					DestroyDynamicPickup(Portal::Info[ teleport ][ Portal::Pickup ][ 0 ]);
-					Portal::Info[ teleport ][ Portal::Pickup ][ 0 ]=_AddPickup(Portal::Info[ teleport ][ Portal::Model ][ 0 ],Portal::Info[ teleport ][ Portal::Type ][ 0 ],Portal::Info[ teleport ][ Portal::Portal1 ],Portal::Info[ teleport ][ Portal::World ][ 0 ]);
+					Portal::Info[teleport][Portal::World][0] = inputtext[0];
+					DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][0]);
+					Portal::Info[teleport][Portal::Pickup][0]=_AddPickup(Portal::Info[teleport][Portal::Model][0],Portal::Info[teleport][Portal::Type][0],Portal::Info[teleport][Portal::Portal1],Portal::Info[teleport][Portal::World][0]);
 					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", 0xffff);
 				}
 			}
@@ -18581,9 +15836,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, TP_EDIT+8, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[ teleport ][ Portal::World ][ 1 ] = inputtext[0];
-					DestroyDynamicPickup(Portal::Info[ teleport ][ Portal::Pickup ][ 1 ]);
-					Portal::Info[ teleport ][ Portal::Pickup ][ 1 ]=_AddPickup(Portal::Info[ teleport ][ Portal::Model ][ 1 ],Portal::Info[ teleport ][ Portal::Type ][ 1 ],Portal::Info[ teleport ][ Portal::Portal2 ],Portal::Info[ teleport ][ Portal::World ][ 1 ]);
+					Portal::Info[teleport][Portal::World][1] = inputtext[0];
+					DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][1]);
+					Portal::Info[teleport][Portal::Pickup][1]=_AddPickup(Portal::Info[teleport][Portal::Model][1],Portal::Info[teleport][Portal::Type][1],Portal::Info[teleport][Portal::Portal2],Portal::Info[teleport][Portal::World][1]);
 					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", 0xffff);
 				}
 			}
@@ -18597,10 +15852,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			{
 				dialog[0] = '\0';
 				new portal = GetPVarInt(playerid, "selectTeleport");
-				Portal::Info[ portal ][ Portal::Allowed ][ listitem ] = !Portal::Info[ portal ][ Portal::Allowed ][ listitem ];
+				Portal::Info[portal][Portal::Allowed][listitem] = !Portal::Info[portal][Portal::Allowed][listitem];
 				for(new i; i < MAX_FRAC; i++)
 				{
-					if( Portal::Info[ portal ][ Portal::Allowed ][ i ] )
+					if( Portal::Info[portal][Portal::Allowed][i] )
 						scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 					else
 						scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
@@ -19112,7 +16367,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_FBANK: {
 			if(response) {
 				SetPVarInt(playerid, "SelectedItem", listitem);
-				format(string, sizeof(string), "Счет %s", FracInfo[ FracID[listitem] ][ fName ]);
+				format(string, sizeof(string), "Счет %s", FracInfo[FracID[listitem]][fName]);
 				SPD(playerid, D_FBANK+1, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "БАЛАНС", "ПЕРЕВОД");
 			}
 		}
@@ -19121,15 +16376,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new idx = GetPVarInt(playerid, "SelectedItem");
 			if(!response) {
 				if(Bl::Info[playerid][Bl::onFrac][FracID[idx]] && FracInfo[FracID[idx]][fBConf][bPRICE]) {
-					format(string, sizeof(string), "Выход из черного списка\n%s.\nСумма выхода: $%i", FracInfo[ FracID[idx] ][ fName ], FracInfo[FracID[idx]][fBConf][bPRICE]);
+					format(string, sizeof(string), "Выход из черного списка\n%s.\nСумма выхода: $%i", FracInfo[FracID[idx]][fName], FracInfo[FracID[idx]][fBConf][bPRICE]);
 					SPD(playerid, D_FBANK+4, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				} else {
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[ FracID[idx] ][ fName ]);
+					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 			} else {
 				if(Pl::FracID(playerid) == FracID[idx] || EditMode[playerid]) {
-					format(string, sizeof(string), "Баланс %s:\n$%i", FracInfo[ FracID[idx] ][ fName ], GetFracMoney(FracID[idx]));
+					format(string, sizeof(string), "Баланс %s:\n$%i", FracInfo[FracID[idx]][fName], GetFracMoney(FracID[idx]));
 					SPD(playerid, D_FBANK+2, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				} else {
 					Send(playerid, COLOR_GREY, "* Проверять баланс счета могут только его владельцы!");
@@ -19145,18 +16400,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new idx = GetPVarInt(playerid, "SelectedItem");
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[ FracID[idx] ][ fName ]);
+					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 				
 				else if(!(1 <= inputtext[0] < 1000000)) {
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[ FracID[idx] ][ fName ]);
+					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 				
 				else if(inputtext[0] > Rac::GetPlayerMoney(playerid)) {
 					Send(playerid,COLOR_GREY,"* У Вас нет столько денег!");
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[ FracID[idx] ][ fName ]);
+					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 				
@@ -19171,7 +16426,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						format(string, sizeof(string), "[TRANSFER]: Только что %s положил на счёт $%i", plname, inputtext[0]);
 					}
 					sendToFamily(FracID[idx], COLOR_AZTECAS, string);
-					format(string, sizeof(string), "* Счет %s успешно пополнен на $%i", FracInfo[ FracID[idx] ][ fName ], inputtext[0]);
+					format(string, sizeof(string), "* Счет %s успешно пополнен на $%i", FracInfo[FracID[idx]][fName], inputtext[0]);
 					Send(playerid, COLOR_LIGHTBLUE, string);
 				}
 					
@@ -19191,9 +16446,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						Rac::GivePlayerMoney(playerid, -exitprice);
 						Bl::Remove(playerid, FracID[idx]);
 						
-						format(string, sizeof(string), "[BLACK LIST] Терпила %s, заплатил %i$ за выход из черного списка %s", plname, exitprice, FracInfo[ FracID[idx] ][ fName ]);
+						format(string, sizeof(string), "[BLACK LIST] Терпила %s, заплатил %i$ за выход из черного списка %s", plname, exitprice, FracInfo[FracID[idx]][fName]);
 						sendToFamily(FracID[idx], COLOR_AZTECAS, string);
-						format(string, sizeof(string), "[BLACK LIST] Вы вышли из черного списка(%s) за %i$", FracInfo[ FracID[idx] ][ fName ], exitprice);
+						format(string, sizeof(string), "[BLACK LIST] Вы вышли из черного списка(%s) за %i$", FracInfo[FracID[idx]][fName], exitprice);
 						Send(playerid, COLOR_AZTECAS, string);
 					}
 				}
@@ -19972,7 +17227,7 @@ public OnPlayerUpdate(playerid) {
 	
 	switch(Rac::GetPlayerState(playerid)) {
 		case PLAYER_STATE_DRIVER : {
-			static speed, vehicle;
+			new speed, vehicle;
 			vehicle = GetPlayerVehicleID(playerid);
 			speed = Rac::GetPlayerSpeed(playerid, false);
 			if(speed > AutoInfo[vehicle][aLimit]) {
@@ -21803,12 +19058,12 @@ public OnQueryError(errorid, error[], callback[], querystr[], connectionHandle) 
 		SendToAdmin(COLOR_LIGHTBLUE, temp, 4, 5);
 		
 	SendLog("sqlerror",	querystr);
-	DEBUG[ TOTAL_QUERY_ERRORS ]++;
+	DEBUG[TOTAL_QUERY_ERRORS]++;
 	return 1;
 }
 
 stock AddPickup(model, type, Float:x, Float:y, Float:z, vw = -1, text[] = " ", color = 0xFFFFFFFF, Float:offsetX = 0.0, Float:offsetY = 0.0, Float:offsetZ = 0.6) {
-	if(text[ 0 ] != ' ') {
+	if(text[0] != ' ') {
 		offsetX += x;
 		offsetY += y;
 		offsetZ += z;
@@ -21819,15 +19074,15 @@ stock AddPickup(model, type, Float:x, Float:y, Float:z, vw = -1, text[] = " ", c
 }
 
 stock _AddPickup(model, type, Float:pos[], vw = -1, text[] = " ", color = 0xFFFFFFFF, Float:offset[] = {0.0,0.0,0.6}) {
-	if(text[ 0 ] != ' ') {
-		offset[ 0 ] += pos[ 0 ];
-		offset[ 1 ] += pos[ 1 ];
-		offset[ 2 ] += pos[ 2 ];
+	if(text[0] != ' ') {
+		offset[0] += pos[0];
+		offset[1] += pos[1];
+		offset[2] += pos[2];
 		
-		Add3DText(text, color, offset[ 0 ], offset[ 2 ], offset[ 3 ], 40.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, vw);
+		Add3DText(text, color, offset[0], offset[2], offset[3], 40.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, vw);
 	}
 	
-	return CreateDynamicPickup(model, type, pos[ 0 ], pos[ 1 ], pos[ 2 ], vw);
+	return CreateDynamicPickup(model, type, pos[0], pos[1], pos[2], vw);
 }
 
 stock Veh::Init() {
@@ -22314,7 +19569,7 @@ stock ShowOnline(playerid, id) {
 	return 1;
 }
 
-static LoadVehicles() {
+stock LoadVehicles() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableVehicles__"` ORDER BY `ID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
@@ -22358,7 +19613,7 @@ static LoadVehicles() {
 	return 1;
 }
 
-static LoadATM() {
+stock LoadATM() {
 	ATMp[0] = CountDynamicPickups()+1;
 	for(new i, Float:x, Float:y; i < sizeof ATMs; i++) {
 		x = ATMs[i][0]; y = ATMs[i][1];
@@ -22462,7 +19717,7 @@ public: _ShowOffline(playerid, id) {
 						if(!Pl::isLogged(leaderid)) {
 							num ++;
 							get_tab(name);
-							scf(dialogtext, src, "{ffffff}• %s {AA3333}%s{ffffff} \t{%h}%s\n", name, lastdate, rgb<GetFracColor(leader)>, FracInfo[ leader ][ fName ]);
+							scf(dialogtext, src, "{ffffff}• %s {AA3333}%s{ffffff} \t{%h}%s\n", name, lastdate, rgb<GetFracColor(leader)>, FracInfo[leader][fName]);
 						}
 					}
 				}
@@ -22548,12 +19803,12 @@ stock SafeMenu(playerid, hid, type = 0) {
 			case 0: {
 				new count;
 				for(new i; i < MAX_HWEAP; i++) if(HouseInfo[hid][hGuns][i] != 0) count ++;
-				format(dialog, sizeof dialog, ""#_GREY_ARROW"Деньги [ {33AA33}$%i{ffffff} ] [ Лимит: {AA3333}$10000000 {ffffff}]\n", HouseInfo[hid][hSafe][0]);
-				scf(dialog, src, ""#_GREY_ARROW"Наркотики [ {33AA33}%i{ffffff} ] [ Лимит: {AA3333}1000 грамм {ffffff}]\n", HouseInfo[hid][hSafe][1]);
-				scf(dialog, src, ""#_GREY_ARROW"Матиреалы [ {33AA33}%i{ffffff} ] [ Лимит: {AA3333}100000 матов {ffffff}]\n", HouseInfo[hid][hSafe][2]);
-				scf(dialog, src, ""#_GREY_ARROW"Оружие [ {33AA33}%i{ffffff} ] [ Лимит: {AA3333}6 слотов {ffffff}]\n", count);
-				scf(dialog, src, ""#_GREY_ARROW"Аптечки [ {33AA33}%i{ffffff} ] [ Лимит: {AA3333}100 штук{ffffff} ]\n", HouseInfo[hid][hSafe][3]);
-				scf(dialog, src, ""#_GREY_ARROW"Бронежилеты [ {33AA33}%i{ffffff} ] [ Лимит: {AA3333}10 штук{ffffff} ]\n", HouseInfo[hid][hSafe][4]);
+				format(dialog, sizeof dialog, ""#_GREY_ARROW"Деньги [{33AA33}$%i{ffffff}] [Лимит: {AA3333}$10000000 {ffffff}]\n", HouseInfo[hid][hSafe][0]);
+				scf(dialog, src, ""#_GREY_ARROW"Наркотики [{33AA33}%i{ffffff}] [Лимит: {AA3333}1000 грамм {ffffff}]\n", HouseInfo[hid][hSafe][1]);
+				scf(dialog, src, ""#_GREY_ARROW"Матиреалы [{33AA33}%i{ffffff}] [Лимит: {AA3333}100000 матов {ffffff}]\n", HouseInfo[hid][hSafe][2]);
+				scf(dialog, src, ""#_GREY_ARROW"Оружие [{33AA33}%i{ffffff}] [Лимит: {AA3333}6 слотов {ffffff}]\n", count);
+				scf(dialog, src, ""#_GREY_ARROW"Аптечки [{33AA33}%i{ffffff}] [Лимит: {AA3333}100 штук{ffffff}]\n", HouseInfo[hid][hSafe][3]);
+				scf(dialog, src, ""#_GREY_ARROW"Бронежилеты [{33AA33}%i{ffffff}] [Лимит: {AA3333}10 штук{ffffff}]\n", HouseInfo[hid][hSafe][4]);
 				SPD(playerid, D_HMENU+14, DIALOG_STYLE_LIST, "[House Menu] > Сейф", dialog, "SELECT", "CANCEL");
 			}
 			case 1: {
@@ -22561,9 +19816,9 @@ stock SafeMenu(playerid, hid, type = 0) {
 				for(new i; i < MAX_HWEAP; i++) {
 					if(HouseInfo[hid][hGuns][i] != 0) {
 						GetWeaponName(HouseInfo[hid][hGuns][i], temp, 24);
-						scf(dialog, src, "[ {33AA33}%s{ffffff} - Патрон: {AA3333}%i {ffffff}]\n", temp, HouseInfo[hid][hAmmos][i]);
+						scf(dialog, src, "[{33AA33}%s{ffffff} - Патрон: {AA3333}%i {ffffff}]\n", temp, HouseInfo[hid][hAmmos][i]);
 					} else {
-						strcat(dialog, "[ {33AA33}Пусто{ffffff} - Патрон: {AA3333}0 {ffffff}]\n");
+						strcat(dialog, "[{33AA33}Пусто{ffffff} - Патрон: {AA3333}0 {ffffff}]\n");
 					}
 				}
 				SPD(playerid, D_HMENU+21, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Оружие", dialog, "SELECT", "CANCEL");
@@ -22775,7 +20030,7 @@ stock Fc::ShowModel( playerid, fracid, dialogid) {
 		for(new i; i < rows; i++) {
 			Db::fetch_row( query );
 			cache_get_int(i, 0, model_id);
-			scf(dialog, query, "%s\n", VehicleNames[ model_id-400 ], model_id );
+			scf(dialog, query, "%s\n", VehicleNames[model_id-400], model_id );
 		}
 		if( Pl::Info[playerid][pAdmin] >= 5 && dialogid != D_ADD_FC && dialogid != D_LMENU+7 ) strcat( dialog, "------------\nДобавить");
 		SPD( playerid, dialogid, DIALOG_STYLE_LIST, "Frac Models", dialog, "SELECT", "CANCEL");
@@ -22866,7 +20121,7 @@ stock UpdateStuffTD(playerid, vehid, type) {
 	return 1;
 }
 
-static LoadSkins() {
+stock LoadSkins() {
 	Container::AddArray(100, {78, 79, 135, 200, 230, 212, 213});
 	Container::AddArray(101, {55, 152, 138, 201, 63, 54, 85});
 	
@@ -22886,7 +20141,7 @@ static LoadSkins() {
 	return 1;
 }
 
-static LoadRanks( ) {
+stock LoadRanks( ) {
 	new time = GetTickCount();
 	format( query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableFracRanks__"` ORDER BY `r_id`");
 	new Cache:result = Db::query(connDb, query, true);
@@ -22905,7 +20160,7 @@ static LoadRanks( ) {
 	return 1;
 }
 
-static LoadPortals(){
+stock LoadPortals(){
 	new allowed, time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TablePickups__"` ORDER BY `id`");
 	new Cache:result = Db::query(connDb, query, true);
@@ -22932,7 +20187,7 @@ static LoadPortals(){
 	return 1;
 }
 
-static LoadAntiDmZones() {
+stock LoadAntiDmZones() {
 	new index, time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableAntidmzones__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
@@ -23134,10 +20389,10 @@ stock BlockPickupForPlayer(playerid, pickupid, delay=2) {
 
 stock Add_To_Iterator(playerid) {
 	Iter::Add(TeamPlayers[Pl::FracID(playerid)], playerid);
-	if(Pl::Info[playerid][pAdmin ]) Iter::Add(AdminPlayers, playerid);
+	if(Pl::Info[playerid][pAdmin]) Iter::Add(AdminPlayers, playerid);
 	if(Pl::Info[playerid][pHelper]) Iter::Add(HelperPlayers, playerid);
 	if(Pl::Info[playerid][pLeader]) Iter::Add(LeaderPlayers, playerid);
-	if(Pl::Info[playerid][pJob   ]) Iter::Add(JobPlayers[Pl::Info[playerid][pJob]], playerid);
+	if(Pl::Info[playerid][pJob  ]) Iter::Add(JobPlayers[Pl::Info[playerid][pJob]], playerid);
 }
 
 stock Del_Of_Iterator(playerid) {
@@ -23756,7 +21011,7 @@ stock GetPlayerPosEx(playerid, &Float:x, &Float:y, &Float:z, &Float:a) {
 	return 1;
 }
 
-static LoadGates() {
+stock LoadGates() {
 	new gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	new leafid = AddLeafToGate(FracGate[gateid][GateID], 968, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,90.0,90.0}, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,0.0,90.0}, 0);
@@ -24035,7 +21290,7 @@ public: ExitBiz(playerid, biz) {
 
 stock ShowFracBank(playerid) {
 	dialog[0] = '\0';
-	for(new i; i < sizeof(FracID); i++) scf(dialog, temp, "%s\n", FracInfo[ FracID[i] ][ fName ]);
+	for(new i; i < sizeof(FracID); i++) scf(dialog, temp, "%s\n", FracInfo[FracID[i]][fName]);
 	return SPD(playerid, D_FBANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", dialog, "ENTER", "CANCLE");
 }
 
