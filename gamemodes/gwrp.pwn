@@ -7582,10 +7582,6 @@ CMD:gotome(playerid, params[]) {
 	return Send(params[0],COLOR_LIGHTRED,"* ¬ас насильно потащили за собой!");
 }
 
-CMD:animhelp(playerid, params[]) {
-	return ShowDialog(playerid, D_NONE, 0, "јнимации", "help/anim.hlp", "OK", "");
-}
-
 CMD:dance(playerid, params[]) {
 	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
 		if(sscanf(params, "d", params[0])) return Send(playerid,COLOR_GREY ,"¬ведите: /dance [1-3]");
