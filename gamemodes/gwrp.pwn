@@ -1858,7 +1858,7 @@ public OnGameModeInit() {
 		GangOnBattle[i] = INVALID_BIZ_ID;
 	}
 	
-	ValidText = regex_build("[а-яА-Яa-zA-Z0-9_,!\\.\\?\\-\\+\\(\\)\\]+");
+	ValidText = regex_build("[а-яА-Яa-zA-Z0-9_,!\\.\\?\\-\\+\\(\\)\\ ]+");
 	ValidRPName = regex_build("([A-Z]{1,1})[a-z]{2,9}+_([A-Z]{1,1})[a-z]{2,9}");
 	ADBlock = regex_build("(((\\w+):\\/\\/)|(www\\.|\\,|))+(([\\w\\.\\,_-]{2,}(\\.|\\,)[\\w]{2,6})|(([\\d]{1,3}(\\b))(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}))(((\\s+|)(\\:|\\;|\\s)(\\s+|)[\\d\\s]{2,}(\\b))|\\b)(\\/[\\w\\&amp\\;\\%_\\.\\/\\-\\~\\-]*)?");
 	
@@ -8037,7 +8037,7 @@ CMD:gov(playerid, params[]) { new string[144], sendername[24];
 	switch(fracid) {
 		case 1..4, 7, 10, 11 : {
 			if(Pl::Info[playerid][pRank] >= GetGRank(fracid)) {
-				SendToAll(COLOR_WHITE, "|_ Городские новости _|");
+				SendToAll(COLOR_WHITE, "______________| Городские новости |______________");
 				format(string, sizeof string, "*%s %s: %s", RankInfo[fracid][Pl::Info[playerid][pRank]], sendername, params);
 				SendToAll(COLOR_DBLUE, string);
 				SendLog("gov", string);
