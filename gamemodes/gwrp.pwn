@@ -1917,7 +1917,7 @@ public OnGameModeInit() {
 	ManualVehicleEngineAndLights	();
 	
 	RegisterAlt("/c",		"/close");
-	RegisterAlt("/s",		"/shout");
+	RegisterAlt("/shout",	"/s");
 	RegisterAlt("/p",		"/pickup");
 	RegisterAlt("/h",		"/hangup");
 	RegisterAlt("/a",		"/admin");
@@ -1927,6 +1927,7 @@ public OnGameModeInit() {
 	RegisterAlt("/sl",		"/showlicenses");
 	RegisterAlt("/pas",		"/pasport");
 	RegisterAlt("/vopros",	"/вопрос");
+	RegisterAlt("/givegun",	"/ggun");
 	
 	for(new i; i < MAX_FRAC; i++) {
 		FracPay[i] = 0;
@@ -2122,7 +2123,7 @@ public: onZahvatBizz(biz, attack, defend) {
 			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
 			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] вз€ли территорию бизнеса %s, без бо€, %s[%d] повержены!",
+			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] вз€ли территорию бизнеса %s без бо€, %s[%d] повержены!",
 			GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
 			sendToTeam(GetFracColor(attack), temp, Gangs);
 			
@@ -2135,7 +2136,7 @@ public: onZahvatBizz(biz, attack, defend) {
 			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию бизнеса %s, %s[%d] повержены!",
+			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию бизнеса %s без бо€, %s[%d] повержены!",
 			GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 			sendToTeam(GetFracColor(defend), temp, Gangs);
 		
