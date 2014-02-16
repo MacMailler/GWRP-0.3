@@ -218,7 +218,7 @@ pip-log.txt
 #############
 ## SA-MP
 #############
-filterscritps/*.amx
+filterscripts/*.amx
 gamemodes/*.amx
 gamemodes/*.lst
 gamemodes/*.asm
