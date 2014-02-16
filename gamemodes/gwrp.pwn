@@ -9462,6 +9462,7 @@ CMD:giverank(playerid, params[]) { new string[144], sendername[24], playername[2
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
+
 CMD:vigovor(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "us[24]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /vigovor [id] [reason]");
@@ -10725,14 +10726,6 @@ CMD:take(playerid, params[]) { new string[144], sendername[24], playername[24];
 	return 1;
 }
 
-/*if(strcmp(temp, "/atm(playerid, params[]) { new string[144];
-	if(GetPlayerState(playerid) == 1) {
-		if(!IsAtATM(playerid)) return Send(playerid, COLOR_GREY, "* Нет банкоматов поблизости!");
-		SPD(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "Обналичить\nПополнить\nБаланс", "SELECT", "CANCLE");
-	}
-	return 1;
-}*/
-
 CMD:music(playerid, params[]) {
 	if(Pl::Info[playerid][pCDPlayer] <= 0) return Send(playerid, COLOR_GREY, "* У Вас нет CD-плейера!");
 	dialog[0] = '\0';
@@ -11442,21 +11435,6 @@ CMD:zahvat(playerid, params[]) { new string[144], sendername[24];
 			if(GangOnBattle[BizzInfo[i][bFrac]] != INVALID_BIZ_ID) {
 				format(string, sizeof string, "* Банда %s уже сражается за другой бизнес!", GetGangName(BizzInfo[i][bFrac]));
 				Send(playerid, COLOR_GREY, string);
-			/*} else if(!Iter::Count(TeamPlayers[BizzInfo[i][bFrac]])) {
-				ZahvatScore[frac] ++;
-				Gz::StopFlashForAll(BizzInfo[i][bZone]);
-				Gz::HideForAll(BizzInfo[i][bZone]);
-				Gz::ShowForAll(BizzInfo[i][bZone], GetFracColor(frac));
-				GiveGangRespect(frac, ZahvatScore[frac]);
-				format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(frac), ZahvatScore[frac]);
-				GameTextForGangs(temp, 6000, 1);
-				format(temp, sizeof(temp), "[GANG NEWS] %s[%d] взяли без боя территорию бизнеса %s!", GetGangName(frac), ZahvatScore[frac], BizzInfo[i][bDescription]);
-				sendToTeam(GetFracColor(frac), temp, Gangs);
-				ZahvatScore[frac] = 0;
-				GangBiznes{BizzInfo[i][bFrac]} --;
-				BizzInfo[i][bFrac] = frac;
-				GangBiznes{frac} ++;
-				*/
 			} else {
 				GangOnBattle[frac] = i;
 				ZahvatKills{frac} = 0;
@@ -11633,21 +11611,6 @@ CMD:lock(playerid, params[]) {
 	}
 	else Send(playerid, COLOR_GREY, "Нет машин поблизости");
 	
-	return 1;
-}
-
-CMD:gift(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /gift [id]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(Pl::Info[params[0]][pLevel] > 1) return Send(playerid, COLOR_GREY, "* Этот игрок не первого лвл!");
-	if(Pl::Info[params[0]][pTime] < 2) return Send(playerid, COLOR_GREY, "* Игрок должен отыграть 2 часов на сервере!");
-	
-	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "Админ %s предлогает вам бонус!\nПринять бонус?",sendername);
-	SPD(params[0], D_GIFT, 0, "ПОДАРОК", string, "Принять", "Нет");
-	format(string, sizeof string, "[AdmWarn] * %s применил команду /gift к игроку %s[%i]", sendername, playername, params[0]);
-	SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	return 1;
 }
 
