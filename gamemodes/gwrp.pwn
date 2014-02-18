@@ -3957,8 +3957,10 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			}
 	
 			case 2 : {
+				Veh::Destroy(TempVehicle[playerid]);
 				SetPVarInt(playerid, "SelectedCar", -1);
 				Pt::Hide(playerid, Td::AutoSolon);
+				Rac::TogglePlayerControllable(playerid, true);
 				ExitBiz(playerid, Pl::Info[playerid][pLocal] - OFFSET_BIZZ);
 			}
 		}
