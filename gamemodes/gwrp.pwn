@@ -10,38 +10,38 @@
 #define __GamemodeCopyright__	"(c) MacMailler, 2012—2014"
 #define __DBPrefix__			""
 
-#define __TableUsers__			"users"
-#define __TableHouses__			"houses"
-#define __TableBusines__		"busines"
-#define __TableStuffs__			"stuffs"
-#define __TableSpawns__			"spawns"
-#define __TableBanned__			"banned"
-#define __TableBlacklist__		"blacklist"
-#define __TableFracInfo__		"frac_info"
-#define __TableFracModels__		"frac_models"
-#define __TableFracVehicles__	"frac_vehicles"
-#define __TableFracSkins__		"frac_skins"
-#define __TableGangInfo__		"ganginfo"
-#define __TableRefills__		"busines_refill"
-#define __TablePickups__		"pickups"
-#define __TableVehicles__		"vehicles"
-#define __TableFracRanks__		"frac_ranks"
-#define __TableAntidmzones__	"antidmzones"
-#define __TableExtraVehicles__	"extra_vehicles"
-#define __TableHouseGarages__	"houses_garage"
+#define __TableUsers__			__DBPrefix__"users"
+#define __TableHouses__			__DBPrefix__"houses"
+#define __TableBusines__		__DBPrefix__"busines"
+#define __TableStuffs__			__DBPrefix__"stuffs"
+#define __TableSpawns__			__DBPrefix__"spawns"
+#define __TableBanned__			__DBPrefix__"banned"
+#define __TableBlacklist__		__DBPrefix__"blacklist"
+#define __TableFracInfo__		__DBPrefix__"frac_info"
+#define __TableFracModels__		__DBPrefix__"frac_models"
+#define __TableFracVehicles__	__DBPrefix__"frac_vehicles"
+#define __TableFracSkins__		__DBPrefix__"frac_skins"
+#define __TableGangInfo__		__DBPrefix__"ganginfo"
+#define __TableRefills__		__DBPrefix__"busines_refill"
+#define __TablePickups__		__DBPrefix__"pickups"
+#define __TableVehicles__		__DBPrefix__"vehicles"
+#define __TableFracRanks__		__DBPrefix__"frac_ranks"
+#define __TableAntidmzones__	__DBPrefix__"antidmzones"
+#define __TableExtraVehicles__	__DBPrefix__"extra_vehicles"
+#define __TableHouseGarages__	__DBPrefix__"houses_garage"
 
-#define LOG_ANTICHEAT		"anticheat"
-#define LOG_ADMINCHAT		"adminchat"
-#define LOG_REPORT			"report"
-#define LOG_ADMWARN			"admwarn"
-#define LOG_PAYDAY_STATS	"debug"
-#define LOG_MYSQL_ERROR		"sqlerror"
-#define LOG_GOV_CHAT		"gov"
-#define LOG_AD_CHAT			"ad"
-#define LOG_CHANGENAME		"changename"
-#define LOG_HELPER_CHAT		"helperchat"
-#define LOG_HOUSE			"houses"
-#define LOG_PAY				"pay"
+#define LOG_ANTICHEAT			"anticheat"
+#define LOG_ADMINCHAT			"adminchat"
+#define LOG_REPORT				"report"
+#define LOG_ADMWARN				"admwarn"
+#define LOG_PAYDAY_STATS		"debug"
+#define LOG_MYSQL_ERROR			"sqlerror"
+#define LOG_GOV_CHAT			"gov"
+#define LOG_AD_CHAT				"ad"
+#define LOG_CHANGENAME			"changename"
+#define LOG_HELPER_CHAT			"helperchat"
+#define LOG_HOUSE				"houses"
+#define LOG_PAY					"pay"
 
 #define __SERVER_NAME_LC		"GrandWorld"
 #define __SERVER_NAME_L			"grandworld"
@@ -2520,7 +2520,7 @@ public OnPlayerConnect(playerid) {
 	strmid(playerIp[playerid], ip, 0, strlen(ip), 16);
 	
 	if(Gm::Info[Gm::isAutoRest]) {
-		ShowDialog(playerid, D_NONE, 0, "RESTART", "list/srv_restart.lst", "OK","");
+		ShowDialog(playerid, D_NONE, 0, "RESTART", "dialog/srv_restart.txt", "OK","");
 		Kick(playerid);
 	} else {
 		Pl::Init(playerid);
@@ -3461,7 +3461,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 				if(Pl::Info[playerid][pLic][0]) return Send(playerid,COLOR_GREY,"* У Вас уже есть права!");
 				if(Pl::Info[playerid][pTest] == 999) return Send(playerid,COLOR_GREY,"* Вы уже сдали теорию!");
 				SetPVarInt(playerid, "SelectedItem", 1);
-				return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", "dialog/pddtest/pdd_test_1.lst", "Ответ", "Отмена");
+				return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", "dialog/pddtest/pdd_test_1.txt", "Ответ", "Отмена");
 			}
 	
 			else if(pickupid == prolaps[0] || pickupid == prolaps[1]) {
@@ -3485,7 +3485,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			}
 	
 			else if(pickupid == Bank[0]) {
-				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "list/bankmenu.lst", "SELECT","CENCEL");
+				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "dialog/bankmenu.txt", "SELECT","CENCEL");
 			}
 	
 			else if(pickupid == Bank[1]) {
@@ -3514,7 +3514,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			}
 			
 			else if(ATMp[0] <= pickupid <= ATMp[1]) {
-				ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "list/atmmenu.lst", "SELECT","CENCEL");
+				ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "dialog/atmmenu.txt", "SELECT","CENCEL");
 			}
 			
 			else if(pickupid == HGaragePickup[0]) {
@@ -5533,7 +5533,7 @@ stock Pl::SetFracColor(playerid) {
 
 stock LoadSpawns() {
 	new time = GetTickCount();
-	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__DBPrefix__""#__TableSpawns__"` ORDER BY `id` ASC");
+	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__TableSpawns__"` ORDER BY `id` ASC");
 	new rows = cache_get_row_count();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -5554,7 +5554,7 @@ stock LoadSpawns() {
 
 stock LoadGMInfo() {
 	new time = GetTickCount();
-	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__DBPrefix__""#__TableStuffs__"` WHERE 1", true);
+	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__TableStuffs__"` WHERE 1", true);
 	if(cache_get_row_count()) {
 		cache_get_int(0, 0, Gm::Info[Gm::TaxValue]);
 		cache_get_int(0, 1, Gm::Info[Gm::PritonDrugs]);
@@ -5570,7 +5570,7 @@ stock LoadGMInfo() {
 }
 
 stock SaveStuff() {
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableStuffs__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableStuffs__"` SET ");
 	scf(query, temp, "`TaxValue`='%i',", Gm::Info[Gm::TaxValue]);
 	scf(query, temp, "`PDrugs`='%i',", Gm::Info[Gm::PritonDrugs]);
 	scf(query, temp, "`ADrugs`='%i',", Gm::Info[Gm::AmbarDrugs]);
@@ -5584,7 +5584,7 @@ stock SaveStuff() {
 
 stock LoadHouses() {
 	new time = GetTickCount();
-    format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableHouses__"` ORDER BY `id` ASC", true);
+    format(query, sizeof query, "SELECT * FROM `"#__TableHouses__"` ORDER BY `id` ASC", true);
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -5663,7 +5663,7 @@ stock LoadHGarages() {
 	HGaragePickup[1] = AddPickup(1318, 23, HGaragePickupPos[1][0], HGaragePickupPos[1][1], HGaragePickupPos[1][2], 0);
 	
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableHouseGarages__"` ORDER BY `house` ASC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableHouseGarages__"` ORDER BY `house` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -5687,7 +5687,7 @@ stock LoadHGarages() {
 
 stock LoadBizz() {
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableBusines__"` ORDER BY `id` ASC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableBusines__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -5740,7 +5740,7 @@ stock LoadBizz() {
 
 stock LoadGas() {
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableRefills__"` ORDER BY `id` ASC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableRefills__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -5759,7 +5759,7 @@ stock LoadGas() {
 
 stock LoadGangInfo() {
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableGangInfo__"` ORDER BY `gRespect` DESC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableGangInfo__"` ORDER BY `gRespect` DESC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -5778,7 +5778,7 @@ stock LoadGangInfo() {
 
 stock SaveGI() {
 	for(new i; i < sizeof GangInfo; ++i) {
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableGangInfo__"` SET ");
+		format(query, sizeof query, "UPDATE `"#__TableGangInfo__"` SET ");
 		scf(query, src, "`gRespect`='%i',", GangInfo[i][gRespect]);
 		scf(query, src, "`gPosX`='%f',", GangInfo[i][gPosX]);
 		scf(query, src, "`gPosY`='%f',", GangInfo[i][gPosY]);
@@ -5791,7 +5791,7 @@ stock SaveGI() {
 
 stock LoadFracInfo() {
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableFracInfo__"` ORDER BY `fID` ASC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableFracInfo__"` ORDER BY `fID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -5815,7 +5815,7 @@ stock LoadFracInfo() {
 
 stock UpdateFracInfo(fracid) {
 	if(IsValidFrac(fracid)) {
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableFracInfo__"` SET ");
+		format(query, sizeof query, "UPDATE `"#__TableFracInfo__"` SET ");
 		scf(query, temp, "`fBank`='%i',", FracInfo[fracid][fBank]);
 		scf(query, temp, "`fRConf`='%i,%i,%i',", FracInfo[fracid][fRConf][zRANK], FracInfo[fracid][fRConf][bRANK], FracInfo[fracid][fRConf][gRANK]);
 		scf(query, temp, "`fBConf`='%i,%i',", FracInfo[fracid][fBConf][bKILLS], FracInfo[fracid][fBConf][bPRICE]);
@@ -5829,7 +5829,7 @@ stock UpdateFracInfo(fracid) {
 
 stock LoadFracVehicles( ) {
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableFracVehicles__"` ORDER BY `ID` ASC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableFracVehicles__"` ORDER BY `ID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -5943,7 +5943,7 @@ public: ClearBanList(currtime) {
 			format(query, sizeof query, "unbanip %.16s", banIp);
 			SendRconCommand(query);
 		}
-		format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableBanned__"` WHERE `unbandate` <= '%i'", currtime);
+		format(query, sizeof query, "DELETE FROM `"#__TableBanned__"` WHERE `unbandate` <= '%i'", currtime);
 		Db::tquery(connDb, query, "", "");
 	}
 	return 1;
@@ -6203,10 +6203,10 @@ public: onPlayerLogin(playerid) {
 		}
 		PlayerLogged{playerid} = true;
 		
-		format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableExtraVehicles__"` WHERE `owner` = '%i' ORDER BY `id` ASC", Pl::Info[playerid][pID]);
+		format(query, sizeof query, "SELECT * FROM `"#__TableExtraVehicles__"` WHERE `owner` = '%i' ORDER BY `id` ASC", Pl::Info[playerid][pID]);
 		Db::tquery(connDb, query, "LoadExtraVehicles", "i", playerid);
 		
-		format(query, sizeof query, "SELECT `f_id`,`mink` FROM `"#__DBPrefix__""#__TableBlacklist__"` WHERE `accused`='%i'", Pl::Info[playerid][pID]);
+		format(query, sizeof query, "SELECT `f_id`,`mink` FROM `"#__TableBlacklist__"` WHERE `accused`='%i'", Pl::Info[playerid][pID]);
 		Db::tquery(connDb, query, ""#Bl::"Check", "i", playerid);
 	}
 	return 1;
@@ -6220,7 +6220,7 @@ public: Pl::Update(playerid) {
 		if(IsValidHouse(hidx)) UpdateHouse(hidx);
 
 		Pl::Info[playerid][pLastVisit] = gettime();
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET ");
+		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET ");
 		scf(query, src, "`Level`='%i',", Pl::Info[playerid][pLevel]);
 		scf(query, src, "`Admin`='%i',", Pl::Info[playerid][pAdmin]);
 		scf(query, src, "`Helper`='%i',", Pl::Info[playerid][pHelper]);
@@ -6284,7 +6284,7 @@ public: Pl::Update(playerid) {
 stock UpdateHouse(i) {
 	new safeDiscription[28];
 	Db::escape_string(HouseInfo[i][hDescription], safeDiscription);
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableHouses__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableHouses__"` SET ");
 	scf(query, src, "`owned`='%i',", HouseInfo[i][hOwned]);
 	scf(query, src, "`locked`='%i',", HouseInfo[i][hLock]);
 	scf(query, src, "`owner`='%s',", HouseInfo[i][hOwner]);
@@ -6314,7 +6314,7 @@ stock UpdateHouse(i) {
 }
 
 stock UpdateHouseGarage(idx) {
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableHouseGarages__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableHouseGarages__"` SET ");
 	scf(query, src, "`intpos`='%.3f,%.3f,%.3f,%.3f',", HouseInfo[idx][hgIntPos][0], HouseInfo[idx][hgIntPos][1], HouseInfo[idx][hgIntPos][2], HouseInfo[idx][hgIntPos][3]);
 	scf(query, src, "`streetpos`='%.3f,%.3f,%.3f,%.3f' ", HouseInfo[idx][hgStreetPos][0], HouseInfo[idx][hgStreetPos][1], HouseInfo[idx][hgStreetPos][2], HouseInfo[idx][hgStreetPos][3]);
 	scf(query, src, "WHERE `house`='%i'", HouseInfo[idx][hID]);
@@ -6327,14 +6327,14 @@ stock DeleteHouseGarage(idx) {
 		HouseInfo[idx][hgGarage] = false;
 		DestroyDynamicPickup(HouseInfo[idx][hgPickupInt]);
 		DestroyDynamicPickup(HouseInfo[idx][hgPickupStreet]);
-		format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableHouseGarages__"` WHERE `house` = '%i'", HouseInfo[idx][hID]);
+		format(query, sizeof query, "DELETE FROM `"#__TableHouseGarages__"` WHERE `house` = '%i'", HouseInfo[idx][hID]);
 		Db::tquery(connDb, query, "", "");
 	}
 	return 1;
 }
 
 stock Fc::Update(idx) {
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableFracVehicles__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableFracVehicles__"` SET ");
 	scf(query, src, "`model`='%i',", Fc::Info[idx][Fc::Model]);
 	scf(query, src, "`frac`='%i',", Fc::Info[idx][Fc::FracId]);
 	scf(query, src, "`rank`='%i',", Fc::Info[idx][Fc::RankId]);
@@ -6350,7 +6350,7 @@ stock Fc::Update(idx) {
 stock UpdateBizz(i) {
 	new safeDescription[24];
 	Db::escape_string(BizzInfo[i][bDescription], safeDescription, connDb);
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableBusines__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableBusines__"` SET ");
 	scf(query, src, "`owned`='%i',", BizzInfo[i][bOwned]);
 	scf(query, src, "`locked`='%i',", BizzInfo[i][bLocked]);
 	scf(query, src, "`owner`='%s',", BizzInfo[i][bOwner]);
@@ -6411,7 +6411,7 @@ stock UpdateHousePickups(i) {
 
 stock SaveToSQL(idx, type = 1) {
 	if(type == 2) {
-		format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableVehicles__"` (`Model`,`pX`,`pY`,`pZ`,`pA`,");
+		format(query, sizeof query, "INSERT INTO `"#__TableVehicles__"` (`Model`,`pX`,`pY`,`pZ`,`pA`,");
 		scf(query, temp, "`col1`,`col2`,`resp`) VALUES ('%i',", VehicleInfo[idx][vModel]);
 		scf(query, temp, "'%f','%f','%f','%f',", VehicleInfo[idx][vPosX], VehicleInfo[idx][vPosY], VehicleInfo[idx][vPosZ], VehicleInfo[idx][vPosA]);
 		scf(query, temp, "'%i','%i','%i')", VehicleInfo[idx][vColor1], VehicleInfo[idx][vColor2], VehicleInfo[idx][vRespTime]);
@@ -6426,7 +6426,7 @@ stock SaveToSQL(idx, type = 1) {
 stock UpdateToSQL(idx, type=0) {
 	switch(type) {
 		case 0 : {
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableVehicles__"` SET ");
+			format(query, sizeof query, "UPDATE `"#__TableVehicles__"` SET ");
 			scf(query, src, "`Model`='%i',", VehicleInfo[idx][vModel]);
 			scf(query, src, "`pX`='%f',", VehicleInfo[idx][vPosX]);
 			scf(query, src, "`pY`='%f',", VehicleInfo[idx][vPosY]);
@@ -6448,7 +6448,7 @@ stock UpdateToSQL(idx, type=0) {
 stock RemoveInSQL(idx, type=1) {
 	switch(type) {
 		case 2 : {
-			format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableVehicles__"` WHERE `ID` = '%i'", VehicleInfo[idx][vID]);
+			format(query, sizeof query, "DELETE FROM `"#__TableVehicles__"` WHERE `ID` = '%i'", VehicleInfo[idx][vID]);
 			Db::tquery(connDb, query, "", "");
 			return 1;
 		}
@@ -6458,7 +6458,7 @@ stock RemoveInSQL(idx, type=1) {
 }
 
 stock updatePickup( i ) {
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TablePickups__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TablePickups__"` SET ");
 	scf(query,src,"`models`='%i,%i',", Portal::Info[i][Portal::Model][0], Portal::Info[i][Portal::Model][1]);
 	scf(query,src,"`types`='%i,%i',", Portal::Info[i][Portal::Type][0], Portal::Info[i][Portal::Type][1]);
 	scf(query,src,"`interiors`='%i,%i',", Portal::Info[i][Portal::Inter][0], Portal::Info[i][Portal::Inter][1]);
@@ -6474,7 +6474,7 @@ stock updatePickup( i ) {
 }
 
 stock updateAntiDmZone(zone) {
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableAntidmzones__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableAntidmzones__"` SET ");
 	scf(query,src,"`world`='%i',", AntiDmInfo[zone][e_AntiDmWorld]);
 	scf(query,src,"`coord`='%.4f,", AntiDmInfo[zone][e_AntiDmCoord][0]);
 	scf(query,src,"%.4f,", AntiDmInfo[zone][e_AntiDmCoord][1]);
@@ -6761,7 +6761,7 @@ CMD:addskin(playerid, params[]) {
 	if(sscanf(params, "ii", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /fracname [fracid] [skinid]");
 	if(!Container::Find(params[0], params[1])) return Send(playerid, COLOR_GREY, "* Skin found!");
 	Container::Add(params[0], params[1]);
-	format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableFracSkins__"` (`f_id`,`skin_id`) VALUES ('%i','%i')", params[0], params[1]);
+	format(query, sizeof query, "INSERT INTO `"#__TableFracSkins__"` (`f_id`,`skin_id`) VALUES ('%i','%i')", params[0], params[1]);
 	Db::tquery(connDb, query, "", "");
 	Send(playerid, COLOR_YELLOW, "* Скин добавлен!");
 	return 1;
@@ -6772,7 +6772,7 @@ CMD:delskin(playerid, params[]) {
 	if(sscanf(params, "ii", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /fracname [fracid] [skinid]");
 	if(!Container::Find(params[0], params[1])) return Send(playerid, COLOR_GREY, "* Skin not found!");
 	Container::Remove(params[0], params[1]);
-	format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableFracSkins__"` WHERE `f_id` = '%i' AND `skin_id` = '%i'", params[0], params[1]);
+	format(query, sizeof query, "DELETE FROM `"#__TableFracSkins__"` WHERE `f_id` = '%i' AND `skin_id` = '%i'", params[0], params[1]);
 	Db::tquery(connDb, query, "", "");
 	Send(playerid, COLOR_YELLOW, "* Скин удален!");
 	return 1;
@@ -7129,8 +7129,8 @@ CMD:bl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!IsAGang(playerid) && !IsAMafia(playerid)) return Send(playerid, COLOR_GREY, "* Вы не член банды/мафии");
 	new fracid = Pl::FracID(playerid);
 	if(sscanf(params, "uS(none)[36]", params[0], params[1])) {
-		format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID`=`accused`),`mink`,FROM_UNIXTIME(`date`),\
-		(SELECT `Name` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID`=`accuser`),`reason` FROM `"#__DBPrefix__""#__TableBlacklist__"` WHERE `f_id`='%i'", fracid);
+		format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`accused`),`mink`,FROM_UNIXTIME(`date`),\
+		(SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`accuser`),`reason` FROM `"#__TableBlacklist__"` WHERE `f_id`='%i'", fracid);
 		Db::tquery(connDb, query, ""#Bl::"Show", "ii", playerid, fracid);
 		return 1;
 	}
@@ -7164,12 +7164,12 @@ CMD:bl(playerid, params[]) { new string[144], sendername[24], playername[24];
 CMD:bmenu(playerid, params[]) {
 	new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
 	if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
-	return ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu] Выберете пункт", "list/bmenu.lst", "ENTER", "CANCLE");
+	return ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu] Выберете пункт", "dialog/bmenu.txt", "ENTER", "CANCLE");
 }
 
 CMD:hmenu(playerid, params[]) {
 	if(!IsPlayerHouseOwner(playerid, Pl::Info[playerid][pHouseKey])) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
-	return ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "list/hmenu.lst", "ENTER", "CANCLE");
+	return ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "dialog/hmenu.txt", "ENTER", "CANCLE");
 }
 
 CMD:lmenu(playerid, params[]) {
@@ -7182,7 +7182,7 @@ CMD:antidmzone(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, 5) ) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(TOTAL_ANTIDM_ZONES >= sizeof AntiDmInfo) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во зон!");
 	if(sscanf(params, "f", distance)) return Send(playerid, COLOR_GREY, "Введите: /antidmzone [radius]");
-	format(string, sizeof string, "INSERT INTO `"#__DBPrefix__""#__TableAntidmzones__"` (`coord`) VALUES ('0.0,0.0,0.0,%.4f')", params[0]);
+	format(string, sizeof string, "INSERT INTO `"#__TableAntidmzones__"` (`coord`) VALUES ('0.0,0.0,0.0,%.4f')", params[0]);
 	new Cache:result = Db::query(connDb, string, true);
 	if(cache_affected_rows()) {
 		new zone = TOTAL_ANTIDM_ZONES++;
@@ -7215,7 +7215,7 @@ CMD:addpic(playerid, params[]) { new string[144];
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
 		return Send(playerid, COLOR_GREY, "Введите: /addpickup [modelid] (optional [vw] [type])");
 
-	format(string, sizeof string, "INSERT INTO `"#__DBPrefix__""#__TablePickups__"` (`models`) VALUES ('%i,0')", params[0]);
+	format(string, sizeof string, "INSERT INTO `"#__TablePickups__"` (`models`) VALUES ('%i,0')", params[0]);
 	new Cache:result = Db::query(connDb, string, true);
 	if(cache_affected_rows()) {
 		if(params[1] == -1) params[1] = GetPlayerVirtualWorld(playerid);
@@ -7346,7 +7346,7 @@ CMD:addrefill(playerid, params[]) {
 	RefillInfo[i][brBizID] = params[0];
 	RefillInfo[i][brPickup] = AddPickup(1650, 14, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2], 0, "* Заправочная Станция *\n /fill", 0xFF6347AA);
 	
-	format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableRefills__"` (`biz`, `pos`) VALUES (%i,'%.3f,%.3f,%.3f')", params[0], RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2]);
+	format(query, sizeof query, "INSERT INTO `"#__TableRefills__"` (`biz`, `pos`) VALUES (%i,'%.3f,%.3f,%.3f')", params[0], RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2]);
 	new Cache:result = Db::query(connDb, query, true);
 	if(cache_affected_rows()) {
 		RefillInfo[i][brID] = cache_insert_id();
@@ -7370,7 +7370,7 @@ CMD:addbiz(playerid, params[]) {
 	new Float:x, Float:y, Float:z, Float:a;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, a);
-	format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableBusines__"` (`enter`) VALUES ('%.3f,%.3f,%.3f,%.3f')", x, y, z, a);
+	format(query, sizeof query, "INSERT INTO `"#__TableBusines__"` (`enter`) VALUES ('%.3f,%.3f,%.3f,%.3f')", x, y, z, a);
 	new Cache:result = Db::query(connDb, query, true);
 	if(cache_affected_rows()) {
 		new b = Iter::Count(Biznes);
@@ -7426,13 +7426,13 @@ CMD:saveme(playerid, params[]) {
 }
 
 CMD:online(playerid, params[]) {
-	ShowDialog(playerid, D_ONLINE, 2, ""#__SERVER_PREFIX""#__SERVER_NAME_LC" Онлайн", "list/online.lst", "Выбор","Отмена");
+	ShowDialog(playerid, D_ONLINE, 2, ""#__SERVER_PREFIX""#__SERVER_NAME_LC" Онлайн", "dialog/online.txt", "Выбор","Отмена");
 	return 1;
 }
 
 CMD:offline(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, 1) && !Pl::Info[playerid][pVip]) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	ShowDialog(playerid, D_OFFLINE, 2, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": OFFLINE", "dialog/offline.lst", "Выбор","Отмена");
+	ShowDialog(playerid, D_OFFLINE, 2, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": OFFLINE", "dialog/offline.txt", "Выбор","Отмена");
 	return 1;
 }
 
@@ -7615,7 +7615,7 @@ CMD:setname(playerid, params[]) { new string[144];
 	if(!regex_match_exid(params[1], ValidText)) return Send(playerid, COLOR_GRAD1, "* Недопустимый ник!");
 	if(NameChange{params[0]}) return Send(playerid, COLOR_GREY, "* Этому игроку уже изменили ник!");
 	if(Pl::Info[params[0]][pAdmin] > Pl::Info[playerid][pAdmin]) return Send(playerid, COLOR_LIGHTRED, "Введите: Вы не можете изминить имя админу который старше вас!");
-	format(string, sizeof string, "SELECT * FROM `"#__DBPrefix__""#__TableUsers__"` WHERE BINARY `Name`='%s'", params[1]);
+	format(string, sizeof string, "SELECT * FROM `"#__TableUsers__"` WHERE BINARY `Name`='%s'", params[1]);
 	new Cache:result = Db::query(connDb, string, true);
 	if(cache_get_row_count()) {
 		Send(playerid,COLOR_GREY,"* Такое имя уже есть на сервере!");
@@ -7638,7 +7638,7 @@ CMD:setskin(playerid, params[]) {
 }
 
 CMD:pdd(playerid, params[]) {
-	return ShowDialog(playerid, D_NONE, 0, "Правила дорожного движения", "help/pdd.hlp", "ENTER", "");
+	return ShowDialog(playerid, D_NONE, 0, "Правила дорожного движения", "dialog/help/pdd.txt", "ENTER", "");
 }
 
 CMD:pay(playerid, params[]) { new string[144], sendername[24], playername[24];
@@ -8984,7 +8984,7 @@ CMD:biz(playerid, params[]) {
 
 CMD:edit(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	ShowDialog(playerid, D_EDIT, DIALOG_STYLE_INPUT, "EDIT", "list/edit.lst", "OK", "ОТМЕНА");
+	ShowDialog(playerid, D_EDIT, DIALOG_STYLE_INPUT, "EDIT", "dialog/edit.txt", "OK", "ОТМЕНА");
 	return 1;
 }
 
@@ -9231,7 +9231,7 @@ CMD:unjail(playerid, params[]) { new string[144], sendername[24], playername[24]
 
 CMD:setstat(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
-	ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "list/setstat.lst", "Ввод", "Отмена");
+	ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "dialog/setstat.txt", "Ввод", "Отмена");
 	return 1;
 }
 
@@ -9320,7 +9320,7 @@ CMD:unleader(playerid, params[]) { new string[144], sendername[24], playername[2
 			Send(playerid, COLOR_GREY, string);
 		}
 	} else {
-		format(string, sizeof string, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Leader`='0' WHERE BINARY `Name`='%s'", playername);
+		format(string, sizeof string, "UPDATE `"#__TableUsers__"` SET `Leader`='0' WHERE BINARY `Name`='%s'", playername);
 		new Cache:result = Db::query(connDb, string, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
@@ -9344,7 +9344,7 @@ CMD:unhelper(playerid, params[]) { new string[144], sendername[24], playername[2
 			Send(playerid, COLOR_GREY, string);
 		}
 	} else {
-		format(string, sizeof string, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Helper`='0' WHERE BINARY `Name`='%s'", playername);
+		format(string, sizeof string, "UPDATE `"#__TableUsers__"` SET `Helper`='0' WHERE BINARY `Name`='%s'", playername);
 		new Cache:result = Db::query(connDb, string, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
@@ -9368,7 +9368,7 @@ CMD:unadmin(playerid, params[]) { new string[144], sendername[24], playername[24
 			Send(playerid, COLOR_GREY, string);
 		}
 	} else {
-		format(string, sizeof string, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Admin`='0' WHERE BINARY `Name`='%s'", playername);
+		format(string, sizeof string, "UPDATE `"#__TableUsers__"` SET `Admin`='0' WHERE BINARY `Name`='%s'", playername);
 		new Cache:result = Db::query(connDb, string, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
@@ -9548,7 +9548,7 @@ CMD:setspawn(playerid, params[]) { new string[144];
 	GetPlayerFacingAngle(playerid, SpawnInfo[params[0]][spA]);
 	SpawnInfo[params[0]][spInt] = GetPlayerInterior(playerid);
 	SpawnInfo[params[0]][spVirt] = GetPlayerVirtualWorld(playerid);
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableSpawns__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableSpawns__"` SET ");
 	scf(query, string, "`interior`='%i',", SpawnInfo[params[0]][spInt]);
 	scf(query, string, "`virtualworld`='%i',", SpawnInfo[params[0]][spVirt]);
 	scf(query, string, "`spawn_x`='%.3f',", SpawnInfo[params[0]][spX]);
@@ -9586,7 +9586,7 @@ CMD:fracspawn(playerid, params[]) { new string[144];
 	FracInfo[params[0]][fSpawn][fSpawnInt][0] = GetPlayerInterior(playerid);
 	FracInfo[params[0]][fSpawn][fSpawnInt][1] = GetPlayerVirtualWorld(playerid);
 	
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableFracInfo__"` SET ");
+	format(query, sizeof query, "UPDATE `"#__TableFracInfo__"` SET ");
 	scf(query, string, "`fSpawn`='%i,%i,", FracInfo[params[0]][fSpawn][fSpawnInt][0], FracInfo[params[0]][fSpawn][fSpawnInt][1]);
 	scf(query, string, "%.3f,%.3f,", FracInfo[params[0]][fSpawn][fSpawnPos][0], FracInfo[params[0]][fSpawn][fSpawnPos][1]);
 	scf(query, string, "%.3f,%.3f'", FracInfo[params[0]][fSpawn][fSpawnPos][2], FracInfo[params[0]][fSpawn][fSpawnPos][3]);
@@ -9710,7 +9710,7 @@ CMD:givegun(playerid, params[]) { new string[144], sendername[24], playername[24
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /givegun к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 		SendToAdmin(COLOR_YELLOW, string, 1, 3);
 	} else {
-		ShowDialog(playerid, D_GGUN, DIALOG_STYLE_INPUT, "GIVEGUN", "dialog/ggun.lst", "Ввод", "Отмена");
+		ShowDialog(playerid, D_GGUN, DIALOG_STYLE_INPUT, "GIVEGUN", "dialog/ggun.txt", "Ввод", "Отмена");
 	}
 	return 1;
 }
@@ -10136,7 +10136,7 @@ CMD:banacc(playerid, params[]) { new string[144], sendername[24], playername[24]
 	if(sscanf(params, "s[24]s[24]", playername, temp)) return Send(playerid, COLOR_GREY, "Введите: /banacc [id] [reason]");
 	params[0] = ReturnUser(playername);
 	if(!IsPlayerConnected(params[0])) {
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Banned` = '1' WHERE BINARY `Name` = '%s'", playername);
+		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Banned` = '1' WHERE BINARY `Name` = '%s'", playername);
 		new Cache:result = Db::query(connDb, query, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
@@ -10161,7 +10161,7 @@ CMD:unbanacc(playerid, params[]) { new string[144], sendername[24], playername[2
 	if(sscanf(params, "s[24]s[24]", playername, temp)) return Send(playerid, COLOR_GREY, "Введите: /unbanacc [id] [reason]");
 	params[0] = ReturnUser(playername);
 	if(!IsPlayerConnected(params[0])) {
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Banned` = '0' WHERE BINARY `Name` = '%s'", playername);
+		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Banned` = '0' WHERE BINARY `Name` = '%s'", playername);
 		new Cache:result = Db::query(connDb, query, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
@@ -10227,7 +10227,7 @@ CMD:oban(playerid, params[]) { new string[144], sendername[24], playername[24];
 	unbandate = currdate + (params[0]*1440)*60;
 	Db::escape_string(temp, reason);
 	GetPlayerName(playerid, sendername, 24);
-	format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableBanned__"` (`user_id`,`admin_id`,`date`,`unbandate`,`reason`) VALUES (");
+	format(query, sizeof query, "INSERT INTO `"#__TableBanned__"` (`user_id`,`admin_id`,`date`,`unbandate`,`reason`) VALUES (");
 	scf(query, src, "'%i','%i',", banid, Pl::Info[playerid][pID]);
 	scf(query, src, "'%i','%i','%s')", currdate, unbandate, reason);
 	Db::tquery(connDb, query, "", "");
@@ -10367,7 +10367,7 @@ CMD:gangtop(playerid, params[]) { new string[144];
 }
 
 CMD:help(playerid, params[]) {
-	ShowDialog(playerid, D_HELP,DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь", "list/help.lst", "ВЫБРАТЬ", "Закрыть");
+	ShowDialog(playerid, D_HELP,DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь", "dialog/help.txt", "ВЫБРАТЬ", "Закрыть");
 	return 1;
 }
 
@@ -10442,7 +10442,7 @@ CMD:setskill(playerid, params[]) { new string[144];
 }
 
 CMD:skill(playerid, params[]) {
-	ShowDialog(playerid, D_SKILL, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": SKILL", "list/skill.lst", "Выбор","Отмена");
+	ShowDialog(playerid, D_SKILL, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": SKILL", "dialog/skill.txt", "Выбор","Отмена");
 	return 1;
 }
 
@@ -11208,7 +11208,7 @@ CMD:loadmac(playerid, params[]) { new string[144];
 CMD:sellgun(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(Pl::Info[playerid][pJob] != 7) return Send(playerid,COLOR_GREY,"* Вы не Гандилер!");
 	if(sscanf(params, "s[15]u", temp, params[0])) {
-		return ShowDialog(playerid, D_NONE, 0, "• SellGun • Info", "dialog/sellgun.lst", "OK", "");
+		return ShowDialog(playerid, D_NONE, 0, "• SellGun • Info", "dialog/sellgun.txt", "OK", "");
 	}
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 5.0, params[0])) return Send(playerid, COLOR_GREY, "* Вы долеко от этого игрока!");
@@ -13119,7 +13119,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				}
 				
 				else if(strfind(inputtext, "Изменить цвет") != -1) {
-					ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "list/colors.lst", "ENTER", "CANCEL");
+					ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
 				}
 			} else {
 				ShowExtraVehiclesMenu(playerid);
@@ -13130,13 +13130,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				if(sscanf(inputtext, "p<,>ii", inputtext[0], inputtext[1])) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "list/colors.lst", "ENTER", "CANCEL");
+					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 127) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "list/colors.lst", "ENTER", "CANCEL");
+					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
 				} else if(inputtext[1] < 0 || inputtext[1] > 127) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "list/colors.lst", "ENTER", "CANCEL");
+					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
 				} else {
 					new item = GetPVarInt(playerid, "SelectedItem");
 					ExtraVehicles[playerid][item][evColor1] = inputtext[0];
@@ -13184,7 +13184,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA1_HASH_LEN];
 				KeyProtect(inputtext[0], hash);
-				format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
+				format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
 				Db::tquery(connDb, query, "onPlayerLogin", "i", playerid);
 			} else {
 				ShowLoginForm(playerid, 1);
@@ -13201,7 +13201,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA1_HASH_LEN];
 				KeyProtect(inputtext[0], hash);
-				format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableUsers__"` (`Name`,`Key`,`Fightstyle`) VALUES ('%s', '%s', '%i')",
+				format(query, sizeof query, "INSERT INTO `"#__TableUsers__"` (`Name`,`Key`,`Fightstyle`) VALUES ('%s', '%s', '%i')",
 				GetName(playerid), hash, FightStyles[random(sizeof FightStyles)]);
 				Db::tquery(connDb, query, "onPlayerRegister", "i", playerid);
 			} else {
@@ -13568,7 +13568,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				}
 				else
 				{
-					ShowDialog(playerid, D_GGUN, DIALOG_STYLE_INPUT, "GIVEGUN", "dialog/ggun.lst", "Ввод", "Отмена");
+					ShowDialog(playerid, D_GGUN, DIALOG_STYLE_INPUT, "GIVEGUN", "dialog/ggun.txt", "Ввод", "Отмена");
 				}
 			}
 			return 1;
@@ -13602,7 +13602,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							if((amount<1000||amount>999999) && !Pl::isAdmin(playerid, ADMINISTRATOR)) {
 								Send(playerid, COLOR_GREY, "* Слишком длинный или короткий номер.");
 							} else {
-								format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `Number` = '%i'", amount);
+								format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `Number` = '%i'", amount);
 								new Cache:result = Db::query(connDb, query, true);
 								if(cache_get_row_count()) {
 									format(string, sizeof(string), "* Номер телефона %d уже есть у другого игрока.", amount);
@@ -13651,7 +13651,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						default:
 						{
 							format(string, sizeof(string), "* Неверное значение.");
-							return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "list/setstat.lst", "Ввод", "Отмена");
+							return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "dialog/setstat.txt", "Ввод", "Отмена");
 						}
 					}
 					format(string, sizeof(string), "[AdmWarn] * %s применил команду /setstat к игроку %s[%s]. Statcode: %i",
@@ -13661,7 +13661,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				{
 					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 					Send(playerid, COLOR_GREY, "* Вы нечего не ввели!");
-					return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "list/setstat.lst", "Ввод", "Отмена");
+					return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "dialog/setstat.txt", "Ввод", "Отмена");
 				}
 			}
 			return 1;
@@ -13822,7 +13822,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				{
 					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 					Send(playerid, COLOR_GREY, "* Вы нечего не ввели!");
-					ShowDialog(playerid, D_EDIT, DIALOG_STYLE_INPUT, "EDIT", "list/edit.lst", "OK", "ОТМЕНА");
+					ShowDialog(playerid, D_EDIT, DIALOG_STYLE_INPUT, "EDIT", "dialog/edit.txt", "OK", "ОТМЕНА");
 				}
 			}
 			return 1;
@@ -13835,7 +13835,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_ONLINE+1: {
 			if(response) {
-				ShowDialog(playerid, D_ONLINE,DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC" Онлайн", "list/online.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_ONLINE,DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC" Онлайн", "dialog/online.txt", "SELECT", "CANCEL");
 			}
 			return 1;
 		}
@@ -13847,7 +13847,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_OFFLINE+1: {
 			if(response) {
-				ShowDialog(playerid, D_OFFLINE, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": OFFLINE", "dialog/offline.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_OFFLINE, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": OFFLINE", "dialog/offline.txt", "SELECT", "CANCEL");
 			}
 			return 1;
 		}
@@ -13894,7 +13894,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						Iter::Add(JobPlayers[GettingJob[playerid]], playerid);
 						
 						GettingJob[playerid] = 0;
-						ShowDialog(playerid, D_NONE, 0, "Трудоустройство", "dialog/job_success.lst", "OK", "");
+						ShowDialog(playerid, D_NONE, 0, "Трудоустройство", "dialog/job_success.txt", "OK", "");
 					}
 					default : {
 						Pl::Info[playerid][pJob] = GettingJob[playerid];
@@ -13937,7 +13937,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					
 					case 2 : SPD(playerid, D_HMENU+4, DIALOG_STYLE_LIST, "[House Menu] > Аренда", "Вкл./Откл. аренду\nЦена аренды", "ENTER", "CANCLE");
 						
-					case 3 : ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "list/hmenu_auto.lst", "SELECT", "CANCEL");
+					case 3 : ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
 					
 					case 4 : {
 						if(!IsPlayerInHouse(playerid, 15.0, hid)) return SPD(playerid, D_NONE, 0, "[House Menu] > Интерьер", "Вы должны находится в своем доме, чтобы изменить интерьер!", "OK", "");
@@ -14028,7 +14028,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						HouseInfo[hid][hSafe][0] -= 100000;
 						GameTextForPlayer(playerid, "~r~-$100000", 1000, 1);
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-						format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableHouseGarages__"` (`house`) VALUES ('%i')", HouseInfo[hid][hID]);
+						format(query, sizeof query, "INSERT INTO `"#__TableHouseGarages__"` (`house`) VALUES ('%i')", HouseInfo[hid][hID]);
 						Db::tquery(connDb, query, "", "");
 						HouseInfo[hid][hgGarage] = true;
 						Streamer_AppendArrayData(STREAMER_TYPE_PICKUP, HGaragePickup[0], E_STREAMER_WORLD_ID, HouseInfo[hid][hVirtual]);
@@ -14047,7 +14047,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "list/hmenu.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "dialog/hmenu.txt", "SELECT", "CANCEL");
 			}
 		}
 		case D_HMENU+4:
@@ -14087,7 +14087,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "list/hmenu.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "dialog/hmenu.txt", "SELECT", "CANCEL");
 			}
 		}
 		case D_HMENU+5:
@@ -14217,12 +14217,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(!(400 <= HouseInfo[hid][hvModel] <= 611)) {
 							SPD(playerid, D_NONE, 0, "[House Menu] > Авто", "У Вас нет домашнего авто!", "OK", "");
 						} else {
-							ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
+							ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
 						}
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "list/hmenu.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "dialog/hmenu.txt", "SELECT", "CANCEL");
 			}
 		
 		}
@@ -14275,7 +14275,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SetPVarInt(playerid, "SelectedCar", -1);
 				PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 			} else {
-				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "list/hmenu_auto.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -14283,13 +14283,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				if(sscanf(inputtext, "p<,>ii", inputtext[0], inputtext[1])) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 127) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
 				} else if(inputtext[1] < 0 || inputtext[1] > 127) {
 					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "list/colors.lst", "SELECT", "CANCEL");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
 				}
 				new hid = Pl::Info[playerid][pHouseKey];
 				new bidx = GetIndexFromBizID(Bizz_HouseService);
@@ -14303,7 +14303,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				GameTextForPlayer(playerid, "~r~-$10000", 5000, 1);
 			} else {
-				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "list/hmenu_auto.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -14325,7 +14325,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "list/hmenu.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU, DIALOG_STYLE_LIST, "[House Menu]", "dialog/hmenu.txt", "SELECT", "CANCEL");
 			}
 		}
 		case D_HMENU+15:
@@ -14930,7 +14930,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "list/bmenu.lst", "ENTER", "CANCLE");
+				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
 			}
 		}
 		
@@ -15012,7 +15012,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_BMENU+4, DIALOG_STYLE_INPUT, "[Biz Menu] > Стоимость услуг", string, "ENTER", "CANCLE");
 				}
 			} else {
-				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "list/bmenu.lst", "ENTER", "CANCLE");
+				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
 			}
 		}
 		
@@ -15030,7 +15030,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_NONE, 0, "[Biz Menu] > Название бизнеса", string, "OK", "");
 				}
 			} else {
-				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "list/bmenu.lst", "ENTER", "CANCLE");
+				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
 			}
 		}
 		
@@ -15055,7 +15055,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_BMENU+6, DIALOG_STYLE_INPUT, "[Biz Menu] > Цена за продукты", string, "ENTER", "CANCLE");
 				}
 			} else {
-				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "list/bmenu.lst", "ENTER", "CANCLE");
+				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
 			}
 		}
 		
@@ -15097,7 +15097,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > Компаньон", string, "ENTER", "CANCLE");
 				}
 			} else {
-				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "list/bmenu.lst", "ENTER", "CANCLE");
+				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
 			}
 		}
 		
@@ -15108,7 +15108,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					ShowRankList(playerid, fracid);
 					
 				} else if(strfind(inputtext, "Транспорт", true) != -1) {
-					ShowDialog(playerid, D_LMENU, 2, "L-Menu. Транспорт", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
+					ShowDialog(playerid, D_LMENU, 2, "L-Menu. Транспорт", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 					
 				} else if(strfind(inputtext, "Ранг захвата", false) != -1) {
 					SPD(playerid, D_LMENU+8, 1, "L-Menu. Ранг захвата", "Введите ранг захвата:", "OK", "CANCEL");
@@ -15263,9 +15263,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
 		case D_LMENU+1 : {
 			if(response) {
-				ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+				ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 			} else {
-				ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+				ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 			}
 			return 1;
 		}
@@ -15274,10 +15274,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response && Pl::Info[playerid][pLeader]) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
 					Send(playerid, COLOR_GREY, "* Вы оставили поле ввода пустым!");
-					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 256) {
 					Send(playerid, COLOR_GREY, "* Вы ввели не правельный ID цвета!");
-					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 					if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
@@ -15319,10 +15319,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
 					Send(playerid, COLOR_GREY, "* Вы оставили поле ввода пустым!");
-					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 256) {
 					Send(playerid, COLOR_GREY, "* Вы ввели не правельный ID цвета!");
-					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.lst", "OK", "CANCEL");
+					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 					if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
@@ -15377,7 +15377,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -15418,7 +15418,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -15444,7 +15444,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -15485,7 +15485,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.lst", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -15498,7 +15498,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if( Fc::IsForbiddenVeh( model_id ) ) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
 				frac_id = GetPVarInt( playerid, "SelectFrac");
 				new Float: r_pos[4]; GetPlayerPos( playerid, r_pos[0], r_pos[1], r_pos[2]); GetPlayerFacingAngle(playerid, r_pos[3]);
-				format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableFracVehicles__"` (`model`,`frac`,`resp_pos`) VALUES \
+				format(query, sizeof query, "INSERT INTO `"#__TableFracVehicles__"` (`model`,`frac`,`resp_pos`) VALUES \
 				('%i','%i','%.3f,%.3f,%.3f,%.3f')", model_id, frac_id, r_pos[0], r_pos[1], r_pos[2], r_pos[3]);
 				
 				new Cache:result = Db::query(connDb, query, true);
@@ -15541,7 +15541,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_SHOW_MODEL : {
 			if(response) {
 				if(!strcmp(inputtext, "Добавить", true)) {
-					ShowDialog( playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.lst", "Ok", "Cancel");
+					ShowDialog( playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
 				}
 				else if(strcmp(inputtext, "------------", true)){
 					new model_id;
@@ -15564,7 +15564,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 					case 1 : {
 						new model_id = GetPVarInt( playerid, "SelectModel" );
-						format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", frac_id, model_id);
+						format(query, sizeof query, "DELETE FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", frac_id, model_id);
 						Db::tquery(connDb, query, "", "");
 						Send( playerid, COLOR_WHITE, " Эта модель была удалена из списка доступных!");
 					}
@@ -15583,7 +15583,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if( Fc::IsForbiddenVeh( newmodel ) ) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
 					new frac_id = GetPVarInt( playerid, "SelectFrac" );
 					new model_id = GetPVarInt( playerid, "SelectModel" );
-					format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableFracModels__"` SET `model_id` = '%i' WHERE \
+					format(query, sizeof query, "UPDATE `"#__TableFracModels__"` SET `model_id` = '%i' WHERE \
 					`frac_id` = '%i' AND `model_id` = '%i'", newmodel, frac_id, model_id);
 					Db::tquery(connDb, query, "", "");
 					Send(playerid, COLOR_WHITE, " Модель была изменена!");
@@ -15595,13 +15595,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new model_id;
 				if(!name_to_id(inputtext, model_id)){
-					ShowDialog(playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.lst", "Ok", "Cancel");
+					ShowDialog(playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
 				} else {
 					new frac_id = GetPVarInt( playerid, "SelectFrac" );
 					if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
 					if(Fc::IsForbiddenVeh(model_id)) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
 					if(Fc::IsThereModel(frac_id, model_id)) return Send(playerid, COLOR_RED, "* Эта модель уже есть в списке!");
-					format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableFracModels__"` (`frac_id`, `model_id`) VALUES ('%i','%i')", frac_id, model_id);
+					format(query, sizeof query, "INSERT INTO `"#__TableFracModels__"` (`frac_id`, `model_id`) VALUES ('%i','%i')", frac_id, model_id);
 					Db::tquery(connDb, query, "", "");
 					format(string, sizeof(string), " Модель добвалена! Model_id: %i; Model_name: %s", model_id, VehicleNames[model_id-400]);
 					Send(playerid, COLOR_WHITE, string);
@@ -15636,7 +15636,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						new i = GetPVarInt(playerid, "selectTeleport");
 						DestroyDynamicPickup(Portal::Info[i][Portal::Pickup][0]);
 						DestroyDynamicPickup(Portal::Info[i][Portal::Pickup][1]);
-						format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TablePickups__"` WHERE `id`='%i'", Portal::Info[i][Portal::Id]);
+						format(query, sizeof query, "DELETE FROM `"#__TablePickups__"` WHERE `id`='%i'", Portal::Info[i][Portal::Id]);
 						Db::tquery(connDb, query, "", "");
 						
 						CopyArray(Portal::Info[i][Portal::Model], Portal::Info[TOTAL_PORTAL][Portal::Model], 2);
@@ -15848,7 +15848,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new hash[SHA1_HASH_LEN];
 				KeyProtect(inputtext, hash);
-				format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
+				format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
 				new Cache:result = Db::query(connDb, query, true);
 				if(cache_get_row_count()) {
 					SPD(playerid, D_CHANGE_PASS+1,DIALOG_STYLE_PASSWORD,""#__SERVER_PREFIX""#__SERVER_NAME_LC": ATTENTION PLEASE",
@@ -15870,7 +15870,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				else {
 					new hash[SHA1_HASH_LEN];
 					KeyProtect(inputtext, hash);
-					format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%s'", hash, Pl::Info[playerid][pID]);
+					format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%s'", hash, Pl::Info[playerid][pID]);
 					Db::tquery(connDb, query, "", "");
 					format(string, sizeof(string), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВНИМАНИЕ! ПАРОЛЬ ИЗМЕНЕН! Ваш новый пароль: %s", inputtext);
 					Send(playerid, COLOR_LIGHTRED, string);
@@ -15906,12 +15906,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							return SetTimerEx(""#Rac::"TogglePlayerControllable", 50, false, "ii", playerid, 1);
 						} else {
 							SetPVarInt(playerid, "SelectedItem", i);
-							format(string, sizeof string, "dialog/pddtest/pdd_test_%i.lst", i);
+							format(string, sizeof string, "dialog/pddtest/pdd_test_%i.txt", i);
 							return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", string, "Ответ", "Отмена");
 						}
 					}
 				}
-				format(string, sizeof string, "dialog/pddtest/pdd_test_%i.lst", i);
+				format(string, sizeof string, "dialog/pddtest/pdd_test_%i.txt", i);
 				ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": PDD TEST", string, "Ответить","Отмена");
 			} else {
 				Pl::Info[playerid][pTest] = 0;
@@ -16134,7 +16134,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "list/bankmenu.lst", "SELECT","CENCEL");
+				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "dialog/bankmenu.txt", "SELECT","CENCEL");
 			}
 		}
 		
@@ -16153,7 +16153,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "list/bankmenu.lst", "SELECT","CENCEL");
+				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "dialog/bankmenu.txt", "SELECT","CENCEL");
 			}
 		}
 		
@@ -16171,7 +16171,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "list/bankmenu.lst", "SELECT","CENCEL");
+				ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "dialog/bankmenu.txt", "SELECT","CENCEL");
 			}
 		}
 		
@@ -16228,7 +16228,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 		
 		case D_BANK+33 : {
-			ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "list/bankmenu.lst", "SELECT","CENCEL");
+			ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "dialog/bankmenu.txt", "SELECT","CENCEL");
 		}
 // СИСТЕМА БАНКА. END
 
@@ -16289,7 +16289,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_ATM+33, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. WITHDRAW", dialog, "OK", "CANCLE");
 				}
 			} else {
-				ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "list/atmmenu.lst", "SELECT","CENCEL");
+				ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "dialog/atmmenu.txt", "SELECT","CENCEL");
 			}
 		}
 		
@@ -16326,12 +16326,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "list/atmmenu.lst", "SELECT","CENCEL");
+				ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "dialog/atmmenu.txt", "SELECT","CENCEL");
 			}
 		}
 		
 		case D_ATM+33 : {
-			ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "list/atmmenu.lst", "SELECT","CENCEL");
+			ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "dialog/atmmenu.txt", "SELECT","CENCEL");
 		}
 // СИСТЕМА БАНКАМАТОВ. END
 
@@ -16640,7 +16640,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(!Pl::Info[playerid][pAdmin]) strcat(dialog, "Вы не админ!");
 						else
 						{
-							return ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > Команды админов", "help/admin.hlp", "CANCEL", "");
+							return ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > Команды админов", "dialog/help/admin.txt", "CANCEL", "");
 						}
 					}
 				}
@@ -16650,7 +16650,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 		
 		case D_HELP+33 : { 
-			ShowDialog(playerid, D_HELP, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь", "list/help.lst", "SELECT", "CANCEL");
+			ShowDialog(playerid, D_HELP, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь", "dialog/help.txt", "SELECT", "CANCEL");
 		}
 		
 		case D_ARMOUR: {
@@ -16776,7 +16776,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_SKILL+1 : {
 			if(response) {
-				ShowDialog(playerid, D_SKILL, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": SKILL", "list/skill.lst", "Выбор","Отмена");
+				ShowDialog(playerid, D_SKILL, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": SKILL", "dialog/skill.txt", "Выбор","Отмена");
 			}
 		}
 		
@@ -16868,7 +16868,7 @@ public: Gm::Thread() {
 			SendToAll(COLOR_WHITE, temp);
 			SetTimer("onPayDay", 555, false);
 			
-			format(query, sizeof query, "SELECT `ip` FROM `"#__DBPrefix__""#__TableBanned__"` WHERE `unbandate` <= '%i'", currtime);
+			format(query, sizeof query, "SELECT `ip` FROM `"#__TableBanned__"` WHERE `unbandate` <= '%i'", currtime);
 			Db::tquery(connDb, query, "ClearBanList", "i", currtime);
 			
 			for(new i; i < MAX_FRAC; i++) FracPay[i] = 0;
@@ -16984,7 +16984,7 @@ public: Gm::Thread() {
 							Kick(p);
 						}
 					} else {
-						ShowDialog(p, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", "list/noregged.lst", "OK", "");
+						ShowDialog(p, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", "dialog/noregged.txt", "OK", "");
 						Kick(p);
 					}
 				}
@@ -17629,7 +17629,7 @@ stock ChangeName(playerid) {
 			}
 		}
 		
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Name`='%s' WHERE `ID`='%i'", newName, Pl::Info[playerid][pID]),
+		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Name`='%s' WHERE `ID`='%i'", newName, Pl::Info[playerid][pID]),
 			Db::tquery(connDb, query, "", "");
 		
 		format(temp, sizeof temp, "** %s теперь изветен как %s (userid:%i)", oldName, newName, Pl::Info[playerid][pID]),
@@ -17737,7 +17737,7 @@ stock GetPIP(playerid) {
 
 stock GetUserName(uid) {
 	new name[24];
-	format(query, sizeof query, "SELECT `Name` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID` = '%i'", uid);
+	format(query, sizeof query, "SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID` = '%i'", uid);
 	new Cache:result = Db::query(connDb, query, true);
 	if(cache_get_row_count() > 0) {
 		cache_get_row(0, 0, name);
@@ -18529,7 +18529,7 @@ stock UpdateTuning(vehid, type, id) {
 	switch(type) {
 		case 1: {
 			if(!IsValidHouse(id)) return 0;
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableHouses__"` SET `vehicle_tuning`='");
+			format(query, sizeof query, "UPDATE `"#__TableHouses__"` SET `vehicle_tuning`='");
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][0], AutoInfo[vehid][aTuning][1], AutoInfo[vehid][aTuning][2], AutoInfo[vehid][aTuning][3]);
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][4], AutoInfo[vehid][aTuning][5], AutoInfo[vehid][aTuning][6], AutoInfo[vehid][aTuning][7]);
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][8], AutoInfo[vehid][aTuning][9], AutoInfo[vehid][aTuning][10], AutoInfo[vehid][aTuning][11]);
@@ -18538,7 +18538,7 @@ stock UpdateTuning(vehid, type, id) {
 			Db::tquery(connDb, query, "", "");
 		}
 		case 2: {
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableVehicles__"` SET `tuning`='");
+			format(query, sizeof query, "UPDATE `"#__TableVehicles__"` SET `tuning`='");
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][0], AutoInfo[vehid][aTuning][1], AutoInfo[vehid][aTuning][2], AutoInfo[vehid][aTuning][3]);
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][4], AutoInfo[vehid][aTuning][5], AutoInfo[vehid][aTuning][6], AutoInfo[vehid][aTuning][7]);
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][8], AutoInfo[vehid][aTuning][9], AutoInfo[vehid][aTuning][10], AutoInfo[vehid][aTuning][11]);
@@ -18556,14 +18556,14 @@ stock ResetTuning(vehid, type, id) {
 		case 1: {
 			if(IsValidHouse(id)) {
 				RemoveTuning(vehid);
-				format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableHouses__"` SET `vehicle_tuning`='0,0,0,0,0,0,0,0,0,0,0,0,0,0,3' WHERE `id`='%i'", id);
+				format(query, sizeof query, "UPDATE `"#__TableHouses__"` SET `vehicle_tuning`='0,0,0,0,0,0,0,0,0,0,0,0,0,0,3' WHERE `id`='%i'", id);
 				Db::tquery(connDb, query, "", "");
 			}
 		}
 		
 		case 2: {
 			RemoveTuning(vehid);
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableVehicles__"` SET `tuning`='0,0,0,0,0,0,0,0,0,0,0,0,0,0,3' WHERE `ID`='%i'", id);
+			format(query, sizeof query, "UPDATE `"#__TableVehicles__"` SET `tuning`='0,0,0,0,0,0,0,0,0,0,0,0,0,0,3' WHERE `ID`='%i'", id);
 			Db::tquery(connDb, query, "", "");
 		}
 		default: return 0;
@@ -18609,7 +18609,7 @@ stock UpdateRank(fracid, rankid, rank[]) {
 	new escname[36];
 	Db::escape_string(rank, escname);
 	strmid(RankInfo[fracid][rankid], rank, 0, strlen(rank), 255);
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableFracRanks__"` SET `r_name` = '%s' WHERE `f_id` = '%i' AND `r_id` = '%i'", escname, fracid, rankid);
+	format(query, sizeof query, "UPDATE `"#__TableFracRanks__"` SET `r_name` = '%s' WHERE `f_id` = '%i' AND `r_id` = '%i'", escname, fracid, rankid);
 	Db::tquery(connDb, query, "", "");
 	return 1;
 }
@@ -18618,7 +18618,7 @@ stock SetFracName(fracid, name[]) {
 	new escname[36];
 	Db::escape_string(name, escname);
 	strmid(FracInfo[fracid][fName], name, 0, strlen(name), 255);
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableFracInfo__"` SET `fName` = '%s' WHERE `fID` = '%i'", escname, fracid);
+	format(query, sizeof query, "UPDATE `"#__TableFracInfo__"` SET `fName` = '%s' WHERE `fID` = '%i'", escname, fracid);
 	Db::tquery(connDb, query, "", "");
 	return 1;
 }
@@ -18627,7 +18627,7 @@ stock SetFracTag(fracid, tag[]) {
 	new escname[16];
 	Db::escape_string(tag, escname);
 	strmid(FracInfo[fracid][fTag], tag, 0, strlen(tag), 255);
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableFracInfo__"` SET `fTag` = '%s' WHERE `fID` = '%i'", escname, fracid);
+	format(query, sizeof query, "UPDATE `"#__TableFracInfo__"` SET `fTag` = '%s' WHERE `fID` = '%i'", escname, fracid);
 	Db::tquery(connDb, query, "", "");
 	return 1;
 }
@@ -18639,7 +18639,7 @@ stock AddBanList(playerid, adminid, mins, reason[], type = 1) {
 	
 	new safestr[64];
 	Db::escape_string(reason, safestr);
-	format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableBanned__"` (`user_id`,`admin_id`,`ip`,`date`,`unbandate`,`reason`) VALUES (");
+	format(query, sizeof query, "INSERT INTO `"#__TableBanned__"` (`user_id`,`admin_id`,`ip`,`date`,`unbandate`,`reason`) VALUES (");
 	scf(query, src, "'%i','%i','%s',", Pl::Info[playerid][pID], adminid==-1 ? adminid : Pl::Info[adminid][pID], GetPIP(playerid));
 	scf(query, src, "'%i','%i','%s')", currdate, unbandate, safestr);
 	Db::tquery(connDb, query, "", "");
@@ -18672,14 +18672,14 @@ stock AddBanList(playerid, adminid, mins, reason[], type = 1) {
 	// Удаление игрока из бан-листа
 stock RemoveBanList(userid) {
 	new banIp[16];
-	format(query, sizeof query, "SELECT `ip` FROM `"#__DBPrefix__""#__TableBanned__"` WHERE `user_id`='%i'", userid);
+	format(query, sizeof query, "SELECT `ip` FROM `"#__TableBanned__"` WHERE `user_id`='%i'", userid);
 	new Cache:result = Db::query(connDb, query, true);
 	if(cache_get_row_count()) {
 		cache_get_row(0, 0, banIp);
 		format(query, sizeof query, "unbanip %.16s", banIp);
 		SendRconCommand(query);
 			
-		format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableBanned__"` WHERE `user_id`='%i'", userid);
+		format(query, sizeof query, "DELETE FROM `"#__TableBanned__"` WHERE `user_id`='%i'", userid);
 		Db::tquery(connDb, query, "", "");
 		return 1;
 	}
@@ -18688,7 +18688,7 @@ stock RemoveBanList(userid) {
 }
 
 stock isBanned(userid) {
-	format(query, sizeof query, "SELECT `user_id` FROM `"#__DBPrefix__""#__TableBanned__"` WHERE `user_id` = '%i'", userid);
+	format(query, sizeof query, "SELECT `user_id` FROM `"#__TableBanned__"` WHERE `user_id` = '%i'", userid);
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	cache_delete(result);
@@ -18698,9 +18698,9 @@ stock isBanned(userid) {
 public: CheckBan(playerid) {
 	if(Pl::Info[playerid][pID] != -1) {
 		new unbandate, bandate, bip[16], aname[24], reason[64];
-		format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID`=`user_id`),\
-		(SELECT `Name` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID`=`admin_id`),\
-		`ip`,`date`,`unbandate`,`reason` FROM `"#__DBPrefix__""#__TableBanned__"` WHERE `user_id`='%i'", Pl::Info[playerid][pID]);
+		format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`user_id`),\
+		(SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`admin_id`),\
+		`ip`,`date`,`unbandate`,`reason` FROM `"#__TableBanned__"` WHERE `user_id`='%i'", Pl::Info[playerid][pID]);
 		
 		new Cache:result = Db::query(connDb, query, true);
 		if(cache_get_row_count()) {
@@ -18735,9 +18735,9 @@ public: CheckBan(playerid) {
  
 stock ShowPlayerBanList(adminid, pname[]) {
 	new bandate, unbandate, bip[16], aname[24], reason[64], date_s[2][28];
-	format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID`=`user_id`),\
-	(SELECT `Name` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `ID`=`admin_id`),\
-	`ip`,`date`,`unbandate`,`reason` FROM `"#__DBPrefix__""#__TableBanned__"` WHERE `user_id`=(SELECT `ID` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE BINARY `Name`='%s')", pname);
+	format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`user_id`),\
+	(SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`admin_id`),\
+	`ip`,`date`,`unbandate`,`reason` FROM `"#__TableBanned__"` WHERE `user_id`=(SELECT `ID` FROM `"#__TableUsers__"` WHERE BINARY `Name`='%s')", pname);
 	new Cache:result = Db::query(connDb, query, true);
 	if(cache_get_row_count()) {
 		cache_get_row(0, 1, aname);
@@ -18983,7 +18983,7 @@ stock Pl::SetSpawnInfo(playerid) {
 
 stock GetIDFromName(playername[]) {
 	new id = -1;
-	format(query, sizeof query, "SELECT `ID` FROM `"#__DBPrefix__""#__TableUsers__"` WHERE BINARY `Name` = '%s'", playername);
+	format(query, sizeof query, "SELECT `ID` FROM `"#__TableUsers__"` WHERE BINARY `Name` = '%s'", playername);
 	new Cache:result = Db::query(connDb, query, true);
 	if(cache_get_row_count()) {
 		cache_get_int(0, 0, id);
@@ -19544,7 +19544,7 @@ stock ShowOnline(playerid, id) {
 
 stock LoadVehicles() {
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableVehicles__"` ORDER BY `ID` ASC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableVehicles__"` ORDER BY `ID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -19662,9 +19662,9 @@ stock get_tab(name[], l=sizeof name) {
 
 stock ShowOffline(playerid, id) {
 	switch(id) {
-		case 0 : format(query, sizeof query, "SELECT `Name`,`Leader`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `Leader` >= '1' ORDER BY `Leader` ASC");
-		case 1 : format(query, sizeof query, "SELECT `Name`,`Helper`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `Helper` >= '1' ORDER BY `Helper` DESC");
-		case 2 : format(query, sizeof query, "SELECT `Name`,`Admin`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__DBPrefix__""#__TableUsers__"` WHERE `Admin` >= '1' ORDER BY `Admin` DESC");
+		case 0 : format(query, sizeof query, "SELECT `Name`,`Leader`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__TableUsers__"` WHERE `Leader` >= '1' ORDER BY `Leader` ASC");
+		case 1 : format(query, sizeof query, "SELECT `Name`,`Helper`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__TableUsers__"` WHERE `Helper` >= '1' ORDER BY `Helper` DESC");
+		case 2 : format(query, sizeof query, "SELECT `Name`,`Admin`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__TableUsers__"` WHERE `Admin` >= '1' ORDER BY `Admin` DESC");
 	}
 	Db::tquery(connDb, query, "_ShowOffline", "ii", playerid, id);
 	return 1;
@@ -19807,7 +19807,7 @@ stock ClearBiz(biz) {
 		new playerid = ReturnUser(BizzInfo[biz][bOwner]);
 		new targetid = ReturnUser(BizzInfo[biz][bExtortion]);
 		if(!Pl::isLogged(playerid)) {
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Busines` = %i WHERE `Busines` = %i", INVALID_BIZ_ID, BizzInfo[biz][bID]);
+			format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Busines` = %i WHERE `Busines` = %i", INVALID_BIZ_ID, BizzInfo[biz][bID]);
 			Db::tquery(connDb, query, "", "");
 		} else {
 			Pl::Info[playerid][pBizKey] = INVALID_BIZ_ID;
@@ -19815,7 +19815,7 @@ stock ClearBiz(biz) {
 		}
 		
 		if(!Pl::isLogged(targetid)) {
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `Busines` = %i WHERE `Busines` = %i", INVALID_BIZ_ID, BizzInfo[biz][bID]);
+			format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Busines` = %i WHERE `Busines` = %i", INVALID_BIZ_ID, BizzInfo[biz][bID]);
 			Db::tquery(connDb, query, "", "");
 		} else {
 			Pl::Info[playerid][pBizKey] = INVALID_BIZ_ID;
@@ -19863,10 +19863,10 @@ stock ClearHouse(houseid) {
 			}
 			Send(playerid, COLOR_LIGHTRED, "* Ваш дом был продан!");
 		} else {
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableExtraVehicles__"` SET `park` = '%i' WHERE `park` = '%i'", PARK_GARAGE, PARK_HOME_GARAGE*houseid);
+			format(query, sizeof query, "UPDATE `"#__TableExtraVehicles__"` SET `park` = '%i' WHERE `park` = '%i'", PARK_GARAGE, PARK_HOME_GARAGE*houseid);
 			Db::tquery(connDb, query, "", "");
 			
-			format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableUsers__"` SET `House` = '%i' WHERE BINARY `House` = '%i'", INVALID_HOUSE_ID, houseid);
+			format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `House` = '%i' WHERE BINARY `House` = '%i'", INVALID_HOUSE_ID, houseid);
 			Db::tquery(connDb, query, "", "");
 		}
 	}
@@ -19986,7 +19986,7 @@ stock Fc::IsForbiddenVeh(modelid) {
 }
 
 stock Fc::IsThereModel(fracid, modelid) {
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", fracid, modelid);
+	format(query, sizeof query, "SELECT * FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", fracid, modelid);
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	cache_delete(result);
@@ -19994,7 +19994,7 @@ stock Fc::IsThereModel(fracid, modelid) {
 }
 
 stock Fc::ShowModel( playerid, fracid, dialogid) {
-	format(query, sizeof query, "SELECT `model_id` FROM `"#__DBPrefix__""#__TableFracModels__"` WHERE `frac_id` = '%i'", fracid);
+	format(query, sizeof query, "SELECT `model_id` FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i'", fracid);
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -20039,7 +20039,7 @@ stock Fc::RecreateVehicle(idx) {
 
 stock Fc::Delete(idx) {
 	if(0 <= idx < sizeof Fc::Info) {
-		format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableFracVehicles__"` WHERE `ID` = '%i'", Fc::Info[idx][Fc::Id][0]);
+		format(query, sizeof query, "DELETE FROM `"#__TableFracVehicles__"` WHERE `ID` = '%i'", Fc::Info[idx][Fc::Id][0]);
 		Db::tquery(connDb, query, "", "");
 
 		Fc::TOTAL --;
@@ -20099,7 +20099,7 @@ stock LoadSkins() {
 	Container::AddArray(101, {55, 152, 138, 201, 63, 54, 85});
 	
 	new time = GetTickCount();
-	format(query, sizeof query, "SELECT `f_id`,`skin_id` FROM `"#__DBPrefix__"frac_skins`");
+	format(query, sizeof query, "SELECT `f_id`,`skin_id` FROM `frac_skins`");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -20116,7 +20116,7 @@ stock LoadSkins() {
 
 stock LoadRanks( ) {
 	new time = GetTickCount();
-	format( query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableFracRanks__"` ORDER BY `r_id`");
+	format( query, sizeof query, "SELECT * FROM `"#__TableFracRanks__"` ORDER BY `r_id`");
 	new Cache:result = Db::query(connDb, query, true);
 	for(new i; i < MAX_RANK; i++) strmid(RankInfo[0][i], "-", 0, strlen("-"), 255);
 	new rows = cache_get_row_count();
@@ -20135,7 +20135,7 @@ stock LoadRanks( ) {
 
 stock LoadPortals(){
 	new allowed, time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TablePickups__"` ORDER BY `id`");
+	format(query, sizeof query, "SELECT * FROM `"#__TablePickups__"` ORDER BY `id`");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -20162,7 +20162,7 @@ stock LoadPortals(){
 
 stock LoadAntiDmZones() {
 	new index, time = GetTickCount();
-	format(query, sizeof query, "SELECT * FROM `"#__DBPrefix__""#__TableAntidmzones__"` ORDER BY `id` ASC");
+	format(query, sizeof query, "SELECT * FROM `"#__TableAntidmzones__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
@@ -20194,7 +20194,7 @@ stock Bl::Add(playerid, accuser, reason[]) {
 	Db::escape_string(reason, escstring);
 	Bl::Info[playerid][Bl::onFrac][fracid] = 1;
 	Bl::Info[playerid][Bl::Kills][fracid] = 0;
-	format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableBlacklist__"` (`f_id`,`accused`,`date`,`accuser`,`reason`,`lastvisit`) VALUES (");
+	format(query, sizeof query, "INSERT INTO `"#__TableBlacklist__"` (`f_id`,`accused`,`date`,`accuser`,`reason`,`lastvisit`) VALUES (");
 	scf(query, src, "'%i','%i','%i',", fracid, Pl::Info[playerid][pID], currtime);
 	scf(query, src, "'%i','%s','%i')", Pl::Info[accuser][pID], escstring, currtime+DAY*15);
 	Db::tquery(connDb, query, "", "");
@@ -20204,7 +20204,7 @@ stock Bl::Add(playerid, accuser, reason[]) {
 stock Bl::Remove(playerid, fracid) {
 	new name[24];
 	GetPlayerName(playerid, name, 24);
-	format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableBlacklist__"` WHERE `f_id`='%i' AND `accused`='%i'", fracid, Pl::Info[playerid][pID]);
+	format(query, sizeof query, "DELETE FROM `"#__TableBlacklist__"` WHERE `f_id`='%i' AND `accused`='%i'", fracid, Pl::Info[playerid][pID]);
 	Bl::Info[playerid][Bl::onFrac][fracid] = 0;
 	Bl::Info[playerid][Bl::Kills][fracid] = 0;
 	Db::tquery(connDb, query, "", "");
@@ -20212,7 +20212,7 @@ stock Bl::Remove(playerid, fracid) {
 }
 
 stock Bl::Update(playerid, fracid) {
-	format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableBlacklist__"` SET `mink`='%i' WHERE `accused`='%i' AND `f_id`='%i'",
+	format(query, sizeof query, "UPDATE `"#__TableBlacklist__"` SET `mink`='%i' WHERE `accused`='%i' AND `f_id`='%i'",
 	Bl::Info[playerid][Bl::Kills][fracid], Pl::Info[playerid][pID], fracid);
 	Db::tquery(connDb, query, "", "");
 	return 1;
@@ -20238,14 +20238,14 @@ public: Bl::Check(playerid) {
 		temp[strlen(temp)-2] = '\0';
 		Send(playerid, COLOR_AZTECAS, temp);
 
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableBlacklist__"` SET `lastvisit` = '%i' WHERE `accused` = '%i'", (gettime()+DAY*15), Pl::Info[playerid][pID]);
+		format(query, sizeof query, "UPDATE `"#__TableBlacklist__"` SET `lastvisit` = '%i' WHERE `accused` = '%i'", (gettime()+DAY*15), Pl::Info[playerid][pID]);
 		Db::tquery(connDb, query, "", "");
 	}
 }
 
 
 stock Bl::Clear( ) {
-	format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableBlacklist__"` WHERE `lastvisit` <= '%i'", gettime());
+	format(query, sizeof query, "DELETE FROM `"#__TableBlacklist__"` WHERE `lastvisit` <= '%i'", gettime());
 	Db::tquery(connDb, query, "", "");
 	return 1;
 }
@@ -20812,7 +20812,7 @@ public: LoadExtraVehicles(playerid) {
 				AddExtraVehicleToGarage(playerid, i);
 				ExtraVehicles[playerid][i][evID2] = INVALID_VEHICLE_ID;
 			}
-			Iter_Add(ExtraVehicles[playerid], i);
+			Iter::Add(ExtraVehicles[playerid], i);
 		}
 		TotalExtraVehicles[playerid] = rows;
 	}
@@ -20823,7 +20823,7 @@ stock AddExtraVehicle(playerid, model, Float:spawn_x, Float:spawn_y, Float:spawn
 	if(Pl::isLogged(playerid)) {
 		if(TotalExtraVehicles[playerid] < MAX_EXTRA_VEHICLES) {
 			new id = TotalExtraVehicles[playerid] ++;			
-			format(query, sizeof query, "INSERT INTO `"#__DBPrefix__""#__TableExtraVehicles__"` (`owner`,`model`,`park`,`color`,`spawn`) VALUES (");
+			format(query, sizeof query, "INSERT INTO `"#__TableExtraVehicles__"` (`owner`,`model`,`park`,`color`,`spawn`) VALUES (");
 			scf(query, temp, "'%i',", Pl::Info[playerid][pID]);
 			scf(query, temp, "'%i',", model);
 			scf(query, temp, "'%i',", park);
@@ -20851,7 +20851,7 @@ stock AddExtraVehicle(playerid, model, Float:spawn_x, Float:spawn_y, Float:spawn
 				ExtraVehicles[playerid][id][evID2] = INVALID_PLAYER_ID;
 			}
 			
-			Iter_Add(ExtraVehicles[playerid], id);
+			Iter::Add(ExtraVehicles[playerid], id);
 			cache_delete(result);
 			return id;
 		}
@@ -20883,7 +20883,7 @@ stock RemoveExtraVehicleFromGarage(playerid, slot) {
 
 stock RemoveExtraVehicle(playerid, slot) {
 	if(0 <= slot < MAX_EXTRA_VEHICLES) {
-		format(query, sizeof query, "DELETE FROM `"#__DBPrefix__""#__TableExtraVehicles__"` WHERE `owner` = '%i' AND `id` = '%i'", Pl::Info[playerid][pID], ExtraVehicles[playerid][slot][evID1]);
+		format(query, sizeof query, "DELETE FROM `"#__TableExtraVehicles__"` WHERE `owner` = '%i' AND `id` = '%i'", Pl::Info[playerid][pID], ExtraVehicles[playerid][slot][evID1]);
 		Db::tquery(connDb, query, "", "");
 		
 		Veh::Destroy(ExtraVehicles[playerid][slot][evID2]);
@@ -20901,7 +20901,7 @@ stock RemoveExtraVehicle(playerid, slot) {
 		ExtraVehicles[playerid][slot][evSpawnZ] = ExtraVehicles[playerid][i][evSpawnZ];
 		ExtraVehicles[playerid][slot][evSpawnA] = ExtraVehicles[playerid][i][evSpawnA];
 		RemoveExtraVehicleFromGarage(playerid, i);
-		Iter_Remove(ExtraVehicles[playerid], i);
+		Iter::Remove(ExtraVehicles[playerid], i);
 		
 		if(ExtraVehicles[playerid][slot][evPark] == PARK_GARAGE) {
 			AddExtraVehicleToGarage(playerid, slot);
@@ -20915,7 +20915,7 @@ stock RemoveExtraVehicle(playerid, slot) {
 
 stock UpdateExtraVehicle(playerid, slot) {
 	if(0 <= slot < MAX_EXTRA_VEHICLES) {
-		format(query, sizeof query, "UPDATE `"#__DBPrefix__""#__TableExtraVehicles__"` SET ");
+		format(query, sizeof query, "UPDATE `"#__TableExtraVehicles__"` SET ");
 		scf(query, temp, "`owner`='%i',", ExtraVehicles[playerid][slot][evOwner]);
 		scf(query, temp, "`model`='%i',", ExtraVehicles[playerid][slot][evModel]);
 		scf(query, temp, "`park`='%i',", ExtraVehicles[playerid][slot][evPark]);
@@ -21033,7 +21033,7 @@ stock LoadGates() {
 	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-1644.6872558594, 682.34130859375, 9.4969673156738, 0.0, 0.0, 90.0}, Float:{-1644.6865234375, 682.3408203125, 1.9969673156738,-1000.0,-1000.0,-1000.0}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1639.8580,684.3269,7.1875}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1649.8622,679.5843,9.5154}, 0);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	
 	gateid = FracGateCount++;
@@ -21041,7 +21041,7 @@ stock LoadGates() {
 	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{-1571.8803710938, 661.48571777344, 8.9608917236328, 0.0, 0.0, 270.67565917969}, Float:{-1571.8798828125, 661.4853515625, 1.7108917236328,-1000.0,-1000.0,-1000.0}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1567.8168,663.8288,7.1875}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-1577.6217,660.2245,7.1901}, 0);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	
 	gateid = FracGateCount++;
@@ -21131,7 +21131,7 @@ stock LoadGates() {
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1537.6506,-1629.3037,13.0889}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1549.0046,-1626.0970,13.0881}, 0);
 	SetLeafType(FracGate[gateid][GateID], leafid, TYPE_BARRIER);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	
 	gateid = FracGateCount++;
@@ -21163,38 +21163,38 @@ stock LoadGates() {
 	AddLeafToGate(FracGate[gateid][GateID], 980, Float:{1590.0573730469, -1637.974609375, 14.743314743042,0.0,0.0,0.0}, Float:{1590.056640625,-1637.974609375,7.3683304786682,-1000.0,-1000.0,-1000.0}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1590.2843,-1641.8308,12.9507}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{1586.6178,-1634.0077,13.3828}, 0);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{228.24499512,151.34700012,1003.64300537,0.0,0.0,269.5}, Float:{228.24400330,151.34700012,1006.19598389,0.0,0.0,269.4}, 2);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{228.21899414,161.11799622,1003.64300537,0.0,0.0,270.2}, Float:{228.21899414,161.11700439,1006.19598389,0.0,0.0,270.2}, 2);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{230.89100647,169.83099365,1003.64300537,0.0,0.0,180.0}, Float:{230.89100647,169.83000183,1006.19598389,0.0,0.0,179.9}, 2);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{275.57101440,189.32000732,1007.79199219,0.0,0.0,0.0}, Float:{275.57000732,189.31900024,1010.26898193,0.0,0.0,0.0}, 2);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{296.51800537,189.32499695,1007.79199219,0.0,0.0,0.0}, Float:{296.51800537,189.32400513,1010.29400635,0.0,0.0,0.0}, 2);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	AddLeafToGate(FracGate[gateid][GateID], 2957, Float:{247.005905,72.448440,1003.640625,0.0,0.0,1260.0}, Float:{247.005905,72.448440,1006.912902,-1000.0,-1000.0,-1000.0}, 1);
-	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, i, 1);
+	for(new i; i < sizeof Teams; i++) SET_GATE_ACCESS(gateid, Teams[i], 1);
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
@@ -21273,3 +21273,44 @@ stock GiveBizzProfit(biz, money) {
 	BizzInfo[biz][bSafe] += money;
 	return 1;
 }
+
+/*
+stock DeleteHouse(i) {
+	Iter::Remove(Houses, i);
+	new last = Iter::Count(Houses);
+	HouseInfo[h][hID] = HouseInfo[last][hID];
+	HouseInfo[h][hOwned] = HouseInfo[last][hOwned];
+	HouseInfo[h][hLock] = HouseInfo[last][hLock];
+	strmid(HouseInfo[h][hOwner], HouseInfo[last][hOwner], 0, strlen(HouseInfo[last][hOwner]), 24);
+	strmid(HouseInfo[h][hDescription], HouseInfo[last][hDescription], 0, strlen(HouseInfo[last][hDescription]), 24);
+	HouseInfo[h][hPrice] = HouseInfo[last][hPrice];
+	HouseInfo[h][hLevel] = HouseInfo[last][hLevel];
+	HouseInfo[h][hInt] = HouseInfo[last][hInt];
+	HouseInfo[h][hTv] = HouseInfo[last][hTv];
+	HouseInfo[h][hDate] = HouseInfo[last][hDate];
+	CopyArray(HouseInfo[h][hRent], HouseInfo[last][hRent], 2);
+	CopyArray(HouseInfo[h][hSafe], HouseInfo[last][hSafe], 5);
+	CopyArray(HouseInfo[h][hGuns], HouseInfo[last][hGuns], MAX_HWEAP);
+	CopyArray(HouseInfo[h][hAmmos], HouseInfo[last][hAmmos], MAX_HWEAP);
+	CopyArray(HouseInfo[h][hEnter], HouseInfo[last][hEnter], 4);
+	CopyArray(HouseInfo[h][hExit], HouseInfo[last][hExit], 4);
+	HouseInfo[h][hvModel] = HouseInfo[last][hvModel];
+	CopyArray(HouseInfo[h][hvColor], HouseInfo[last][hvColor], 2);
+	CopyArray(HouseInfo[h][hvSpawn], HouseInfo[last][hvSpawn], 4);
+	HouseInfo[h][hvPark] = HouseInfo[last][hvPark];
+	CopyArray(HouseInfo[h][hvSpawn], HouseInfo[last][hvSpawn], 4);
+	
+	HouseInfo[h][hgGarage] = HouseInfo[last][hgGarage];
+	CopyArray(HouseInfo[h][hgIntPos], HouseInfo[last][hgIntPos], 4);
+	CopyArray(HouseInfo[h][hgStreetPos], HouseInfo[last][hgStreetPos], 4);
+	HouseInfo[h][hgPickupInt] = HouseInfo[last][hgPickupInt];
+	HouseInfo[h][hgPickupStreet] = HouseInfo[last][hgPickupStreet];
+	
+	HouseInfo[h][hPickup] = HouseInfo[h][hPickup];
+	HouseInfo[h][hMapIcon] = HouseInfo[h][hMapIcon];
+	HouseInfo[h][hVirtual] = HouseInfo[h][hVirtual];
+	HouseInfo[h][hAuto] = HouseInfo[h][hAuto];
+
+	format(query, sizeof query, "UPDATE `houses` SET `id` = '%i' WHERE `id`")
+	Db::tquery(connDb, query);
+}*/
