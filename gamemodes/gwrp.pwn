@@ -64,6 +64,7 @@
 #define MAX_COMPONENT 			(14)
 #define MAX_VEHICLESex			(200)
 #define MAX_ANTIDM_ZONES		(10)
+#define MAX_FRAC_GATE			(50)
 
 #define START_MONEY				(5000)
 #define START_LEVEL				(1)
@@ -1146,7 +1147,7 @@ new RankInfo[MAX_FRAC][MAX_RANK][36];
 new RankNums[MAX_FRAC];
 new FracPay[MAX_FRAC];
 
-new FracGate[50][fGateInfo];
+new FracGate[MAX_FRAC_GATE][fGateInfo];
 new FracGateCount;
 
 #define SET_GATE_ACCESS(%0,%1,%2) FracGate[%0][GateRight] += %2 << %1
@@ -20945,6 +20946,12 @@ stock GetPlayerPosEx(playerid, &Float:x, &Float:y, &Float:z, &Float:a) {
 }
 
 stock LoadGates() {
+	for(new i; i < MAX_FRAC_GATE; i++) {
+		for(new j; j < MAX_FRAC; j++) {
+			SET_GATE_ACCESS(i, j, 0);
+		}
+	}
+	
 	new gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
 	new leafid = AddLeafToGate(FracGate[gateid][GateID], 968, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,90.0,90.0}, Float:{-2056.89990234,-100.02700043,34.94699860,0.0,0.0,90.0}, 0);
@@ -21071,7 +21078,7 @@ stock LoadGates() {
 	
 	gateid = FracGateCount++;
 	FracGate[gateid][GateID] = CreateGate();
-	AddLeafToGate(FracGate[gateid][GateID], 10184, Float:{363.94100952148,187.08000183105,1020.125,0.0,0.0,90.0}, Float:{-2666.6979980469, 577.875, 20.325000762939,-1000.0,-1000.0,-1000.0}, 0);
+	AddLeafToGate(FracGate[gateid][GateID], 10184, Float:{-2666.6979980469,577.875,15.800000190735,0.0,0.0,90.0}, Float:{-2666.6979980469, 577.875, 20.325000762939,-1000.0,-1000.0,-1000.0}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2669.3008,583.7839,14.4545}, 0);
 	AddPickupToGate(FracGate[gateid][GateID], 1239, Float:{-2665.1614,573.7731,14.4621}, 0);
 	SET_GATE_ACCESS(gateid, TEAM_MEDIC, 1);
