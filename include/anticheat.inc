@@ -725,22 +725,10 @@ stock AC::OnfootSync(playerid) {
 	if(AC::Info[playerid][AC::Delay][R::SPEED_HACK] > 0) {
 		AC::Info[playerid][AC::Delay][R::SPEED_HACK] --;
 	} else {
-		if(playerspeed >= 55) {
-			switch(GetPlayerAnimationIndex(playerid)) {
-				case 958, 959, 962, 961, 971, 963, 965, 978, 976 : {
-					if(!Rac::CheckPlayerWeapon(playerid, 46)) {
-						AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
-						if(Rac::Info[playerid][Rac::Warns][R::SPEED_HACK] >= MAX_WARNS) {
-							Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
-						}
-					}
-				}
-				default : {
-					AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
-					if(Rac::Info[playerid][Rac::Warns][R::SPEED_HACK] >= MAX_WARNS) {
-						Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
-					}
-				}
+		if(playerspeed >= 100) {
+			AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
+			if(Rac::Info[playerid][Rac::Warns][R::SPEED_HACK] >= MAX_WARNS) {
+				Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
 			}
 		}
 	}
