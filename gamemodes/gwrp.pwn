@@ -178,7 +178,6 @@
 #define D_RENTCAR				(3900)
 #define D_BANLIST				(4000)
 #define D_WEATHER				(4100)
-#define D_RP_NICK				(4200)
 #define D_PDDTEST				(4300)
 #define D_PORTABLE				(4400)
 #define D_EN_HOUSE 				(4500)
@@ -11833,17 +11832,6 @@ CMD:cancel(playerid, params[]) { new string[144], sendername[24];
 		SetPVarInt(playerid, "HouseSeller", INVALID_PLAYER_ID);
 		SetPVarInt(playerid, "HouseBuyer", INVALID_PLAYER_ID);
 		SetPVarInt(playerid, "HousePrice", 0);
-	}
-	
-	else if(strfind(temp,"nick",true) >= 0) {
-		if(!IsPlayerConnected(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не подключен!");
-		if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-		if(!GetPVarString(params[0], "NewName", plname, 24)) return Send(playerid, COLOR_GREY, "* Этот игрок не подавал заявку на смену ника!");
-		NameChange{params[0]} = 0;
-		DeletePVar(params[0], "NewName");
-		GetPlayerName(playerid, plname, 24);
-		format(string, sizeof string, "* Администратор %s отменил смену вашего ника!", plname);
-		return Send(params[0], COLOR_LIGHTRED, string);
 	
 	} else if(strcmp(temp,"sex",true) == 0) {
 		SexOffer[playerid] = INVALID_PLAYER_ID;
@@ -12077,16 +12065,6 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 			Pl::Info[playerid][pChar] = ChosenSkin[playerid];
 			format(string, sizeof string, "* Вы были приняты в %s", FracInfo[frac][fName]);
 			Send(playerid, COLOR_LIGHTBLUE, string);
-		}
-		
-		else if(strcmp(temp, "nick",true) == 0) {
-			if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-			if(NameChange{params[0]}) return Send(playerid, COLOR_GREY, "* Этому игроку уже изменили ник!");
-			if(!GetPVarString(params[0], "NewName", plname, 24)) return Send(playerid, COLOR_GREY, "* Этот игрок не подавал заявку на смену ника!");
-			Send(params[0],COLOR_LIGHTBLUE,"Администратор одобрил ваш ник. В течении пяти секунд изменения вступят в силу");
-			Send(playerid,COLOR_LIGHTBLUE,"Вы одобрили смену ника. В течении пяти секунд изменения всупят в силу");
-			NameChange{params[0]} = 5;
-		
 		}
 		
 		else if(strcmp(temp,"car",true) == 0) {
@@ -13848,26 +13826,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_OFFLINE+1: {
 			if(response) {
 				ShowDialog(playerid, D_OFFLINE, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": OFFLINE", "dialog/offline.txt", "SELECT", "CANCEL");
-			}
-			return 1;
-		}
-		
-		case D_RP_NICK: {
-			if(response) {
-				if(sscanf(inputtext, "s[24]", inputtext[0])) return SPD(playerid, D_RP_NICK, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВВЕДИТЕ НИК", "Вы вообще ничего не ввели.\nПридумайте и введите РП-ник!", "ENTER", "");
-				if(strcmp(GetName(playerid), inputtext[0], false) == 0) return SPD(playerid, D_RP_NICK, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВВЕДИТЕ НИК", "Этот ник вы имеете в данный момент.\nПридумайте и введите РП-ник!", "ENTER", "");
-				if(!regex_match_exid(inputtext[0], ValidRPName)) return SPD(playerid, D_RP_NICK, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВВЕДИТЕ НИК", "Вы ввели не РП-ник.\nПридумайте и введите РП-ник!", "ENTER", "");
-				if(GetIDFromName(inputtext[0]) != -1) return SPD(playerid, D_RP_NICK, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВВЕДИТЕ НИК", "Такой ник уже есть на сервере!\nПридумайте и введите РП-ник!", "ENTER", "");
-				SetPVarString(playerid, "NewName", inputtext[0]);
-				format(dialog, sizeof dialog, "Вы сменили себе ник на: %s\n\n\
-				Ваша заявка на смену ника была отправлена администрации!\n\
-				Пожалуйста дождитесь пока администратор проверит и одобрит вашу заявку!", inputtext[0]);
-				SPD(playerid, D_NONE, 0,""#__SERVER_PREFIX""#__SERVER_NAME_LC": СМЕНА НИКА", dialog, "OK", "");
-				GetPlayerName(playerid, plname, 24);
-				format(string, sizeof(string), "[AdmWarn] * %s[%i] изминил ник на новый %s. Для одобрения: /accept nick [id], либо /cancel nick [id] для отмены.", plname, playerid, inputtext[0]);
-				SendToAdmin(COLOR_YELLOW, string, 1, 3);
-			} else {
-				SPD(playerid, D_RP_NICK, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВВЕДИТЕ НИК", "У Вас не РП-ник.\nИ вы должны его сминить на РП!\nПридумайте и введите РП-ник!", "ENTER", "");
 			}
 			return 1;
 		}
