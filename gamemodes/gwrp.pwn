@@ -17160,48 +17160,15 @@ public OnPlayerUpdate(playerid) {
 	
 	switch(Rac::GetPlayerState(playerid)) {
 		case PLAYER_STATE_DRIVER : {
-			new speed, vehicle;
-			vehicle = GetPlayerVehicleID(playerid);
-			speed = Rac::GetPlayerSpeed(playerid, false);
+			new vehicle = GetPlayerVehicleID(playerid);
+			new speed = Rac::GetPlayerSpeed(playerid, false);
 			if(speed > AutoInfo[vehicle][aLimit]) {
 				Rac::SetVehicleSpeed(vehicle, AutoInfo[vehicle][aLimit]);
 				speed = AutoInfo[vehicle][aLimit];
 			}
 			format(string, sizeof string, "%03i km'h", speed);
 			Pt::SetString(playerid, Pt::Speed[playerid][2], string);
-			
-			switch(speed) {
-				case 0..9: Pt::SetString(playerid, Pt::Speed[playerid][0], "~w~~h~I");
-				case 10..14: Pt::SetString(playerid, Pt::Speed[playerid][0], "~w~~h~II");
-				case 15..19: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~III");
-				case 20..24: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~IIII");
-				case 25..29: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIII");
-				case 30..34: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIIII");
-				case 35..39: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIIIII");
-				case 40..44: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIIIIII");
-				case 45..49: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIII");
-				case 50..59: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIIII");
-				case 60..64: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIIIII");
-				case 65..69: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIIIIII");
-				case 70..79: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~IIIIIIIIIIIII");
-				case 80..89: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~IIIIIIIIIIIIII");
-				case 90..99: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIII");
-				case 100..109: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIII");
-				case 110..119: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIII");
-				case 120..129: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIII");
-				case 130..139: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIII");
-				case 140..149: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIIII");
-				case 150..164: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIIIII");
-				case 165..174: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIIIIII");
-				case 175..189: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~IIIIIIIIIIIIIIIIIIIIIII");
-				case 190..199: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~IIIIIIIIIIIIIIIIIIIIIIII");
-				case 200..209: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~IIIIIIIIIIIIIIIIIIIIIIIII");
-				case 210..219: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~IIIIIIIIIIIIIIIIIIIIIIIIII");
-				case 220..229: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~IIIIIIIIIIIIIIIIIIIIIIIIIII");
-				case 230..239: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIII");
-				case 240..249: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-				default: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-			}
+			UpdateSpeedometer(playerid, speed);
 		}
 	}
 
@@ -21281,3 +21248,39 @@ stock DeleteHouse(i) {
 	format(query, sizeof query, "UPDATE `houses` SET `id` = '%i' WHERE `id`")
 	Db::tquery(connDb, query);
 }*/
+
+stock UpdateSpeedometer(playerid, speed) {
+	switch(speed) {
+		case 0..9: Pt::SetString(playerid, Pt::Speed[playerid][0], "~w~~h~I");
+		case 10..14: Pt::SetString(playerid, Pt::Speed[playerid][0], "~w~~h~II");
+		case 15..19: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~III");
+		case 20..24: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~IIII");
+		case 25..29: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIII");
+		case 30..34: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIIII");
+		case 35..39: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIIIII");
+		case 40..44: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~IIIIIIII");
+		case 45..49: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIII");
+		case 50..59: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIIII");
+		case 60..64: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIIIII");
+		case 65..69: Pt::SetString(playerid, Pt::Speed[playerid][0], "~g~~h~~h~IIIIIIIIIIII");
+		case 70..79: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~IIIIIIIIIIIII");
+		case 80..89: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~IIIIIIIIIIIIII");
+		case 90..99: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIII");
+		case 100..109: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIII");
+		case 110..119: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIII");
+		case 120..129: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIII");
+		case 130..139: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIII");
+		case 140..149: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIIII");
+		case 150..164: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIIIII");
+		case 165..174: Pt::SetString(playerid, Pt::Speed[playerid][0], "~y~~h~IIIIIIIIIIIIIIIIIIIIII");
+		case 175..189: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~IIIIIIIIIIIIIIIIIIIIIII");
+		case 190..199: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~IIIIIIIIIIIIIIIIIIIIIIII");
+		case 200..209: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~IIIIIIIIIIIIIIIIIIIIIIIII");
+		case 210..219: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~IIIIIIIIIIIIIIIIIIIIIIIIII");
+		case 220..229: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~IIIIIIIIIIIIIIIIIIIIIIIIIII");
+		case 230..239: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIII");
+		case 240..249: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+		default: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+	}
+	return 1;
+}
