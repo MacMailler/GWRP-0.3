@@ -7302,8 +7302,9 @@ CMD:setpic2(playerid, params[]) {
 }
 
 CMD:editmode(playerid, params[]) { new string[144];
-	if( !Pl::isAdmin(playerid, 5) ) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	EditMode[playerid] = !EditMode[playerid];
+	SetPVarInt(playerid, "selectTeleport", 0xffff);
 	format(string, sizeof string, "Режим редактирования: %s", (EditMode[playerid])?("{00cc00}Вкл."):("{ff0000}Выкл."));
 	Send(playerid, -1, string);
 	return 1;
@@ -15570,29 +15571,25 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			}
 		}
 
-		case TP_EDIT : 
-		{
-			if( response )
-			{
-				switch(listitem)
-				{
+		case TP_EDIT : {
+			if(response) {
+				switch(listitem) {
 					case 0 : SPD(playerid, TP_EDIT+1, 2, "Первый пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
 					case 1 : SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
-					case 2 :
-					{
+					case 2 : {
 						dialog[0] = '\0';
 						new portal = GetPVarInt(playerid, "selectTeleport");
-						for(new i; i < MAX_FRAC; i++)
-						{
-							if( Portal::Info[portal][Portal::Allowed][i] )
+						for(new i; i < MAX_FRAC; i++) {
+							if(Portal::Info[portal][Portal::Allowed][i]) {
 								scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
-							else
+							} else {
 								scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
+							}
 						}
 						SPD(playerid, TP_EDIT+9, 2, "Доступность для фракций", dialog, "SELECT", "CANCEL");
 					}
-					case 3 :
-					{
+					
+					case 3 : {
 						TOTAL_PORTAL --;
 						new i = GetPVarInt(playerid, "selectTeleport");
 						DestroyDynamicPickup(Portal::Info[i][Portal::Pickup][0]);
@@ -15609,25 +15606,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						CopyArray(Portal::Info[i][Portal::Portal2], Portal::Info[TOTAL_PORTAL][Portal::Portal2], 4);
 					}
 				}
+			} else {
+				SetPVarInt(playerid, "selectTeleport", 0xffff);
 			}
-			else SetPVarInt(playerid, "selectTeleport", 0xffff);
-			
-			return 1;
 		}
-		case TP_EDIT+1 :
-		{
-			if( response )
-			{
-				switch(listitem)
-				{
+		
+		case TP_EDIT+1 : {
+			if(response) {
+				switch(listitem) {
 					case 0 : SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
 					case 1 : SPD(playerid, TP_EDIT+5, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
 					case 2 : SPD(playerid, TP_EDIT+7, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
 					case 3 : Send(playerid, -1, "Встанте на то место где должен быть пикап и введите /setpic1");
 				}
-			}
-			else
-			{
+			} else {
 				format(string, sizeof string, "Telepot №%i", Portal::Info[GetPVarInt(playerid, "selectTeleport")][Portal::Id]);
 				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
 			}
@@ -15647,118 +15639,86 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			}
 		}
 		
-		case TP_EDIT+3 :
-		{
-			if( response )
-			{
-				if(sscanf(inputtext, "i", inputtext[0]))
-				{
+		case TP_EDIT+3 : {
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
 					SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
-				}
-				else
-				{
+				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Portal::Info[teleport][Portal::Model][0] = inputtext[0];
 					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][0], E_STREAMER_MODEL_ID, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
+			} else {
+				SPD(playerid, TP_EDIT+1, 2, "Первый пикап", "Модель\nПозиция", "SELECT", "CANCEL");
 			}
-			else SPD(playerid, TP_EDIT+1, 2, "Первый пикап", "Модель\nПозиция", "SELECT", "CANCEL");
-			
-			return 1;
 		}
-		case TP_EDIT+4 :
-		{
-			if( response )
-			{
-				if(sscanf(inputtext, "i", inputtext[0]))
-				{
+		
+		case TP_EDIT+4 : {
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
 					SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
-				}
-				else
-				{
+				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Portal::Info[teleport][Portal::Model][1] = inputtext[0];
 					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][1], E_STREAMER_MODEL_ID, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
+			} else {
+				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nПозиция", "SELECT", "CANCEL");
 			}
-			else SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nПозиция", "SELECT", "CANCEL");
-			
-			return 1;
 		}
-		case TP_EDIT+5 :
-		{
-			if( response )
-			{
-				if(sscanf(inputtext, "i", inputtext[0]))
-				{
+		
+		case TP_EDIT+5 : {
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
 					SPD(playerid, TP_EDIT+5, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
-				}
-				else if( inputtext[0] < 1 || inputtext[0] > 23)
-				{
+				} else if(inputtext[0] < 1 || inputtext[0] > 23) {
 					SPD(playerid, TP_EDIT+5, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
-				}
-				else
-				{
+				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Portal::Info[teleport][Portal::Type][0] = inputtext[0];
 					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][0], E_STREAMER_TYPE, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
+			} else {
+				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
 			}
-			else SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
-			
-			return 1;
 		}
-		case TP_EDIT+6 :
-		{
-			if( response )
-			{
-				if(sscanf(inputtext, "i", inputtext[0]))
-				{
+		
+		case TP_EDIT+6 : {
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
 					SPD(playerid, TP_EDIT+6, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
-				}
-				else if( inputtext[0] < 1 || inputtext[0] > 23)
-				{
+				} else if(inputtext[0] < 1 || inputtext[0] > 23) {
 					SPD(playerid, TP_EDIT+6, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
-				}
-				else
-				{
+				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Portal::Info[teleport][Portal::Type][1] = inputtext[0];
 					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][1], E_STREAMER_TYPE, inputtext[0]);
 					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
 				}
+			} else {
+				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
 			}
-			else SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
-			
-			return 1;
 		}
-		case TP_EDIT+7 :
-		{
-			if( response )
-			{
-				if(sscanf(inputtext, "i", inputtext[0]))
-				{
+		
+		case TP_EDIT+7 : {
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
 					SPD(playerid, TP_EDIT+7, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
-				}
-				else if( inputtext[0] < 0 )
-				{
+				} else if(inputtext[0] < 0) {
 					SPD(playerid, TP_EDIT+7, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
-				}
-				else
-				{
+				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Portal::Info[teleport][Portal::World][0] = inputtext[0];
 					DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][0]);
 					Portal::Info[teleport][Portal::Pickup][0]=_AddPickup(Portal::Info[teleport][Portal::Model][0],Portal::Info[teleport][Portal::Type][0],Portal::Info[teleport][Portal::Portal1],Portal::Info[teleport][Portal::World][0]);
 					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", 0xffff);
 				}
+			} else {
+				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
 			}
-			else SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
-			
-			return 1;
 		}
 		
 		case TP_EDIT+8 : {
@@ -15774,35 +15734,29 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Portal::Info[teleport][Portal::Pickup][1]=_AddPickup(Portal::Info[teleport][Portal::Model][1],Portal::Info[teleport][Portal::Type][1],Portal::Info[teleport][Portal::Portal2],Portal::Info[teleport][Portal::World][1]);
 					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", 0xffff);
 				}
+			} else { 
+				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
 			}
-			else SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
-			
-			return 1;
 		}
-		case TP_EDIT+9 :
-		{
-			if( response )
-			{
+		
+		case TP_EDIT+9 : {
+			if(response) {
 				dialog[0] = '\0';
 				new portal = GetPVarInt(playerid, "selectTeleport");
 				Portal::Info[portal][Portal::Allowed][listitem] = !Portal::Info[portal][Portal::Allowed][listitem];
-				for(new i; i < MAX_FRAC; i++)
-				{
-					if( Portal::Info[portal][Portal::Allowed][i] )
+				for(new i; i < MAX_FRAC; i++) {
+					if(Portal::Info[portal][Portal::Allowed][i]) {
 						scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
-					else
+					} else {
 						scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
+					}
 				}
 				SPD(playerid, TP_EDIT+9, 2, "Доступность для фракций", dialog, "SELECT", "CANCEL");
-				updatePickup( portal );
-			}
-			else
-			{
+				updatePickup(portal);
+			} else {
 				format(string, sizeof string, "Telepot №%i", Portal::Info[GetPVarInt(playerid, "selectTeleport")][Portal::Id]);
 				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
 			}
-			
-			return 1;
 		}
 		
 		case D_CHANGE_PASS : {
