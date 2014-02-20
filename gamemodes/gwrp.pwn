@@ -6645,12 +6645,12 @@ CMD:fakekill(playerid, params[]) {
 	return Rac::SetPlayerHealth(playerid, 0.0);
 }
 
-CMD:loadmap(playerid, params[]) { new string[144];
+CMD:loadmap(playerid, params[]) { new string[144], mapfile[24], worldid, interiorid, player;
 	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
-	if(sscanf(params, "s[24]I(-1)I(-1)I(-1)", params[3], params[0], params[1], params[2]))
-	return Send(playerid, COLOR_GREY, "Введите: /reloadmap [mapfile]");
-	new mapid = map::Load(params[3], params[0], params[1], params[2]);
-	if(mapid == INVALID_MAP_ID) return Send(playerid, COLOR_GREY, "* Invalid map id!");
+	if(sscanf(params, "s[24]I(-1)I(-1)I(-1)", mapfile, worldid, interiorid, player))
+	return Send(playerid, COLOR_GREY, "Введите: /loadmap [mapfile] (example: maps/file.map)");
+	new mapid = map::Load(mapfile, worldid, interiorid, player);
+	if(mapid == INVALID_MAP_ID) return Send(playerid, COLOR_GREY, "* Map file not found!");
 	format(string, sizeof string, "* Карта загружена! [id:%i]", mapid);
 	Send(playerid, COLOR_YELLOW, string);
 	return 1;
@@ -6658,7 +6658,7 @@ CMD:loadmap(playerid, params[]) { new string[144];
 
 CMD:unloadmap(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
-	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /unloadmap [mapfile]");
+	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /unloadmap [mapid]");
 	if(!map::Destroy(params[0])) return Send(playerid, COLOR_GREY, "* Invalid map id!");
 	format(string, sizeof string, "* Карта выгружена! [id:%i]", params[0]);
 	Send(playerid, COLOR_YELLOW, string);
