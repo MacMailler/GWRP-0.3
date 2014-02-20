@@ -12426,7 +12426,8 @@ CMD:at(playerid, params[]) {
 	new trailer = GetPlayerBootVehicle(playerid, veh);
 	if(trailer == INVALID_VEHICLE_ID) return Send(playerid, COLOR_GREY,"* Нет машин поблизости!");
 	if(IsTrailerAttachedToVehicle(trailer)) return Send(playerid, COLOR_GREY, "* Машина уже прицеплена!");
-	AttachTrailerToVehicle(trailer, veh); Send(playerid, COLOR_YELLOW, "* Машина подцеплена!");
+	AttachTrailerToVehicle(trailer, veh);
+	Send(playerid, COLOR_YELLOW, "* Машина подцеплена!");
 	return 1;
 }
 
@@ -20319,15 +20320,13 @@ stock ClosestVeh(playerid, Float:radi = 200.0, exc = INVALID_VEHICLE_ID) {
 }
 
 stock GetPlayerBootVehicle(playerid, vehicleid) {
-	if(0 <= playerid <= MAX_PLAYERS) {
-		if(1 <= vehicleid <= MAX_VEHICLES) {
-			new Float:x, Float:y, Float:z;
-			GetCoordVehicleParams(vehicleid, 3, x, y, z);
-			foreach(new i: inStreamVehicles[playerid]) {
-				if(i != vehicleid && IsVehicleInRangeOfPoint(i, 5.0, x, y, z)) {
-					return i;
-				}
-			}
+	new Float:x, Float:y, Float:z, Float:a;
+	GetVehiclePos(vehicleid, x, y, z);
+	GetVehicleZAngle(vehicleid, a);
+	GetXYInFrontOfPoint(x, y, a, -5.0);
+	foreach(new i: inStreamVehicles[playerid]) {
+		if(IsVehicleInRangeOfPoint(i, 2.0, x, y, z) && i != vehicleid) {
+			return i;
 		}
 	}
 	return INVALID_VEHICLE_ID;
