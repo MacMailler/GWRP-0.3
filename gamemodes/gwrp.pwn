@@ -15785,7 +15785,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				else {
 					new hash[SHA1_HASH_LEN];
 					KeyProtect(inputtext, hash);
-					format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%s'", hash, Pl::Info[playerid][pID]);
+					format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", hash, Pl::Info[playerid][pID]);
 					Db::tquery(connDb, query, "", "");
 					format(string, sizeof(string), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ÂÍÈÌÀÍÈÅ! ÏÀÐÎËÜ ÈÇÌÅÍÅÍ! Âאר םמגûי ןאנמכü: %s", inputtext);
 					Send(playerid, COLOR_LIGHTRED, string);
