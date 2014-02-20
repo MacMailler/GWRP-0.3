@@ -6630,7 +6630,7 @@ CMD:put(playerid, params[]) {
 }
 
 CMD:setpayday(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /setpayday [ид/часть имени] [amount]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	Pl::Info[params[0]][pPayDay] = params[1];
@@ -6638,7 +6638,7 @@ CMD:setpayday(playerid, params[]) {
 }
 
 CMD:fakekill(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /fakekill [ид/часть имени] [причина]");
 	SyncInfo[playerid][sKillerID] = params[0];
 	SyncInfo[playerid][sReasonID] = params[1];
@@ -6646,7 +6646,7 @@ CMD:fakekill(playerid, params[]) {
 }
 
 CMD:loadmap(playerid, params[]) { new string[144], mapfile[24], worldid, interiorid, player;
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "s[24]I(-1)I(-1)I(-1)", mapfile, worldid, interiorid, player))
 	return Send(playerid, COLOR_GREY, "Введите: /loadmap [mapfile] (example: maps/file.map)");
 	new mapid = map::Load(mapfile, worldid, interiorid, player);
@@ -6657,7 +6657,7 @@ CMD:loadmap(playerid, params[]) { new string[144], mapfile[24], worldid, interio
 }
 
 CMD:unloadmap(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /unloadmap [mapid]");
 	if(!map::Destroy(params[0])) return Send(playerid, COLOR_GREY, "* Invalid map id!");
 	format(string, sizeof string, "* Карта выгружена! [id:%i]", params[0]);
@@ -6666,7 +6666,7 @@ CMD:unloadmap(playerid, params[]) { new string[144];
 }
 	
 CMD:togglereg(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	switch(Gm::Info[Gm::EnableReg]) {
 		case 0 : {
 			Send(playerid, COLOR_YELLOW, "* Регистрация включена!");
@@ -6682,7 +6682,7 @@ CMD:togglereg(playerid, params[]) {
 }
 
 CMD:tune(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /tune [componentid]");
 	new vehicle = GetPlayerVehicleID(playerid);
 	if(vehicle && AddVehicleComponent(vehicle, params[0])) {
@@ -6733,13 +6733,13 @@ CMD:ptmcheck(playerid, params[]) { new string[144], sendername[24], playername[2
 }
 
 CMD:payday(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	SetTimer("onPayDay", 100, false);
 	return 1;
 }
 
 CMD:int(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return 1 ;
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return 1 ;
 	if(sscanf(params, "i", params[0])) return 1;
 	if(params[0] <= -1 || params[0] >= sizeof SAInteriors) {
 		params[0] = GetPVarInt(playerid, "SelectedItem");
@@ -6759,7 +6759,7 @@ CMD:cambehind(playerid, params[]) {
 }
 
 CMD:addskin(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "ii", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /fracname [fracid] [skinid]");
 	if(!Container::Find(params[0], params[1])) return Send(playerid, COLOR_GREY, "* Skin found!");
 	Container::Add(params[0], params[1]);
@@ -6770,7 +6770,7 @@ CMD:addskin(playerid, params[]) {
 }
 
 CMD:delskin(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "ii", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /fracname [fracid] [skinid]");
 	if(!Container::Find(params[0], params[1])) return Send(playerid, COLOR_GREY, "* Skin not found!");
 	Container::Remove(params[0], params[1]);
@@ -6781,7 +6781,7 @@ CMD:delskin(playerid, params[]) {
 }
 
 CMD:fracname(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "is[36]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /fracname [fracid] [name]");
 	if(!regex_match_exid(params[1], ValidText)) return Send(playerid, COLOR_GREY, "* Недопустимое название!");
 	SetFracName(params[0], params[1]);
@@ -6790,7 +6790,7 @@ CMD:fracname(playerid, params[]) {
 }
 
 CMD:fractag(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "is[16]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /fracname [fracid] [name]");
 	if(!regex_match_exid(params[1], ValidText)) return Send(playerid, COLOR_GREY, "* Недопустимое название!");
 	SetFracTag(params[0], params[1]);
@@ -7212,7 +7212,7 @@ CMD:antidmzone(playerid, params[]) { new string[144];
 }
 
 CMD:addpic(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(TOTAL_PORTAL >= sizeof Portal::Info) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во пикапов!");	
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
 		return Send(playerid, COLOR_GREY, "Введите: /addpickup [modelid] (optional [vw] [type])");
@@ -7273,7 +7273,7 @@ CMD:setpic1(playerid, params[]) {
 }
 
 CMD:setpic2(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	new teleport = GetPVarInt(playerid, "selectTeleport");
 	if(teleport == 0xffff) return Send(playerid, COLOR_GREY, "* Вы не выбрали портал!");
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
@@ -7302,7 +7302,7 @@ CMD:setpic2(playerid, params[]) {
 }
 
 CMD:editmode(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	EditMode[playerid] = !EditMode[playerid];
 	SetPVarInt(playerid, "selectTeleport", 0xffff);
 	format(string, sizeof string, "Режим редактирования: %s", (EditMode[playerid])?("{00cc00}Вкл."):("{ff0000}Выкл."));
@@ -7311,7 +7311,7 @@ CMD:editmode(playerid, params[]) { new string[144];
 }
 
 CMD:addfc(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Use: /addfc [fracid]");
 	if(params[0] < 1 || params[0] > 20) return Send(playerid, COLOR_GREY, "* Неверный ID фракции!");
 	if(Fc::TOTAL >= MAX_FC) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во транспорта!");
@@ -7321,7 +7321,7 @@ CMD:addfc(playerid, params[]) {
 
 CMD:delfc(playerid, params[]) {
 	new vehid = GetPlayerVehicleID(playerid), idx, fracid;
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(!IsPlayerInAnyVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Нужно быть в автомобиле!");
 	if(!Fc::GetInfo(vehid, "if", idx, fracid)) return Send(playerid, COLOR_GREY, "* Это не фракционная машина!");
 	Iter::Remove(TeamVehicles[fracid], vehid);
@@ -7339,7 +7339,7 @@ CMD:showmodel(playerid, params[]) {
 }
 
 CMD:addrefill(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(TOTAL_GASS >= sizeof RefillInfo) return Send(playerid, COLOR_GREY, "* Создано максимальное количество заправок!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Ведите: /addrefill [bizid]");
 	if(GetIndexFromBizID(params[0]) == -1) return Send(playerid, COLOR_GREY, "* Введен не верный ID бизнеса!");
@@ -7360,7 +7360,7 @@ CMD:addrefill(playerid, params[]) {
 }
 
 CMD:addbiz(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "ii", params[0], params[1])) {
 		Send(playerid, COLOR_FADE1, "Ведите: /addbiz [lvl] [type]");
 		Send(playerid, COLOR_FADE2, "Типы бизнесов:");
@@ -7936,7 +7936,7 @@ CMD:buylevel(playerid, params[]) { new string[144];
 }
 
 CMD:savetun(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(GetPlayerState(playerid) != 2) return Send(playerid, COLOR_GREY,"* Вы должны сидеть в машине!");
 	if(sscanf(params, "s[10]", params[0])) return Send(playerid, COLOR_GREY,"/savetun [name]");
 	new vehid = GetPlayerVehicleID(playerid);
@@ -7960,7 +7960,7 @@ CMD:savetun(playerid, params[]) {
 }
 
 CMD:deltun(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(GetPlayerState(playerid) != 2) return Send(playerid, COLOR_GREY,"* Вы должны сидеть в машине!");
 	if(sscanf(params, "s[10]", params[0])) return Send(playerid, COLOR_GREY,"/deltun [name]");
 	new vehid = GetPlayerVehicleID(playerid);
@@ -7983,6 +7983,39 @@ CMD:deltun(playerid, params[]) {
 	return Send(playerid, COLOR_YELLOW, "* Ошибка, у этой машины нельзя удалить тюнинг!");
 }
 
+CMD:asetpass(playerid, params[]) { new string[144], uname[24], ukey[36], uhash[SHA1_HASH_LEN];
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(sscanf(params, "s[24]s[36]", uname, ukey)) return Send(playerid, COLOR_GREY, "Введите: /asetpass [name] [password]");
+	new pid=ReturnUser(uname);
+	if(Pl::isLogged(pid)) {
+		KeyProtect(ukey, uhash);
+		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", uhash, Pl::Info[pid][pID]);
+		Db::tquery(connDb, query, "", "");
+	
+		format(string, sizeof string, "* Вы изменили пароль %s, новый пароль; %s", uname, ukey);
+		Send(playerid, COLOR_LIGHTRED, string);
+		format(string, sizeof string, "* Администратор %s изменили ваш пароль, новый пароль %s", GetName(playerid), ukey);
+		Send(pid, COLOR_LIGHTRED, string);
+		Send(playerid, COLOR_LIGHTRED,"* ОБЯЗАТЕЛЬНО сделайте скриншот с новым паролем, для этого нажмите F8");
+		
+		format(string, sizeof string, "[AdmWarn] * %s изменил пароль %s[uid:%i]", GetName(playerid), uname, Pl::Info[pid][pID]);
+		SendLog(LOG_ADMWARN, string);
+	} else {
+		new uid = GetIDFromName(uname);
+		if(uid == -1) return Send(playerid, COLOR_GREY, "* Нет такого юзера!");
+		KeyProtect(ukey, uhash);
+		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", uhash, uid);
+		Db::tquery(connDb, query, "", "");
+		
+		format(string, sizeof string, "* Вы изменили пароль %s, новый пароль %s", uname, ukey);
+		Send(playerid, COLOR_LIGHTRED, string);
+		
+		format(string, sizeof string, "[AdmWarn] * %s изменил пароль %s[uid:%i]", GetName(playerid), uname, uid);
+		SendLog(LOG_ADMWARN, string);
+	}
+	return 1;
+}
+		
 CMD:setpass(playerid, params[]) {
 	SPD(playerid, D_CHANGE_PASS, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ATTENTION PLEASE",
 	"ВНИМАНИЕ! Для изменения пароля от вашего\n\
@@ -8972,7 +9005,7 @@ CMD:houseo(playerid, params[]) {
 }
 
 CMD:biz(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /biz [biznumber]");
 	new bidx = GetIndexFromBizID(params[0]);
 	if(!IsValidBiz(bidx)) return Send(playerid, COLOR_GREY, "* Нет такого бизнеса!");
@@ -9041,7 +9074,7 @@ CMD:houseinfo(playerid, params[]) {
 
 
 CMD:bizname(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "is[24]", params[0], temp)) return Send(playerid, COLOR_GREY, "Введите: /bizname [biz] [name]");
 	new i = GetIndexFromBizID(params[0]);
 	strmid(BizzInfo[i][bDescription], temp, 0, strlen(temp), 24);
@@ -9770,7 +9803,7 @@ CMD:veh(playerid, params[]) { new string[144];
 }
 
 CMD:setbenz(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(!IsPlayerInAnyVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Вы не находитесь в транспорте!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /setbenz!");
 	AutoInfo[GetPlayerVehicleID(playerid)][aFuel] = float(params[0]);
@@ -15242,7 +15275,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-					if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
+					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 						return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 					
 					if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
@@ -15287,7 +15320,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-					if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
+					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 						return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 						
 					if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
@@ -15351,7 +15384,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!regex_match_exid(number, ValidText)) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
 				
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-				if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
+				if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 				
 				if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
@@ -15387,7 +15420,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+6 : {
 			if(response) {
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-				if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
+				if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 				
 				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
