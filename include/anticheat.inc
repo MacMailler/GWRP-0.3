@@ -721,24 +721,24 @@ stock AC::OnfootSync(playerid) {
 			}
 		}
 	}
-
-	if(AC::Info[playerid][AC::Delay][R::SPEED_HACK] > 0) {
-		AC::Info[playerid][AC::Delay][R::SPEED_HACK] --;
-	} else {
-		if(playerspeed >= 100) {
-			AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
-			if(Rac::Info[playerid][Rac::Warns][R::SPEED_HACK] >= MAX_WARNS) {
-				Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
+	
+	if(surfveh == INVALID_VEHICLE_ID) {
+		if(AC::Info[playerid][AC::Delay][R::SPEED_HACK] > 0) {
+			AC::Info[playerid][AC::Delay][R::SPEED_HACK] --;
+		} else {
+			if(playerspeed >= 100) {
+				AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
+				if(Rac::Info[playerid][Rac::Warns][R::SPEED_HACK] >= MAX_WARNS) {
+					Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
+				}
 			}
 		}
 	}
-
-	if(surfveh == INVALID_VEHICLE_ID) {
-		switch(GetPlayerAnimationIndex(playerid)) {
-			case 1543, 1538, 1539 : {
-				if(z >= 2.0 && !Rac::IsPlayerInPool(playerid)) {
-					Rac::Kick(playerid, "Использование читов", R::FLY_HACK);
-				}
+	
+	switch(GetPlayerAnimationIndex(playerid)) {
+		case 1543, 1538, 1539 : {
+			if(z >= 2.0 && !Rac::IsPlayerInPool(playerid)) {
+				Rac::Kick(playerid, "Использование читов", R::FLY_HACK);
 			}
 		}
 	}
