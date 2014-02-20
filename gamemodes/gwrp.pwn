@@ -8138,14 +8138,14 @@ CMD:me(playerid, params[]) { new string[144];
 }
 
 CMD:knockdown(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(useknock[playerid] > 0) return Send(playerid,COLOR_GREY,"* Эту команду можно использовать только раз в 30 сек");
-	if(Fell[playerid] > 0) return  Send(playerid,COLOR_GREY,"* Вас сбили, и вы не можете сбить с ног");
-	if(IsPlayerInAnyVehicle(playerid)) return Send(playerid,COLOR_GREY,"* В транспорте нельзя использовать эту команду");
+	if(useknock[playerid] > 0) return Send(playerid, COLOR_GREY, "* Эту команду можно использовать только раз в 30 сек");
+	if(Fell[playerid] > 0) return  Send(playerid, COLOR_GREY, "* Вас сбили, и вы не можете сбить с ног");
+	if(IsPlayerInAnyVehicle(playerid)) return Send(playerid, COLOR_GREY, "* В транспорте нельзя использовать эту команду");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /knockdown [id/Name]");
 	if(playerid == params[0]) return Send(playerid, COLOR_GREY, "* Нельзя сбить с ног самого себя!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(!IsPlayerInRangeOfPlayer(playerid, 3.0, params[0])) return Send(playerid,COLOR_GREY,"Вы слишком далеко!");
-	if(IsPlayerInAnyVehicle(params[0])) return Send(playerid,COLOR_GREY,"* Этот игрок в транспорте");
+	if(!IsPlayerInRangeOfPlayer(playerid, 3.0, params[0])) return Send(playerid, COLOR_GREY, "Вы слишком далеко!");
+	if(IsPlayerInAnyVehicle(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок в транспорте");
 	new rannn = random(100);
 	getname(playerid -> sendername, params[0] -> playername);
 	if(rannn < 30) {
@@ -8285,7 +8285,7 @@ CMD:r(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255]
 }
 
 CMD:duty(playerid, params[]) { new string[144];
-	if(Pl::FracID(playerid) == 1) {
+	if(Pl::FracID(playerid) == TEAM_COP) {
 		if(IsPlayerInRangeOfPoint(playerid,3,255.3,77.4,1003.6) || IsPlayerInRangeOfPoint(playerid,3,-1616.1294,681.1594,7.1875) || Pl::Info[playerid][pLocal] != 0) {
 			if(!OnDuty[playerid]) {
 				OnDuty[playerid] = true;
@@ -8302,7 +8302,7 @@ CMD:duty(playerid, params[]) { new string[144];
 		}
 		else return Send(playerid, COLOR_LIGHTRED2, "* Вы не в раздевалке!");
 	
-	} else if(Pl::FracID(playerid) == 4) {
+	} else if(Pl::FracID(playerid) == TEAM_MEDIC) {
 		switch(OnDuty[playerid]) {
 			case 0: {
 				Medics ++;
@@ -8317,7 +8317,7 @@ CMD:duty(playerid, params[]) { new string[144];
 		}
 	}
 	
-	if(Pl::Info[playerid][pJob] == 6) {
+	if(Pl::Info[playerid][pJob] == JOB_MECHANIC) {
 		switch(OnDuty[playerid]) {
 			case 0: {
 				Mechanics ++;
@@ -11469,9 +11469,9 @@ CMD:zahvat(playerid, params[]) { new string[144], sendername[24];
 				BizzInfo[i][bZahvatArea] = CreateDynamicSphere(BizzInfo[i][bEnter][0], BizzInfo[i][bEnter][1], BizzInfo[i][bEnter][2], MAX_ZONE_SIZE, 0);
 				
 				GetPlayerName(playerid, sendername, 24);
-				format(string, sizeof string,"[GANG NEWS] %s[%s] начал захват бизнеса %s, банды[%s]", sendername, GetGangName(frac), BizzInfo[i][bDescription], GetGangName(BizzInfo[i][bFrac]));
+				format(string, sizeof string, "[GANG NEWS] %s[%s] начал захват бизнеса %s, банды[%s]", sendername, GetGangName(frac), BizzInfo[i][bDescription], GetGangName(BizzInfo[i][bFrac]));
 				sendToFamily(frac, GetFracColor(frac), string);
-				format(string, sizeof string,"[GANG NEWS] Чужие псы напали на вашу территорию [%s], покажите им кто тут хозяин!", BizzInfo[i][bDescription]);
+				format(string, sizeof string, "[GANG NEWS] Чужие псы напали на вашу территорию [%s], покажите им кто тут хозяин!", BizzInfo[i][bDescription]);
 				sendToFamily(BizzInfo[i][bFrac], GetFracColor(BizzInfo[i][bFrac]), string);
 			}
 		}
@@ -16571,9 +16571,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							strcat(dialog, "{FFFF00}/invite - {FFFFFF}принять игрока в свою фракцию\n");
 							strcat(dialog, "{FFFF00}/uninvite - {FFFFFF}выгнать игрока из своей фракции\n");
 							strcat(dialog, "{FFFF00}/giverank - {FFFFFF}установить ранг игроку\n");
-							/*strcat(dialog, "{FFFF00}/fwarn - {FFFFFF}дать выговор игроку\n");
-							strcat(dialog, "{FFFF00}/fwarns - {FFFFFF}посмотреть выговоры игрока\n");
-							strcat(dialog, "{FFFF00}/funwarn - {FFFFFF}снять выговор с игрока\n");*/
 							strcat(dialog, "{FFFF00}/fracpay - {FFFFFF}выдать зарплату\n");
 							strcat(dialog, "{FFFF00}/vigovor - {FFFFFF}дать выговор игроку\n");
 							strcat(dialog, "{FFFF00}/unvigovor - {FFFFFF}снять выговор с игрока\n");
@@ -16648,88 +16645,72 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				TransportValue[playerid] = 0;
 			}
 		}
-
+		
 		case D_SKILL : {
 			if(response) {
 				switch(listitem) {
 					case 0: {
-						new level = Pl::Info[playerid][pSkill][0];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = 1.\n*Для повышения уровня необходимо найти ещё %d игроков!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = 2.\n*Для повышения уровня необходимо найти ещё %d игроков!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = 3.\n*Для повышения уровня необходимо найти ещё %d игроков!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = 4.\n*Для повышения уровня необходимо найти ещё %d игроков!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"ОК","");
+						new score = Pl::Info[playerid][pSkill][0];
+						new level = GetSkillLevel(playerid, 0);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = %i.\n*Для повышения уровня необходимо найти ещё %i игроков!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 					
 					case 1: {
-						new level = Pl::Info[playerid][pSkill][2];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = 1.\n*Для повышения уровня необходимо освободить ещё %d игроков!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = 2.\n*Для повышения уровня необходимо освободить ещё %d игроков!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = 3.\n*Для повышения уровня необходимо освободить ещё %d игроков!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = 4.\n*Для повышения уровня необходимо освободить ещё %d игроков!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"ОК","");
+						new score = Pl::Info[playerid][pSkill][2];
+						new level = GetSkillLevel(playerid, 2);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = %i.\n*Для повышения уровня необходимо освободить ещё %i игроков!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 					
 					case 2: {
-						new level = Pl::Info[playerid][pSkill][1];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = 1.\n*Для повышения уровня необходимо обслужить ещё %d клиентов!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = 2.\n*Для повышения уровня необходимо обслужить ещё %d клиентов!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = 3.\n*Для повышения уровня необходимо обслужить ещё %d клиентов!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = 4.\n*Для повышения уровня необходимо обслужить ещё %d клиентов!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"ОК","");
+						new score = Pl::Info[playerid][pSkill][1];
+						new level = GetSkillLevel(playerid, 1);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = %i.\n*Для повышения уровня необходимо обслужить ещё %i клиентов!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 					
 					case 3: {
-						new level = Pl::Info[playerid][pSkill][7];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = 1.\n*Для повышения уровня необходимо совершить ещё %d сделок!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = 2.\n*Для повышения уровня необходимо совершить ещё %d сделок!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = 3.\n*Для повышения уровня необходимо совершить ещё %d сделок!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = 4.\n*Для повышения уровня необходимо совершить ещё %d сделок!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"ОК","");
+						new score = Pl::Info[playerid][pSkill][7];
+						new level = GetSkillLevel(playerid, 7);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = %i.\n*Для повышения уровня необходимо совершить ещё %i сделок!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 					
 					case 4: {
-						new level = Pl::Info[playerid][pSkill][4];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = 1.\n*Для повышения уровня необходимо продать ещё %d машин!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = 2.\n*Для повышения уровня необходимо продать ещё %d машин!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = 3.\n*Для повышения уровня необходимо продать ещё %d машин!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = 4.\n*Для повышения уровня необходимо продать ещё %d машин!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"ОК","");
+						new score = Pl::Info[playerid][pSkill][4];
+						new level = GetSkillLevel(playerid, 4);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = %i.\n*Для повышения уровня необходимо продать ещё %i машин!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 					
 					case 5:	{
-						new level = Pl::Info[playerid][pSkill][6];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = 1.\n*Для повышения уровня необходимо опубликовать ещё %d новостей в /news!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = 2.\n*Для повышения уровня необходимо опубликовать ещё %d новостей в /news!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = 3.\n*Для повышения уровня необходимо опубликовать ещё %d новостей в /news!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = 4.\n*Для повышения уровня необходимо опубликовать ещё %d новостей в /news!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"ОК","");
+						new score = Pl::Info[playerid][pSkill][6];
+						new level = GetSkillLevel(playerid, 6);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = %i.\n*Для повышения уровня необходимо опубликовать ещё %i новостей в /news!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 					
 					case 6: {
-						new level = Pl::Info[playerid][pSkill][3];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = 1.\n*Для повышения уровня необходимо починить/заправить ещё %d машин!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = 2.\n*Для повышения уровня необходимо починить/заправить ещё %d машин!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = 3.\n*Для повышения уровня необходимо починить/заправить ещё %d машин!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = 4.\n*Для повышения уровня необходимо починить/заправить ещё %d машин!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"ОК","");
+						new score = Pl::Info[playerid][pSkill][3];
+						new level = GetSkillLevel(playerid, 3);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = %i.\n*Для повышения уровня необходимо починить/заправить ещё %i машин!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 					
 					case 7: {
-						new level = Pl::Info[playerid][pSkill][5];
-						if(level >= 0 && level <= 50) format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = 1.\n*Для повышения уровня необходимо оформить ещё %d автомобилей!", 50 - level);
-						else if(level >= 51 && level <= 100) format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = 2.\n*Для повышения уровня необходимо оформить ещё %d автомобилей!", 100 - level);
-						else if(level >= 101 && level <= 200) format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = 3.\n*Для повышения уровня необходимо оформить ещё %d автомобилей!", 200 - level);
-						else if(level >= 201 && level <= 400) format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = 4.\n*Для повышения уровня необходимо оформить ещё %d автомобилей!", 400 - level);
-						else if(level >= 401) format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL",string,"НАЗАД","Закрыть");
+						new score = Pl::Info[playerid][pSkill][5];
+						new level = GetSkillLevel(playerid, 5);
+						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = %i.\n*Для повышения уровня необходимо оформить ещё %i автомобилей!", level, 50 - score);
+						else format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 					}
 				}
 			}
@@ -21282,5 +21263,15 @@ stock UpdateSpeedometer(playerid, speed) {
 		case 240..249: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIIII");
 		default: Pt::SetString(playerid, Pt::Speed[playerid][0], "~r~~h~~h~IIIIIIIIIIIIIIIIIIIIIIIIIIIII");
 	}
+	return 1;
+}
+
+stock GetSkillLevel(playerid, skill) {
+	new level = Pl::Info[playerid][pSkill][skill];
+	if(level >= 0 && level <= 50) return 1;
+	else if(level >= 51 && level <= 100) return 2;
+	else if(level >= 101 && level <= 200) return 3;
+	else if(level >= 201 && level <= 400) return 4;
+	else if(level >= 401) return 5;
 	return 1;
 }
