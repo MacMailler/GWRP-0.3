@@ -560,7 +560,6 @@ new bool:SuspectKill		[MAX_PLAYERS];
 new bool:PhoneOnline		[MAX_PLAYERS];
 new bool:MoneyMessage		[MAX_PLAYERS];
 new bool:TakingLesson		[MAX_PLAYERS];
-new bool:PlayerCuffed		[MAX_PLAYERS];
 new bool:PlayerUseTazed		[MAX_PLAYERS];
 
 new bool:gCarLock			[MAX_VEHICLES char] = {false, ...};
@@ -2839,7 +2838,6 @@ public OnPlayerDeath(playerid, killerid, reason) {
 	}
 
 	MedicBill[playerid] = true;
-	PlayerCuffed[playerid] = false;
 	Pl::CarInt[playerid] = INVALID_VEHICLE_ID;
 	SetPlayerColor(playerid, COLOR_GRAD2);
 	
@@ -5299,8 +5297,7 @@ stock Update(i) {
 	}
 
 	if(Pl::CuffedTime[i] > 0) {
-		if(--Pl::CuffedTime[i] <= 0) {
-			PlayerTazeTime[i] = 1;
+		if(--Pl::CuffedTime[i] == 0) {
 			Pl::CuffedTime[i] = 0;
 			RemovePlayerAttachedObject(i, 0);
 			SetPlayerSpecialAction(i, SPECIAL_ACTION_NONE);
@@ -7539,7 +7536,7 @@ CMD:givekey(playerid, params[]) { new string[144], sendername[24], playername[24
 }
 
 CMD:handsup(playerid, params[]) {
-	if(!PlayerCuffed[playerid]) SetPlayerSpecialAction(playerid, SPECIAL_ACTION_HANDSUP);
+	if(Pl::CuffedTime[playerid] <= 0) SetPlayerSpecialAction(playerid, SPECIAL_ACTION_HANDSUP);
 	return 1;
 }
 
@@ -7568,7 +7565,7 @@ CMD:mheal(playerid, params[]) {
 CMD:sit(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY,"* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY,"Введите: /sit [playerid]");
-	if(!PlayerCuffed[params[0]]) return Send(playerid, COLOR_GREY,"* Игрок не в наручниках!");
+	if(Pl::CuffedTime[params[0]] <= 0) return Send(playerid, COLOR_GREY,"* Игрок не в наручниках!");
 	if(IsPlayerInAnyVehicle(playerid) || IsPlayerInAnyVehicle(params[0])) return Send(playerid, COLOR_GREY,"* Вы или тот игрок находитесь уже в тачке!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 3.0, params[0])) return Send(playerid, COLOR_GREY,"* Вы слишком далеко от игрока!");
 	new vehid = ClosestVeh(playerid, 4.0);
@@ -7591,7 +7588,7 @@ CMD:gotome(playerid, params[]) {
 	if(!IsACop(playerid)) return Send(playerid,COLOR_GREY,"* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid,COLOR_GREY,"Введите: /gotome [playerid]");
 	if(IsPlayerInAnyVehicle(playerid) || IsPlayerInAnyVehicle(params[0])) return Send(playerid,COLOR_GREY, "* Вы или тот игрок находитесь в тачке!");
-	if(!PlayerCuffed[params[0]]) return Send(playerid,COLOR_GREY,"* Игрок не в наручниках!");
+	if(Pl::CuffedTime[params[0]] <= 0) return Send(playerid,COLOR_GREY,"* Игрок не в наручниках!");
 	if(IsPlayerInRangeOfPlayer(playerid, 8.0, params[0])) return Send(playerid,COLOR_GREY,"* Вы слишком далеко от игрока!");
 	GetPlayerPos(playerid, posx, posy, posz);
 	Rac::SetPlayerPos(params[0],posx+0.5, posy+0.5, posz);
@@ -7900,7 +7897,7 @@ CMD:checkw(playerid, params[]) { new string[144];
 CMD:number(playerid, params[]) { new string[144];
 	if(Pl::Info[playerid][pPhoneBook] != 1) return Send(playerid, COLOR_GREY, "* У Вас нет телефонной книги!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GRAD1, "Введите: /number [playerid]");
-	if(!IsPlayerConnected(params[0]) || params[0] == INVALID_PLAYER_ID) return Send(playerid, COLOR_GRAD2, "* Этот игрок не подключен!");
+	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GRAD2, "* Этот игрок не подключен!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GRAD2, "* Этот игрок не залогинен!");
 	format(string, sizeof string, "Name: %s, Ph: %d", GetName(params[0]), Pl::Info[params[0]][pNumber]);
 	Send(playerid, COLOR_GRAD1, string);
@@ -10690,13 +10687,13 @@ CMD:forceskin(playerid, params[]) {
 CMD:take(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!IsACop(playerid) && Pl::FracID(playerid) != 11) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "s[16]u", temp, params[0])) {
-		Send(playerid, COLOR_WHITE, "| {0080ff}TAKE{ffffff} |");
+		Send(playerid, COLOR_WHITE, "|_______________ {0080ff}TAKE{ffffff} _______________|");
 		Send(playerid, COLOR_WHITE, "* Используйте: /take [id] [name]");
 		Send(playerid, COLOR_GREY, "*  Лицензии: drivinglic, flyinglic, sailinglic, weaponlic");
 		if(Pl::FracID(playerid) != 11) {
 			Send(playerid, COLOR_GREY, "*  Другое: drugs, maps, weapons.");
 		}
-		Send(playerid, COLOR_WHITE, "|_|");
+		Send(playerid, COLOR_WHITE, "|_______________________________|");
 		return 1;
 	}
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GRAD2, "* Этот игрок не залогинен!");
@@ -10760,17 +10757,17 @@ CMD:take(playerid, params[]) { new string[144], sendername[24], playername[24];
 			format(string, sizeof string, "* %s %s конфисковал(а) ваше оружие **", xx, sendername);
 			Send(params[0], COLOR_LIGHTBLUE, string);
 		} else {
-			Send(playerid, COLOR_WHITE, "| {0080ff}TAKE{ffffff} |");
+			Send(playerid, COLOR_WHITE, "|_______________ {0080ff}TAKE{ffffff} _______________|");
 			Send(playerid, COLOR_WHITE, "* Используйте: /take [id] [name]");
 			Send(playerid, COLOR_GREY, "*  Лицензии: drivinglic, flyinglic, sailinglic, gunlic");
 			Send(playerid, COLOR_GREY, "*  Другое: drugs, maps, weapons.");
-			Send(playerid, COLOR_WHITE, "|_|");
+			Send(playerid, COLOR_WHITE, "|______________________________|");
 		}
 	} else {
 		Send(playerid, COLOR_WHITE, "| {0080ff}TAKE{ffffff} |");
 		Send(playerid, COLOR_WHITE, "* Используйте: /take [id] [name]");
 		Send(playerid, COLOR_GREY, "*  Лицензии: drivinglic, flyinglic, sailinglic, weaponlic");
-		Send(playerid, COLOR_WHITE, "|_|");
+		Send(playerid, COLOR_WHITE, "|______________________________|");
 	}
 	return 1;
 }
@@ -11737,11 +11734,10 @@ CMD:jailed(playerid, params[]) { new string[144];
 CMD:cuff(playerid, params[]) { new string[144];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY, "* Вы не коп!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /cuff [id/Name]");
-	if(!IsPlayerConnected(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не подлючен!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "*Вы неможете надеть наручники на самого себя!");
 	if(IsACop(params[0])) return Send(playerid, COLOR_GREY, "*Вы неможете надевать наручники на законников!");
-	if(PlayerCuffed[params[0]]) return Send(playerid, COLOR_GREY, "* На игрока уже надеты наручники !");
+	if(Pl::CuffedTime[params[0]] > 0) return Send(playerid, COLOR_GREY, "* На игрока уже надеты наручники !");
 	if(!IsPlayerInRangeOfPlayer(playerid, 3.0, params[0])) return Send(playerid, COLOR_GREY, "* Игрок слишком далеко!");
 	SetPlayerAttachedObject(params[0], 0, 19418, 6, -0.011000, 0.028000, -0.022000, -15.600012, -33.699977, -81.700035, 0.891999, 1.000000, 1.168000);
 	SetPlayerSpecialAction(params[0], SPECIAL_ACTION_CUFFED);
@@ -11752,7 +11748,6 @@ CMD:cuff(playerid, params[]) { new string[144];
 	format(string, sizeof string, "* Офицер %s надевает наручники на %s", GetName(playerid), GetName(params[0]));
 	ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	GameTextForPlayer(params[0], "~r~Cuffed", 3000, 3);
-	PlayerCuffed[params[0]] = true;
 	Pl::CuffedTime[params[0]] = 240;
 	return 1;
 }
@@ -11760,11 +11755,10 @@ CMD:cuff(playerid, params[]) { new string[144];
 CMD:uncuff(playerid, params[]) { new string[144];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY, "* Вы не коп!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /uncuff [id/Name]");
-	if(!IsPlayerConnected(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не подлючен!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Вы неможете снять наручники на самого себя!");
 	if(IsACop(params[0])) return Send(playerid, COLOR_GREY, "* Вы неможете надевать наручники на законников!");
-	if(!PlayerCuffed[params[0]]) return Send(playerid, COLOR_GREY, "* На игрока не надеты наручники!");
+	if(Pl::CuffedTime[params[0]] <= 0) return Send(playerid, COLOR_GREY, "* На игрока не надеты наручники!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 3.0, params[0])) return Send(playerid, COLOR_GREY, "* Игрок слишком далеко!");
 	RemovePlayerAttachedObject(params[0], 0);
 	SetPlayerSpecialAction(params[0], SPECIAL_ACTION_NONE);
@@ -11775,7 +11769,6 @@ CMD:uncuff(playerid, params[]) { new string[144];
 	format(string, sizeof string, "* Офицер %s снимает наручники с %s", GetName(playerid), GetName(params[0]));
 	ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	GameTextForPlayer(params[0], "~g~Uncuffed", 2500, 3);
-	PlayerCuffed[params[0]] = false;
 	Pl::CuffedTime[params[0]] = 0;
 	return 1;
 }
@@ -17394,6 +17387,15 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		wait(playerid);
 		
 		switch(Rac::GetPlayerState(playerid)) {
+			case PLAYER_STATE_ONFOOT : {
+				if(Pl::CuffedTime[playerid] > 0) {
+					AnimClear[playerid] = 4;
+					ApplyAnimation(playerid, "FAT","IDLE_tired", 4.1, 1, 1, 1, 1, 0);
+					if(Rac::IsPlayerControllable(playerid)) {
+						SetTimerEx(""#Rac::"TogglePlayerControllable", 7000, false, "ii", playerid, 1);
+					}
+				}
+			}
 			case PLAYER_STATE_DRIVER : {
 				new vehid = GetPlayerVehicleID(playerid);
 				switch(GetVehicleType(GetVehicleModel(vehid))) {
@@ -18114,7 +18116,6 @@ stock Pl::Init(playerid) {
 	PhoneOnline[playerid]				= true;
 	MoneyMessage[playerid]				= false;
 	TakingLesson[playerid]				= false;
-	PlayerCuffed[playerid]				= false;
 	PlayerUseTazed[playerid]			= false;
 	
 	TempVehicle[playerid]				= INVALID_VEHICLE_ID;
@@ -20454,15 +20455,6 @@ public: onSobeitCheck(playerid) {
 	format(temp, sizeof temp, "[AdmWarn] * %s[%i] прошел тест на собейт, результат - собейт %s", GetName(playerid), playerid, (y < -0.75) ? ("{AA3333}установлен"):("{33AA33}не установлен"));
 	SendToAdmin(COLOR_YELLOW, temp, 1, 3);
 }
-/*
-public: onSobeitCheck(playerid) {
-	if(AFKInfo[playerid][afk_State] == 0) {
-		new Float:x, Float:y, Float:z;
-		GetPlayerCameraFrontVector(playerid, x, y, z);
-		if(y < -0.75) Rac::Kick(playerid, "mod_sa (hacking tool)");
-	}
-	Rac::TogglePlayerControllable(playerid, true);
-}*/
 
 public: onPTMCheck(playerid, targetid, Float:x, Float:y, Float:z) {
 	if(Pl::isLogged(targetid)) {
