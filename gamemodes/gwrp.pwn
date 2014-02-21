@@ -65,6 +65,7 @@
 #define MAX_VEHICLESex			(200)
 #define MAX_ANTIDM_ZONES		(10)
 #define MAX_FRAC_GATE			(50)
+#define MAX_REFILLS				(50)
 
 #define START_MONEY				(5000)
 #define START_LEVEL				(1)
@@ -303,7 +304,6 @@ new AFKInfo[MAX_PLAYERS][e_AFKInfo];
 
 new
 	Fc::TOTAL,
-	TOTAL_GASS,
 	TOTAL_VEHICLES
 ;
 
@@ -577,6 +577,7 @@ new Iterator:LeaderPlayers<MAX_PLAYERS>;
 new Iterator:enginedVehicles<MAX_VEHICLES>;
 new Iterator:Houses<MAX_HOUSES>;
 new Iterator:Biznes<MAX_BIZNES>;
+new Iterator:Refills<MAX_REFILLS>;
 
 new Iterator:MedicCalls<MAX_PLAYERS>;
 new Iterator:MechanicCalls<MAX_PLAYERS>;
@@ -1005,7 +1006,7 @@ enum hInfo {
     hID,
 	hOwned,
 	hLock,
-	hOwner[24],
+	hOwner[MAX_PLAYER_NAME],
 	hDescription[28],
 	hPrice,
 	hLevel,
@@ -1067,8 +1068,8 @@ enum bInfo {
 	bID,
 	bOwned,
 	bLocked,
-	bOwner[24],
-	bExtortion[24],
+	bOwner[MAX_PLAYER_NAME],
+	bExtortion[MAX_PLAYER_NAME],
 	bDescription[24],
 	bLevel,
 	bPrice,
@@ -1110,7 +1111,7 @@ enum brInfo {
 	Float:brPos[3],
 	brPickup,
 }
-new RefillInfo[20][brInfo];
+new RefillInfo[MAX_REFILLS][brInfo];
 
 
 enum gInfo {
@@ -1904,7 +1905,7 @@ public OnGameModeInit() {
 	
 	serverUpdate = SetTimer(""#Gm::"Thread", SEC_TIMER, true);
 
-	printf("[debug] OnGameModeInit() - Ok! Run time: %i (ms)", GetTickCount()-time);
+	debug("OnGameModeInit() - Ok! Run time: %i (ms)", GetTickCount()-time);
 
 	return 1;
 }
@@ -3617,12 +3618,33 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			}
 			
 			else {
-				PickupHndlr::Portal(playerid, pickupid);
+				if(!PickupHndlr::Gas(playerid, pickupid)) {
+					if(!PickupHndlr::Portal(playerid, pickupid)) {}
+				}
 			}
 		}
 	}
 	
 	return 1;
+}
+
+
+stock PickupHndlr::Gas(playerid, pickupid) {
+	foreach(new i : Refills) {
+		if(pickupid == RefillInfo[i][brPickup]) {
+			new veh = GetPlayerVehicleID(playerid);
+			switch(GetVehicleType(GetVehicleModel(veh))) {
+				case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
+					SetPVarInt(playerid, "SelectGas", i);
+					SetVehicleVelocity(veh, 0, 0, 0);
+					ShowRefillDialog(playerid, GetIndexFromBizID(RefillInfo[i][brBizID]));
+				}
+				default : Send(playerid,COLOR_GREY,"* Заправка непредназначена для вашего транспорта!");
+			}
+			return 1;
+		}
+	}
+	return 0;
 }
 
 stock PickupHndlr::Portal(playerid, pickupid) {
@@ -5312,8 +5334,8 @@ public: Fillup(playerid, amount, price, sec) {
 		GameTextForPlayer(playerid, temp, 600, 5);
 		SetTimerEx("Fillup", 300, false, "iiii", playerid, amount, price, --sec);
 	} else {
-		new gas = GetClosestGas(playerid);
-		if(gas != -1) {
+		new gas = GetPVarInt(playerid, "SelectGas");
+		if(gas != 0xFFFF) {
 			new bidx = GetIndexFromBizID(RefillInfo[gas][brBizID]);
 			if(BizzInfo[bidx][bProds] <= 0) {
 				GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
@@ -5327,6 +5349,7 @@ public: Fillup(playerid, amount, price, sec) {
 				Send(playerid, COLOR_LIGHTBLUE, temp);
 				Rac::GivePlayerMoney(playerid, -price);
 			}
+			SetPVarInt(playerid, "SelectGas", 0xFFFF);
 		}
 		Rac::TogglePlayerControllable(playerid, true);
 	}
@@ -5545,7 +5568,7 @@ stock LoadSpawns() {
 			cache_get_float(i, 5, SpawnInfo[id][spZ]);
 			cache_get_float(i, 6, SpawnInfo[id][spA]);
 		}
-		printf("[debug] LoadSpawns() - Ok! Spawns: %i. Run time: %i (ms)", rows, GetTickCount()-time);
+		debug("LoadSpawns() - Ok! Spawns: %i. Run time: %i (ms)", rows, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5562,7 +5585,7 @@ stock LoadGMInfo() {
 		cache_get_int(0, 4, Gm::Info[Gm::FactoryFuel]);
 		cache_get_int(0, 5, Gm::Info[Gm::FactoryProds]);
 		cache_get_int(0, 6, Gm::Info[Gm::EnableReg]);
-		printf("[debug] LoadGMInfo() - Ok! Run time: %i (ms)", GetTickCount()-time);
+		debug("LoadGMInfo() - Ok! Run time: %i (ms)", GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5592,6 +5615,7 @@ stock LoadHouses() {
 			cache_get_int(iter, 0, i);
 			HouseInfo[i][hID] = i;
 			HouseInfo[i][hVirtual] = i;
+			HouseInfo[i][hgGarage] = false;
 			cache_get_int(iter, 1, HouseInfo[i][hOwned]);
 			cache_get_int(iter, 2, HouseInfo[i][hLock]);
 			cache_get_row(iter, 3, HouseInfo[i][hOwner], connDb, 24);
@@ -5635,8 +5659,6 @@ stock LoadHouses() {
 					}
 				}
 			}
-
-			HouseInfo[i][hgGarage] = false;
 			
 			switch(HouseInfo[i][hOwned]) {
 				case 0 : {
@@ -5651,7 +5673,7 @@ stock LoadHouses() {
 			
 			Iter::Add(Houses, i);
 		}
-		printf("[debug] LoadHouses() - Ok! Houses: %i. Run time: %i (ms)", Iter::Count(Houses), GetTickCount()-time);
+		debug("LoadHouses() - Ok! Houses: %i. Run time: %i (ms)", Iter::Count(Houses), GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5678,7 +5700,7 @@ stock LoadHGarages() {
 			Streamer_AppendArrayData(STREAMER_TYPE_PICKUP, HGaragePickup[0], E_STREAMER_WORLD_ID, HouseInfo[house][hVirtual]);
 			Streamer_AppendArrayData(STREAMER_TYPE_PICKUP, HGaragePickup[1], E_STREAMER_WORLD_ID, HouseInfo[house][hVirtual]);
 		}
-		printf("[debug] LoadHGarage() - Ok! Garages: %i. Run time: %i (ms)", rows, GetTickCount()-time);
+		debug("LoadHGarage() - Ok! Garages: %i. Run time: %i (ms)", rows, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5731,7 +5753,7 @@ stock LoadBizz() {
 			GangBiznes{BizzInfo[i][bFrac]} ++;
 			Iter::Add(Biznes, i);
 		}
-		printf("[debug] LoadBizz() - Ok! Biznes: %i. Run time: %i (ms)", Iter_Count(Biznes), GetTickCount()-time);
+		debug("LoadBizz() - Ok! Biznes: %i. Run time: %i (ms)", Iter_Count(Biznes), GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5747,10 +5769,10 @@ stock LoadGas() {
 			cache_get_int(i, 0, RefillInfo[i][brID]);
 			cache_get_int(i, 1, RefillInfo[i][brBizID]);
 			cache_get_str(i, 2, "p<,>a<f>[3]", RefillInfo[i][brPos]);
-			RefillInfo[i][brPickup] = AddPickup(1650, 14, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2], 0, "* Заправочная Станция *\n /fill", 0xFF6347AA);
+			RefillInfo[i][brPickup] = AddPickup(1650, 14, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2], 0);
+			Iter::Add(Refills, i);
 		}
-		TOTAL_GASS = rows;
-		printf("[debug] LoadGas() - Ok! Gas: %i. Run time: %i (ms)", TOTAL_GASS, GetTickCount()-time);
+		debug("LoadGas() - Ok! Gas: %i. Run time: %i (ms)", Iter::Count(Refills), GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5769,7 +5791,7 @@ stock LoadGangInfo() {
 			cache_get_float(i, 3, GangInfo[i][gPosY]);
 			cache_get_float(i, 4, GangInfo[i][gPosZ]);
 		}
-		printf("[debug] LoadGangInfo() - Ok! Run time: %i (ms)", GetTickCount()-time);
+		debug("LoadGangInfo() - Ok! Run time: %i (ms)", GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5806,7 +5828,7 @@ stock LoadFracInfo() {
 			cache_get_str(i, 6, "p<,>a<i>[2]a<f>[4]", FracInfo[fracid][fSpawn][fSpawnInt], FracInfo[fracid][fSpawn][fSpawnPos]);
 			cache_get_str(i, 7, "h", FracInfo[fracid][fColor]);
 		}
-		printf("[debug] LoadFracInfo() - Ok! Fracs: %i. Run time: %i (ms)", rows, GetTickCount()-time);
+		debug("LoadFracInfo() - Ok! Fracs: %i. Run time: %i (ms)", rows, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5859,7 +5881,7 @@ stock LoadFracVehicles( ) {
 			Iter::Add(TeamVehicles[Fc::Info[i][Fc::FracId]], Fc::Info[i][Fc::Id][1]);
 		}
 		Fc::TOTAL = rows;
-		printf("[debug] LoadFracVehicles() - Ok! Vehicles: %i; Run time: %i (ms)", Fc::TOTAL, GetTickCount()-time);
+		debug("LoadFracVehicles() - Ok! Vehicles: %i; Run time: %i (ms)", Fc::TOTAL, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -7337,14 +7359,16 @@ CMD:showmodel(playerid, params[]) {
 
 CMD:addrefill(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(TOTAL_GASS >= sizeof RefillInfo) return Send(playerid, COLOR_GREY, "* Создано максимальное количество заправок!");
+	if(Iter::Count(Refills) >= sizeof RefillInfo) return Send(playerid, COLOR_GREY, "* Создано максимальное количество заправок!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Ведите: /addrefill [bizid]");
 	if(GetIndexFromBizID(params[0]) == -1) return Send(playerid, COLOR_GREY, "* Введен не верный ID бизнеса!");
 	
-	new i = TOTAL_GASS++;
+	new i = Iter::Count(Refills);
+	Iter::Add(Refills, i);
+	
 	GetPlayerPos(playerid, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2]);
 	RefillInfo[i][brBizID] = params[0];
-	RefillInfo[i][brPickup] = AddPickup(1650, 14, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2], 0, "* Заправочная Станция *\n /fill", 0xFF6347AA);
+	RefillInfo[i][brPickup] = AddPickup(1650, 14, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2], 0);
 	
 	format(query, sizeof query, "INSERT INTO `"#__TableRefills__"` (`biz`, `pos`) VALUES (%i,'%.3f,%.3f,%.3f')", params[0], RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2]);
 	new Cache:result = Db::query(connDb, query, true);
@@ -11328,26 +11352,6 @@ CMD:get(playerid, params[]) { new string[144];
 	return 1;
 }
 
-CMD:fill(playerid, params[]) {
-	new gas;
-	if((gas = GetClosestGas(playerid)) == -1) return Send(playerid,COLOR_GREY,"* Вы не на бензоколонке!");
-	new vehid = GetPlayerVehicleID(playerid);
-	if(!vehid) return Send(playerid,COLOR_GREY,"* Вы не в транспорте!");
-	if(isEngined{vehid}) return Send(playerid,COLOR_GREY,"* Сначало заглушите двигатель!");
-	switch(GetVehicleType(GetVehicleModel(vehid))) {
-		case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
-			new bidx = GetIndexFromBizID(RefillInfo[gas][brBizID]);
-			if(BizzInfo[bidx][bProds] <= 0) return GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
-			SetCameraBehindPlayer(playerid);
-			format(dialog, sizeof dialog, "На заправке имеется %i литров.\nСтоимость 1 литра: %i$\n\nВведите количество литров, которое хотите заправить:",
-			BizzInfo[bidx][bProds] * 10, BizzInfo[bidx][bEnterCost]/100);
-			SPD(playerid, D_REFILL, DIALOG_STYLE_INPUT, "Автозапрвака", dialog, "ENTER", "CENCEL");
-		}
-		default : Send(playerid,COLOR_GREY,"* Заправка непредназначена для вашего транспорта!");
-	}
-	return 1;
-}
-
 CMD:fillcar(playerid, params[]) {
 	if(Pl::Info[playerid][pFuel] <= 0) return Send(playerid, COLOR_GREY, "* У Вас нет конистры с бензином!");
 	if(AutoInfo[gLastCar[playerid]][aFuel] > 81.0) return Send(playerid, COLOR_GREY, "* Ваш Автомобиль заправлен, удачного пути!");
@@ -14814,15 +14818,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_REFILL : {
 			if(response) {
 				if(!sscanf(inputtext, "i", inputtext[0])) {
+					new i = GetPVarInt(playerid, "SelectGas");
+					new veh = GetPlayerVehicleID(playerid);
 					if(!(1 <= inputtext[0] <= 100)) return Send(playerid, COLOR_GREY, "* Вы не можите заправится больше чем на 100 литров!");
-					new FillUP = (inputtext[0] * (BizzInfo[GetIndexFromBizID(RefillInfo[GetClosestGas(playerid)][brBizID])][bEnterCost]/100));
+					if((floatround(AutoInfo[veh][aFuel]) + inputtext[0]) > 100) return Send(playerid, COLOR_GREY, "* В бензобак не влезит столько бензина!");
+					new FillUP = (inputtext[0] * (BizzInfo[GetIndexFromBizID(RefillInfo[i][brBizID])][bEnterCost]/100));
 					if(Rac::GetPlayerMoney(playerid) < FillUP) return Send(playerid, COLOR_GREY, "* У Вас не хватает денег на запрваку!");
-					if((floatround(AutoInfo[GetPlayerVehicleID(playerid)][aFuel]) + inputtext[0]) > 100) return Send(playerid, COLOR_GREY, "* В бензобак не влезит столько бензина!");
 					SetTimerEx("Fillup", 250, false, "iiii", playerid, inputtext[0], FillUP, inputtext[0]);
 					Rac::TogglePlayerControllable(playerid, 0);
 					format(string, sizeof string, "~g~%i~n~~b~Please wait...", inputtext[0]);
 					GameTextForPlayer(playerid, string, 600, 5);
 				}
+			} else {
+				SetPVarInt(playerid, "SelectGas", 0xFFFF);
 			}
 		}
 		
@@ -17460,8 +17468,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				}
 			}
 		}
-	}
-	
+	}	
 	return 1;
 }
 
@@ -17614,7 +17621,7 @@ stock IsAtATM(playerid) {
 }
 
 stock GetClosestGas(playerid) {
-	for(new i; i < TOTAL_GASS; i++) {
+	foreach(new i : Refills) {
 		if(IsPlayerInRangeOfPoint(playerid, 8.0, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2])) {
 			return i;
 		}
@@ -18125,6 +18132,7 @@ stock Pl::Init(playerid) {
 	SetPVarInt(playerid, "SelectedItem", -1);
 	SetPVarInt(playerid, "SelectedPlayer", INVALID_PLAYER_ID);
 	SetPVarInt(playerid, "selectTeleport", 0xFFFF);
+	SetPVarInt(playerid, "SelectGas", 0xFFFF);
 	
 	SetPVarInt(playerid, "InvateFrac", 0);
 	SetPVarInt(playerid, "AnsweredHelper", INVALID_PLAYER_ID);
@@ -18991,7 +18999,7 @@ stock Veh::Init() {
 		if(IsValidVehicle(i)) vehicles ++;
 	}
 	
-	return printf("[debug] Veh::Init() - Ok! Vehicles: %i", vehicles);
+	return debug("Veh::Init() - Ok! Vehicles: %i", vehicles);
 }
 
 stock Area::Init() {
@@ -19000,7 +19008,7 @@ stock Area::Init() {
 	Area::poppyField = CreateDynamicRectangle(-1199.7,-1065.9,-1002.0,-909.5, 0, 0, 0);
 	Area::jailField = CreateDynamicRectangle(264.2168+3.0, 264.2168-34.0, 77.5795+3.0, 77.5795-3.0);
 	
-	return printf("[debug] Area::Init() - Ok! Areas: %i", CountDynamicAreas());
+	return debug("Area::Init() - Ok! Areas: %i", CountDynamicAreas());
 }
 
 stock Obj::Init() {
@@ -19066,7 +19074,7 @@ stock Obj::Init() {
 		"Arial", 18, 1, -16776961
 	);
 	
-	return printf("[debug] Obj::Init() - Ok! Objects: %i", CountDynamicObjects());
+	return debug("Obj::Init() - Ok! Objects: %i", CountDynamicObjects());
 }
 
 stock Pup::Init() {
@@ -19171,7 +19179,7 @@ stock Pup::Init() {
 
 	CreateDynamicMapIcon(-2647.4233,695.6075,27.9370, 22, 0, -1, -1, -1, 200.0);
 
-	return printf("[debug] Pup::Init() - Ok! Pickups: %i", CountDynamicPickups());
+	return debug("Pup::Init() - Ok! Pickups: %i", CountDynamicPickups());
 }
 
 stock T3d::Init() {
@@ -19217,7 +19225,7 @@ stock T3d::Init() {
 	Add3DText("Загрузка Продуктов\n/loadprods", 0xFF6347AA, -1857.7770, 110.9073, 15.7994, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
 	Add3DText("Разгрузка Металла и Топлива\n/unloadstuff", 0xFF6347AA, -1837.0381, 111.2696, 15.6467, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
 
-	return printf("[debug] T3d::Init() - Ok! 3DTexts: %i", CountDynamic3DTextLabels());
+	return debug("T3d::Init() - Ok! 3DTexts: %i", CountDynamic3DTextLabels());
 }
 
 stock Mnu::Init() {
@@ -19478,7 +19486,7 @@ stock LoadVehicles() {
 			VehicleInfo[i][cID] = veh;
 			TOTAL_VEHICLES ++;
 		}
-		printf("[debug] LoadVehicles() - Ok! Vehicles: %i. Run time: %i (ms)", TOTAL_VEHICLES, GetTickCount()-time);
+		debug("LoadVehicles() - Ok! Vehicles: %i. Run time: %i (ms)", TOTAL_VEHICLES, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -20006,7 +20014,7 @@ stock LoadSkins() {
 			cache_get_int(i, 1, query[1]);
 			Container::Add(query[0], query[1]);
 		}
-		printf("[debug] Loadskins() - Ok! Skins: %i. Run time: %i (ms)", rows, GetTickCount()-time);
+		debug("Loadskins() - Ok! Skins: %i. Run time: %i (ms)", rows, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -20025,7 +20033,7 @@ stock LoadRanks( ) {
 			cache_get_row(i, 2, RankInfo[fracid][rankid], connDb, 36);
 			RankNums[fracid] ++;
 		}
-		printf("[debug] LoadRanks() - Ok! Ranks: %i. Run time: %i (ms)", rows, GetTickCount()-time);
+		debug("LoadRanks() - Ok! Ranks: %i. Run time: %i (ms)", rows, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -20052,7 +20060,7 @@ stock LoadPortals(){
 			binToArray(allowed, Portal::Info[i][Portal::Allowed], MAX_FRAC);
 		}
 		TOTAL_PORTAL = rows;
-		printf("[debug] LoadPortals() - Ok! Portals: %i. Run time: %i (ms)", TOTAL_PORTAL, GetTickCount()-time);
+		debug("LoadPortals() - Ok! Portals: %i. Run time: %i (ms)", TOTAL_PORTAL, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -20078,7 +20086,7 @@ stock LoadAntiDmZones() {
 			);
 		}
 		TOTAL_ANTIDM_ZONES = rows;
-		printf("[debug] LoadAntiDmZones() - Ok! Zones: %i. Run time: %i (ms)", TOTAL_ANTIDM_ZONES, GetTickCount()-time);
+		debug("LoadAntiDmZones() - Ok! Zones: %i. Run time: %i (ms)", TOTAL_ANTIDM_ZONES, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -21251,5 +21259,14 @@ stock GetSkillLevel(playerid, skill) {
 	else if(level >= 101 && level <= 200) return 3;
 	else if(level >= 201 && level <= 400) return 4;
 	else if(level >= 401) return 5;
+	return 1;
+}
+
+stock ShowRefillDialog(playerid, biz) {
+	if(BizzInfo[biz][bProds] <= 0) return GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
+	format(dialog, sizeof dialog, "На заправке имеется %i литров.\nСтоимость 1 литра: %i$\n\nВведите количество литров, которое хотите заправить:",
+	BizzInfo[biz][bProds] * 10, BizzInfo[biz][bEnterCost]/100);
+	SPD(playerid, D_REFILL, DIALOG_STYLE_INPUT, BizzInfo[biz][bDescription], dialog, "ENTER", "CENCEL");
+	SetCameraBehindPlayer(playerid);
 	return 1;
 }
