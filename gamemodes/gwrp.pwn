@@ -1920,6 +1920,8 @@ public OnGameModeExit() {
 	DestroyAllDynamic3DTextLabels();
 	
 	regex_delete_all();
+	
+	for(;;) if(0 >= Db::unprocessed_queries(connDb)) break;
 	Db::close(connDb);
 	
 	print(" ");
