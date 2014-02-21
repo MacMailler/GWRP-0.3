@@ -1801,8 +1801,12 @@ public OnGameModeInit() {
 	#emit SYSREQ.C		GetTickCount
 	#emit STOR.S.pri	time
 	
+	if(GetMaxPlayers() > MAX_PLAYERS) panic("Количество слотов больше MAX_PLAYERS, старт игрового режима невозможен!");
 	
-	Db::Init();
+	if(!LoadConf()) panic("Отсутствует файл конфигурации, старт игрового режима невозможен!");
+	
+	if(!Db::Init()) panic("Не удалось подключится к базе данных, старт игрового режима невозможен!");
+	
 	Db::Update();
 	
 	Iter::Init(JobPlayers);
@@ -1882,26 +1886,16 @@ public OnGameModeInit() {
 	SetWorldTime(ghour);
 	SetWeather(1 + random(5));
 	
-	new iniFile = iniOpen("conf.ini");
-	if(iniFile != INI_FILE_NOT_FOUND) {
-		iniGet(iniFile, "server.hostname", Gm::Info[Gm::Hostname], 36);
-		iniGet(iniFile, "server.password", Gm::Info[Gm::Password], 36);
-		iniGet(iniFile, "server.mode", Gm::Info[Gm::Mode], 36);
-		iniGet(iniFile, "server.map", Gm::Info[Gm::Map], 36);
-		iniGetInt(iniFile, "server.status", Gm::Info[Gm::Status]);
+	SetGameModeText(Gm::Info[Gm::Mode]);
+	format(temp, sizeof temp, "mapname %s", Gm::Info[Gm::Map]), SendRconCommand(temp);
+	SendRconCommand("weburl "#__SERVER_SITE"");
 	
-		SetGameModeText(Gm::Info[Gm::Mode]);
-		format(temp, sizeof temp, "mapname %s", Gm::Info[Gm::Map]), SendRconCommand(temp);
-		SendRconCommand("weburl "#__SERVER_SITE"");
-		
-		if(Gm::Info[Gm::Status] == 1) {
-			format(temp, sizeof temp, "hostname %s (private)", Gm::Info[Gm::Hostname]), SendRconCommand(temp);
-			format(temp, sizeof temp, "password %s", Gm::Info[Gm::Password]), SendRconCommand(temp);
-		} else {
-			format(temp, sizeof temp, "hostname %s", Gm::Info[Gm::Hostname]), SendRconCommand(temp);
-		}
+	if(Gm::Info[Gm::Status] == 1) {
+		format(temp, sizeof temp, "hostname %s (private)", Gm::Info[Gm::Hostname]), SendRconCommand(temp);
+		format(temp, sizeof temp, "password %s", Gm::Info[Gm::Password]), SendRconCommand(temp);
+	} else {
+		format(temp, sizeof temp, "hostname %s", Gm::Info[Gm::Hostname]), SendRconCommand(temp);
 	}
-	iniClose(iniFile);
 	
 	serverUpdate = SetTimer(""#Gm::"Thread", SEC_TIMER, true);
 
@@ -17848,9 +17842,26 @@ stock GetHelperRank(hlvl) {
 	return hrank;
 }
 
-public: Db::Init() {
+stock Db::Init() {		
+	Db::log(Db::Conf[Db::Debug] == 1 ? (LOG_ERROR | LOG_WARNING | LOG_DEBUG) : (LOG_ERROR | LOG_WARNING));
+	
+	connDb = Db::connect(Db::Conf[Db::Host], Db::Conf[Db::User], Db::Conf[Db::Base], Db::Conf[Db::Pass]);
+	
+	new errno = Db::errno();
+	if(errno) Db::FixCharset();
+	
+	return errno == 0;
+}
+
+stock LoadConf() {
 	new iniFile = iniOpen("conf.ini");
 	if(iniFile != INI_FILE_NOT_FOUND) {
+		iniGet(iniFile, "server.hostname", Gm::Info[Gm::Hostname], 36);
+		iniGet(iniFile, "server.password", Gm::Info[Gm::Password], 36);
+		iniGet(iniFile, "server.mode", Gm::Info[Gm::Mode], 36);
+		iniGet(iniFile, "server.map", Gm::Info[Gm::Map], 36);
+		iniGetInt(iniFile, "server.status", Gm::Info[Gm::Status]);
+		
 		iniGet(iniFile, "mysql.host", Db::Conf[Db::Host], 128);
 		iniGet(iniFile, "mysql.user", Db::Conf[Db::User], 64);
 		iniGet(iniFile, "mysql.base", Db::Conf[Db::Base], 64);
@@ -17858,14 +17869,11 @@ public: Db::Init() {
 		iniGet(iniFile, "mysql.charset", Db::Conf[Db::Charset], 16);
 		iniGetInt(iniFile, "mysql.debug", Db::Conf[Db::Debug]);
 		
-		Db::log(Db::Conf[Db::Debug] == 1 ? (LOG_ERROR | LOG_WARNING | LOG_DEBUG) : (LOG_ERROR | LOG_WARNING));
-
-		connDb = Db::connect(Db::Conf[Db::Host], Db::Conf[Db::User], Db::Conf[Db::Base], Db::Conf[Db::Pass]);
+		iniClose(iniFile);
 		
-		Db::FixCharset();
+		return 1;
 	}
-	iniClose(iniFile);
-	return 1;
+	return 0;
 }
 
 stock Db::FixCharset() {
