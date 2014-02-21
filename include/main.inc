@@ -205,3 +205,8 @@ stock to_timestamp(dest[], timestamp=0, format[]="%d-%m-%y, %H:%M:%S",maxlen=siz
     localtime(Time:timestamp, tmToday);
 	return strftime(dest, maxlen, format, tmToday);
 }
+
+stock panic(dest[]) {
+	printf("[panic] %s", dest);
+	for(;;) {}
+}
