@@ -240,13 +240,9 @@ stock binToArray(input, output[], maxlen=sizeof output) {
 }
 
 stock Float:vehicleSize(vehicleid) {
-	new model = GetVehicleModel(vehicleid);
-	if(400 <= model <= 611) {
-		new Float:x, Float:y, Float:z;
-		GetVehicleModelInfo(model, 1, x, y, z);
-		return y;
-	}
-	return 0.0;
+	new Float:x, Float:y, Float:z;
+	GetVehicleModelInfo(GetVehicleModel(vehicleid), VEHICLE_MODEL_INFO_SIZE, x, y, z);
+	return y;
 }
 
 #if defined Streamer_IncludeFileVersion
