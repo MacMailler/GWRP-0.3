@@ -8,6 +8,7 @@
 #define __GamemodeName__		"GWRP"
 #define __GamemodeVersion__		"0.3"
 #define __GamemodeCopyright__	"(c) MacMailler, 2012—2014"
+
 #define __DBPrefix__			""
 
 #define __TableUsers__			__DBPrefix__"users"
@@ -20342,10 +20343,12 @@ stock GetPlayerBootVehicle(playerid, vehicleid) {
 	new Float:x, Float:y, Float:z, Float:a;
 	GetVehiclePos(vehicleid, x, y, z);
 	GetVehicleZAngle(vehicleid, a);
-	GetXYInFrontOfPoint(x, y, a, -5.0);
+	GetXYInFrontOfPoint(x, y, a, -6.0);
 	foreach(new i: inStreamVehicles[playerid]) {
-		if(IsVehicleInRangeOfPoint(i, 2.0, x, y, z) && i != vehicleid) {
-			return i;
+		if(GetVehicleDistanceFromPoint(i, x, y, z) <= (vehicleSize(i)/2.0)) {
+			if(i != vehicleid) {
+				return i;
+			}
 		}
 	}
 	return INVALID_VEHICLE_ID;
