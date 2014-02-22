@@ -26,9 +26,9 @@
 #define AC::						AC_
 #define Rac::						AC_
 
-#define R_MAX_CHEATS				(21)
+#define R_MAX_CHEATS				(20)
 #define R_NONE						(0xFFFF)
-#define R_JOYPAD					(0)
+#define R_SPECHACK					(0)
 #define R_CAR_TP					(1)
 #define R_MINIGUN					(2)
 #define R_DRIVEBY					(3)
@@ -48,7 +48,6 @@
 #define R_ARMOUR_HACK				(17)
 #define R_ANTI_FREEZE				(18)
 #define R_UNLIM_AMMO				(19)
-#define R_SPECHACK					(20)
 
 #define AC_HEALTH					(0)
 #define AC_ARMOUR					(1)
@@ -127,7 +126,7 @@ static AC::TimerUpdate;
 
 
 new const R_Info[][] = {
-	"#8693",	// JoyPad
+	"#6418",	// Inv/Spechack
 	"#0847",	// CarTp
 	"#1488",	// Minigun
 	"#4748",	// DriveBy
@@ -147,7 +146,6 @@ new const R_Info[][] = {
 	"#3490",	// SetArmour
 	"#8283",	// AntiFreeze
 	"#0730",	// UnlimAmmo
-	"#6418"		// Inv/Spechack
 };
 
 
@@ -160,9 +158,6 @@ enum AC::PlayerEnum {
 	AC::OldVeh,
 	AC::OldState,
 	AC::OldSpeed,
-	
-	AC::AimTick,
-	AC::AimCount,
 	
 	AC::Money,
 	AC::Toggle,
@@ -473,25 +468,6 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			} else {
 				AC::Info[playerid][AC::Warns][R::UNLIM_AMMO] = 0;
 				AC::Info[playerid][AC::AmmoI][slot] = p_ammo;
-			}
-			
-			if(GetPlayerTargetPlayer(playerid) == INVALID_PLAYER_ID) {
-				new currtick = gettime();
-				if((currtick - AC::Info[playerid][AC::AimTick]) <= 10 && AC::Info[playerid][AC::AimTick] >= MAX_AIM_TICKS) {
-					AC::Info[playerid][AC::AimTick] = currtick;
-					AC::Info[playerid][AC::AimCount] = 0;
-					
-					AC::Info[playerid][AC::Warns][R::JOYPAD] ++;
-					if(AC::Info[playerid][AC::Warns][R::JOYPAD] >= 3) {
-						Rac::ResetPlayerWeapons(playerid);
-						Rac::Kick(playerid, R::Info[R::JOYPAD], R::JOYPAD);
-					}
-				} else if((currtick - AC::Info[playerid][AC::AimTick]) > 10) {
-					AC::Info[playerid][AC::AimTick] = currtick;
-					AC::Info[playerid][AC::AimCount] = 0;
-				}
-				AC::Info[playerid][AC::AimTick] = currtick;
-				AC::Info[playerid][AC::AimCount] ++;
 			}
 		}
 		AC::OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
@@ -1189,9 +1165,6 @@ public: AC::ClearPlayer(playerid) {
 	AC::Info[playerid][AC::RemoveVeh] = INVALID_VEHICLE_ID;
 	AC::Info[playerid][AC::OldVeh] = INVALID_VEHICLE_ID;
 	AC::Info[playerid][AC::OldState] = PLAYER_STATE_NONE;
-	
-	AC::Info[playerid][AC::AimTick] = gettime();
-	AC::Info[playerid][AC::AimCount] = 0;
 	
 	return 1;
 }
