@@ -6518,12 +6518,6 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 }
 
 
-CMD:charset(playerid, params[]) { new string[144];
-	Db::get_charset(string, connDb);
-	Send(playerid, COLOR_WHITE, string);
-	return 1;
-}
-
 CMD:fracpay(playerid, params[]) { new string[144];
 	if(Pl::Info[playerid][pLeader] != Pl::FracID(playerid)) return Send(playerid, COLOR_GREY, "* Вы не лидер!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /fracpay [Сумма каждому члену фракции]");
@@ -6551,12 +6545,6 @@ CMD:fracpay(playerid, params[]) { new string[144];
 	}
 	format(string, sizeof(string), " * Вы выдали зарплату членам своей фракции, в размере $%i", price);
 	Send(playerid, COLOR_LIGHTBLUE, string);
-	return 1;
-}
-
-CMD:accode(playerid, params[]) {
-	if(Pl::isAdmin(playerid, 1))
-	ShowDialog(playerid, D_NONE, 0, "AntiCheat codes:", "dialog/accodes.txt", "ENTER", "");
 	return 1;
 }
 
@@ -6597,7 +6585,7 @@ CMD:mycar(playerid, params[]) {
 }
 
 CMD:dopcar_add(playerid, params[]) { new string[144], sendername[24];
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "uiI(-1)I(-1)", params[0], params[1], params[2], params[3])) return Send(playerid, COLOR_GREY, "Введите: /dopcar_add [id/name] [model] (optional [color1] [color2])");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(!(400 <= params[1] <= 611)) return Send(playerid, COLOR_GREY, "* Invalid model ID!");
@@ -6617,7 +6605,7 @@ CMD:dopcar_add(playerid, params[]) { new string[144], sendername[24];
 }
 
 CMD:dopcar_del(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_WHITE, "Введите: /dopcar_del [id/name])");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	dialog[0] = '\0';
@@ -6638,19 +6626,11 @@ CMD:dopcar_del(playerid, params[]) {
 }
 
 CMD:put(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(GetPlayerVehicleID(playerid)) return Send(playerid, COLOR_GREY, "* Вы уже в транспорте!");
 	new vehicleid = ClosestVeh(playerid, 3.0);
 	if(vehicleid == INVALID_VEHICLE_ID) return Send(playerid, COLOR_GREY, "Нет машин поблизости");
 	return Rac::PutPlayerInVehicle(playerid, vehicleid, 0);
-}
-
-CMD:setpayday(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
-	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /setpayday [ид/часть имени] [amount]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
-	Pl::Info[params[0]][pPayDay] = params[1];
-	return 1;
 }
 
 CMD:fakekill(playerid, params[]) {
@@ -6697,20 +6677,8 @@ CMD:togglereg(playerid, params[]) {
 	return 1;
 }
 
-CMD:tune(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
-	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /tune [componentid]");
-	new vehicle = GetPlayerVehicleID(playerid);
-	if(vehicle && AddVehicleComponent(vehicle, params[0])) {
-		Send(playerid, COLOR_YELLOW, "* You tune the car!");
-	} else {
-		Send(playerid, COLOR_GREY, "* Invalid component id!");
-	}
-	return 1;
-}
-
 CMD:sobcheck(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /sobcheck [id/part name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	if(AFKInfo[params[0]][afk_State]) return Send(playerid, COLOR_GREY, "* Игрок в AFK!");
@@ -6726,7 +6694,7 @@ CMD:sobcheck(playerid, params[]) { new string[144], sendername[24], playername[2
 }
 
 CMD:ptmcheck(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(Rac::GetPlayerState(playerid) != 9) return Send(playerid, COLOR_GREY, "* Только в режиме спектирования!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "* Введите: /ptmcheck [id/part name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
@@ -6814,15 +6782,6 @@ CMD:fractag(playerid, params[]) {
 	return 1;
 }
 
-CMD:setweapskill(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "uii", params[0], params[1], params[2])) return Send(playerid, COLOR_GREY, "Введите: /setweapskill [id] [skill] [level]");
-	if(!IsPlayerConnected(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не подключен!");
-	SetPlayerSkillLevel(params[0], params[1], params[2]);
-	format(string, sizeof string, "* Вы установили значение скилла %i на %i", params[1], params[2]);
-	return Send(playerid, COLOR_YELLOW, string);
-}
-
 CMD:netstat(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /netstat [playerid]");
@@ -6831,18 +6790,6 @@ CMD:netstat(playerid, params[]) {
 	else if(Pl::isLogged(params[0])) Pl::NetStats[playerid] = params[0];
 	else Send(playerid, COLOR_GREY, "* Этот игрок не подключен!");
 
-	return 1;
-}
-
-CMD:atun(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /atun [componentid]");
-	if(params[0] < 1000 || params[0] > 1193) return Send(playerid, COLOR_GREY, "Неверный компонент!");
-	new vehicleid = GetPlayerVehicleID(playerid);
-	if( !vehicleid ) return Send(playerid, COLOR_GREY, "* Вы не в транспорте!");
-	AutoInfo[vehicleid][aTuning][GetVehicleComponentType(params[0])] = params[0];
-	AddVehicleComponent(vehicleid, params[0]);
-	Send(playerid, COLOR_YELLOW, " * Комипонент был добавлен!");
 	return 1;
 }
 
@@ -6860,22 +6807,6 @@ CMD:savecam(playerid, params[]) { new string[144];
 	format(string, sizeof string, "SetPlayerCameraLookAt(playerid, %.4f, %.4f, %.4f);\n", camera[0]+(vector[0]*4), camera[1]+(vector[1]*4), camera[2]+(vector[2]*4));
 	writeFile("campos.txt", string);		
 	Send(playerid, COLOR_YELLOW, "* Camera pos saved");
-	return 1;
-}
-
-CMD:settime(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Use: /settime [id] [time]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
-	Pl::Info[params[0]][pTime] = params[1];
-	return 1;
-}
-
-CMD:settest(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Use: /settime [id] [time]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
-	Pl::Info[params[0]][pTest] = params[1];
 	return 1;
 }
 
@@ -6903,27 +6834,6 @@ CMD:velocity(playerid, params[]) { new string[144], sendername[24], playername[2
 	getname(playerid -> sendername, params[0] -> playername);
 	format(string, sizeof string, "[AdmWarn] * %s применил команду /velocity к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
 	SendToAdmin(COLOR_YELLOW, string, 3, 3);
-	return 1;
-}
-
-CMD:angular(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "ucf", params[0], params[1], distance)) return Send(playerid, COLOR_GREY, "Used: /superjmp [id] [] [float]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
-	switch(GetPlayerState(params[0])) {
-		case 2, 3 : {
-			new veh = GetPlayerVehicleID(params[0]);
-			switch(params[1]) {
-				case 'x' : SetVehicleAngularVelocity(veh, distance, 0.0, 0.0);
-				case 'y' : SetVehicleAngularVelocity(veh, 0.0, distance, 0.0);
-				case 'z' : SetVehicleAngularVelocity(veh, 0.0, 0.0, distance);	
-			}
-			getname(playerid -> sendername, params[0] -> playername);
-			format(string, sizeof string, "[AdmWarn] * %s применил команду /angular к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
-			SendToAdmin(COLOR_YELLOW, string, 3, 3);
-		}
-	}
-
 	return 1;
 }
 
@@ -7347,7 +7257,7 @@ CMD:delfc(playerid, params[]) {
 }
 
 CMD:showmodel(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Use: /showmodel [fracid]");
 	if(params[0] < 1 || params[0] > 20) return Send(playerid, COLOR_GREY, "* Неверный ID фракции!");
 	Fc::ShowModel(playerid, params[0], D_SHOW_MODEL);
@@ -7734,7 +7644,7 @@ CMD:takepas(playerid, params[]) { new string[144], sendername[24], playername[24
 }
 
 CMD:agl(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GRAD2, "* Недостачточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD2, "* Недостачточно прав!");
 	if(sscanf(params, "s[15]u", params[1], params[0])) {
 		Send(playerid, COLOR_WHITE, "Введите: /agl [лицензия] [id/Name]");
 		Send(playerid, COLOR_WHITE, "* Доступные лицензии: Driving, Pilots, Sailing, Weapon.");
@@ -7797,7 +7707,7 @@ CMD:agl(playerid, params[]) { new string[144], sendername[24], playername[24];
 }
 
 CMD:atl(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GRAD2, "* Недостачточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GRAD2, "* Недостачточно прав!");
 	if(sscanf(params, "s[15]u", params[1], params[0])) {
 		Send(playerid, COLOR_WHITE, "Введите: /atl [лицензия] [playerid]");
 		Send(playerid, COLOR_WHITE, "* Доступные лицензии: Driving, Pilots, Sailing, Weapon.");
@@ -7874,7 +7784,7 @@ CMD:delivery(playerid, params[]) {
 }
 
 CMD:skydive(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(GetPlayerInterior(playerid) > 0) return Send(playerid, COLOR_GREY, "*  Вы не можете прыгать с парашютом в помещении!");
 	GetPlayerPos(playerid, posx, posy, posz);
 	Rac::SetPlayerPos(playerid, posx, posy, posz+1000);
@@ -7883,7 +7793,7 @@ CMD:skydive(playerid, params[]) {
 }
 
 CMD:check(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /check [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(Pl::isAdmin(params[0], 5) && !Pl::isAdmin(playerid,5)) return Send(playerid, COLOR_RED, "* Вы не может выполнить это действие!");
@@ -7891,9 +7801,8 @@ CMD:check(playerid, params[]) {
 }
 
 CMD:checkw(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /checkw [id/Name]");
-	if(!IsPlayerConnected(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не подлючен!");
 	if(!Pl::isLogged(playerid)) return Send(playerid, COLOR_RED, "* Этот игрок не залогинен!");
 	new isw, weapon, ammo, wname[24]; dialog[0]='\0';
 	for(new i; i < 13; i++) {
@@ -8033,7 +7942,7 @@ CMD:asetpass(playerid, params[]) { new string[144], uname[24], ukey[36], uhash[S
 	}
 	return 1;
 }
-		
+
 CMD:setpass(playerid, params[]) {
 	SPD(playerid, D_CHANGE_PASS, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ATTENTION PLEASE",
 	"ВНИМАНИЕ! Для изменения пароля от вашего\n\
@@ -8043,7 +7952,7 @@ CMD:setpass(playerid, params[]) {
 }
 
 CMD:setsex(playerid, params[]) {
-	SPD(playerid, 65, DIALOG_STYLE_MSGBOX, "Смена пола", "Выбирите ваш пол.", "ДУВУШКА", "ПАРЕНЬ");
+	SPD(playerid, 65, DIALOG_STYLE_MSGBOX, "Смена пола", "Выбирите ваш пол.", "ДЕВУШКА", "ПАРЕНЬ");
 	return 1;
 }
 
@@ -8087,7 +7996,7 @@ CMD:ad(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255
 			format(string, sizeof string, "~r~Paid $%d~n~~w~Message contained: %d Characters", payout, len);
 			GameTextForPlayer(playerid, string, 7000, 5);
 		}
-		if(!Pl::isAdmin(playerid, 3)) {
+		if(!Pl::isAdmin(playerid, MODER3LVL)) {
 			adds = false;
 			SetTimer("AddsOn", addtimer, false);
 		}
@@ -8139,7 +8048,7 @@ CMD:togfam(playerid, params[]) { new string[144];
 }
 
 CMD:noooc(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	noooc = !noooc;
 	format(string, sizeof string, "** OOC чат %s администратором.", (noooc)?("выключен"):("включен"));
 	SendToAll(COLOR_GREY, string);
@@ -8147,7 +8056,7 @@ CMD:noooc(playerid, params[]) { new string[144];
 }
 
 CMD:bigears(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	BigEar[playerid] = !BigEar[playerid];
 	format(string, sizeof string, "* Ваши уши %s!", (BigEar[playerid])?("выросли"):("стали нормальными"));
 	Send(playerid, COLOR_GREY, string);
@@ -8163,7 +8072,7 @@ CMD:togphone(playerid, params[]) { new string[144];
 }
 
 CMD:togtp(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_LIGHTRED2, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_LIGHTRED2, "* Недостаточно прав!");
 	TogTP[playerid] = !TogTP[playerid];
 	format(string, sizeof string, "* Вы %s телепортироватся к себе!", (TogTP[playerid])?("разрешили"):("запретили"));
 	Send(playerid, COLOR_LIGHTBLUE, string);
@@ -8388,7 +8297,7 @@ CMD:duty(playerid, params[]) { new string[144];
 
 CMD:ao(playerid, params[]) { new string[144], sendername[24];
 	if(IsPMuted(playerid)) return Send(playerid,COLOR_GREY,"* У Вас молчанка!");
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GRAD2, "* OOC канал отключен админом!");
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GRAD2, "* OOC канал отключен админом!");
 	if(isnull(params) || params[0] == ' ') return Send(playerid, COLOR_GREY, "Введите: /ao [текст]");
 	GetPlayerName(playerid, sendername, 24);
 	format(string, sizeof string, "[ADMIN] %s: %s " , sendername, params);
@@ -8397,7 +8306,7 @@ CMD:ao(playerid, params[]) { new string[144], sendername[24];
 }
 
 CMD:ot(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid,COLOR_GREY,"* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid,COLOR_GREY,"* Недостаточно прав!");
 	if(sscanf(params, "us[90]", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Введите: /ot [id] [ответ]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	getname(playerid->sendername,params[0]->playername);
@@ -8418,8 +8327,7 @@ CMD:aduty(playerid, params[]) { new string[144], sendername[24];
 }
 
 CMD:spawncars(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	// SPD(playerid, D_SPCARS, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": SPAWNCARS", "")
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	format(string, sizeof string, "* Администратор %s[%i] зареспавнил все автомобили.", GetName(playerid), playerid);
 	RespawnUnoccupiedVehicles();
 	SendToAll(COLOR_LIGHTRED, string);
@@ -8436,13 +8344,6 @@ CMD:autorestart(playerid, params[]) {
 	if(Pl::Info[playerid][pAdmin] != 5 && !IsPlayerAdmin(playerid)) return 1;
 	SendToAll(COLOR_LIGHTRED2,"* Администратор перезагрузил сервер!");
 	GameModeInitExitFunc(1); return 1;
-}
-
-CMD:saveall(playerid, params[]) {
-	if(Pl::Info[playerid][pAdmin] != 5 && !IsPlayerAdmin(playerid)) return 1;
-	SaveAcc();
-	Send(playerid, COLOR_LIGHTBLUE, "* Все аккаунты сохранены!");
-	return 1;
 }
 
 CMD:updateprop(playerid, params[]) { new string[144];
@@ -9004,7 +8905,7 @@ CMD:time(playerid, params[]) { new string[144];
 }
 
 CMD:house(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_GREY, "Введите: /house [housenumber]");
 	if(!IsValidHouse(params[0])) return Send(playerid, COLOR_GREY, "Invalid house id!");
 	EnterHouse(playerid, params[0]);
@@ -9014,7 +8915,7 @@ CMD:house(playerid, params[]) {
 }
 
 CMD:houseo(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_GREY, "Используйте: /houseo [housenumber]");
 	if(!IsValidHouse(params[0])) return Send(playerid, COLOR_GREY, "Invalid house id!");
 	ExitHouse(playerid, params[0]);
@@ -9173,7 +9074,7 @@ CMD:tv(playerid, params[]) { new string[144], playername[24];
 		if(!Pl::isAdmin(playerid, 1) && HouseInfo[hkey][hTv] != 1) return GameTextForPlayer(playerid, "~r~This upgrade isn't installed", 5000, 1);
 		if(Pl::Info[specid][pAdmin] > 0 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Этот канал не работает!");
 		GetPlayerName(specid, playername, 24);
-		if(!Pl::isAdmin(playerid, 1)) Rac::TogglePlayerControllable(playerid, 0);
+		if(!Pl::isAdmin(playerid, MODER1LVL)) Rac::TogglePlayerControllable(playerid, 0);
 		Pl::SpecInfo[playerid][pSpecID] = specid;
 		format(string, sizeof string, "[TV] Канал: (%i) %s", specid, playername);
 		Send(playerid, COLOR_GREEN, string);
@@ -9214,7 +9115,7 @@ CMD:a(playerid, params[]) { new string[144];
 
 CMD:cnn(playerid, params[]) { new string[144];
 	if(IsPMuted(playerid)) return Send(playerid, COLOR_GREY, "* У Вас молчанка!");
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "iis[90]", params[0], params[1], params[3])) return Send(playerid, COLOR_GRAD1, "Введите: /cnn [type] [time] [text]");
 	if(params[0] < 0 || params[0] == 2 || params[0] > 6) return Send(playerid, COLOR_GREY, "* Вы не можите использовать этот тип текста!");
 	format(string, sizeof string, "~w~%s", params[3]);
@@ -9223,7 +9124,7 @@ CMD:cnn(playerid, params[]) { new string[144];
 }
 
 CMD:prison(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "us[64]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /prison [id/Name] [reason]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(Pl::Info[params[0]][pJailed] == 2) return Send(playerid, COLOR_GREY, "* Этот игрок уже в присоне!");
@@ -9239,7 +9140,7 @@ CMD:prison(playerid, params[]) { new string[144], sendername[24], playername[24]
 }
 
 CMD:unprison(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /unprison [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(Pl::Info[params[0]][pJailed] != 2) return Send(playerid, COLOR_GREY, "* Этот игрок не в присоне!");
@@ -9651,7 +9552,7 @@ CMD:fracspawn(playerid, params[]) { new string[144];
 }
 
 CMD:mark(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Сиди блять!");
 	TeleportDest[playerid][tpInt] = GetPlayerInterior(playerid);
 	TeleportDest[playerid][tpVw] = GetPlayerVirtualWorld(playerid);
@@ -9662,7 +9563,7 @@ CMD:mark(playerid, params[]) {
 }
 
 CMD:gotomark(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Сиди блять!");
 	if(GetPlayerState(playerid) == 2 && GetPlayerInterior(playerid)) return Send(playerid, COLOR_GREY, "* Нельзя телепортироватся в интерьер!");
 	Rac::SetPlayerPos(playerid, TeleportDest[playerid][tpPos][0], TeleportDest[playerid][tpPos][1], TeleportDest[playerid][tpPos][2]);
@@ -9674,7 +9575,7 @@ CMD:gotomark(playerid, params[]) {
 }
 
 CMD:tp(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Вы заключенный!");
 	SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты", "— Популярные места\n— Респы банд\n— Респы фракций", "SELECT", "CANCEL");
 	return 1;
@@ -9692,7 +9593,7 @@ CMD:gotoc(playerid, params[]) {
 }
 
 CMD:goto(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Это вевозможно!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /goto [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
@@ -9708,7 +9609,7 @@ CMD:goto(playerid, params[]) {
 }
 
 CMD:gethere(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Сиди блять!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /gethere [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
@@ -9730,7 +9631,7 @@ CMD:gethere(playerid, params[]) { new string[144], sendername[24], playername[24
 }
 
 CMD:getcar(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Сиди блять!");
 	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_GREY, "Введите: /getcar [carid]");
 	GetPlayerPos(playerid, posx, posy, posz);
@@ -9739,7 +9640,7 @@ CMD:getcar(playerid, params[]) {
 }
 
 CMD:gethousecar(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_GREY, "Введите: /getcar [carid]");
 	if(!IsValidHouse(params[0])) return Send(playerid, COLOR_GREY, "* Неверный ID дома!");
 	GetPlayerPos(playerid, posx, posy, posz);
@@ -9754,7 +9655,7 @@ CMD:oldcar(playerid, params[]) { new string[144];
 }
 
 CMD:givegun(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(!sscanf(params, "uii", params[0], params[1], params[2])) {
 		if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 		if(IsWrongWeponID(params[1]) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Не правельный ID оружия!");
@@ -9770,7 +9671,7 @@ CMD:givegun(playerid, params[]) { new string[144], sendername[24], playername[24
 }
 
 CMD:resetgun(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /resetgun [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	getname(playerid -> sendername,params[0] -> playername);
@@ -9839,7 +9740,7 @@ CMD:fuelcars(playerid, params[]) { new string[144];
 }
 
 CMD:fixveh(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) {
 		if(!IsPlayerInAnyVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Вы не находитесь в транспорте!");
 		Rac::RepairVehicle(GetPlayerVehicleID(playerid)); Send(playerid, COLOR_LIGHTBLUE, "* Транспорт был починен!");
@@ -9858,7 +9759,7 @@ CMD:fixveh(playerid, params[]) { new string[144], sendername[24], playername[24]
 }
 
 CMD:fillveh(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) {
 		new veh = GetPlayerVehicleID(playerid);
 		if(!veh) return Send(playerid, COLOR_GREY, "* Вы не находитесь в транспорте!");
@@ -9895,7 +9796,7 @@ CMD:worldtime(playerid, params[]) {
 }
 
 CMD:weather(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GRAD1, "* Вам не доступна эта функция");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GRAD1, "* Вам не доступна эта функция");
 	if(sscanf(params, "d", params[0])) return Send(playerid, COLOR_WHITE, "Введите: /weather [номер погоды] (0 - 45)");
 	if(params[0] < 0 || params[0] > 45) return SendClientMessage(playerid, COLOR_GREY, "* Погодное удостоверение личности не может быть ниже 0 или выше 45!");
 	SetPlayerWeather(playerid, params[0]);
@@ -9944,7 +9845,7 @@ CMD:slap(playerid, params[]) { new string[144], sendername[24], playername[24];
 }
 
 CMD:mute(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "uds[64]", params[0], params[1], params[2])) return Send(playerid, COLOR_GREY, "Введите: /mute [id] [time] [reason]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	switch(Pl::Info[params[0]][pMuted]) {
@@ -9968,7 +9869,6 @@ CMD:mute(playerid, params[]) { new string[144];
 CMD:hmute(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!IsPHelper(playerid, 2)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "us[64]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /hmute [id] [reason]");
-	if(!IsPlayerConnected(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не подлючен!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(Pl::Info[params[0]][pMuted] == 2) return Send(playerid, COLOR_GREY, "* У игрока уже есть молчанка!");
 	getname(playerid -> sendername,params[0] -> playername);
@@ -10442,7 +10342,7 @@ CMD:ganginfo(playerid, params[]) {
 }
 
 CMD:setskill(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "udd", params[0], params[1], params[2])) {
 		Send(playerid, COLOR_WHITE, "| Skill Info |");
 		Send(playerid, COLOR_GREY,  "| 1: Детектив      | 6: Репортер");
@@ -10592,7 +10492,7 @@ CMD:ram(playerid, params[]) {
 }
 
 CMD:fracs(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	Send(playerid, COLOR_WHITE, "______________|FRAC|______________");
 	for(new i; i < sizeof FracID; i++) {
 		format(string, sizeof string,
@@ -10608,7 +10508,7 @@ CMD:fracs(playerid, params[]) { new string[144];
 }
 
 CMD:fracbank(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 4)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /checkbank [fracid]");
 	if(!IsValidFrac(params[0])) return Send(playerid, COLOR_GREY, "* Неверный ID фракции!");
 	format(string, sizeof string, "* Банк %s состовляет: $%i", FracInfo[params[0]][fName], GetFracMoney(params[0]));
@@ -10677,7 +10577,7 @@ CMD:report(playerid, params[]) { new string[144], sendername[24];
 }
 
 CMD:spawn(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GREY, "Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GREY, "Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /spawn [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	getname(playerid -> sendername,params[0] -> playername);
@@ -10688,7 +10588,7 @@ CMD:spawn(playerid, params[]) { new string[144], sendername[24], playername[24];
 }
 
 CMD:forceskin(playerid, params[]) {
-	if(!Pl::isAdmin(playerid, 2)) return Send(playerid, COLOR_GREY, "Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GREY, "Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /forceskin [id/Name]");
 	if(!Pl::isLogged(playerid)) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	
@@ -11593,7 +11493,7 @@ CMD:origin(playerid, params[]) {
 }
 
 CMD:hirecar(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	new vehicle = ClosestVeh(playerid, 3.0);
 	if(vehicle == INVALID_VEHICLE_ID) return Send(playerid, COLOR_GREY, "* С вами рядом нет машин!");
 	HireCar[playerid] = vehicle;
@@ -12646,7 +12546,7 @@ CMD:healme(playerid, params[]) {
 }
 
 CMD:kickjob(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 1)) return Send(playerid,COLOR_GREY,"* Вам не доступна эта функция");
+	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid,COLOR_GREY,"* Вам не доступна эта функция");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GRAD2, "Введите: /kickjob [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	Iter::Remove(JobPlayers[Pl::Info[params[0]][pJob]], playerid);
@@ -12848,7 +12748,7 @@ CMD:clear(playerid, params[]) { new string[144], sendername[24], playername[24];
 }
 
 CMD:aclear(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isAdmin(playerid, 3)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Ввелите: /clear [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Вы не можете оправдаться!");
@@ -14680,7 +14580,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						— Тюрьма\n— Присон\n— Отель ЛС\n— Банк\n— Дальнобой\n\
 						— Маяк\n— Небоскреб Лос Сантоса\n— Гора Чиллиад\n— Рублевка", "SELECT", "CANCEL");
 					}
-					case 1: {
+					case 1 : {
 						dialog[0] = '\0';
 						static const family[] = {5, 6, 8, 12, 13, 14, 15, 16, 17, 18};
 						for(new i; i < sizeof family; i++) {
@@ -14688,7 +14588,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						}
 						SPD(playerid, D_GOTO+2, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты > Респы банд/мафий", dialog, "SELECT", "CANCEL");
 					}
-					case 2: {
+					case 2 : {
 						dialog[0] = '\0';
 						static const team[] = {1, 2, 3, 4, 7, 9, 10, 11};
 						for(new i; i < sizeof team; i++) {
@@ -14810,7 +14710,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты", "— Популярные места\n— Респы банд\n— Респы фракций", "SELECT", "CANCEL");
 			}
 		}
-		
 		
 		case D_REFILL : {
 			if(response) {
