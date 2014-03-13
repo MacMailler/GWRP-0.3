@@ -145,7 +145,7 @@ new const R_Info[][] = {
 	"#0004",	// SetHP
 	"#3490",	// SetArmour
 	"#8283",	// AntiFreeze
-	"#0730",	// UnlimAmmo
+	"#0730"	// UnlimAmmo
 };
 
 
