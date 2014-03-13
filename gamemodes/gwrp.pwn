@@ -1138,21 +1138,30 @@ enum fInfo {
 	fColor,
 	fSpawn[fSpawnInfo],
 };
-
-enum fGateInfo {
-	GateID,
-	GateRight
-};
 new FracInfo[MAX_FRAC][fInfo];
 new RankInfo[MAX_FRAC][MAX_RANK][36];
 new RankNums[MAX_FRAC];
 new FracPay[MAX_FRAC];
 
-new FracGate[MAX_FRAC_GATE][fGateInfo];
-new FracGateCount;
 
-#define SET_GATE_ACCESS(%0,%1,%2) FracGate[%0][GateRight] += %2 << %1
-#define GET_GATE_ACCESS(%0,%1) (FracGate[%0][GateRight] >>> %1 & 1 != 0)
+#define MAX_GATE			(100)
+#define GATE_ATTACH_NONE	(0)
+#define GATE_ATTACH_FRAC	(1)
+#define GATE_ATTACH_HOUSE	(2)
+#define GATE_ATTACH_JOB		(3)
+
+#define GATE_MODE_PICKUP 	(0)
+#define GATE_MODE_KEY 		(1)
+
+enum e_GateData {
+	GateID,
+	GateAttach,
+	GateAllowed,
+	GateMode
+};
+new GateData[MAX_GATE][e_GateData];
+new Iterator:GateModePickup<MAX_GATE>;
+new Iterator:GateModeKey<MAX_GATE>;
 
 #define zRANK	(0)
 #define bRANK	(1)
@@ -3330,12 +3339,42 @@ stock AshQueue(playerid, reason) {
 }
 
 public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
-	for(new i, fracid = Pl::FracID(playerid); i < FracGateCount; i++) {
-		if(FracGate[i][GateID] == gateid) {
-			if(GET_GATE_ACCESS(gateid, fracid) == true) {
-				if(GateOpen(gateid)) {
-					PlayerPlaySound(playerid, 1058, 0, 0, 0);
-					SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
+	foreach(new i : GateModePickup) {
+		if(GateData[i][GateID] == gateid) {
+			switch(GateData[i][GateAttach]) {
+				case GATE_ATTACH_FRAC : {
+					new frcaid = Pl::FracID(playerid);
+					if((GateData[i][GateAllowed] >>> frcaid & 1 != 0) == true) {
+						if(GateOpen(gateid)) {
+							PlayerPlaySound(playerid, 1058, 0, 0, 0);
+							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
+						}
+					}
+				}
+				
+				case GATE_ATTACH_HOUSE : {
+					if(Pl::Info[playerid][pHouseKey] == GateData[i][GateAllowed]) {
+						if(GateOpen(gateid)) {
+							PlayerPlaySound(playerid, 1058, 0, 0, 0);
+							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
+						}
+					}
+				}
+				
+				case GATE_ATTACH_JOB : {
+					if(Pl::Info[playerid][pJob] == GateData[i][GateAllowed]) {
+						if(GateOpen(gateid)) {
+							PlayerPlaySound(playerid, 1058, 0, 0, 0);
+							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
+						}
+					}
+				}
+				
+				default : {
+					if(GateOpen(gateid)) {
+						PlayerPlaySound(playerid, 1058, 0, 0, 0);
+						SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
+					}
 				}
 			}
 			return 1;
@@ -7107,7 +7146,7 @@ CMD:lmenu(playerid, params[]) {
 }
 
 CMD:antidmzone(playerid, params[]) { new string[144];
-	if(!Pl::isAdmin(playerid, 5) ) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(TOTAL_ANTIDM_ZONES >= sizeof AntiDmInfo) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во зон!");
 	if(sscanf(params, "f", distance)) return Send(playerid, COLOR_GREY, "Введите: /antidmzone [radius]");
 	format(string, sizeof string, "INSERT INTO `"#__TableAntidmzones__"` (`coord`) VALUES ('0.0,0.0,0.0,%.4f')", params[0]);
@@ -7171,9 +7210,9 @@ CMD:addpic(playerid, params[]) { new string[144];
 }
 
 CMD:setpic1(playerid, params[]) {
-	if( !Pl::isAdmin(playerid, 5) ) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	new teleport = GetPVarInt(playerid, "selectTeleport");
-	if( teleport == 0xffff ) return Send(playerid, COLOR_GREY, "* Вы не выбрали портал!");
+	if(teleport == 0xffff) return Send(playerid, COLOR_GREY, "* Вы не выбрали портал!");
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
 		return Send(playerid, COLOR_GREY, "Введите: /setpic1 [modelid]");
 		
@@ -7796,7 +7835,7 @@ CMD:check(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /check [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(Pl::isAdmin(params[0], 5) && !Pl::isAdmin(playerid,5)) return Send(playerid, COLOR_RED, "* Вы не может выполнить это действие!");
+	if(Pl::isAdmin(params[0], ADMINISTRATOR) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_RED, "* Вы не может выполнить это действие!");
 	return ShowStats(playerid, params[0], 1);
 }
 
@@ -9072,7 +9111,7 @@ CMD:tv(playerid, params[]) { new string[144], playername[24];
 		if(!Pl::isLogged(specid)) return Send(playerid, COLOR_GREY, "* Игрок не авторизирован!");
 		if(WatchingTV[specid]) return Send(playerid, COLOR_GREY, "* Этот игрок сам в ТВ!");
 		if(!Pl::isAdmin(playerid, 1) && HouseInfo[hkey][hTv] != 1) return GameTextForPlayer(playerid, "~r~This upgrade isn't installed", 5000, 1);
-		if(Pl::Info[specid][pAdmin] > 0 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Этот канал не работает!");
+		if(Pl::Info[specid][pAdmin] > 0 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Этот канал не работает!");
 		GetPlayerName(specid, playername, 24);
 		if(!Pl::isAdmin(playerid, MODER1LVL)) Rac::TogglePlayerControllable(playerid, 0);
 		Pl::SpecInfo[playerid][pSpecID] = specid;
@@ -9144,7 +9183,7 @@ CMD:unprison(playerid, params[]) { new string[144], sendername[24], playername[2
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /unprison [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(Pl::Info[params[0]][pJailed] != 2) return Send(playerid, COLOR_GREY, "* Этот игрок не в присоне!");
-	if(playerid == params[0] && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Вы не можите оправдаться!");
+	if(playerid == params[0] && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Вы не можите оправдаться!");
 	getname(playerid->sendername,params[0]->playername);
 	format(string, sizeof string, "[AdmWarn] * %s применил команду /unprison к игроку %s[%i].", sendername, playername, params[0]);
 	SendToAdmin(COLOR_YELLOW, string, 1, 3);
@@ -9173,7 +9212,7 @@ CMD:unjail(playerid, params[]) { new string[144], sendername[24], playername[24]
 	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /unjail [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(playerid == params[0] && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Вы не можите оправдаться!");
+	if(playerid == params[0] && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Вы не можите оправдаться!");
 	if(Pl::Info[params[0]][pJailed] != 1) return Send(playerid, COLOR_GREY, "* Этот игрок не в тюрьме!");
 	UnJail(params[0], 1);
 	getname(playerid->sendername,params[0]->playername);
@@ -9204,7 +9243,7 @@ CMD:ainvite(playerid, params[]) { new string[144], sendername[24], playername[24
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(Pl::FracID(params[0]) != 0) return Send(playerid, COLOR_GREY, "* Этот игрок уже состоит в другой организации!");
 	if(params[1] < 1 || params[1] > 20) return Send(playerid, COLOR_GREY, "* Неверный ID фракции!");
-	if(params[1] == 8 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Неверный ID фракции!");
+	if(params[1] == 8 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Неверный ID фракции!");
 	Pl::Info[params[0]][pMember] = params[1];
 	Pl::Info[params[0]][pRank] = 1;
 	Rac::SetPlayerInterior(params[0], 3);
@@ -9341,9 +9380,9 @@ CMD:makeleader(playerid, params[]) { new string[144], sendername[24], playername
 	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /makeleader [id] [fracid]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(Pl::Info[params[0]][pAdmin] && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Нельзя менять лидерку админу!");
+	if(Pl::Info[params[0]][pAdmin] && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Нельзя менять лидерку админу!");
 	if(params[1] < 0 || params[1] > 20) return Send(playerid, COLOR_GREY, "* Не ниже 0, и не выше 20!");
-	if(params[1] == 8 && !Pl::isAdmin(playerid, 5))  return Send(playerid, COLOR_GREY, "* Не ниже 0, и не выше 20!");
+	if(params[1] == 8 && !Pl::isAdmin(playerid, ADMINISTRATOR))  return Send(playerid, COLOR_GREY, "* Не ниже 0, и не выше 20!");
 	if(Pl::FracID(params[0]) == params[1])  return Send(playerid, COLOR_GREY, "* Этот игрок уже лидер!");
 	getname(playerid -> sendername,params[0] -> playername);
 	if(params[1] == 0) {
@@ -9597,7 +9636,7 @@ CMD:goto(playerid, params[]) {
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Это вевозможно!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /goto [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(!TogTP[params[0]] && !Pl::isAdmin(playerid, 5)) return Send(playerid,COLOR_GREY,"* Админ запретил к нему телепортироваться!");
+	if(!TogTP[params[0]] && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid,COLOR_GREY,"* Админ запретил к нему телепортироваться!");
 	GetPlayerPos(params[0], posx, posy, posz);
 	if(GetPlayerState(playerid) == 2) Rac::SetVehiclePos(GetPlayerVehicleID(playerid), posx, posy+4, posz);
 	else Rac::SetPlayerPos(playerid,posx, posy+2, posz);
@@ -9614,7 +9653,7 @@ CMD:gethere(playerid, params[]) { new string[144], sendername[24], playername[24
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /gethere [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(Pl::Info[params[0]][pJailed]) return Send(playerid, COLOR_GRAD1, "* Это вевозможно!");
-	if(Pl::Info[params[0]][pAdmin] > Pl::Info[playerid][pAdmin] && !Pl::isAdmin(playerid, 5)) return Send(playerid,COLOR_GREY,"* Скажите админу чтобы он Телепортировался к вам.");
+	if(Pl::Info[params[0]][pAdmin] > Pl::Info[playerid][pAdmin] && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid,COLOR_GREY,"* Скажите админу чтобы он Телепортировался к вам.");
 	GetPlayerPos(playerid, posx, posy, posz);
 	if (GetPlayerState(params[0]) == 2) Rac::SetVehiclePos(GetPlayerVehicleID(params[0]), posx, posy+3, posz);
 	else Rac::SetPlayerPos(params[0],posx, posy+1, posz);
@@ -9658,8 +9697,8 @@ CMD:givegun(playerid, params[]) { new string[144], sendername[24], playername[24
 	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(!sscanf(params, "uii", params[0], params[1], params[2])) {
 		if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-		if(IsWrongWeponID(params[1]) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Не правельный ID оружия!");
-		if(params[2] < 1 || params[2] > 999 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Не ниже 1 и не выше 999 патронов!");
+		if(IsWrongWeponID(params[1]) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Не правельный ID оружия!");
+		if(params[2] < 1 || params[2] > 999 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Не ниже 1 и не выше 999 патронов!");
 		Rac::GivePlayerWeapon(params[0], params[1], params[2]);
 		getname(playerid -> sendername, params[0] -> playername);
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /givegun к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
@@ -9696,7 +9735,7 @@ CMD:setarmour(playerid, params[]) { new string[144], sendername[24], playername[
 	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /setarmour [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
-	if(!IsACop(params[0]) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Только для закона!");
+	if(!IsACop(params[0]) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Только для закона!");
 	Rac::SetPlayerArmour(params[0], params[1]);
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "[AdmWarn] * %s применил команду /setarmour к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
@@ -9708,7 +9747,7 @@ CMD:veh(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "iI(0)I(0)", params[0], params[1], params[2])) return Send(playerid, COLOR_GREY, "Введите: /veh [model] [color1] [color2]");
 	if(!(400 <= params[0] <= 611)) return Send(playerid, COLOR_GREY, "* ID транспортного средства не может быть ниже 400 или выше 611 !");
-	if((params[0] == 425 || params[0] == 520 || params[0] == 432) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Вы не можите создать этот транспорт!");
+	if((params[0] == 425 || params[0] == 520 || params[0] == 432) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Вы не можите создать этот транспорт!");
 	if(Iter::Count(CreatedCars) >= 50) return Send(playerid, COLOR_GREY, "* Создано максемальное кол-во транспорта!");
 	new vehid, Float:x, Float:y, Float:z;
 	GetPlayerCameraLookAt(playerid, 5.0, x, y, z);
@@ -10044,7 +10083,7 @@ CMD:alldc(playerid, params[]) {
 CMD:warn(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!Pl::isAdmin(playerid, MODER2LVL)) return Send(playerid, COLOR_GRAD2, "* Недостаточно прав!");
 	if(sscanf(params, "us[64]", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Введите: /warn [id] [reason]");
-	if(Pl::isAdmin(params[0], 1) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD2, "* Вы не можите выдать варн админу!");
+	if(Pl::isAdmin(params[0], 1) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD2, "* Вы не можите выдать варн админу!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Игрок не авторизирован!");
 	Pl::Info[params[0]][pWarns] += 1;
 	if(Pl::Info[params[0]][pWarns] >= 3) {
@@ -10064,7 +10103,7 @@ CMD:warn(playerid, params[]) { new string[144], sendername[24], playername[24];
 CMD:clearwarn(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GRAD2, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GRAD2, "Введите: /clearwarn [id]");
-	if(Pl::isAdmin(params[0], 1) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD2, "* Вы не можите снимать варн с админа!");
+	if(Pl::isAdmin(params[0], 1) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD2, "* Вы не можите снимать варн с админа!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Игрок не авторизирован!");
 	if(Pl::Info[params[0]][pWarns] <= 0) return Send(playerid, COLOR_GREY,"* У игрока нет варнов!");
 	Pl::Info[params[0]][pWarns] = 0;
@@ -10209,7 +10248,7 @@ CMD:getip(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /getip [id]");
 	if(!IsPlayerConnected(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не подлючен!");
-	if(Pl::isAdmin(params[0], 5) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Вы не может узнавать IP адрес этого игрока");
+	if(Pl::isAdmin(params[0], ADMINISTRATOR) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Вы не может узнавать IP адрес этого игрока");
 	format(string, sizeof string, "* %s[ID: %i] IP: %s", GetName(params[0]), params[0], GetPIP(params[0]));
 	return Send(playerid,COLOR_LIGHTBLUE,string);
 }
@@ -10252,7 +10291,7 @@ CMD:freeze(playerid, params[]) { new string[144], sendername[24], playername[24]
 	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GRAD2, "Введите: /freeze [playerid]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(Pl::isAdmin(params[0], 1) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GREY, "* Администратор не может быть заморожен!");
+	if(Pl::isAdmin(params[0], 1) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Администратор не может быть заморожен!");
 	getname(playerid -> sendername,params[0] -> playername);
 	if(params[0] != playerid) {
 		format(string, sizeof string, "[AdmWarn] * %s применил команду /freeze к игроку %s[%s]", sendername, playername, FracInfo[Pl::FracID(params[0])][fName]);
@@ -13470,9 +13509,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!sscanf(inputtext, "uii", setid, weaponid, amount))
 				{
 					if(!Pl::isLogged(setid)) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-					if(IsWrongWeponID(weaponid) && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD1, "* Не правельный ID оружия!");
-					if(amount < 1 || amount > 999 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD1, "* Не ниже 1 и не выше 999 патронов!");
-					if( Rac::GetPlayerAmmo(setid, weaponid) >= 999 && !Pl::isAdmin(playerid, 5)) return Send(playerid, COLOR_GRAD1, "* У этого игрока слишком много оружия!");
+					if(IsWrongWeponID(weaponid) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* Не правельный ID оружия!");
+					if(amount < 1 || amount > 999 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* Не ниже 1 и не выше 999 патронов!");
+					if( Rac::GetPlayerAmmo(setid, weaponid) >= 999 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* У этого игрока слишком много оружия!");
 					format(string, sizeof(string), "[AdmWarn] * %s применил команду /ggun к игроку %s[%s]", GetName(playerid), GetName(setid), FracInfo[Pl::FracID(setid)][fName]);
 					SendToAdmin(COLOR_YELLOW, string, 1, 3); Rac::GivePlayerWeapon(setid, weaponid, amount);
 				}
@@ -14735,7 +14774,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!sscanf(inputtext, "p<.>i{s[40]}", inputtext[0])) {
 					new frac = GetPVarInt(playerid, "SelectedFrac");
 					SetPVarInt(playerid, "SelectedRank", inputtext[0]);
-					if(Pl::Info[playerid][pLeader] == frac || Pl::isAdmin(playerid, 5)) {
+					if(Pl::Info[playerid][pLeader] == frac || Pl::isAdmin(playerid, ADMINISTRATOR)) {
 						format( dialog, sizeof dialog, "Текущее: %s\nВведите новое название ранга.\n", RankInfo[frac][inputtext[0]]);
 						SPD(playerid, D_CRANK+1, 1, "Название ранга", dialog, "OK", "CANCEL");
 					} else {
@@ -15350,7 +15389,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(Fc::IsForbiddenVeh(model_id)) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
 				
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-				if(!Pl::isAdmin(playerid, 5) ) if(!IsInRespawn(Pl::FracID(playerid), carid))
+				if(!Pl::isAdmin(playerid, ADMINISTRATOR) ) if(!IsInRespawn(Pl::FracID(playerid), carid))
 					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 				
 				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
@@ -17016,7 +17055,7 @@ stock SetPlayerDamage(playerid, damagedid, Float:damage, reason) {
 
 public OnPlayerUpdate(playerid) {
 	static string[125];
-	
+
 	AFKInfo[playerid][afk_Time][0] = 0;
 	if(AFKInfo[playerid][afk_State] != 0) {
 		AFKInfo[playerid][afk_State] = 0;
@@ -17351,12 +17390,42 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		switch(GetPlayerState(playerid)) {
 			case PLAYER_STATE_ONFOOT : {
-				for(new i = 19, fracid = Pl::FracID(playerid); i < FracGateCount; i++) {
-					if(IsPlayerInRangeOfGate(playerid, 2.0, FracGate[i][GateID])) {
-						if(GET_GATE_ACCESS(i, fracid) == true) {
-							if(GateOpen(FracGate[i][GateID])) {
-								SetTimerEx("GateClose", 5000, false, "i", FracGate[i][GateID]);
-								Send(playerid, 0x15AAEAAA, "* Дверь открыта, проходите!");
+				foreach(new i : GateModeKey) {
+					if(IsPlayerInRangeOfGate(playerid, 2.0, GateData[i][GateID])) {
+						switch(GateData[i][GateAttach]) {
+							case GATE_ATTACH_FRAC : {
+								new frcaid = Pl::FracID(playerid);
+								if((GateData[i][GateAllowed] >>> frcaid & 1 != 0) == true) {
+									if(GateOpen(GateData[i][GateID])) {
+										PlayerPlaySound(playerid, 1058, 0, 0, 0);
+										SetTimerEx("GateClose", 1000 * 7, false, "i", GateData[i][GateID]);
+									}
+								}
+							}
+							
+							case GATE_ATTACH_HOUSE : {
+								if(Pl::Info[playerid][pHouseKey] == GateData[i][GateAllowed]) {
+									if(GateOpen(GateData[i][GateID])) {
+										PlayerPlaySound(playerid, 1058, 0, 0, 0);
+										SetTimerEx("GateClose", 1000 * 7, false, "i", GateData[i][GateID]);
+									}
+								}
+							}
+							
+							case GATE_ATTACH_JOB : {
+								if(Pl::Info[playerid][pJob] == GateData[i][GateAllowed]) {
+									if(GateOpen(GateData[i][GateID])) {
+										PlayerPlaySound(playerid, 1058, 0, 0, 0);
+										SetTimerEx("GateClose", 1000 * 7, false, "i", GateData[i][GateID]);
+									}
+								}
+							}
+							
+							default : {
+								if(GateOpen(GateData[i][GateID])) {
+									PlayerPlaySound(playerid, 1058, 0, 0, 0);
+									SetTimerEx("GateClose", 1000 * 7, false, "i", GateData[i][GateID]);
+								}
 							}
 						}
 						return 1;
@@ -20791,6 +20860,8 @@ stock GetPlayerPosEx(playerid, &Float:x, &Float:y, &Float:z, &Float:a) {
 	return 1;
 }
 
+
+/*
 stock LoadGates() {
 	for(new i; i < MAX_FRAC_GATE; i++) {
 		for(new j; j < MAX_FRAC; j++) {
@@ -21020,6 +21091,61 @@ stock LoadGates() {
 	SET_GATE_ACCESS(gateid, TEAM_GOV, 1);
 	
 	return 1;
+}*/
+
+stock LoadGates() {
+	new Cache:result = Db::query(connDb, "SELECT * FROM `gate` ORDER BY `id` ASC", true);
+	new rows = cache_get_row_count();
+	if(rows) {
+		for(new i; i < rows; i++) {
+			new id = cache_get_row_int(i, 0);
+			GateData[id][GateID] = CreateGate();
+			cache_get_int(i, 1, GateData[id][GateAttach]);
+			cache_get_int(i, 2, GateData[id][GateAllowed]);
+			cache_get_int(i, 3, GateData[id][GateMode]);
+			LoadGateLeaf(GateData[id][GateID], GateData[id][GateID]);
+			LoadGatePickup(GateData[id][GateID], GateData[id][GateID]);
+			
+			switch(GateData[id][GateMode]) {
+				case GATE_MODE_PICKUP : Iter::Add(GateModePickup, id);
+				case GATE_MODE_KEY : Iter::Add(GateModeKey, id);
+				default : Iter::Add(GateModePickup, id);
+			}
+			cache_set_active(result);
+		}
+	}
+	cache_delete(result);
+}
+
+stock LoadGateLeaf(id, gateid) {
+	format(query, sizeof query, "SELECT * FROM `gate_leaf` WHERE `gate_id` = '%i'", id);
+	new Cache:result = Db::query(connDb, query, true);
+	new rows = cache_get_row_count();
+	if(rows) {
+		for(new i; i < rows; i++) {
+			new Float:close_pos[6], Float:open_pos[6];
+			cache_get_str(i, 3, "p<,>a<f>[6]", close_pos);
+			cache_get_str(i, 4, "p<,>a<f>[6]", open_pos);
+
+			new leafid = AddLeafToGate(gateid, cache_get_row_int(i, 1), close_pos, open_pos);
+			SetLeafType(gateid, leafid, cache_get_row_int(i, 2));
+		}
+	}
+	cache_delete(result);
+}
+
+stock LoadGatePickup(id, gateid) {
+	format(query, sizeof query, "SELECT * FROM `gate_pickup` WHERE `gate_id` = '%i'", id);
+	new Cache:result = Db::query(connDb, query, true);
+	new rows = cache_get_row_count();
+	if(rows) {
+		for(new i; i < rows; i++) {
+			new Float:pos[3];
+			cache_get_str(i, 2, "p<,>a<f>[3]", pos);
+			AddPickupToGate(gateid, cache_get_row_int(i, 1), pos);
+		}
+	}
+	cache_delete(result);
 }
 
 
