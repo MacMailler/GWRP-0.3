@@ -16707,6 +16707,12 @@ public: Gm::Thread() {
 		SendToAll(COLOR_LIGHTGREEN,"На сервере "#__SERVER_PREFIX""#__SERVER_NAME_LC" запрещено: ДБ, ДМ, Флуд, Читы, CLEO скрипты, Капс, Розжиг межрасовой розни");
 		SendToAll(COLOR_LIGHTBLUE,"Все интересующие вас вопросы, касающиеся игры вы найдете на нашем форуме: "#__SERVER_SITE"");
 		SendToAll(COLOR_DBLUE,"Если вас оскорбили, унизили, убили без причины, либо вы увидели читера или того, кто нарушает правила - то пишите /report [id] жалоба.");
+		
+		new y, m, d;
+		getdate(y, m, d);
+		if(y >= 1993 && m == 8 && d == 29) {
+			SendToAll(COLOR_YELLOW, "Happy birthday, MacMailler!");
+		}
 	}
 
 	static syncTimer;
