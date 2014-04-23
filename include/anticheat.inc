@@ -498,46 +498,44 @@ public onAntiCheatUpdate() {
 			case PLAYER_STATE_DRIVER, PLAYER_STATE_PASSENGER : {
 				Rac::OnvehicleSync(i);
 			}
-			
-			default : {
-				new Float:fvar;
-				if(AC::Info[i][AC::Delay][R::HEALTH_HACK] > 0) {
-					AC::Info[i][AC::Delay][R::HEALTH_HACK] --;
-				} else {
-					if(AC::IsPlayerSync(i)) {
-						GetPlayerHealth(i, fvar);
-						if(fvar > AC::Info[i][AC::HealthArmor][AC::HEALTH]) {
-							if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
-								if(Rac::IsAtCandySprunk(i, 4.0)) {
-									Rac::GivePlayerHealth(i, ((fvar - AC::Info[i][AC::HealthArmor][AC::HEALTH]) + 1.0 ), 100.0);
-								} else {
-									SetPlayerHealth(i, AC::Info[i][AC::HealthArmor][AC::HEALTH]);
-								}
-							}
+		}
+		
+		new Float:fvar;
+		if(AC::Info[i][AC::Delay][R::HEALTH_HACK] > 0) {
+			AC::Info[i][AC::Delay][R::HEALTH_HACK] --;
+		} else {
+			if(AC::IsPlayerSync(i)) {
+				GetPlayerHealth(i, fvar);
+				if(fvar > AC::Info[i][AC::HealthArmor][AC::HEALTH]) {
+					if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
+						if(Rac::IsAtCandySprunk(i, 4.0)) {
+							Rac::GivePlayerHealth(i, ((fvar - AC::Info[i][AC::HealthArmor][AC::HEALTH]) + 1.0 ), 100.0);
 						} else {
-							AC::Info[i][AC::HealthArmor][AC::HEALTH] = fvar;
+							SetPlayerHealth(i, AC::Info[i][AC::HealthArmor][AC::HEALTH]);
 						}
 					}
-				}
-				
-				if(AC::Info[i][AC::Delay][R::ARMOUR_HACK] > 0) {
-					AC::Info[i][AC::Delay][R::ARMOUR_HACK] --;
 				} else {
-					GetPlayerArmour(i, fvar);
-					if(fvar > AC::Info[i][AC::HealthArmor][AC::ARMOUR]) {
-						if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
-							SetPlayerArmour(i, AC::Info[i][AC::HealthArmor][AC::ARMOUR]);
-						}
-					} else {
-						AC::Info[i][AC::HealthArmor][AC::ARMOUR] = fvar;
-					}
+					AC::Info[i][AC::HealthArmor][AC::HEALTH] = fvar;
 				}
+			}
+		}
+		
+		if(AC::Info[i][AC::Delay][R::ARMOUR_HACK] > 0) {
+			AC::Info[i][AC::Delay][R::ARMOUR_HACK] --;
+		} else {
+			GetPlayerArmour(i, fvar);
+			if(fvar > AC::Info[i][AC::HealthArmor][AC::ARMOUR]) {
+				if(AFKInfo[i][afk_Time][0] < AFK_TEXT_SET) {
+					SetPlayerArmour(i, AC::Info[i][AC::HealthArmor][AC::ARMOUR]);
+				}
+			} else {
+				AC::Info[i][AC::HealthArmor][AC::ARMOUR] = fvar;
+			}
+		}
 
-				if(!(2 <= playerState <= 6)) {
-					if(GetPlayerCameraMode(i) == 18 && GetPlayerSpecialAction(i) == 3) {
-						Rac::Kick(i, "Disable incar data");
-					}
-				}
+		if(!(2 <= playerState <= 6)) {
+			if(GetPlayerCameraMode(i) == 18 && GetPlayerSpecialAction(i) == 3) {
+				Rac::Kick(i, "Disable incar data");
 			}
 		}
 		
