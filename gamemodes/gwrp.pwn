@@ -6557,6 +6557,16 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 }
 
 
+CMD:deletehouse(playerid, params[]) { new string[144];
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Ведите: /deletehouse [houseid]");
+	if(!Iter::Contains(Houses, params[0])) return Send(playerid, COLOR_GREY, "* Нет такого дома!");
+	DeleteHouse(params[0]);
+	format(string, sizeof string, "* Дом №%i был удален!", params[0]);
+	Send(playerid, COLOR_LIGHTBLUE, string);
+	return 1;
+}
+
 CMD:fracpay(playerid, params[]) { new string[144];
 	if(Pl::Info[playerid][pLeader] != Pl::FracID(playerid)) return Send(playerid, COLOR_GREY, "* Вы не лидер!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /fracpay [Сумма каждому члену фракции]");
@@ -21216,46 +21226,75 @@ stock GiveBizzProfit(biz, money) {
 	return 1;
 }
 
-/*
-stock DeleteHouse(i) {
-	Iter::Remove(Houses, i);
+stock DeleteHouse(h) {
 	new last = Iter::Count(Houses);
-	HouseInfo[h][hID] = HouseInfo[last][hID];
-	HouseInfo[h][hOwned] = HouseInfo[last][hOwned];
-	HouseInfo[h][hLock] = HouseInfo[last][hLock];
-	strmid(HouseInfo[h][hOwner], HouseInfo[last][hOwner], 0, strlen(HouseInfo[last][hOwner]), 24);
-	strmid(HouseInfo[h][hDescription], HouseInfo[last][hDescription], 0, strlen(HouseInfo[last][hDescription]), 24);
-	HouseInfo[h][hPrice] = HouseInfo[last][hPrice];
-	HouseInfo[h][hLevel] = HouseInfo[last][hLevel];
-	HouseInfo[h][hInt] = HouseInfo[last][hInt];
-	HouseInfo[h][hTv] = HouseInfo[last][hTv];
-	HouseInfo[h][hDate] = HouseInfo[last][hDate];
-	CopyArray(HouseInfo[h][hRent], HouseInfo[last][hRent], 2);
-	CopyArray(HouseInfo[h][hSafe], HouseInfo[last][hSafe], 5);
-	CopyArray(HouseInfo[h][hGuns], HouseInfo[last][hGuns], MAX_HWEAP);
-	CopyArray(HouseInfo[h][hAmmos], HouseInfo[last][hAmmos], MAX_HWEAP);
-	CopyArray(HouseInfo[h][hEnter], HouseInfo[last][hEnter], 4);
-	CopyArray(HouseInfo[h][hExit], HouseInfo[last][hExit], 4);
-	HouseInfo[h][hvModel] = HouseInfo[last][hvModel];
-	CopyArray(HouseInfo[h][hvColor], HouseInfo[last][hvColor], 2);
-	CopyArray(HouseInfo[h][hvSpawn], HouseInfo[last][hvSpawn], 4);
-	HouseInfo[h][hvPark] = HouseInfo[last][hvPark];
-	CopyArray(HouseInfo[h][hvSpawn], HouseInfo[last][hvSpawn], 4);
 	
-	HouseInfo[h][hgGarage] = HouseInfo[last][hgGarage];
-	CopyArray(HouseInfo[h][hgIntPos], HouseInfo[last][hgIntPos], 4);
-	CopyArray(HouseInfo[h][hgStreetPos], HouseInfo[last][hgStreetPos], 4);
-	HouseInfo[h][hgPickupInt] = HouseInfo[last][hgPickupInt];
-	HouseInfo[h][hgPickupStreet] = HouseInfo[last][hgPickupStreet];
+	format(query, sizeof query, "DELETE FROM `houses` WHERE `id` = '%i'", HouseInfo[h][hID]);
+	Db::query(connDb, query, false);
+	format(query, sizeof query, "UPDATE `users` SET `House` = '%i' WHERE `House` = '%i'", INVALID_HOUSE_ID, HouseInfo[h][hID]);
+	Db::query(connDb, query, false);
 	
-	HouseInfo[h][hPickup] = HouseInfo[h][hPickup];
-	HouseInfo[h][hMapIcon] = HouseInfo[h][hMapIcon];
-	HouseInfo[h][hVirtual] = HouseInfo[h][hVirtual];
-	HouseInfo[h][hAuto] = HouseInfo[h][hAuto];
+	DestroyDynamicPickup(HouseInfo[h][hPickup]);
+	DestroyDynamicMapIcon(HouseInfo[h][hMapIcon]);
+	DeleteHouseGarage(h);
+	
+	new playerid = ReturnUser(HouseInfo[h][hOwner]);
+	if(Pl::isLogged(playerid)) Pl::Info[playerid][pHouseKey] = INVALID_HOUSE_ID;
+	
+	if(last > h) {
+		Iter::Remove(Houses, last);
+		format(query, sizeof query, "UPDATE `houses` SET `id` = '%i' WHERE `id` = '%i'", h, last);
+		Db::query(connDb, query, false);
+		format(query, sizeof query, "UPDATE `users` SET `House` = '%i' WHERE `House` = '%i'", h, last);
+		Db::query(connDb, query, false);
 
-	format(query, sizeof query, "UPDATE `houses` SET `id` = '%i' WHERE `id`")
-	Db::tquery(connDb, query);
-}*/
+		playerid = ReturnUser(HouseInfo[last][hOwner]);
+		if(Pl::isLogged(playerid)) Pl::Info[playerid][pHouseKey] = h;
+		
+		if(HouseInfo[last][hgGarage]) {
+			format(query, sizeof query, "UPDATE `houses_garage` SET `house` = '%i' WHERE `house` = '%i'", h, last);
+			Db::tquery(connDb, query);
+			
+		}
+		HouseInfo[h][hOwned] = HouseInfo[last][hOwned];
+		HouseInfo[h][hLock] = HouseInfo[last][hLock];
+		CopyArray(HouseInfo[h][hOwner], HouseInfo[last][hOwner], 24);
+		CopyArray(HouseInfo[h][hDescription], HouseInfo[last][hDescription], 28);
+		HouseInfo[h][hPrice] = HouseInfo[last][hPrice];
+		HouseInfo[h][hLevel] = HouseInfo[last][hLevel];
+		HouseInfo[h][hInt] = HouseInfo[last][hInt];
+		HouseInfo[h][hTv] = HouseInfo[last][hTv];
+		HouseInfo[h][hDate] = HouseInfo[last][hDate];
+		CopyArray(HouseInfo[h][hRent], HouseInfo[last][hRent], 2);
+		CopyArray(HouseInfo[h][hSafe], HouseInfo[last][hSafe], 5);
+		CopyArray(HouseInfo[h][hGuns], HouseInfo[last][hGuns], MAX_HWEAP);
+		CopyArray(HouseInfo[h][hAmmos], HouseInfo[last][hAmmos], MAX_HWEAP);
+		CopyArray(HouseInfo[h][hEnter], HouseInfo[last][hEnter], 4);
+		CopyArray(HouseInfo[h][hExit], HouseInfo[last][hExit], 4);
+		HouseInfo[h][hvModel] = HouseInfo[last][hvModel];
+		CopyArray(HouseInfo[h][hvColor], HouseInfo[last][hvColor], 2);
+		CopyArray(HouseInfo[h][hvSpawn], HouseInfo[last][hvSpawn], 4);
+		HouseInfo[h][hvPark] = HouseInfo[last][hvPark];
+		CopyArray(HouseInfo[h][hvSpawn], HouseInfo[last][hvSpawn], 4);
+		
+		HouseInfo[h][hgGarage] = HouseInfo[last][hgGarage];
+		CopyArray(HouseInfo[h][hgIntPos], HouseInfo[last][hgIntPos], 4);
+		CopyArray(HouseInfo[h][hgStreetPos], HouseInfo[last][hgStreetPos], 4);
+		HouseInfo[h][hgPickupInt] = HouseInfo[last][hgPickupInt];
+		HouseInfo[h][hgPickupStreet] = HouseInfo[last][hgPickupStreet];
+		
+		HouseInfo[h][hPickup] = HouseInfo[last][hPickup];
+		HouseInfo[h][hMapIcon] = HouseInfo[last][hMapIcon];
+		HouseInfo[h][hVirtual] = HouseInfo[last][hVirtual];
+		HouseInfo[h][hAuto] = HouseInfo[last][hAuto];
+	} else {
+		Iter::Remove(Houses, h);
+	}
+	
+	format(query, sizeof query, "ALTER TABLE `houses` AUTO_INCREMENT = %i", last < 1 ? 1 : last);
+	Db::query(connDb, query, false);
+	return 1;
+}
 
 stock UpdateSpeedometer(playerid, speed) {
 	switch(speed) {
