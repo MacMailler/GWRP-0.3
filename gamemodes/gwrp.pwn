@@ -19884,9 +19884,8 @@ stock Fc::ShowModel( playerid, fracid, dialogid) {
 		new model_id;
 		dialog[0] = '\0';
 		for(new i; i < rows; i++) {
-			Db::fetch_row( query );
 			cache_get_int(i, 0, model_id);
-			scf(dialog, query, "%s\n", VehicleNames[model_id-400], model_id );
+			scf(dialog, query, "%s\n", VehicleNames[model_id-400], model_id);
 		}
 		if( Pl::Info[playerid][pAdmin] >= 5 && dialogid != D_ADD_FC && dialogid != D_LMENU+7 ) strcat( dialog, "------------\nДобавить");
 		SPD( playerid, dialogid, DIALOG_STYLE_LIST, "Frac Models", dialog, "SELECT", "CANCEL");
