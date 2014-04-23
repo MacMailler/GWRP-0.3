@@ -20046,17 +20046,17 @@ stock LoadPortals(){
 }
 
 stock LoadAntiDmZones() {
-	new index, time = GetTickCount();
+	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableAntidmzones__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
 		for(new i; i < rows; i++) {
-			cache_get_int(i, 0, AntiDmInfo[index][e_AntiDmZoneId]);
-			cache_get_int(i, 1, AntiDmInfo[index][e_AntiDmWorld]);
-			cache_get_str(i, 2, "a<f>[4]", AntiDmInfo[index][e_AntiDmCoord]);
+			cache_get_int(i, 0, AntiDmInfo[i][e_AntiDmZoneId]);
+			cache_get_int(i, 1, AntiDmInfo[i][e_AntiDmWorld]);
+			cache_get_str(i, 2, "a<f>[4]", AntiDmInfo[i][e_AntiDmCoord]);
 			
-			AntiDmInfo[index][e_AntiDmZone] = CreateDynamicSphere(
+			AntiDmInfo[i][e_AntiDmZone] = CreateDynamicSphere(
 				AntiDmInfo[i][e_AntiDmCoord][0],
 				AntiDmInfo[i][e_AntiDmCoord][1],
 				AntiDmInfo[i][e_AntiDmCoord][2],
