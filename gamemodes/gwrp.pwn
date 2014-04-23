@@ -5021,7 +5021,7 @@ public OnPlayerRequestClass(playerid, classid) {
 
 public OnPlayerRequestSpawn(playerid) return 0;
 
-stock SetPlayerCriminal(playerid, declare, reason[]) {
+stock SetPlayerCriminal(playerid, declare, reason[], wlevel = 1) {
 	if(Pl::isLogged(playerid)) {
 		new turned[24], turner[24];
 		GetPlayerName(playerid, turned, sizeof(turned));
@@ -5031,7 +5031,7 @@ stock SetPlayerCriminal(playerid, declare, reason[]) {
 			strmid(turner, "*Неизвестно", 0, 38, sizeof turner);
 		}
 		WantedTime[playerid] = 180;
-		Pl::SetWantedLevel(playerid, ++Pl::Info[playerid][pWantedL]);
+		Pl::SetWantedLevel(playerid, Pl::Info[playerid][pWantedL] + wlevel);
 		strmid(Pl::Crime[playerid][pVictim], turner, 0, strlen(turner), 255);
 		strmid(Pl::Crime[playerid][pAccusing], reason, 0, strlen(reason), 255);
 		strmid(Pl::Crime[playerid][pAccused], turner, 0, strlen(turner), 255);
@@ -8416,8 +8416,7 @@ CMD:su(playerid, params[]) { new string[144];
 	if(params[1] > 6) return Send(playerid,COLOR_GREY,"* Больше 6 звезд кидать нельзя!");
 	if(Pl::Info[params[0]][pWantedL] == 0) {
 		WantedTime[params[0]] = 180;
-		Pl::SetWantedLevel(params[0], Pl::Info[params[0]][pWantedL]+params[1]);
-		SetPlayerCriminal(params[0], playerid, params[2]);
+		SetPlayerCriminal(params[0], playerid, params[2], params[1]);
 		format(string,sizeof string,"* Теперь у этого игрока %i уровень розыска.", Pl::Info[params[0]][pWantedL]);
 		Send(playerid, COLOR_LIGHTRED, string);
 	}
@@ -11559,8 +11558,7 @@ CMD:jack(playerid, params[]) {
 				params[0] = GetClosestPlayer(playerid, 20.0);
 				if(Pl::isLogged(params[0])) {
 					WantedTime[playerid] = 180;
-					Pl::SetWantedLevel(playerid, Pl::Info[playerid][pWantedL]+params[1]);
-					SetPlayerCriminal(playerid, 255, "Угон ТС");
+					SetPlayerCriminal(playerid, 255, "Угон ТС", 2);
 				}
 			}
 		}
