@@ -63,16 +63,18 @@ stock map::Load(const mapfile[], worldid=-1, interiorid=-1, playerid=-1, Float:s
 			DynamicMaps[TotalDynamicMaps][e_MapPlayer] = playerid;
 			DynamicMaps[TotalDynamicMaps][e_MapStreamDist] = streamdistance;
 		
-			while(fread(fhandle, buffer[0]) && strcut(buffer[0], buffer[1], "(", ")")) {
-				sscanf(buffer[1], "p<,>ia<f>[3]a<f>[3]", modelid, pos, rot);
-				objectid = CreateDynamicObject(modelid, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], worldid, interiorid, playerid, streamdistance);
-				if(objectid == INVALID_OBJECT_ID) {
-					if(map_debug) {
-						print("map::Load(): Error, object could not be created!");
+			while(fread(fhandle, buffer[0])) {
+				if(strcut(buffer[0], buffer[1], "(", ")")) {
+					sscanf(buffer[1], "p<,>ia<f>[3]a<f>[3]", modelid, pos, rot);
+					objectid = CreateDynamicObject(modelid, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], worldid, interiorid, playerid, streamdistance);
+					if(objectid == INVALID_OBJECT_ID) {
+						if(map_debug) {
+							print("map::Load(): Error, object could not be created!");
+						}
+						break;
+					} else {
+						DynamicMaps[TotalDynamicMaps][e_CountObjects]++;
 					}
-					break;
-				} else {
-					DynamicMaps[TotalDynamicMaps][e_CountObjects]++;
 				}
 			}
 			
