@@ -81,6 +81,7 @@
 #define JAILED_MAN 				(268)
 #define JAILED_WOMEN 			(69)
 
+#define INVALID_ID				(0xFFFF)
 #define INVALID_BIZ_ID			(0xFFFF)
 #define INVALID_HOUSE_ID		(0xFFFF)
 
@@ -229,7 +230,7 @@
 #define Gz::					GangZone
 #define Db::					mysql_
 #define Iter::					Iter_
-#define Portal::				TP_
+#define Ptl::					TP_
 #define PickupHndlr::			PH_
 
 #define Mnu::					MNU_
@@ -1205,24 +1206,24 @@ enum pCrime_Enum {
 new Pl::Crime[MAX_PLAYERS][pCrime_Enum];
 
 
-enum Portal::e_potal
+enum Ptl::e_potal
 {
-	Portal::Id,
+	Ptl::Id,
 	
-	Portal::Model[2],
-	Portal::Type[2],
-	Portal::Inter[2],
-	Portal::World[2],
+	Ptl::Model[2],
+	Ptl::Type[2],
+	Ptl::Inter[2],
+	Ptl::World[2],
 	
-	Float:Portal::Portal1[4],
-	Float:Portal::Portal2[4],
+	Float:Ptl::Portal1[4],
+	Float:Ptl::Portal2[4],
 	
-	Portal::Allowed[MAX_FRAC],
-	Portal::Pickup[2],
+	Ptl::Allowed[MAX_FRAC],
+	Ptl::Pickup[2],
 };
 new
 	TOTAL_PORTAL,
-	Portal::Info[MAX_PORTALS][Portal::e_potal]
+	Ptl::Info[MAX_PORTALS][Ptl::e_potal]
 ;
 
 
@@ -2839,8 +2840,8 @@ public OnPlayerDeath(playerid, killerid, reason) {
 	DisablePlayerCheckpointEx(playerid, FIND_ICON);
 	DestroyDynamicRaceCP(checkpointb[playerid]);
 	
-	if(GetPVarInt(playerid, "RouteID") != 0xFFFF) {
-		SetPVarInt(playerid, "RouteID", 0xFFFF);
+	if(GetPVarInt(playerid, "RouteID") != INVALID_ID) {
+		SetPVarInt(playerid, "RouteID", INVALID_ID);
 		SetPVarInt(playerid, "NextCP", 0);
 	}
 
@@ -3104,7 +3105,7 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 			new Veh = GetPlayerVehicleID(playerid);
 			switch(Pl::Info[playerid][pJob]) {
 				case JOB_BUSMAN : {
-					if(checkpointb[playerid] == checkpointid && GetPVarInt(playerid, "RouteID") != 0xFFFF) {
+					if(checkpointb[playerid] == checkpointid && GetPVarInt(playerid, "RouteID") != INVALID_ID) {
 						if(IsABusCar(Veh)) {
 							new next = GetPVarInt(playerid, "NextCP");
 							new route = GetPVarInt(playerid, "RouteID");
@@ -3168,7 +3169,7 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 								GameTextForPlayer(playerid, string, 7000, 1);
 								Rac::GivePlayerMoney(playerid, cost);
 
-								SetPVarInt(playerid, "RouteID", 0xFFFF);
+								SetPVarInt(playerid, "RouteID", INVALID_ID);
 								DeletePVar(playerid, "NextCP");
 							
 							}
@@ -3685,17 +3686,17 @@ stock PickupHndlr::Gas(playerid, pickupid) {
 
 stock PickupHndlr::Portal(playerid, pickupid) {
 	for(new i; i < TOTAL_PORTAL; ++i) {
-		if(Portal::Info[i][Portal::Pickup][0] == pickupid) {
+		if(Ptl::Info[i][Ptl::Pickup][0] == pickupid) {
 			if(EditMode[playerid]) {
 				SetPVarInt(playerid, "selectTeleport", i);
-				format(dialog, sizeof dialog, "Telepot №%i | | Пикап №1", Portal::Info[i][Portal::Id]);
+				format(dialog, sizeof dialog, "Telepot №%i | | Пикап №1", Ptl::Info[i][Ptl::Id]);
 				SPD(playerid,TP_EDIT,2,dialog,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
 				return 1;
 			}
 			
-			if(Portal::Info[i][Portal::Portal2][0] != 0.0) {
-				if(!Portal::Info[i][Portal::Allowed][Pl::FracID(playerid)]) {
-					switch(CallLocalFunction("onPlayerPortal", "iii", playerid, Portal::Info[i][Portal::Id], 1)) {
+			if(Ptl::Info[i][Ptl::Portal2][0] != 0.0) {
+				if(!Ptl::Info[i][Ptl::Allowed][Pl::FracID(playerid)]) {
+					switch(CallLocalFunction("onPlayerPortal", "iii", playerid, Ptl::Info[i][Ptl::Id], 1)) {
 						case -1 : {
 							return 1;
 						}
@@ -3706,36 +3707,36 @@ stock PickupHndlr::Portal(playerid, pickupid) {
 				}
 				
 				new Float:x,Float:y;
-				if(Portal::Info[i][Portal::Type][1] != 14) {
-					GetXYInFrontOfPoint(x, y, Portal::Info[i][Portal::Portal2][3], 1.5);
-					Rac::SetPlayerPos(playerid,Portal::Info[i][Portal::Portal2][0]+x,Portal::Info[i][Portal::Portal2][1]+y,Portal::Info[i][Portal::Portal2][2]);
-					Rac::SetPlayerFacingAngle(playerid, Portal::Info[i][Portal::Portal2][3]);
+				if(Ptl::Info[i][Ptl::Type][1] != 14) {
+					GetXYInFrontOfPoint(x, y, Ptl::Info[i][Ptl::Portal2][3], 1.5);
+					Rac::SetPlayerPos(playerid,Ptl::Info[i][Ptl::Portal2][0]+x,Ptl::Info[i][Ptl::Portal2][1]+y,Ptl::Info[i][Ptl::Portal2][2]);
+					Rac::SetPlayerFacingAngle(playerid, Ptl::Info[i][Ptl::Portal2][3]);
 				} else {
 					new veh = GetPlayerVehicleID(playerid);
-					GetXYInFrontOfPoint(x, y, Portal::Info[i][Portal::Portal2][3], vehicleSize(veh)+2.0);
-					Rac::SetVehiclePos(veh, Portal::Info[i][Portal::Portal2][0]+x,Portal::Info[i][Portal::Portal2][1]+y,Portal::Info[i][Portal::Portal2][2]);
-					SetVehicleZAngle(veh, Portal::Info[i][Portal::Portal2][3]);
-					LinkVehicleToInterior(veh, Portal::Info[i][Portal::Inter][1]);
-					SetVehicleVirtualWorld(veh, Portal::Info[i][Portal::World][1]);
+					GetXYInFrontOfPoint(x, y, Ptl::Info[i][Ptl::Portal2][3], vehicleSize(veh)+2.0);
+					Rac::SetVehiclePos(veh, Ptl::Info[i][Ptl::Portal2][0]+x,Ptl::Info[i][Ptl::Portal2][1]+y,Ptl::Info[i][Ptl::Portal2][2]);
+					SetVehicleZAngle(veh, Ptl::Info[i][Ptl::Portal2][3]);
+					LinkVehicleToInterior(veh, Ptl::Info[i][Ptl::Inter][1]);
+					SetVehicleVirtualWorld(veh, Ptl::Info[i][Ptl::World][1]);
 				}
-				Rac::SetPlayerInterior(playerid, Portal::Info[i][Portal::Inter][1]);
-				Rac::SetPlayerVirtualWorld(playerid, Portal::Info[i][Portal::World][1]);
+				Rac::SetPlayerInterior(playerid, Ptl::Info[i][Ptl::Inter][1]);
+				Rac::SetPlayerVirtualWorld(playerid, Ptl::Info[i][Ptl::World][1]);
 				SetCameraBehindPlayer(playerid);
 				
 				return 1;
 			}
 		}
 		
-		else if(Portal::Info[i][Portal::Pickup][1] == pickupid) {
+		else if(Ptl::Info[i][Ptl::Pickup][1] == pickupid) {
 			if(EditMode[playerid]) {
 				SetPVarInt(playerid, "selectTeleport", i);
-				format(dialog, sizeof dialog, "Telepot №%i | Пикап №2 ", Portal::Info[i][Portal::Id]);
+				format(dialog, sizeof dialog, "Telepot №%i | Пикап №2 ", Ptl::Info[i][Ptl::Id]);
 				SPD(playerid,TP_EDIT,2,dialog,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
 				return 1;
 			}
 			
-			if(!Portal::Info[i][Portal::Allowed][Pl::FracID(playerid)]) {
-				switch(CallLocalFunction("onPlayerPortal", "iii", playerid, Portal::Info[i][Portal::Id], 2)) {
+			if(!Ptl::Info[i][Ptl::Allowed][Pl::FracID(playerid)]) {
+				switch(CallLocalFunction("onPlayerPortal", "iii", playerid, Ptl::Info[i][Ptl::Id], 2)) {
 					case -1 : {
 						return 1;
 					}
@@ -3746,20 +3747,20 @@ stock PickupHndlr::Portal(playerid, pickupid) {
 			}
 				
 			new Float:x,Float:y;
-			if(Portal::Info[i][Portal::Type][0] != 14) {
-				GetXYInFrontOfPoint(x, y, Portal::Info[i][Portal::Portal1][3], 1.5);
-				Rac::SetPlayerPos(playerid,Portal::Info[i][Portal::Portal1][0]+x,Portal::Info[i][Portal::Portal1][1]+y,Portal::Info[i][Portal::Portal1][2]);
-				Rac::SetPlayerFacingAngle(playerid, Portal::Info[i][Portal::Portal1][3]);
+			if(Ptl::Info[i][Ptl::Type][0] != 14) {
+				GetXYInFrontOfPoint(x, y, Ptl::Info[i][Ptl::Portal1][3], 1.5);
+				Rac::SetPlayerPos(playerid,Ptl::Info[i][Ptl::Portal1][0]+x,Ptl::Info[i][Ptl::Portal1][1]+y,Ptl::Info[i][Ptl::Portal1][2]);
+				Rac::SetPlayerFacingAngle(playerid, Ptl::Info[i][Ptl::Portal1][3]);
 			} else {
 				new veh = GetPlayerVehicleID(playerid);
-				GetXYInFrontOfPoint(x, y, Portal::Info[i][Portal::Portal1][3], vehicleSize(veh)+2.0);
-				Rac::SetVehiclePos(veh, Portal::Info[i][Portal::Portal1][0]+x,Portal::Info[i][Portal::Portal1][1]+y,Portal::Info[i][Portal::Portal1][2]);
-				SetVehicleZAngle(veh, Portal::Info[i][Portal::Portal1][3]);
-				LinkVehicleToInterior(veh, Portal::Info[i][Portal::Inter][0]);
-				SetVehicleVirtualWorld(veh, Portal::Info[i][Portal::World][0]);
+				GetXYInFrontOfPoint(x, y, Ptl::Info[i][Ptl::Portal1][3], vehicleSize(veh)+2.0);
+				Rac::SetVehiclePos(veh, Ptl::Info[i][Ptl::Portal1][0]+x,Ptl::Info[i][Ptl::Portal1][1]+y,Ptl::Info[i][Ptl::Portal1][2]);
+				SetVehicleZAngle(veh, Ptl::Info[i][Ptl::Portal1][3]);
+				LinkVehicleToInterior(veh, Ptl::Info[i][Ptl::Inter][0]);
+				SetVehicleVirtualWorld(veh, Ptl::Info[i][Ptl::World][0]);
 			}
-			Rac::SetPlayerInterior(playerid, Portal::Info[i][Portal::Inter][0]);
-			Rac::SetPlayerVirtualWorld(playerid, Portal::Info[i][Portal::World][0]);
+			Rac::SetPlayerInterior(playerid, Ptl::Info[i][Ptl::Inter][0]);
+			Rac::SetPlayerVirtualWorld(playerid, Ptl::Info[i][Ptl::World][0]);
 			SetCameraBehindPlayer(playerid);
 			
 			return 1;
@@ -5371,7 +5372,7 @@ public: Fillup(playerid, amount, price, sec) {
 		SetTimerEx("Fillup", 300, false, "iiii", playerid, amount, price, --sec);
 	} else {
 		new gas = GetPVarInt(playerid, "SelectGas");
-		if(gas != 0xFFFF) {
+		if(gas != INVALID_ID) {
 			new bidx = GetIndexFromBizID(RefillInfo[gas][brBizID]);
 			if(BizzInfo[bidx][bProds] <= 0) {
 				GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
@@ -5385,7 +5386,7 @@ public: Fillup(playerid, amount, price, sec) {
 				Send(playerid, COLOR_LIGHTBLUE, temp);
 				Rac::GivePlayerMoney(playerid, -price);
 			}
-			SetPVarInt(playerid, "SelectGas", 0xFFFF);
+			SetPVarInt(playerid, "SelectGas", INVALID_ID);
 		}
 		Rac::TogglePlayerControllable(playerid, true);
 	}
@@ -6516,16 +6517,16 @@ stock RemoveInSQL(idx, type=1) {
 
 stock updatePickup( i ) {
 	format(query, sizeof query, "UPDATE `"#__TablePickups__"` SET ");
-	scf(query,src,"`models`='%i,%i',", Portal::Info[i][Portal::Model][0], Portal::Info[i][Portal::Model][1]);
-	scf(query,src,"`types`='%i,%i',", Portal::Info[i][Portal::Type][0], Portal::Info[i][Portal::Type][1]);
-	scf(query,src,"`interiors`='%i,%i',", Portal::Info[i][Portal::Inter][0], Portal::Info[i][Portal::Inter][1]);
-	scf(query,src,"`worlds`='%i,%i',", Portal::Info[i][Portal::World][0], Portal::Info[i][Portal::World][1]);
-	scf(query,src,"`portal1`='%.4f,%.4f,", Portal::Info[i][Portal::Portal1][0], Portal::Info[i][Portal::Portal1][1]);
-	scf(query,src,"%.4f,%.4f',", Portal::Info[i][Portal::Portal1][2], Portal::Info[i][Portal::Portal1][3]);
-	scf(query,src,"`portal2`='%.4f,%.4f,", Portal::Info[i][Portal::Portal2][0], Portal::Info[i][Portal::Portal2][1]);
-	scf(query,src,"%.4f,%.4f',", Portal::Info[i][Portal::Portal2][2], Portal::Info[i][Portal::Portal2][3]);
-	scf(query,src,"`allowed`='%i' ", arrayToBin(Portal::Info[i][Portal::Allowed], MAX_FRAC));
-	scf(query,src,"WHERE `id`='%i'", Portal::Info[i][Portal::Id]);
+	scf(query,src,"`models`='%i,%i',", Ptl::Info[i][Ptl::Model][0], Ptl::Info[i][Ptl::Model][1]);
+	scf(query,src,"`types`='%i,%i',", Ptl::Info[i][Ptl::Type][0], Ptl::Info[i][Ptl::Type][1]);
+	scf(query,src,"`interiors`='%i,%i',", Ptl::Info[i][Ptl::Inter][0], Ptl::Info[i][Ptl::Inter][1]);
+	scf(query,src,"`worlds`='%i,%i',", Ptl::Info[i][Ptl::World][0], Ptl::Info[i][Ptl::World][1]);
+	scf(query,src,"`portal1`='%.4f,%.4f,", Ptl::Info[i][Ptl::Portal1][0], Ptl::Info[i][Ptl::Portal1][1]);
+	scf(query,src,"%.4f,%.4f',", Ptl::Info[i][Ptl::Portal1][2], Ptl::Info[i][Ptl::Portal1][3]);
+	scf(query,src,"`portal2`='%.4f,%.4f,", Ptl::Info[i][Ptl::Portal2][0], Ptl::Info[i][Ptl::Portal2][1]);
+	scf(query,src,"%.4f,%.4f',", Ptl::Info[i][Ptl::Portal2][2], Ptl::Info[i][Ptl::Portal2][3]);
+	scf(query,src,"`allowed`='%i' ", arrayToBin(Ptl::Info[i][Ptl::Allowed], MAX_FRAC));
+	scf(query,src,"WHERE `id`='%i'", Ptl::Info[i][Ptl::Id]);
 	Db::tquery(connDb, query, "", "");
 	return 1;
 }
@@ -7188,7 +7189,7 @@ CMD:antidmzone(playerid, params[]) { new string[144];
 
 CMD:addpic(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(TOTAL_PORTAL >= sizeof Portal::Info) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во пикапов!");	
+	if(TOTAL_PORTAL >= sizeof Ptl::Info) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во пикапов!");	
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
 		return Send(playerid, COLOR_GREY, "Введите: /addpickup [modelid] (optional [vw] [type])");
 
@@ -7198,21 +7199,21 @@ CMD:addpic(playerid, params[]) { new string[144];
 		if(params[1] == -1) params[1] = GetPlayerVirtualWorld(playerid);
 		
 		new i = TOTAL_PORTAL; TOTAL_PORTAL++;
-		Portal::Info[i][Portal::Id] = cache_insert_id();
-		Portal::Info[i][Portal::Type][0] = params[2];
-		Portal::Info[i][Portal::Model][0] = params[0];
-		Portal::Info[i][Portal::Inter][0] = GetPlayerInterior(playerid);
-		Portal::Info[i][Portal::World][0] = params[1];
+		Ptl::Info[i][Ptl::Id] = cache_insert_id();
+		Ptl::Info[i][Ptl::Type][0] = params[2];
+		Ptl::Info[i][Ptl::Model][0] = params[0];
+		Ptl::Info[i][Ptl::Inter][0] = GetPlayerInterior(playerid);
+		Ptl::Info[i][Ptl::World][0] = params[1];
 		GetPlayerPos(
 			playerid,
-			Portal::Info[i][Portal::Portal1][0],
-			Portal::Info[i][Portal::Portal1][1],
-			Portal::Info[i][Portal::Portal1][2]
+			Ptl::Info[i][Ptl::Portal1][0],
+			Ptl::Info[i][Ptl::Portal1][1],
+			Ptl::Info[i][Ptl::Portal1][2]
 		);
-		if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[i][Portal::Portal1][3]);
-		else GetPlayerFacingAngle(playerid, Portal::Info[i][Portal::Portal1][3]);
-		Portal::Info[i][Portal::Pickup][0]=_AddPickup(Portal::Info[i][Portal::Model][0],Portal::Info[i][Portal::Type][0],Portal::Info[i][Portal::Portal1],Portal::Info[i][Portal::World][0]);
-		updatePickup( i );
+		if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Ptl::Info[i][Ptl::Portal1][3]);
+		else GetPlayerFacingAngle(playerid, Ptl::Info[i][Ptl::Portal1][3]);
+		Ptl::Info[i][Ptl::Pickup][0]=_AddPickup(Ptl::Info[i][Ptl::Model][0],Ptl::Info[i][Ptl::Type][0],Ptl::Info[i][Ptl::Portal1],Ptl::Info[i][Ptl::World][0]);
+		updatePickup(i);
 		Send(playerid, -1, "* Пикап входа создан!");
 	}
 	cache_delete(result);
@@ -7222,26 +7223,28 @@ CMD:addpic(playerid, params[]) { new string[144];
 CMD:setpic1(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	new teleport = GetPVarInt(playerid, "selectTeleport");
-	if(teleport == 0xffff) return Send(playerid, COLOR_GREY, "* Вы не выбрали портал!");
+	if(teleport == INVALID_ID) return Send(playerid, COLOR_GREY, "* Вы не выбрали портал!");
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
 		return Send(playerid, COLOR_GREY, "Введите: /setpic1 [modelid]");
 		
 	if( params[1] == -1 ) params[1] = GetPlayerVirtualWorld(playerid);
-	Portal::Info[teleport][Portal::Type][0] = params[2];
-	Portal::Info[teleport][Portal::Model][0] = params[0];
-	Portal::Info[teleport][Portal::Inter][0] = GetPlayerInterior(playerid);
-	Portal::Info[teleport][Portal::World][0] = params[1];
+	Ptl::Info[teleport][Ptl::Type][0] = params[2];
+	Ptl::Info[teleport][Ptl::Model][0] = params[0];
+	Ptl::Info[teleport][Ptl::Inter][0] = GetPlayerInterior(playerid);
+	Ptl::Info[teleport][Ptl::World][0] = params[1];
 	GetPlayerPos(
 		playerid,
-		Portal::Info[teleport][Portal::Portal1][0],
-		Portal::Info[teleport][Portal::Portal1][1],
-		Portal::Info[teleport][Portal::Portal1][2]
+		Ptl::Info[teleport][Ptl::Portal1][0],
+		Ptl::Info[teleport][Ptl::Portal1][1],
+		Ptl::Info[teleport][Ptl::Portal1][2]
 	);
-	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[teleport][Portal::Portal1][3]);
-	else GetPlayerFacingAngle(playerid, Portal::Info[teleport][Portal::Portal1][3]);
-	DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][0]);
-	Portal::Info[teleport][Portal::Pickup][0]=_AddPickup(Portal::Info[teleport][Portal::Model][0],Portal::Info[teleport][Portal::Type][0],Portal::Info[teleport][Portal::Portal1],Portal::Info[teleport][Portal::World][0]);
-	updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,params[1]), SetPVarInt(playerid, "selectTeleport", 0xffff);
+	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Ptl::Info[teleport][Ptl::Portal1][3]);
+	else GetPlayerFacingAngle(playerid, Ptl::Info[teleport][Ptl::Portal1][3]);
+	DestroyDynamicPickup(Ptl::Info[teleport][Ptl::Pickup][0]);
+	Ptl::Info[teleport][Ptl::Pickup][0]=_AddPickup(Ptl::Info[teleport][Ptl::Model][0],Ptl::Info[teleport][Ptl::Type][0],Ptl::Info[teleport][Ptl::Portal1],Ptl::Info[teleport][Ptl::World][0]);
+	updatePickup(teleport);
+	Rac::SetPlayerVirtualWorld(playerid,params[1]);
+	SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 	Send(playerid, COLOR_GREY, "Позиция пикапа изменина!");
 
 	return 1;
@@ -7250,27 +7253,29 @@ CMD:setpic1(playerid, params[]) {
 CMD:setpic2(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	new teleport = GetPVarInt(playerid, "selectTeleport");
-	if(teleport == 0xffff) return Send(playerid, COLOR_GREY, "* Вы не выбрали портал!");
+	if(teleport == INVALID_ID) return Send(playerid, COLOR_GREY, "* Вы не выбрали портал!");
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
 		return Send(playerid, COLOR_GREY, "Введите: /setpic2 [modelid]");
 	
 	if( params[1] == -1 ) params[1] = GetPlayerVirtualWorld(playerid);
-	Portal::Info[teleport][Portal::Type][1] = params[2];
-	Portal::Info[teleport][Portal::Model][1] = params[0];
-	Portal::Info[teleport][Portal::Inter][1] = GetPlayerInterior(playerid);
-	Portal::Info[teleport][Portal::World][1] = params[1];
+	Ptl::Info[teleport][Ptl::Type][1] = params[2];
+	Ptl::Info[teleport][Ptl::Model][1] = params[0];
+	Ptl::Info[teleport][Ptl::Inter][1] = GetPlayerInterior(playerid);
+	Ptl::Info[teleport][Ptl::World][1] = params[1];
 	GetPlayerPos
 	(
 		playerid,
-		Portal::Info[teleport][Portal::Portal2][0],
-		Portal::Info[teleport][Portal::Portal2][1],
-		Portal::Info[teleport][Portal::Portal2][2]
+		Ptl::Info[teleport][Ptl::Portal2][0],
+		Ptl::Info[teleport][Ptl::Portal2][1],
+		Ptl::Info[teleport][Ptl::Portal2][2]
 	);
-	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Portal::Info[teleport][Portal::Portal2][3]);
-	else GetPlayerFacingAngle(playerid, Portal::Info[teleport][Portal::Portal2][3]);
-	DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][1]);
-	Portal::Info[teleport][Portal::Pickup][1]=_AddPickup(Portal::Info[teleport][Portal::Model][1],Portal::Info[teleport][Portal::Type][1],Portal::Info[teleport][Portal::Portal2],Portal::Info[teleport][Portal::World][1]);
-	updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,params[1]), SetPVarInt(playerid, "selectTeleport", 0xffff);
+	if(params[2] == 14) GetVehicleZAngle(GetPlayerVehicleID(playerid), Ptl::Info[teleport][Ptl::Portal2][3]);
+	else GetPlayerFacingAngle(playerid, Ptl::Info[teleport][Ptl::Portal2][3]);
+	DestroyDynamicPickup(Ptl::Info[teleport][Ptl::Pickup][1]);
+	Ptl::Info[teleport][Ptl::Pickup][1]=_AddPickup(Ptl::Info[teleport][Ptl::Model][1],Ptl::Info[teleport][Ptl::Type][1],Ptl::Info[teleport][Ptl::Portal2],Ptl::Info[teleport][Ptl::World][1]);
+	updatePickup(teleport);
+	Rac::SetPlayerVirtualWorld(playerid,params[1]);
+	SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 	Send(playerid, COLOR_GREY, "Позиция пикапа изменина!");
 
 	return 1;
@@ -7279,7 +7284,7 @@ CMD:setpic2(playerid, params[]) {
 CMD:editmode(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	EditMode[playerid] = !EditMode[playerid];
-	SetPVarInt(playerid, "selectTeleport", 0xffff);
+	SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 	format(string, sizeof string, "Режим редактирования: %s", (EditMode[playerid])?("{00cc00}Вкл."):("{ff0000}Выкл."));
 	Send(playerid, -1, string);
 	return 1;
@@ -8898,7 +8903,7 @@ CMD:sms(playerid, params[]) { new string[144], sendername[24];
 }
 
 CMD:p(playerid, params[]) { new string[144], sendername[24];
-	if(Mobile[playerid] != 0xFFFF) return Send(playerid, COLOR_GREY, "  Вы уже разговариваите по телефону!");
+	if(Mobile[playerid] != INVALID_ID) return Send(playerid, COLOR_GREY, "  Вы уже разговариваите по телефону!");
 	foreach(new i: Player)
 	{
 		if(Pl::isLogged(i))
@@ -12125,7 +12130,7 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 		
 		} else if(strcmp(temp,"medic",true) == 0) {
 			if(Pl::FracID(playerid) != 4) return Send(playerid, COLOR_GREY, "* Вы не медик!");
-			if(MedicCallTime[playerid][0] != 0xffff) return Send(playerid, COLOR_GREY, "* Вы уже приняли вызов!");
+			if(MedicCallTime[playerid][0] != INVALID_ID) return Send(playerid, COLOR_GREY, "* Вы уже приняли вызов!");
 			if(!Iter::Count(MedicCalls)) return Send(playerid, COLOR_GREY, "* Никто еще не вызывал медика!");
 			foreach(new caller : MedicCalls) {
 				MedicCallTime[playerid][0] = caller;
@@ -12147,7 +12152,7 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 		
 		} else if(strcmp(temp,"mechanic",true) == 0) {
 			if(Pl::Info[playerid][pJob] != 6) return Send(playerid, COLOR_GREY, "* Вы не автомеханик!");
-			if(MechanicCallTime[playerid][0] != 0xffff) return Send(playerid, COLOR_GREY, "* Вы уже приняли другой вызов!");
+			if(MechanicCallTime[playerid][0] != INVALID_ID) return Send(playerid, COLOR_GREY, "* Вы уже приняли другой вызов!");
 			if(!Iter::Count(MechanicCalls)) return Send(playerid, COLOR_GREY, "* В настоящие время нет вызовов!");
 			foreach(new caller : MechanicCalls) {
 				MechanicCallTime[playerid][0] = caller;
@@ -14773,7 +14778,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					GameTextForPlayer(playerid, string, 600, 5);
 				}
 			} else {
-				SetPVarInt(playerid, "SelectGas", 0xFFFF);
+				SetPVarInt(playerid, "SelectGas", INVALID_ID);
 			}
 		}
 		
@@ -15094,9 +15099,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+10 : {
 			if(response) {
 				for(new i; i < TOTAL_PORTAL; i++) {
-					if(Portal::Info[i][Portal::Id] == 11) {
+					if(Ptl::Info[i][Ptl::Id] == 11) {
 						for(new f; f < MAX_FRAC; f++) {
-							Portal::Info[i][Portal::Allowed][f] = listitem;
+							Ptl::Info[i][Ptl::Allowed][f] = listitem;
 						}
 						updatePickup(i);
 						Send(playerid, -1, (listitem)?("* Автошкола открыта!"):("* Автошкола закрыта!"));
@@ -15558,7 +15563,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						dialog[0] = '\0';
 						new portal = GetPVarInt(playerid, "selectTeleport");
 						for(new i; i < MAX_FRAC; i++) {
-							if(Portal::Info[portal][Portal::Allowed][i]) {
+							if(Ptl::Info[portal][Ptl::Allowed][i]) {
 								scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 							} else {
 								scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
@@ -15570,22 +15575,22 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 3 : {
 						TOTAL_PORTAL --;
 						new i = GetPVarInt(playerid, "selectTeleport");
-						DestroyDynamicPickup(Portal::Info[i][Portal::Pickup][0]);
-						DestroyDynamicPickup(Portal::Info[i][Portal::Pickup][1]);
-						format(query, sizeof query, "DELETE FROM `"#__TablePickups__"` WHERE `id`='%i'", Portal::Info[i][Portal::Id]);
+						DestroyDynamicPickup(Ptl::Info[i][Ptl::Pickup][0]);
+						DestroyDynamicPickup(Ptl::Info[i][Ptl::Pickup][1]);
+						format(query, sizeof query, "DELETE FROM `"#__TablePickups__"` WHERE `id`='%i'", Ptl::Info[i][Ptl::Id]);
 						Db::tquery(connDb, query, "", "");
 						
-						CopyArray(Portal::Info[i][Portal::Model], Portal::Info[TOTAL_PORTAL][Portal::Model], 2);
-						CopyArray(Portal::Info[i][Portal::Type], Portal::Info[TOTAL_PORTAL][Portal::Type], 2);
-						CopyArray(Portal::Info[i][Portal::Inter], Portal::Info[TOTAL_PORTAL][Portal::Inter], 2);
-						CopyArray(Portal::Info[i][Portal::World], Portal::Info[TOTAL_PORTAL][Portal::World], 2);
-						CopyArray(Portal::Info[i][Portal::Pickup], Portal::Info[TOTAL_PORTAL][Portal::Pickup], 2);
-						CopyArray(Portal::Info[i][Portal::Portal1], Portal::Info[TOTAL_PORTAL][Portal::Portal1], 4);
-						CopyArray(Portal::Info[i][Portal::Portal2], Portal::Info[TOTAL_PORTAL][Portal::Portal2], 4);
+						CopyArray(Ptl::Info[i][Ptl::Model], Ptl::Info[TOTAL_PORTAL][Ptl::Model], 2);
+						CopyArray(Ptl::Info[i][Ptl::Type], Ptl::Info[TOTAL_PORTAL][Ptl::Type], 2);
+						CopyArray(Ptl::Info[i][Ptl::Inter], Ptl::Info[TOTAL_PORTAL][Ptl::Inter], 2);
+						CopyArray(Ptl::Info[i][Ptl::World], Ptl::Info[TOTAL_PORTAL][Ptl::World], 2);
+						CopyArray(Ptl::Info[i][Ptl::Pickup], Ptl::Info[TOTAL_PORTAL][Ptl::Pickup], 2);
+						CopyArray(Ptl::Info[i][Ptl::Portal1], Ptl::Info[TOTAL_PORTAL][Ptl::Portal1], 4);
+						CopyArray(Ptl::Info[i][Ptl::Portal2], Ptl::Info[TOTAL_PORTAL][Ptl::Portal2], 4);
 					}
 				}
 			} else {
-				SetPVarInt(playerid, "selectTeleport", 0xffff);
+				SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 			}
 		}
 		
@@ -15598,7 +15603,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 3 : Send(playerid, -1, "Встанте на то место где должен быть пикап и введите /setpic1");
 				}
 			} else {
-				format(string, sizeof string, "Telepot №%i", Portal::Info[GetPVarInt(playerid, "selectTeleport")][Portal::Id]);
+				format(string, sizeof string, "Telepot №%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
 				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
 			}
 		}
@@ -15612,7 +15617,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 3 : Send(playerid, -1, "Встанте на то место где должен быть пикап и введите /setpic2");
 				}
 			} else {
-				format(string, sizeof string, "Telepot №%i", Portal::Info[GetPVarInt(playerid, "selectTeleport")][Portal::Id]);
+				format(string, sizeof string, "Telepot №%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
 				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
 			}
 		}
@@ -15623,9 +15628,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[teleport][Portal::Model][0] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][0], E_STREAMER_MODEL_ID, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
+					Ptl::Info[teleport][Ptl::Model][0] = inputtext[0];
+					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][0], E_STREAMER_MODEL_ID, inputtext[0]);
+					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Первый пикап", "Модель\nПозиция", "SELECT", "CANCEL");
@@ -15638,9 +15643,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[teleport][Portal::Model][1] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][1], E_STREAMER_MODEL_ID, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
+					Ptl::Info[teleport][Ptl::Model][1] = inputtext[0];
+					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][1], E_STREAMER_MODEL_ID, inputtext[0]);
+					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nПозиция", "SELECT", "CANCEL");
@@ -15655,9 +15660,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, TP_EDIT+5, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[teleport][Portal::Type][0] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][0], E_STREAMER_TYPE, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
+					Ptl::Info[teleport][Ptl::Type][0] = inputtext[0];
+					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][0], E_STREAMER_TYPE, inputtext[0]);
+					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
@@ -15672,9 +15677,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, TP_EDIT+6, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[teleport][Portal::Type][1] = inputtext[0];
-					Streamer::SetIntData(1, Portal::Info[teleport][Portal::Pickup][1], E_STREAMER_TYPE, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", 0xffff), Streamer::Update(playerid);
+					Ptl::Info[teleport][Ptl::Type][1] = inputtext[0];
+					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][1], E_STREAMER_TYPE, inputtext[0]);
+					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
@@ -15689,10 +15694,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, TP_EDIT+7, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[teleport][Portal::World][0] = inputtext[0];
-					DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][0]);
-					Portal::Info[teleport][Portal::Pickup][0]=_AddPickup(Portal::Info[teleport][Portal::Model][0],Portal::Info[teleport][Portal::Type][0],Portal::Info[teleport][Portal::Portal1],Portal::Info[teleport][Portal::World][0]);
-					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", 0xffff);
+					Ptl::Info[teleport][Ptl::World][0] = inputtext[0];
+					DestroyDynamicPickup(Ptl::Info[teleport][Ptl::Pickup][0]);
+					Ptl::Info[teleport][Ptl::Pickup][0]=_AddPickup(Ptl::Info[teleport][Ptl::Model][0],Ptl::Info[teleport][Ptl::Type][0],Ptl::Info[teleport][Ptl::Portal1],Ptl::Info[teleport][Ptl::World][0]);
+					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
@@ -15707,10 +15712,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, TP_EDIT+8, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
-					Portal::Info[teleport][Portal::World][1] = inputtext[0];
-					DestroyDynamicPickup(Portal::Info[teleport][Portal::Pickup][1]);
-					Portal::Info[teleport][Portal::Pickup][1]=_AddPickup(Portal::Info[teleport][Portal::Model][1],Portal::Info[teleport][Portal::Type][1],Portal::Info[teleport][Portal::Portal2],Portal::Info[teleport][Portal::World][1]);
-					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", 0xffff);
+					Ptl::Info[teleport][Ptl::World][1] = inputtext[0];
+					DestroyDynamicPickup(Ptl::Info[teleport][Ptl::Pickup][1]);
+					Ptl::Info[teleport][Ptl::Pickup][1]=_AddPickup(Ptl::Info[teleport][Ptl::Model][1],Ptl::Info[teleport][Ptl::Type][1],Ptl::Info[teleport][Ptl::Portal2],Ptl::Info[teleport][Ptl::World][1]);
+					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 				}
 			} else { 
 				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
@@ -15721,9 +15726,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				dialog[0] = '\0';
 				new portal = GetPVarInt(playerid, "selectTeleport");
-				Portal::Info[portal][Portal::Allowed][listitem] = !Portal::Info[portal][Portal::Allowed][listitem];
+				Ptl::Info[portal][Ptl::Allowed][listitem] = !Ptl::Info[portal][Ptl::Allowed][listitem];
 				for(new i; i < MAX_FRAC; i++) {
-					if(Portal::Info[portal][Portal::Allowed][i]) {
+					if(Ptl::Info[portal][Ptl::Allowed][i]) {
 						scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 					} else {
 						scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
@@ -15732,7 +15737,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SPD(playerid, TP_EDIT+9, 2, "Доступность для фракций", dialog, "SELECT", "CANCEL");
 				updatePickup(portal);
 			} else {
-				format(string, sizeof string, "Telepot №%i", Portal::Info[GetPVarInt(playerid, "selectTeleport")][Portal::Id]);
+				format(string, sizeof string, "Telepot №%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
 				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
 			}
 		}
@@ -16166,7 +16171,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					\nНапишите сумму, которую хотите снять со счета.\nМаксимум $100000 за одну опирацию.\n\
 					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+1, DIALOG_STYLE_INPUT,""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. WITHDRAW", dialog, "OK", "CANCEL");
-				} else if(inputtext[0] > Pl::Info[playerid][pBank]) {
+				} else if(cash > Pl::Info[playerid][pBank]) {
 					Send(playerid, COLOR_GREY, "Нельзя снять больше денег, чем на счету!");
 					format(dialog, sizeof dialog, "* Недостаточно средств на счету!\n\
 					\nНапишите сумму, которую хотите снять со счета.\nМаксимум $100000 за одну опирацию.\n\
@@ -17680,7 +17685,7 @@ stock playerAFKUpdate(playerid) {
 				AFKInfo[playerid][afk_State] = 1;
 				CallLocalFunction("OnPlayerAFK", "ii", playerid, 1, 0);
 				format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}секунд]", AFKInfo[playerid][afk_Time][0], MAX_AFK_TIME);
-				AFKInfo[playerid][afk_Text] = Create3DTextLabel(temp, 0xFFFFFFFF, 0.00, 0.00, 10000.00, T_DIST, 0);
+				AFKInfo[playerid][afk_Text] = Create3DTextLabel(temp, INVALID_ID, 0.00, 0.00, 10000.00, T_DIST, 0);
 				Attach3DTextLabelToPlayer(AFKInfo[playerid][afk_Text], playerid, 0.0, 0.0, 0.3);
 			}
 			
@@ -17696,7 +17701,7 @@ stock playerAFKUpdate(playerid) {
 				if(Pl::isAdmin(playerid, ADMINISTRATOR)) {
 					AFKInfo[playerid][afk_Time][0] = AFK_TEXT_SET;
 					format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}секунд]", AFKInfo[playerid][afk_Time], MAX_AFK_TIME);
-					Update3DTextLabelText(AFKInfo[playerid][afk_Text], 0xFFFFFFFF, temp);
+					Update3DTextLabelText(AFKInfo[playerid][afk_Text], INVALID_ID, temp);
 				}
 				
 				else {
@@ -17706,7 +17711,7 @@ stock playerAFKUpdate(playerid) {
 				}
 			} else {
 				format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}секунд]", AFKInfo[playerid][afk_Time][0], MAX_AFK_TIME);
-				Update3DTextLabelText(AFKInfo[playerid][afk_Text], 0xFFFFFFFF, temp);
+				Update3DTextLabelText(AFKInfo[playerid][afk_Text], INVALID_ID, temp);
 			}
 		}
 	}
@@ -18120,12 +18125,12 @@ stock Pl::Init(playerid) {
 	
 	TempVehicle[playerid]				= INVALID_VEHICLE_ID;
 
-	SetPVarInt(playerid, "RouteID", 0xFFFF);
+	SetPVarInt(playerid, "RouteID", INVALID_ID);
 	SetPVarInt(playerid, "SelectedCar", -1);
 	SetPVarInt(playerid, "SelectedItem", -1);
 	SetPVarInt(playerid, "SelectedPlayer", INVALID_PLAYER_ID);
-	SetPVarInt(playerid, "selectTeleport", 0xFFFF);
-	SetPVarInt(playerid, "SelectGas", 0xFFFF);
+	SetPVarInt(playerid, "selectTeleport", INVALID_ID);
+	SetPVarInt(playerid, "SelectGas", INVALID_ID);
 	
 	SetPVarInt(playerid, "InvateFrac", 0);
 	SetPVarInt(playerid, "AnsweredHelper", INVALID_PLAYER_ID);
@@ -18934,7 +18939,7 @@ public OnQueryError(errorid, error[], callback[], querystr[], connectionHandle) 
 	return 1;
 }
 
-stock AddPickup(model, type, Float:x, Float:y, Float:z, vw = -1, text[] = " ", color = 0xFFFFFFFF, Float:offsetX = 0.0, Float:offsetY = 0.0, Float:offsetZ = 0.6) {
+stock AddPickup(model, type, Float:x, Float:y, Float:z, vw = -1, text[] = " ", color = INVALID_ID, Float:offsetX = 0.0, Float:offsetY = 0.0, Float:offsetZ = 0.6) {
 	if(text[0] != ' ') {
 		offsetX += x;
 		offsetY += y;
@@ -18945,7 +18950,7 @@ stock AddPickup(model, type, Float:x, Float:y, Float:z, vw = -1, text[] = " ", c
 	return CreateDynamicPickup(model, type, x, y, z, vw);
 }
 
-stock _AddPickup(model, type, Float:pos[], vw = -1, text[] = " ", color = 0xFFFFFFFF, Float:offset[] = {0.0,0.0,0.6}) {
+stock _AddPickup(model, type, Float:pos[], vw = -1, text[] = " ", color = INVALID_ID, Float:offset[] = {0.0,0.0,0.6}) {
 	if(text[0] != ' ') {
 		offset[0] += pos[0];
 		offset[1] += pos[1];
@@ -20038,18 +20043,18 @@ stock LoadPortals(){
 	new rows = cache_get_row_count();
 	if(rows) {
 		for(new i; i < rows; i++) {
-			cache_get_str(i, 0, "p<,>a<i>[2]", Portal::Info[i][Portal::Id]);
-			cache_get_str(i, 1, "p<,>a<i>[2]", Portal::Info[i][Portal::Model]);
-			cache_get_str(i, 2, "p<,>a<i>[2]", Portal::Info[i][Portal::Type]);
-			cache_get_str(i, 3, "p<,>a<i>[2]", Portal::Info[i][Portal::Inter]);
-			cache_get_str(i, 4, "p<,>a<i>[2]", Portal::Info[i][Portal::World]);
-			cache_get_str(i, 5, "p<,>a<f>[4]", Portal::Info[i][Portal::Portal1]);
-			cache_get_str(i, 6, "p<,>a<f>[4]", Portal::Info[i][Portal::Portal2]);
+			cache_get_str(i, 0, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Id]);
+			cache_get_str(i, 1, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Model]);
+			cache_get_str(i, 2, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Type]);
+			cache_get_str(i, 3, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Inter]);
+			cache_get_str(i, 4, "p<,>a<i>[2]", Ptl::Info[i][Ptl::World]);
+			cache_get_str(i, 5, "p<,>a<f>[4]", Ptl::Info[i][Ptl::Portal1]);
+			cache_get_str(i, 6, "p<,>a<f>[4]", Ptl::Info[i][Ptl::Portal2]);
 			cache_get_int(i, 7, allowed);
 			
-			Portal::Info[i][Portal::Pickup][0]=_AddPickup(Portal::Info[i][Portal::Model][0],Portal::Info[i][Portal::Type][0],Portal::Info[i][Portal::Portal1],Portal::Info[i][Portal::World][0]);
-			Portal::Info[i][Portal::Pickup][1]=_AddPickup(Portal::Info[i][Portal::Model][1],Portal::Info[i][Portal::Type][1],Portal::Info[i][Portal::Portal2],Portal::Info[i][Portal::World][1]);
-			binToArray(allowed, Portal::Info[i][Portal::Allowed], MAX_FRAC);
+			Ptl::Info[i][Ptl::Pickup][0]=_AddPickup(Ptl::Info[i][Ptl::Model][0],Ptl::Info[i][Ptl::Type][0],Ptl::Info[i][Ptl::Portal1],Ptl::Info[i][Ptl::World][0]);
+			Ptl::Info[i][Ptl::Pickup][1]=_AddPickup(Ptl::Info[i][Ptl::Model][1],Ptl::Info[i][Ptl::Type][1],Ptl::Info[i][Ptl::Portal2],Ptl::Info[i][Ptl::World][1]);
+			binToArray(allowed, Ptl::Info[i][Ptl::Allowed], MAX_FRAC);
 		}
 		TOTAL_PORTAL = rows;
 		debug("LoadPortals() - Ok! Portals: %i. Run time: %i (ms)", TOTAL_PORTAL, GetTickCount()-time);
@@ -20377,9 +20382,9 @@ stock GetVehiclePlayerSeat(vehicleid, seatid) {
 	return INVALID_PLAYER_ID;
 }
 
-stock Pl::setCamPos(playerid, i, vw=0xFFFF) {
+stock Pl::setCamPos(playerid, i, vw=INVALID_ID) {
 	Rac::SetPlayerInterior(playerid,EnterPos[i][iteriorid]);
-	Rac::SetPlayerVirtualWorld(playerid, (vw != 0xFFFF) ? vw : (playerid+EnterPos[i][virtworld]));
+	Rac::SetPlayerVirtualWorld(playerid, (vw != INVALID_ID) ? vw : (playerid+EnterPos[i][virtworld]));
 	Rac::SetPlayerPos(playerid, EnterPos[i][p_pos][0], EnterPos[i][p_pos][1], EnterPos[i][p_pos][2]);
 	Rac::SetPlayerFacingAngle(playerid, EnterPos[i][p_pos][3]);
 	SetPlayerCameraPos(playerid, EnterPos[i][c_pos][0],EnterPos[i][c_pos][1], EnterPos[i][c_pos][2]);
