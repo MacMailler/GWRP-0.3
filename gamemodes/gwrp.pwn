@@ -17173,6 +17173,10 @@ public OnPlayerStreamIn(playerid, forplayerid) {
 		}
 	}
 	
+	if(GetPlayerState(forplayerid) == PLAYER_STATE_SPECTATING) {
+		Iter::Add(inStreamPlayers[playerid], forplayerid);
+	}
+	
 	ShowPlayerNameTagForPlayer(forplayerid, playerid, !Pl::Info[playerid][pMaskOn]);
 	Iter::Add(inStreamPlayers[forplayerid], playerid);
 }
@@ -17193,6 +17197,10 @@ public OnPlayerStreamOut(playerid, forplayerid) {
 				Bl::Info[playerid][Bl::isKilled] = false;
 			}
 		}
+	}
+	
+	if(GetPlayerState(forplayerid) == PLAYER_STATE_SPECTATING) {
+		Iter::Remove(inStreamPlayers[playerid], forplayerid);
 	}
 	
 	Iter::Remove(inStreamPlayers[forplayerid], playerid);
