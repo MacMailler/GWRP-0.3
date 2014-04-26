@@ -924,10 +924,12 @@ new Teams[] = { 1, 2, 3, 4, 7 };
 new Mafias[] = { 5, 6, 13 };
 
 new ZahvatDeath[MAX_PLAYERS];
+new SolderOnAFK[MAX_FRAC];
 new ZahvatKills[MAX_FRAC char];
 new ZahvatScore[MAX_FRAC];
 new GangOnBattle[MAX_FRAC];
-new GangSolderCount[MAX_FRAC];
+new Iterator:GangSolder[MAX_FRAC]<MAX_PLAYERS>;
+
 
 enum pInfo {
 	pID,
@@ -1840,6 +1842,7 @@ public OnGameModeInit() {
 	
 	Db::Update();
 	
+	Iter::Init(GangSolder);
 	Iter::Init(JobPlayers);
 	Iter::Init(JobVehicles);
 	Iter::Init(TeamPlayers);
@@ -2007,30 +2010,16 @@ public: GameModeExitFunc() {
 }
 
 public: OnPlayerAFK(playerid, newstate, oldstate) {
+	new fracid = Pl::FracID(playerid);
+	new biz = GangOnBattle[fracid];
 	switch(newstate) {
 		case 1 : {
-			new fracid = Pl::FracID(playerid);
-			new biz = GangOnBattle[fracid];
-			if(biz != INVALID_BIZ_ID) {
+			if(IsValidBiz(biz) && BizzInfo[biz][bAttack] == fracid) {
 				if(IsPlayerInDynamicArea(playerid, BizzInfo[biz][bZahvatArea])) {
-					new attack = BizzInfo[biz][bAttack];
-					new defend = BizzInfo[biz][bDefend];
-					if(fracid == defend && GangSolderCount[attack] > 0) {
-						ZahvatScore[attack] ++;
-						BizzInfo[biz][bFrac] = attack;
-						GiveGangRespect(attack, ZahvatScore[attack]);
-						Gz::StopFlashForAll(BizzInfo[biz][bZone]);
-						Gz::HideForAll(BizzInfo[biz][bZone]);
-						Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
-						format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
-						GameTextForGangs(temp, 6000, 1);
-						format(temp, sizeof temp, "[GANG NEWS] %s[%d] захватили территорию бизнеса %s, %s[%d] повержены!",
-						GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
-						sendToTeam(GetFracColor(attack), temp, Gangs);
-					}
-					
-					else {
-						ZahvatScore[defend] ++;
+					if(++SolderOnAFK[fracid] >= Iter::Count(GangSolder[fracid])) {
+						new attack = BizzInfo[biz][bAttack];
+						new defend = BizzInfo[biz][bDefend];
+						
 						GiveGangRespect(defend, ZahvatScore[defend]);
 						Gz::StopFlashForAll(BizzInfo[biz][bZone]);
 						Gz::HideForAll(BizzInfo[biz][bZone]);
@@ -2040,32 +2029,41 @@ public: OnPlayerAFK(playerid, newstate, oldstate) {
 						format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
 						GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 						sendToTeam(GetFracColor(defend), temp, Gangs);
-					}
 
-					ZahvatKills{attack} = ZahvatKills{defend} = 0;
-					ZahvatScore[defend] = ZahvatScore[defend] = 0;
-					
-					GangSolderCount[attack] = GangSolderCount[defend] = 0;
-					GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
-					BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
-					BizzInfo[biz][bOnBattle] = 0;
-					DisableZahvatMapIcon(attack, defend);
-					Td::HideForAll(BizzInfo[biz][bZahvatTD]);
-					Td::Destroy(BizzInfo[biz][bZahvatTD]);
-					DestroyDynamicArea(BizzInfo[biz][bZahvatArea]);
-					KillTimer(BizzInfo[biz][bZahvatTimer]);
-					UpdateBizz(biz);
-					UpdateGangInfo();
+						ZahvatKills{attack} = ZahvatKills{defend} = 0;
+						SolderOnAFK{attack} = SolderOnAFK{defend} = 0;
+						ZahvatScore[defend] = ZahvatScore[defend] = 0;
+						
+						Iter::Clear(GangSolder[attack]);
+						Iter::Clear(GangSolder[defend]);
+						GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
+						BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
+						BizzInfo[biz][bOnBattle] = 0;
+						DisableZahvatMapIcon(attack, defend);
+						Td::HideForAll(BizzInfo[biz][bZahvatTD]);
+						Td::Destroy(BizzInfo[biz][bZahvatTD]);
+						DestroyDynamicArea(BizzInfo[biz][bZahvatArea]);
+						KillTimer(BizzInfo[biz][bZahvatTimer]);
+						UpdateBizz(biz);
+						UpdateGangInfo();
+					}
 				}
+			}
+		}
+		
+		case 0 : {
+			if(IsValidBiz(biz) && BizzInfo[biz][bAttack] == fracid) {
+				if(SolderOnAFK[fracid] > 0) SolderOnAFK[fracid]--;
 			}
 		}
 	}
 	return 1;
 }
 
-public: onZahvatBizz(biz, attack, defend) {
-	if(BizzInfo[biz][bZahvatTime] != 0) {
-		BizzInfo[biz][bZahvatTime]--;
+
+public: onZahvatBizz(biz, attack, defend) {	
+	if(BizzInfo[biz][bZahvatTime] > 0) {
+		BizzInfo[biz][bZahvatTime] -= 2;
 		foreach(new p : TeamPlayers[attack]) {
 			format(temp, sizeof temp, "~r~%i", BizzInfo[biz][bZahvatTime]);
 			Td::SetString(BizzInfo[biz][bZahvatTD], temp), Td::ShowForPlayer(p, BizzInfo[biz][bZahvatTD]);
@@ -2075,8 +2073,8 @@ public: onZahvatBizz(biz, attack, defend) {
 			Td::SetString(BizzInfo[biz][bZahvatTD], temp), Td::ShowForPlayer(p, BizzInfo[biz][bZahvatTD]);
 		}
 	} else {		
-		if((GangSolderCount[defend] == 0 && GangSolderCount[attack] > 0) && (!ZahvatKills{attack} && !ZahvatKills{defend})) {
-			ZahvatScore[attack] += GangSolderCount[attack];
+		if((Iter::Count(GangSolder[defend]) == 0 && Iter::Count(GangSolder[attack]) > 0) && (!ZahvatKills{attack} && !ZahvatKills{defend})) {
+			ZahvatScore[attack] += Iter::Count(GangSolder[attack]);
 			GiveGangRespect(attack, ZahvatScore[attack]);
 
 			GangBiznes{attack} ++;
@@ -2087,12 +2085,11 @@ public: onZahvatBizz(biz, attack, defend) {
 			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
 			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] взяли территорию бизнеса %s без боя, %s[%d] повержены!",
-			GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
+			format(temp, sizeof(temp), "[GANG NEWS] %s взяли без боя территорию бизнеса %s!", GetGangName(attack), BizzInfo[biz][bDescription]);
 			sendToTeam(GetFracColor(attack), temp, Gangs);
 			
 		} else if(!ZahvatKills{attack} && !ZahvatKills{defend}) {
-			ZahvatScore[defend] += GangSolderCount[defend];
+			ZahvatScore[defend] += Iter::Count(GangSolder[defend]);
 			GiveGangRespect(defend, ZahvatScore[defend]);
 			BizzInfo[biz][bFrac] = defend;
 			Gz::StopFlashForAll(BizzInfo[biz][bZone]);
@@ -2100,9 +2097,8 @@ public: onZahvatBizz(biz, attack, defend) {
 			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию бизнеса %s без боя, %s[%d] повержены!",
-			GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
-			sendToTeam(GetFracColor(defend), temp, Gangs);
+			format(temp, sizeof(temp), "[GANG NEWS] %s удержали без боя территорию бизнеса %s!", GetGangName(defend), BizzInfo[biz][bDescription]);
+			sendToTeam(GetFracColor(attack), temp, Gangs);
 		
 		} else {
 			new totalscore = (ZahvatScore[attack] - ZahvatScore[defend]);
@@ -2175,8 +2171,10 @@ public: onZahvatBizz(biz, attack, defend) {
 		}
 		
 		ZahvatKills{attack} = ZahvatKills{defend} = 0;
+		SolderOnAFK{attack} = SolderOnAFK{defend} = 0;
 		ZahvatScore[defend] = ZahvatScore[defend] = 0;
-		
+		Iter::Clear(GangSolder[attack]);
+		Iter::Clear(GangSolder[defend]);
 		GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
 		BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
 		BizzInfo[biz][bOnBattle] = 0;
@@ -3213,9 +3211,9 @@ public OnPlayerEnterDynamicArea(playerid, areaid) {
 	else if(areaid == Area::jailField) {
 	}
 	
-	else if(GangOnBattle[fracid] != INVALID_BIZ_ID) {
+	else if(IsValidBiz(GangOnBattle[fracid])) {
 		if(BizzInfo[GangOnBattle[fracid]][bZahvatArea] == areaid) {
-			GangSolderCount[fracid] ++;
+			Iter::Add(GangSolder[fracid], playerid);
 			Pl::SetFracColor(playerid);
 		}
 	}
@@ -3251,57 +3249,61 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 		}	
 	}
 	
-	else if(GangOnBattle[fracid] != INVALID_BIZ_ID) {
-		if(!ZahvatDeath[playerid]) {
-			new biz = GangOnBattle[fracid];
-			if(BizzInfo[biz][bZahvatArea] == areaid) {
-				new attack = BizzInfo[biz][bAttack];
-				new defend = BizzInfo[biz][bDefend];
-				if(fracid == defend && GangSolderCount[attack] > 0) {
-					ZahvatScore[attack] ++;
-					BizzInfo[biz][bFrac] = attack;
-					GiveGangRespect(attack, ZahvatScore[attack]);
-					Gz::StopFlashForAll(BizzInfo[biz][bZone]);
-					Gz::HideForAll(BizzInfo[biz][bZone]);
-					Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
-					format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
-					GameTextForGangs(temp, 6000, 1);
-					format(temp, sizeof temp, "[GANG NEWS] %s[%d] захватили территорию бизнеса %s, %s[%d] повержены!",
-					GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
-					sendToTeam(GetFracColor(attack), temp, Gangs);
+	else if(IsValidBiz(GangOnBattle[fracid])) {
+		new biz = GangOnBattle[fracid];
+		if(BizzInfo[biz][bZahvatArea] == areaid) {
+			Iter::Remove(GangSolder[fracid], playerid);
+			if(ZahvatDeath[playerid] == 0) {
+				if(!Iter::Count(GangSolder[fracid]) && BizzInfo[biz][bAttack] == fracid) {
+					new attack = BizzInfo[biz][bAttack];
+					new defend = BizzInfo[biz][bDefend];
+					if(fracid == defend && Iter::Count(GangSolder[attack]) > 0) {
+						ZahvatScore[attack] ++;
+						BizzInfo[biz][bFrac] = attack;
+						GiveGangRespect(attack, ZahvatScore[attack]);
+						Gz::StopFlashForAll(BizzInfo[biz][bZone]);
+						Gz::HideForAll(BizzInfo[biz][bZone]);
+						Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
+						format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
+						GameTextForGangs(temp, 6000, 1);
+						format(temp, sizeof temp, "[GANG NEWS] %s[%d] захватили территорию бизнеса %s, %s[%d] повержены!",
+						GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
+						sendToTeam(GetFracColor(attack), temp, Gangs);
+					}
+					
+					else {
+						ZahvatScore[defend] ++;
+						GiveGangRespect(defend, ZahvatScore[defend]);
+						Gz::StopFlashForAll(BizzInfo[biz][bZone]);
+						Gz::HideForAll(BizzInfo[biz][bZone]);
+						Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
+						format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
+						GameTextForGangs(temp, 6000, 1);
+						format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
+						GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
+						sendToTeam(GetFracColor(defend), temp, Gangs);
+					}
+			
+					ZahvatKills{attack} = ZahvatKills{defend} = 0;
+					SolderOnAFK{attack} = SolderOnAFK{defend} = 0;
+					ZahvatScore[defend] = ZahvatScore[defend] = 0;
+					
+					Iter::Clear(GangSolder[attack]);
+					Iter::Clear(GangSolder[defend]);
+					GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
+					BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
+					BizzInfo[biz][bOnBattle] = 0;
+					DisableZahvatMapIcon(attack, defend);
+					Td::HideForAll(BizzInfo[biz][bZahvatTD]);
+					Td::Destroy(BizzInfo[biz][bZahvatTD]);
+					DestroyDynamicArea(BizzInfo[biz][bZahvatArea]);
+					KillTimer(BizzInfo[biz][bZahvatTimer]);
+					UpdateBizz(biz);
+					UpdateGangInfo();
 				}
-				
-				else {
-					ZahvatScore[defend] ++;
-					GiveGangRespect(defend, ZahvatScore[defend]);
-					Gz::StopFlashForAll(BizzInfo[biz][bZone]);
-					Gz::HideForAll(BizzInfo[biz][bZone]);
-					Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
-					format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
-					GameTextForGangs(temp, 6000, 1);
-					format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
-					GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
-					sendToTeam(GetFracColor(defend), temp, Gangs);
-				}
-		
-				ZahvatKills{attack} = ZahvatKills{defend} = 0;
-				ZahvatScore[defend] = ZahvatScore[defend] = 0;
-				
-				GangSolderCount[attack] = GangSolderCount[defend] = 0;
-				GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
-				BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
-				BizzInfo[biz][bOnBattle] = 0;
-				DisableZahvatMapIcon(attack, defend);
-				Td::HideForAll(BizzInfo[biz][bZahvatTD]);
-				Td::Destroy(BizzInfo[biz][bZahvatTD]);
-				DestroyDynamicArea(BizzInfo[biz][bZahvatArea]);
-				KillTimer(BizzInfo[biz][bZahvatTimer]);
-				UpdateBizz(biz);
-				UpdateGangInfo();
+			} else {
+				ZahvatDeath[playerid] = 0;
 			}
-		} else {
-			if(GangSolderCount[fracid] != 0) GangSolderCount[fracid] --;
-			ZahvatDeath[playerid] = 0;
 		}
 	}
 	
@@ -6578,6 +6580,18 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 }
 
 
+CMD:setzahvattime(playerid, params[]) { new string[144];
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	if(sscanf(params, "ii", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /setzahvattime [fracid] [time]");
+	if(!(2 <= params[1] <= 240)) return Send(playerid, COLOR_GREY, "* Неверное время!");
+	if(!IsAGangF(params[0])) return Send(playerid, COLOR_GREY, "* Только для банд!");
+	if(!IsValidBiz(GangOnBattle[params[0]])) return Send(playerid, COLOR_GREY, "* Эта банда не участвует в захвате!");
+	BizzInfo[GangOnBattle[params[0]]][bZahvatTime] = params[1];
+	format(string, sizeof string, "[AdmWarn] * %s применил команду /setzahvattime к банде %s", FracInfo[params[0]][fName]);
+	SendToAdmin(COLOR_YELLOW, string, SUPERMODER, 3);
+	return 1;
+}
+	
 CMD:deletehouse(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Ведите: /deletehouse [houseid]");
@@ -11445,7 +11459,7 @@ CMD:zahvat(playerid, params[]) { new string[144], sendername[24];
 		if(Pl::Info[playerid][pRank] < GetZRank(frac) && !IsPlayerLeader(playerid)) {
 			format(string, sizeof string, "* Для захвата бизнеса вам нужен %i-й ранг!", GetZRank(frac));
 			Send(playerid, COLOR_LIGHTRED, string);
-		} else if(GangOnBattle[frac] != INVALID_BIZ_ID) {
+		} else if(IsValidBiz(GangOnBattle[frac])) {
 			Send(playerid, COLOR_GREY, "* Ваша банда уже учавствует в захвате!");
 		} else {
 			new i = GetClosestBiz(playerid, 3.0);
@@ -11469,13 +11483,18 @@ CMD:zahvat(playerid, params[]) { new string[144], sendername[24];
 				CreateZahvatTD(BizzInfo[i][bZahvatTD]);
 				SetZahvatMapIcon(i, frac, BizzInfo[i][bFrac]);
 				Gz::FlashForAll(BizzInfo[i][bZone], GetFracColor(frac));
-				//Td::ShowForFrac(BizzInfo[i][bZahvatTD], BizzInfo[i][bAttack], BizzInfo[i][bDefend]);
-				BizzInfo[i][bZahvatTimer] = SetTimerEx("onZahvatBizz", 900, true, "iii", i, frac, BizzInfo[i][bFrac]);
-				BizzInfo[i][bZahvatArea] = CreateDynamicSphere(BizzInfo[i][bEnter][0], BizzInfo[i][bEnter][1], BizzInfo[i][bEnter][2], MAX_ZONE_SIZE, 0);
+				BizzInfo[i][bZahvatTimer] = SetTimerEx("onZahvatBizz", 900*2, true, "iii", i, frac, BizzInfo[i][bFrac]);
+				new Float:minx, Float:miny, Float:minz, Float:maxx, Float:maxy, Float:maxz;
+				GetSquare3DPos(BizzInfo[i][bEnter][0], BizzInfo[i][bEnter][1], BizzInfo[i][bEnter][2], MAX_ZONE_SIZE, minx, miny, minz, maxx, maxy, maxz);
+				BizzInfo[i][bZahvatArea] = CreateDynamicCube(minx, miny, minz, maxx, maxy, maxz, 0);
+				
+				foreach(new j : inStreamPlayers[playerid]) {
+					Streamer::UpdateEx(j, BizzInfo[i][bEnter][0], BizzInfo[i][bEnter][1], BizzInfo[i][bEnter][2], 0, 0);
+				}
+				Streamer::UpdateEx(playerid, BizzInfo[i][bEnter][0], BizzInfo[i][bEnter][1], BizzInfo[i][bEnter][2], 0, 0);
 				
 				GetPlayerName(playerid, sendername, 24);
-				format(string, sizeof string, "[GANG NEWS] %s[%s] начал захват бизнеса %s, банды[%s]", sendername, GetGangName(frac), BizzInfo[i][bDescription], GetGangName(BizzInfo[i][bFrac]));
-				sendToFamily(frac, GetFracColor(frac), string);
+				sendToFamily(frac, COLOR_LIGHTRED, "[GANG NEWS] Собирайся в бой, порви противникам глотки!");
 				format(string, sizeof string, "[GANG NEWS] Чужие псы напали на вашу территорию [%s], покажите им кто тут хозяин!", BizzInfo[i][bDescription]);
 				sendToFamily(BizzInfo[i][bFrac], GetFracColor(BizzInfo[i][bFrac]), string);
 			}
