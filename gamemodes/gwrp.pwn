@@ -2294,6 +2294,12 @@ stock SendToAdmin(color, string[], lvl = 1, log = 0) {
 	return 1;
 }
 
+stock SendDeathMessageToAdmin(killer, killee, weapon) {
+	foreach(new i : AdminPlayers) {
+		SendDeathMessageToPlayer(i, killer, killee, weapon);
+	}
+}
+
 stock SendToHelper(color, string[], lvl = 1) {
 	foreach(new i : HelperPlayers) if(IsPHelper(i, lvl) && IsAHelperDuty(i)) Send(i, color, string);
 	SendLog(LOG_HELPER_CHAT, string);
@@ -2867,6 +2873,8 @@ public OnPlayerDeath(playerid, killerid, reason) {
 	Pl::CarInt[playerid] = INVALID_VEHICLE_ID;
 	SetPlayerColor(playerid, COLOR_GRAD2);
 	
+	SendDeathMessageToAdmin(killerid, playerid, reason);
+	
 	return 1;
 }
 
@@ -3372,6 +3380,8 @@ public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
 							PlayerPlaySound(playerid, 1058, 0, 0, 0);
 							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
 						}
+					} else {
+						Send(playerid, COLOR_GREY, "* Для вас проезд закрыт!"); 
 					}
 				}
 				
@@ -3381,6 +3391,8 @@ public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
 							PlayerPlaySound(playerid, 1058, 0, 0, 0);
 							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
 						}
+					} else {
+						Send(playerid, COLOR_GREY, "* Для вас проезд закрыт!"); 
 					}
 				}
 				
@@ -3390,6 +3402,8 @@ public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
 							PlayerPlaySound(playerid, 1058, 0, 0, 0);
 							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
 						}
+					} else {
+						Send(playerid, COLOR_GREY, "* Для вас проезд закрыт!"); 
 					}
 				}
 				
@@ -14215,8 +14229,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new hid = Pl::Info[playerid][pHouseKey];
 				new bidx = GetIndexFromBizID(Bizz_HouseService);
 				if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
-				if(!BizzInfo[bidx][bProds]) return GameTextForPlayer(playerid, "~r~Out of Stock", 1, 5000);
-				if(HouseInfo[hid][hSafe][0] < HouseInt[idx][intPrice]) return Send(playerid, COLOR_GREY, "* На счету дома недастаточно средств!");
+				if(!BizzInfo[bidx][bProds]) {
+					GameTextForPlayer(playerid, "~r~Out of Stock", 1, 5000);
+					ShowMenuForPlayer(IntMenu, playerid);
+					return 1;
+				}
+				if(HouseInfo[hid][hSafe][0] < HouseInt[idx][intPrice]) {
+					Send(playerid, COLOR_GREY, "* На счету дома недастаточно средств!");
+					ShowMenuForPlayer(IntMenu, playerid);
+					return 1;
+				}
 				SetPVarInt(playerid, "SelectedItem", -1);
 				HouseInfo[hid][hInt] = HouseInt[idx][intH];
 				HouseInfo[hid][hExit][0] = HouseInt[idx][intX];
@@ -21168,15 +21190,14 @@ stock LoadGates() {
 			cache_get_int(i, 1, GateData[id][GateAttach]);
 			cache_get_int(i, 2, GateData[id][GateAllowed]);
 			cache_get_int(i, 3, GateData[id][GateMode]);
-			LoadGateLeaf(GateData[id][GateID], GateData[id][GateID]);
-			LoadGatePickup(GateData[id][GateID], GateData[id][GateID]);
+			LoadGateLeaf(id, GateData[id][GateID]);
+			LoadGatePickup(id, GateData[id][GateID]);
 			
 			switch(GateData[id][GateMode]) {
 				case GATE_MODE_PICKUP : Iter::Add(GateModePickup, id);
 				case GATE_MODE_KEY : Iter::Add(GateModeKey, id);
 				default : Iter::Add(GateModePickup, id);
 			}
-			cache_set_active(result);
 		}
 	}
 	cache_delete(result);
