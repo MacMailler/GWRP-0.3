@@ -4279,10 +4279,6 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				PlayerLogged{playerid} = true;
 				Pl::Info[playerid][pReg] = 1;
 				Pl::Info[playerid][pLevel] = START_LEVEL;
-				Pl::Info[playerid][pLic][0] = 1;
-				Pl::Info[playerid][pLic][3] = 1;
-				Pl::Info[playerid][pLic][1] = 1;
-				Pl::Info[playerid][pLic][2] = 1;
 				Pl::Info[playerid][pChar] = GetPlayerSkin(playerid);
 				
 				GivePlayerBankMoney(playerid, 10000);
@@ -18253,7 +18249,7 @@ stock Td::Init() {
 	Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~rp-"#__SERVER_NAME_L"~w~.ru");
 	Td::BackgroundColor(Logo[0], 255);
 	Td::Font(Logo[0], 3);
-	Td::LetterSize(Logo[0], 0.380000, 1.200000);
+	Td::LetterSize(Logo[0], 0.35,1.70);
 	Td::Color(Logo[0], 0xCCCCCCCC);
 	Td::SetOutline(Logo[0], 1);
 	Td::SetProportional(Logo[0], 1);
