@@ -5956,11 +5956,6 @@ stock LoadFracVehicles( ) {
 	return 1;
 }
 
-stock SaveAcc() {
-    foreach(new i: Player) Pl::Update(i);
-	return 1;
-}
-
 public: UpdateProp() {
 	foreach(new i : Biznes) UpdateBizz(i);
 	foreach(new i : Houses) UpdateHouse(i);
@@ -5969,7 +5964,7 @@ public: UpdateProp() {
 	for(new i; i < MAX_FRAC; ++i) UpdateFracInfo(i);
 
 	SaveStuff();
-		
+	
 	SaveGI();
 
 	return 1;
