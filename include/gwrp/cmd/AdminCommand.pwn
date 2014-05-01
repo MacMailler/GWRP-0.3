@@ -491,7 +491,7 @@ CMD:antidmzone(playerid, params[]) { new string[144];
 
 CMD:addpic(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(TOTAL_PORTAL >= sizeof Ptl::Info) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во пикапов!");	
+	if(Iter::Count(Portal) >= sizeof Ptl::Info) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во пикапов!");	
 	if(sscanf(params, "iI(-1)I(23)", params[0], params[1],params[2]))
 		return Send(playerid, COLOR_GREY, "Введите: /addpickup [modelid] (optional [vw] [type])");
 
@@ -500,7 +500,8 @@ CMD:addpic(playerid, params[]) { new string[144];
 	if(cache_affected_rows()) {
 		if(params[1] == -1) params[1] = GetPlayerVirtualWorld(playerid);
 		
-		new i = TOTAL_PORTAL; TOTAL_PORTAL++;
+		new i = Iter::Count(Portal);
+		Iter::Add(Portal, i);
 		Ptl::Info[i][Ptl::Id] = cache_insert_id();
 		Ptl::Info[i][Ptl::Type][0] = params[2];
 		Ptl::Info[i][Ptl::Model][0] = params[0];

@@ -1243,10 +1243,8 @@ enum Ptl::e_potal
 	Ptl::Allowed[MAX_FRAC],
 	Ptl::Pickup[2],
 };
-new
-	TOTAL_PORTAL,
-	Ptl::Info[MAX_PORTALS][Ptl::e_potal]
-;
+new Iterator:Portal<MAX_PORTALS>;
+new Ptl::Info[MAX_PORTALS][Ptl::e_potal];
 
 
 
@@ -3721,7 +3719,7 @@ stock PickupHndlr::Gas(playerid, pickupid) {
 }
 
 stock PickupHndlr::Portal(playerid, pickupid) {
-	for(new i; i < TOTAL_PORTAL; ++i) {
+	foreach(new i : Portal) {
 		if(Ptl::Info[i][Ptl::Pickup][0] == pickupid) {
 			if(EditMode[playerid]) {
 				SetPVarInt(playerid, "selectTeleport", i);
@@ -8805,7 +8803,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_LMENU+10 : {
 			if(response) {
-				for(new i; i < TOTAL_PORTAL; i++) {
+				foreach(new i : Portal) {
 					if(Ptl::Info[i][Ptl::Id] == 11) {
 						for(new f; f < MAX_FRAC; f++) {
 							Ptl::Info[i][Ptl::Allowed][f] = listitem;
@@ -9280,20 +9278,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 					
 					case 3 : {
-						TOTAL_PORTAL --;
 						new i = GetPVarInt(playerid, "selectTeleport");
+						new last = Iter::Last(Portal);
 						DestroyDynamicPickup(Ptl::Info[i][Ptl::Pickup][0]);
 						DestroyDynamicPickup(Ptl::Info[i][Ptl::Pickup][1]);
 						format(query, sizeof query, "DELETE FROM `"#__TablePickups__"` WHERE `id`='%i'", Ptl::Info[i][Ptl::Id]);
 						Db::tquery(connDb, query, "", "");
-						
-						CopyArray(Ptl::Info[i][Ptl::Model], Ptl::Info[TOTAL_PORTAL][Ptl::Model], 2);
-						CopyArray(Ptl::Info[i][Ptl::Type], Ptl::Info[TOTAL_PORTAL][Ptl::Type], 2);
-						CopyArray(Ptl::Info[i][Ptl::Inter], Ptl::Info[TOTAL_PORTAL][Ptl::Inter], 2);
-						CopyArray(Ptl::Info[i][Ptl::World], Ptl::Info[TOTAL_PORTAL][Ptl::World], 2);
-						CopyArray(Ptl::Info[i][Ptl::Pickup], Ptl::Info[TOTAL_PORTAL][Ptl::Pickup], 2);
-						CopyArray(Ptl::Info[i][Ptl::Portal1], Ptl::Info[TOTAL_PORTAL][Ptl::Portal1], 4);
-						CopyArray(Ptl::Info[i][Ptl::Portal2], Ptl::Info[TOTAL_PORTAL][Ptl::Portal2], 4);
+						if(last > i) {
+							Iter::Remove(Portal, last);
+							CopyArray(Ptl::Info[i][Ptl::Model], Ptl::Info[last][Ptl::Model], 2);
+							CopyArray(Ptl::Info[i][Ptl::Type], Ptl::Info[last][Ptl::Type], 2);
+							CopyArray(Ptl::Info[i][Ptl::Inter], Ptl::Info[last][Ptl::Inter], 2);
+							CopyArray(Ptl::Info[i][Ptl::World], Ptl::Info[last][Ptl::World], 2);
+							CopyArray(Ptl::Info[i][Ptl::Pickup], Ptl::Info[last][Ptl::Pickup], 2);
+							CopyArray(Ptl::Info[i][Ptl::Portal1], Ptl::Info[last][Ptl::Portal1], 4);
+							CopyArray(Ptl::Info[i][Ptl::Portal2], Ptl::Info[last][Ptl::Portal2], 4);
+						} else {
+							Iter::Remove(Portal, i);
+						}
 					}
 				}
 			} else {
@@ -9337,7 +9339,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Model][0] = inputtext[0];
 					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][0], E_STREAMER_MODEL_ID, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
+					updatePickup(teleport);
+					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
+					Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Первый пикап", "Модель\nПозиция", "SELECT", "CANCEL");
@@ -9352,7 +9356,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Model][1] = inputtext[0];
 					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][1], E_STREAMER_MODEL_ID, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
+					updatePickup(teleport);
+					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
+					Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nПозиция", "SELECT", "CANCEL");
@@ -9369,7 +9375,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Type][0] = inputtext[0];
 					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][0], E_STREAMER_TYPE, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
+					updatePickup(teleport);
+					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
+					Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
@@ -9386,7 +9394,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Type][1] = inputtext[0];
 					Streamer::SetIntData(1, Ptl::Info[teleport][Ptl::Pickup][1], E_STREAMER_TYPE, inputtext[0]);
-					updatePickup( teleport ), SetPVarInt(playerid, "selectTeleport", INVALID_ID), Streamer::Update(playerid);
+					updatePickup(teleport);
+					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
+					Streamer::Update(playerid);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
@@ -9404,7 +9414,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Ptl::Info[teleport][Ptl::World][0] = inputtext[0];
 					DestroyDynamicPickup(Ptl::Info[teleport][Ptl::Pickup][0]);
 					Ptl::Info[teleport][Ptl::Pickup][0]=_AddPickup(Ptl::Info[teleport][Ptl::Model][0],Ptl::Info[teleport][Ptl::Type][0],Ptl::Info[teleport][Ptl::Portal1],Ptl::Info[teleport][Ptl::World][0]);
-					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", INVALID_ID);
+					updatePickup(teleport);
+					Rac::SetPlayerVirtualWorld(playerid,inputtext[0]);
+					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 				}
 			} else {
 				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
@@ -9422,7 +9434,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Ptl::Info[teleport][Ptl::World][1] = inputtext[0];
 					DestroyDynamicPickup(Ptl::Info[teleport][Ptl::Pickup][1]);
 					Ptl::Info[teleport][Ptl::Pickup][1]=_AddPickup(Ptl::Info[teleport][Ptl::Model][1],Ptl::Info[teleport][Ptl::Type][1],Ptl::Info[teleport][Ptl::Portal2],Ptl::Info[teleport][Ptl::World][1]);
-					updatePickup( teleport ), Rac::SetPlayerVirtualWorld(playerid,inputtext[0]), SetPVarInt(playerid, "selectTeleport", INVALID_ID);
+					updatePickup(teleport);
+					Rac::SetPlayerVirtualWorld(playerid,inputtext[0]);
+					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 				}
 			} else { 
 				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
@@ -11896,7 +11910,8 @@ stock ClearCrime(playerid) {
 
 
 stock Td::Init() {
-	Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~rp-"#__SERVER_NAME_L"~w~.ru");
+	//Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~gwsvr~w~.ru");
+	Logo[0] = Td::Create(495.000000, 6.000000, "~w~www.~g~gwsvr~w~.ru");
 	Td::BackgroundColor(Logo[0], 255);
 	Td::Font(Logo[0], 3);
 	Td::LetterSize(Logo[0], 0.35,1.70);
@@ -13770,9 +13785,9 @@ stock LoadPortals(){
 			Ptl::Info[i][Ptl::Pickup][0]=_AddPickup(Ptl::Info[i][Ptl::Model][0],Ptl::Info[i][Ptl::Type][0],Ptl::Info[i][Ptl::Portal1],Ptl::Info[i][Ptl::World][0]);
 			Ptl::Info[i][Ptl::Pickup][1]=_AddPickup(Ptl::Info[i][Ptl::Model][1],Ptl::Info[i][Ptl::Type][1],Ptl::Info[i][Ptl::Portal2],Ptl::Info[i][Ptl::World][1]);
 			binToArray(allowed, Ptl::Info[i][Ptl::Allowed], MAX_FRAC);
+			Iter::Add(Portal, i);
 		}
-		TOTAL_PORTAL = rows;
-		debug("LoadPortals() - Ok! Portals: %i. Run time: %i (ms)", TOTAL_PORTAL, GetTickCount()-time);
+		debug("LoadPortals() - Ok! Portals: %i. Run time: %i (ms)", Iter::Count(Portal), GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
