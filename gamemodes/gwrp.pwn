@@ -600,6 +600,7 @@ new Iterator:enginedVehicles<MAX_VEHICLES>;
 new Iterator:Houses<MAX_HOUSES>;
 new Iterator:Biznes<MAX_BIZNES>;
 new Iterator:Refills<MAX_REFILLS>;
+new Iterator:Frac<MAX_FRAC>;
 
 new Iterator:MedicCalls<MAX_PLAYERS>;
 new Iterator:MechanicCalls<MAX_PLAYERS>;
@@ -1902,7 +1903,7 @@ public OnGameModeInit() {
 	RegisterAlt("/vopros",	"/вопрос");
 	RegisterAlt("/givegun",	"/ggun");
 	
-	for(new i; i < MAX_FRAC; i++) {
+	foreach(new i : Frac) {
 		FracPay[i] = 0;
 		GangOnBattle[i] = INVALID_BIZ_ID;
 	}
@@ -2350,9 +2351,9 @@ stock sendToTeam(color, const message[], forteam[] = { -1 }, size = sizeof forte
 			}
 		}
 	} else {
-		for(new j; j < MAX_FRAC; j++) {
-			foreach(new i: TeamPlayers[j]) {
-				Send(i, color, message);
+		foreach(new i : Frac) {
+			foreach(new j : TeamPlayers[i]) {
+				Send(j, color, message);
 			}
 		}
 	}
@@ -5894,8 +5895,9 @@ stock LoadFracInfo() {
 			cache_get_row(i, 5, FracInfo[fracid][fTag], connDb, 16);
 			cache_get_str(i, 6, "p<,>a<i>[2]a<f>[4]", FracInfo[fracid][fSpawn][fSpawnInt], FracInfo[fracid][fSpawn][fSpawnPos]);
 			cache_get_str(i, 7, "h", FracInfo[fracid][fColor]);
+			Iter::Add(Frac, fracid);
 		}
-		debug("LoadFracInfo() - Ok! Fracs: %i. Run time: %i (ms)", rows, GetTickCount()-time);
+		debug("LoadFracInfo() - Ok! Fracs: %i. Run time: %i (ms)", Iter::Count(Frac), GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;
@@ -5957,9 +5959,9 @@ stock LoadFracVehicles( ) {
 public: UpdateProp() {
 	foreach(new i : Biznes) UpdateBizz(i);
 	foreach(new i : Houses) UpdateHouse(i);
+	foreach(new i : Frac) UpdateFracInfo(i);
 	for(new i; i < TOTAL_VEHICLES; ++i) UpdateToSQL(i, 0);
 	for(new i; i < Fc::TOTAL; ++i) Fc::Update(i);
-	for(new i; i < MAX_FRAC; ++i) UpdateFracInfo(i);
 
 	SaveStuff();
 	
@@ -8805,8 +8807,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				foreach(new i : Portal) {
 					if(Ptl::Info[i][Ptl::Id] == 11) {
-						for(new f; f < MAX_FRAC; f++) {
-							Ptl::Info[i][Ptl::Allowed][f] = listitem;
+						foreach(new j : Frac) {
+							Ptl::Info[i][Ptl::Allowed][j] = listitem;
 						}
 						updatePickup(i);
 						Send(playerid, -1, (listitem)?("* јвтошкола открыта!"):("* јвтошкола закрыта!"));
@@ -9267,7 +9269,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 2 : {
 						dialog[0] = '\0';
 						new portal = GetPVarInt(playerid, "selectTeleport");
-						for(new i; i < MAX_FRAC; i++) {
+						foreach(new i : Frac) {
 							if(Ptl::Info[portal][Ptl::Allowed][i]) {
 								scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 							} else {
@@ -9448,7 +9450,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				dialog[0] = '\0';
 				new portal = GetPVarInt(playerid, "selectTeleport");
 				Ptl::Info[portal][Ptl::Allowed][listitem] = !Ptl::Info[portal][Ptl::Allowed][listitem];
-				for(new i; i < MAX_FRAC; i++) {
+				foreach(new i : Frac) {
 					if(Ptl::Info[portal][Ptl::Allowed][i]) {
 						scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 					} else {
@@ -10477,7 +10479,9 @@ public: Gm::Thread() {
 			format(query, sizeof query, "SELECT `ip` FROM `"#__TableBanned__"` WHERE `unbandate` <= '%i'", currtime);
 			Db::tquery(connDb, query, "ClearBanList", "i", currtime);
 			
-			for(new i; i < MAX_FRAC; i++) FracPay[i] = 0;
+			foreach(new i : Frac) {
+				FracPay[i] = 0;
+			}
 		}
 		if(h == 4 && m == 0) {
 			print(" ќбъ€вление: через 1 час будет произведен автоматический рестарт сервера");
@@ -11892,7 +11896,7 @@ stock Pl::RemoveWorldModel(playerid) {
 }
 
 stock Bl::Init(playerid) {
-	for(new i; i < MAX_FRAC; i++) {
+	foreach(new i : Frac) {
 		Bl::Info[playerid][Bl::onFrac][i] = 0;
 		Bl::Info[playerid][Bl::Kills][i] = 0;
 	}
@@ -11910,8 +11914,7 @@ stock ClearCrime(playerid) {
 
 
 stock Td::Init() {
-	//Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~gwsvr~w~.ru");
-	Logo[0] = Td::Create(495.000000, 6.000000, "~w~www.~g~gwsvr~w~.ru");
+	Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~rp-"#__SERVER_NAME_C"~w~.ru");
 	Td::BackgroundColor(Logo[0], 255);
 	Td::Font(Logo[0], 3);
 	Td::LetterSize(Logo[0], 0.35,1.70);
@@ -13562,7 +13565,7 @@ stock Fc::GetInfo(vehicleid, format[]="", ...) {
 }
 
 stock Fc::FracID(vehicleid) {
-	for(new i; i < MAX_FRAC; i++) {
+	foreach(new i : Frac) {
 		if(Iter::Contains(TeamVehicles[i], vehicleid)) {
 			return i;
 		}
@@ -13571,7 +13574,7 @@ stock Fc::FracID(vehicleid) {
 }
 
 stock isTeamVehicle(fracid, vehicleid) {
-	if(0 <= fracid <= MAX_FRAC) {
+	if(IsValidFrac(fracid)) {
 		if(1 <= vehicleid <= MAX_VEHICLES) {
 			return Iter::Contains(TeamVehicles[fracid], vehicleid);
 		}
