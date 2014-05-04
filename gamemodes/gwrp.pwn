@@ -102,8 +102,8 @@
 #define JAILED_WOMEN 			(69)
 
 #define INVALID_ID				(0xFFFF)
-#define INVALID_BIZ_ID			(0xFFFF)
-#define INVALID_HOUSE_ID		(0xFFFF)
+#define INVALID_BIZ_ID			INVALID_ID
+#define INVALID_HOUSE_ID		INVALID_ID
 
 #define OFFSET_HOUSE			(INVALID_HOUSE_ID)
 #define OFFSET_BIZZ				(INVALID_HOUSE_ID + MAX_HOUSES)
@@ -708,37 +708,34 @@ new Float:BarCoord[][4] = {
 	{7.0 ,825.0572  ,-2056.0303,12.8672}
 };
 
-enum intHouse
-{
-	intH,
-	intPrice,
-	Float:intX,
-	Float:intY,
-	Float:intZ,
+enum e_HouseInt {
+	Interior,
+	InteriorPrice,
+	Float:InteriorPos[4]
 }
-new HouseInt[][intHouse] = {
-	{2 , 500000,2467.9895,-1698.2231,1013.5078}, // Ryder House
-	{5 , 500000,2233.7095,-1114.6260,1050.8828}, // Safe House group 1
-	{9 , 500000,2317.7146,-1026.5259,1050.2178}, // Safe House group 3
-	{10, 500000,2259.5728,-1135.7870,1050.6328}, // Safe House group 4
-	{3 , 500000,235.1864 ,1187.1646 ,1080.2578}, // Byrglary House X1
-	{2 , 500000,226.0055 ,1240.0029 ,1082.1406}, // Byrglary House X2
-	{1 , 500000,223.0618 ,1287.3446 ,1082.1406}, // Byrglary House X3
-	{5 , 500000,226.9107 ,1114.3109 ,1080.9961}, // Byrglary House X4
-	{12, 500000,443.2735 ,509.3156  ,1001.4195}, // Motel Room
-	{10, 500000,23.9266  ,1340.6561 ,1084.3750}, // Byrglary House X14
-	{12, 500000,2324.2925,-1148.8942,1050.7101}, // Unuded Safe House
-	{4 , 500000,-260.7433,1456.6342 ,1084.3672}, // Byrglary House X15
-	{5 , 500000,22.8225  ,1403.7344 ,1084.4297}, // Byrglary House X16
-	{5 , 500000,140.2087 ,1366.6652 ,1083.8594}, // Byrglary House X17
-	{6 , 500000,234.2954 ,1064.2416 ,1084.2115}, // Byrglary House X18
-	{6 , 500000,-68.8532 ,1351.4395 ,1080.2109}, // Byrglary House X19
-	{8 , 500000,2807.6042,-1174.1803,1025.5703}, // Colonel Furhbegers
-	{1 , 500000,2217.5000,-1076.1509,1050.4844}, // The Calems Toe Safehouse
-	{2 , 500000,2237.4856,-1080.2096,1049.0234}, // old Venturas Strip Casino
-	{8 , 500000,2365.2268,-1135.3055,1050.8750}, // Verdant Bluffs Safehouse
-	{8 , 500000,-42.7179 ,1405.9940 ,1084.4297}, // Byrglary House X21
-	{7 , 800000, 225.8882,1021.8793 ,1084.0165} // Gold bar
+new HouseInt[][e_HouseInt] = {
+	{2 , 500000,{2467.9966,-1698.2451,1013.5078,91.0528}},
+	{5 , 500000,{2233.6760,-1114.7872,1050.8828,1.7116}},
+	{9, 500000,{2317.8501,-1026.5812,1050.2178,1.7116}},
+	{10, 500000,{2259.9468,-1135.8491,1050.6328,270.6325}},
+	{3 , 500000,{235.3273,1186.8773,1080.2578,359.4516}},
+	{2 , 500000,{226.1881,1240.0093,1082.1406,92.6574}},
+	{1 , 500000,{223.0865,1287.4043,1082.1406,2.7299}},
+	{5, 500000,{226.6887,1114.2197,1080.9950,267.6735}},
+	{12 , 500000,{443.0311,509.3219,1001.4195,272.0599}},
+	{10 , 500000,{24.0824,1340.3184,1084.3750,358.2274}},
+	{12 , 500000,{2324.3962,-1149.1707,1050.7101,4.3257}},
+	{4 , 500000,{-260.8852,1456.6240,1084.3672,95.3382}},
+	{5 , 500000,{22.8612,1403.6102,1084.4297,4.3641}},
+	{5 , 500000,{140.2174,1366.3024,1083.8594,2.9613}},
+	{6 , 500000,{234.0868,1064.3472,1084.2113,357.9479}},
+	{6 , 500000,{-68.8532,1351.4395,1080.2109,357.9479}},
+	{8 , 500000,{2807.6042,-1174.1803,1025.5703,357.9479}},
+	{1 , 800000,{2217.8767,-1076.3669,1050.4844,94.2871}},
+	{2 , 500000,{2237.5168,-1081.3751,1049.0234,2.3346}},
+	{8 , 500000,{2365.1528,-1135.1245,1050.8750,2.3346}},
+	{8 , 500000,{-42.5325,1405.7850,1084.4297,357.9479}},
+	{7 , 800000,{225.6805,1021.7444,1084.0168,357.8433}}
 };
 
 
@@ -4142,13 +4139,12 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				new idx = GetPVarInt(playerid, "SelectedItem"); idx ++;
 				if(idx >= sizeof(HouseInt)) idx = 0;
 				SetPVarInt(playerid, "SelectedItem", idx);
-				Rac::SetPlayerPos(playerid, HouseInt[idx][intX], HouseInt[idx][intY], HouseInt[idx][intZ]);
-				Rac::SetPlayerInterior(playerid, HouseInt[idx][intH]);
-				Rac::SetPlayerVirtualWorld(playerid, 999);
-				SetPlayerCameraPos(playerid, HouseInt[idx][intX], HouseInt[idx][intY], HouseInt[idx][intZ]);
-				SetPlayerCameraLookAt(playerid, HouseInt[idx][intX] - 100.0, HouseInt[idx][intY] - 100.0, HouseInt[idx][intZ] - 100.0);
+				Rac::SetPlayerPos(playerid, HouseInt[idx][InteriorPos][0], HouseInt[idx][InteriorPos][1], HouseInt[idx][InteriorPos][2]);
+				SetPlayerFacingAngle(playerid, HouseInt[idx][InteriorPos][3]);
+				Rac::SetPlayerInterior(playerid, HouseInt[idx][Interior]);
+				Rac::SetPlayerVirtualWorld(playerid, Pl::Info[playerid][pLocal]);
 				SetCameraBehindPlayer(playerid);
-				format(temp, sizeof temp, "~n~~n~~n~~n~~n~~n~~n~~n~~g~price: ~w~$%i", HouseInt[idx][intPrice]);
+				format(temp, sizeof temp, "~n~~n~~n~~n~~n~~n~~n~~n~~g~price: ~w~$%i", HouseInt[idx][InteriorPrice]);
 				GameTextForPlayer(playerid, temp, 5000, 6);
 				ShowMenuForPlayer(IntMenu, playerid);
 			}
@@ -4157,20 +4153,19 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				new idx = GetPVarInt(playerid, "SelectedItem"); idx --;
 				if(idx < 0) idx = sizeof(HouseInt)-1;
 				SetPVarInt(playerid, "SelectedItem", idx);
-				Rac::SetPlayerPos(playerid, HouseInt[idx][intX], HouseInt[idx][intY], HouseInt[idx][intZ]);
-				Rac::SetPlayerInterior(playerid, HouseInt[idx][intH]);
-				Rac::SetPlayerVirtualWorld(playerid, 999);
-				SetPlayerCameraPos(playerid, HouseInt[idx][intX], HouseInt[idx][intY], HouseInt[idx][intZ]);
-				SetPlayerCameraLookAt(playerid, HouseInt[idx][intX] - 100.0, HouseInt[idx][intY] - 100.0, HouseInt[idx][intZ] - 100.0);
+				Rac::SetPlayerPos(playerid, HouseInt[idx][InteriorPos][0], HouseInt[idx][InteriorPos][1], HouseInt[idx][InteriorPos][2]);
+				SetPlayerFacingAngle(playerid, HouseInt[idx][InteriorPos][3]);
+				Rac::SetPlayerInterior(playerid, HouseInt[idx][Interior]);
+				Rac::SetPlayerVirtualWorld(playerid, Pl::Info[playerid][pLocal]);
 				SetCameraBehindPlayer(playerid);
-				format(temp, sizeof(temp), "~n~~n~~n~~n~~n~~n~~n~~n~~g~price: ~w~$%i", HouseInt[idx][intPrice]);
+				format(temp, sizeof(temp), "~n~~n~~n~~n~~n~~n~~n~~n~~g~price: ~w~$%i", HouseInt[idx][InteriorPrice]);
 				GameTextForPlayer(playerid, temp, 5000, 6);
 				ShowMenuForPlayer(IntMenu, playerid);
 			}
 			
 			case 2: {
 				new idx = GetPVarInt(playerid, "SelectedItem");
-				format(dialog, sizeof dialog, "Цена интерьера:\t$%i\nВы точно хотите купить этот интерьер?", HouseInt[idx][intPrice]);
+				format(dialog, sizeof dialog, "Цена интерьера:\t$%i\nВы точно хотите купить этот интерьер?", HouseInt[idx][InteriorPrice]);
 				SPD(playerid, D_HMENU+11, 0, "[House Menu] > Интерьер", dialog,  "ДА", "НЕТ");
 			}
 			
@@ -5738,7 +5733,6 @@ stock LoadHouses() {
 					HouseInfo[i][hMapIcon] = CreateDynamicMapIcon(HouseInfo[i][hEnter][0], HouseInfo[i][hEnter][1], HouseInfo[i][hEnter][2], 32,0, 0, -1, -1, 250.0);
 				}
 			}
-			
 			Iter::Add(Houses, i);
 		}
 		debug("LoadHouses() - Ok! Houses: %i. Run time: %i (ms)", Iter::Count(Houses), GetTickCount()-time);
@@ -7583,10 +7577,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 4 : {
 						if(!IsPlayerInHouse(playerid, 15.0, hid)) return SPD(playerid, D_NONE, 0, "[House Menu] > Интерьер", "Вы должны находится в своем доме, чтобы изменить интерьер!", "OK", "");
 						SetPVarInt(playerid, "SelectedItem", 0);
-						Rac::SetPlayerPos(playerid, HouseInt[0][intX], HouseInt[0][intY], HouseInt[0][intZ]);
-						Rac::SetPlayerInterior(playerid, HouseInt[0][intH]);
-						Rac::SetPlayerVirtualWorld(playerid, 999);
-						SetCameraBehindPlayer(playerid); ShowMenuForPlayer(IntMenu, playerid);
+						Rac::SetPlayerPos(playerid, HouseInt[0][InteriorPos][0], HouseInt[0][InteriorPos][1], HouseInt[0][InteriorPos][2]);
+						SetPlayerFacingAngle(playerid, HouseInt[0][InteriorPos][3]);
+						Rac::SetPlayerVirtualWorld(playerid, Pl::Info[playerid][pLocal] + playerid);
+						SetCameraBehindPlayer(playerid);
+						ShowMenuForPlayer(IntMenu, playerid);
 					}
 					
 					case 5 : {
@@ -7880,26 +7875,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					ShowMenuForPlayer(IntMenu, playerid);
 					return 1;
 				}
-				if(HouseInfo[hid][hSafe][0] < HouseInt[idx][intPrice]) {
+				if(HouseInfo[hid][hSafe][0] < HouseInt[idx][InteriorPrice]) {
 					Send(playerid, COLOR_GREY, "* На счету дома недастаточно средств!");
 					ShowMenuForPlayer(IntMenu, playerid);
 					return 1;
 				}
 				SetPVarInt(playerid, "SelectedItem", -1);
-				HouseInfo[hid][hInt] = HouseInt[idx][intH];
-				HouseInfo[hid][hExit][0] = HouseInt[idx][intX];
-				HouseInfo[hid][hExit][1] = HouseInt[idx][intY];
-				HouseInfo[hid][hExit][2] = HouseInt[idx][intZ];
-				HouseInfo[hid][hSafe][0] -= HouseInt[idx][intPrice];
-				GiveBizzProfit(bidx, HouseInt[idx][intPrice]);
+				HouseInfo[hid][hInt] = HouseInt[idx][Interior];
+				CopyArray(HouseInfo[hid][hExit], HouseInt[idx][InteriorPos], 4);
+				HouseInfo[hid][hSafe][0] -= HouseInt[idx][InteriorPrice];
+				GiveBizzProfit(bidx, HouseInt[idx][InteriorPrice]);
 				BizzInfo[bidx][bProds]--;
 				Rac::SpawnPlayer(playerid);
 				Send(playerid, COLOR_LIGHTBLUE, "* Интерьер был успешно изменен!");
 			} else {
 				SetPVarInt(playerid, "SelectedItem", idx);
-				Rac::SetPlayerPos(playerid, HouseInt[idx][intX], HouseInt[idx][intY], HouseInt[idx][intZ]);
-				Rac::SetPlayerInterior(playerid, HouseInt[idx][intH]);
-				Rac::SetPlayerVirtualWorld(playerid, 999);
+				Rac::SetPlayerPos(playerid, HouseInt[0][InteriorPos][0], HouseInt[0][InteriorPos][1], HouseInt[0][InteriorPos][2]);
+				SetPlayerFacingAngle(playerid, HouseInt[0][InteriorPos][3]);
+				Rac::SetPlayerVirtualWorld(playerid, Pl::Info[playerid][pLocal] + playerid);
 				SetCameraBehindPlayer(playerid);
 				ShowMenuForPlayer(IntMenu, playerid);
 			}
