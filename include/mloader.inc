@@ -70,37 +70,38 @@ stock map::Debug(dbg) {
 stock map::Load(const mapfile[], worldid=-1, interiorid=-1, playerid=-1, Float:streamdistance=200.0) {
 	if(fexist(mapfile)) {
 		if(TotalDynamicMaps < sizeof DynamicMaps) {
-			new modelid, Float:pos[3], Float:rot[3];
-			new buffer[2][170], objectid, time = GetTickCount();
+			new id = TotalDynamicMaps++;
+			new buffer[2][170], time = GetTickCount();
 			new File:fhandle = fopen(mapfile, io_read);
 			
-			DynamicMaps[TotalDynamicMaps][e_MapStart] = (CountDynamicObjects()+1);
-			DynamicMaps[TotalDynamicMaps][e_MapWorld] = worldid;
-			DynamicMaps[TotalDynamicMaps][e_MapInterior] = interiorid;
-			DynamicMaps[TotalDynamicMaps][e_MapPlayer] = playerid;
-			DynamicMaps[TotalDynamicMaps][e_MapStreamDist] = streamdistance;
+			DynamicMaps[id][e_MapStart] = (CountDynamicObjects()+1);
+			DynamicMaps[id][e_MapWorld] = worldid;
+			DynamicMaps[id][e_MapInterior] = interiorid;
+			DynamicMaps[id][e_MapPlayer] = playerid;
+			DynamicMaps[id][e_MapStreamDist] = streamdistance;
 		
 			while(fread(fhandle, buffer[0])) {
-				if(strcut(buffer[0], buffer[1], "(", ")")) {
+				if(strcut(buffer[0], buffer[1], "CreateObject(", ")")
+				|| strcut(buffer[0], buffer[1], "CreateDynamicObject(", ")")) {
+					new modelid, Float:pos[3], Float:rot[3];
 					sscanf(buffer[1], "p<,>ia<f>[3]a<f>[3]", modelid, pos, rot);
-					objectid = CreateDynamicObject(modelid, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], worldid, interiorid, playerid, streamdistance);
-					if(objectid == INVALID_OBJECT_ID) {
+					if(CreateDynamicObject(modelid, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], worldid, interiorid, playerid, streamdistance) == INVALID_OBJECT_ID) {
 						if(map_debug) {
 							print("map::Load(): Error, object could not be created!");
 						}
-						break;
+						continue;
 					} else {
-						DynamicMaps[TotalDynamicMaps][e_CountObjects]++;
+						DynamicMaps[id][e_CountObjects]++;
 					}
 				}
 			}
 			
 			if(map_debug) {
-				printf("- Map \"%s\" loaded! (Time:%i, mapid:%i)", mapfile, GetTickCount()-time, TotalDynamicMaps);
+				printf("- Map \"%s\" loaded! (Time:%i, mapid:%i)", mapfile, GetTickCount()-time, id);
 			}
 			fclose(fhandle);
-			DynamicMaps[TotalDynamicMaps][e_MapEnd] = CountDynamicObjects();
-			return TotalDynamicMaps++;
+			DynamicMaps[id][e_MapEnd] = CountDynamicObjects();
+			return id;
 			
 		} else if(map_debug) {
 			printf("map::Load(): Created the maximum number of dynamic maps!");
