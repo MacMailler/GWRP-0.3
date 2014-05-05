@@ -13568,20 +13568,13 @@ stock Fc::FracID(vehicleid) {
 
 stock isTeamVehicle(fracid, vehicleid) {
 	if(IsValidFrac(fracid)) {
-		if(1 <= vehicleid <= MAX_VEHICLES) {
-			return Iter::Contains(TeamVehicles[fracid], vehicleid);
-		}
+		return Iter::Contains(TeamVehicles[fracid], vehicleid);
 	}
 	return 0;
 }
 
 stock isJobVehicle(jobid, vehicleid) {
-	if(0 <= jobid <= MAX_JOBS) {
-		if(1 <= vehicleid <= MAX_VEHICLES) {
-			return Iter::Contains(JobVehicles[jobid], vehicleid);
-		}
-	}
-	return 0;
+	return Iter::Contains(JobVehicles[jobid], vehicleid);
 }
 
 stock GetVehDescription(vehicleid, format[]="", ...) {
