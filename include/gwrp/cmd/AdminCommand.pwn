@@ -28,6 +28,15 @@
 #define __AdminCommand__
 
 
+CMD:maps(playerid, params[]) {
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
+	dialog[0] = '\0';
+	foreach(new i : Maps) scf(dialog, temp, "%i. %s\n", i, MapInfo[i][MapFile]);
+	strcat(dialog, "------------\nДобавить");
+	SPD(playerid, D_EDIT_MAPS, DIALOG_STYLE_LIST, "Maps", dialog, "SELECT", "CANCEL");
+	return 1;
+}
+
 CMD:setzahvattime(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
 	if(sscanf(params, "ii", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /setzahvattime [fracid] [time]");
