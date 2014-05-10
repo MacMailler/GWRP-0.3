@@ -87,6 +87,7 @@
 #define MAX_ANTIDM_ZONES		(10)
 #define MAX_FRAC_GATE			(50)
 #define MAX_REFILLS				(50)
+#define MAX_MAPS				(64)
 
 #define START_MONEY				(5000)
 #define START_LEVEL				(1)
@@ -217,7 +218,7 @@
 #define D_ADD_MODEL				(5500)
 #define D_SHOW_MODEL			(5600)
 #define D_EDIT_MODEL			(5700)
-#define D_DONATE				(5800)
+#define D_EDIT_MAPS				(5800)
 #define D_FARE					(5900)
 #define D_SKILL					(6000)
 #define D_SPAWN					(6100)
@@ -1806,6 +1807,16 @@ new const DefaultBiz[][e_DefaultBiz] = {
 	{9, {52, 14}, {364.8246, -10.8034, 1001.8516, 3.5526}},
 	{17, {52, 36}, {-25.8902, -187.6157, 1003.5469, 4.9643}}
 };
+
+
+enum e_MapInfo {
+	MapID,
+	MapFile[36],
+	MapWorld,
+	MapInt
+}
+new MapInfo[MAX_MAPS][e_MapInfo];
+new Iterator:Maps<MAX_MAPS>;
 
 
 #include "..\include\r_utils"
@@ -6706,6 +6717,162 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_NONE : {
 		
+		}
+		
+		case D_EDIT_MAPS : {
+			if(response) {
+				if(!strcmp(inputtext, "Добавить", true)) {
+					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Добавить", "Введите имя карты\n\
+					Пример: maps/karta.map", "ENTER", "CANCEL");
+				}
+				else if(strcmp(inputtext, "------------", true) != 0) {
+					inputtext[strfind(inputtext, ".")] = '\0';
+					new id = strval(inputtext);
+					SetPVarInt(playerid, "SelectedItem", id);
+					SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+				}
+			}
+		}
+		
+		case D_EDIT_MAPS + 1 : {
+			if(response) {
+				if(sscanf(inputtext, "s[36]", inputtext[0])) {
+					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Добавить", "Введите путь до карты\n\
+					Пример: karta.map", "ENTER", "CANCEL");
+				} else if(!fexist(inputtext[0])) {
+					Send(playerid, COLOR_GREY, "* Нет такого файла!");
+					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Добавить", "Введите путь до карты\n\
+					Пример: maps/karta.map", "ENTER", "CANCEL");
+				} else {
+					new escapetext[36];
+					Db::escape_string(inputtext[0], escapetext);
+					format(query, sizeof query, "INSERT INTO `maps` (`map_file`) VALUES ('%s')", escapetext);
+					new Cache:result = Db::query(connDb, query, true);
+					if(cache_affected_rows()) {
+						new id = cache_insert_id();
+						Iter::Add(Maps, id);
+						MapInfo[id][MapID] = map::Load(inputtext[0]);
+						strmid(MapInfo[id][MapFile], inputtext[0], 0, strlen(inputtext[0]), 36);
+						MapInfo[id][MapWorld] = -1;
+						MapInfo[id][MapInt] = -1;
+						Send(playerid, COLOR_YELLOW, "* Карта была добавлена!");
+					} else {
+						Send(playerid, COLOR_LIGHTRED, "* При добавлении произошла ошибка!");
+					}
+					cache_delete(result);
+				}
+			}
+		}
+		
+		case D_EDIT_MAPS + 2 : {
+			if(response) {
+				switch(listitem) {
+					case 0 : SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "Изменить", "Введите новый путь до карты:", "ENTER", "CANCEL");
+					case 1 : {
+						new id = GetPVarInt(playerid, "SelectedItem");
+						SetPVarInt(playerid, "SelectedItem", -1);
+						map::Destroy(MapInfo[id][MapID]);
+						MapInfo[id][MapID] = map::Load(MapInfo[id][MapFile], MapInfo[id][MapWorld], MapInfo[id][MapInt]);
+						Send(playerid, COLOR_GREY, "* Карта была перезагружена!");
+					}
+					
+					case 2 : SPD(playerid, D_EDIT_MAPS + 4, DIALOG_STYLE_INPUT, "Изменить вирт. мир", "Введите ид виртуального мира:", "ENTER", "CANCEL");
+					case 3 : SPD(playerid, D_EDIT_MAPS + 5, DIALOG_STYLE_INPUT, "Изменить интерьер", "Введите ид интерьера:", "ENTER", "CANCEL");
+					case 4 : SPD(playerid, D_EDIT_MAPS + 6, DIALOG_STYLE_MSGBOX, "Удалить", "Вы точно хотите удалить карту?", "YES", "NO");
+				}
+			} else {
+				SetPVarInt(playerid, "SelectedItem", -1);
+			}
+		}
+		
+		case D_EDIT_MAPS + 3 : {
+			new id = GetPVarInt(playerid, "SelectedItem");
+			if(response) {
+				if(sscanf(inputtext, "s[36]", inputtext[0])) {
+					SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "Изменить", "Введите путь до карты\n\
+					Пример: karta.map", "ENTER", "CANCEL");
+				} else if(!fexist(inputtext[0])) {
+					Send(playerid, COLOR_GREY, "* Нет такого файла!");
+					SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "Изменить", "Введите путь до карты\n\
+					Пример: maps/karta.map", "ENTER", "CANCEL");
+				} else {
+					new escapetext[36];
+					Db::escape_string(inputtext[0], escapetext);
+					format(query, sizeof query, "UPDATE `maps` SET `map_file` = '%s' WHERE `id` = '%i'", escapetext, id);
+					Db::tquery(connDb, query);
+
+					map::Destroy(MapInfo[id][MapID]);
+					MapInfo[id][MapID] = map::Load(inputtext[0], MapInfo[id][MapWorld], MapInfo[id][MapInt]);
+					strmid(MapInfo[id][MapFile], inputtext[0], 0, strlen(inputtext[0]), 36);
+					Send(playerid, COLOR_YELLOW, "* Карта была изменина!");
+					SetPVarInt(playerid, "SelectedItem", -1);
+				}
+			} else {
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+			}
+		}
+		
+		case D_EDIT_MAPS + 4 : {
+			new id = GetPVarInt(playerid, "SelectedItem");
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
+					SPD(playerid, D_EDIT_MAPS + 4, DIALOG_STYLE_INPUT, "Изменить вирт. мир", "Введите ид виртуального мира:", "ENTER", "CANCEL");
+				} else {
+					format(query, sizeof query, "UPDATE `maps` SET `map_world` = '%i' WHERE `id` = '%i'", inputtext[0], id);
+					Db::tquery(connDb, query);
+					map::SetWorld(MapInfo[id][MapID], inputtext[0]);
+					Send(playerid, COLOR_YELLOW, "* Виртуальный мир карты был изменен!");
+					SetPVarInt(playerid, "SelectedItem", -1);
+				}
+			} else {
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+			}
+		}
+		
+		case D_EDIT_MAPS + 5 : {
+			new id = GetPVarInt(playerid, "SelectedItem");
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
+					SPD(playerid, D_EDIT_MAPS + 5, DIALOG_STYLE_INPUT, "Изменить интерьер", "Введите ид интерьера:", "ENTER", "CANCEL");
+				} else {
+					format(query, sizeof query, "UPDATE `maps` SET `map_int` = '%i' WHERE `id` = '%i'", inputtext[0], id);
+					Db::tquery(connDb, query);
+					map::SetInterior(MapInfo[id][MapID], inputtext[0]);
+					Send(playerid, COLOR_YELLOW, "* Интерьер карты карты был изменен!");
+					SetPVarInt(playerid, "SelectedItem", -1);
+				}
+			} else {
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+			}
+		}
+		
+		case D_EDIT_MAPS + 6 : {
+			new id = GetPVarInt(playerid, "SelectedItem");
+			if(response) {
+				SetPVarInt(playerid, "SelectedItem", -1);
+				new last = Iter::Count(Maps);
+				map::Destroy(MapInfo[id][MapID]);
+				format(query, sizeof query, "DELETE FROM `maps` WHERE `id` = '%i'", id);
+				Db::tquery(connDb, query);
+				
+				if(last > id) {
+					MapInfo[id][MapID] = MapInfo[last][MapID];
+					CopyArray(MapInfo[id][MapFile], MapInfo[last][MapFile], 36);
+					MapInfo[id][MapWorld] = MapInfo[last][MapWorld];
+					MapInfo[id][MapInt] = MapInfo[last][MapInt];
+					Iter::Remove(Maps, last);
+					format(query, sizeof query, "UPDATE `maps` SET `id` = '%i' WHERE `id` = '%i'", id, last);
+					Db::tquery(connDb, query);
+				} else {
+					Iter::Remove(Maps, id);
+				}
+				format(query, sizeof query, "ALTER TABLE `maps` AUTO_INCREMENT = %i", last - 1);
+				Db::tquery(connDb, query);
+				
+				Send(playerid, COLOR_YELLOW, "* Карта была удалена!");
+			} else {
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+			}
 		}
 		
 		case D_EV_MENU : {
@@ -13836,6 +14003,29 @@ stock LoadAntiDmZones() {
 	cache_delete(result);
 	return 1;
 }
+
+
+stock LoadMaps() {
+	new time = GetTickCount();
+	new Cache:result = Db::query(connDb, "SELECT * FROM `maps` ORDER BY `id` ASC", true);
+	new rows = cache_get_row_count();
+	if(rows) {
+		new id, mapfile[36], world, int;
+		for(new i; i < rows; i++) {
+			cache_get_int(i, 0, id);
+			cache_get_row(i, 1, mapfile, 36);
+			cache_get_int(i, 2, world);
+			cache_get_int(i, 3, int);
+			strmid(MapInfo[id][MapFile], mapfile, 0, strlen(mapfile), 36);
+			MapInfo[id][MapID] = map::Load(MapInfo[id][MapFile], world, int);
+			Iter::Add(Maps, id);
+		}
+		debug("LoadMaps() - Ok! Maps: %i. Run time: %i (ms)", Iter::Count(Maps), GetTickCount()-time);
+	}
+	cache_delete(result);
+	return 1;
+}
+
 
 
 /// :: ::: ::: BL ::: ::: ::
