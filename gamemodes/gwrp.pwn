@@ -1638,7 +1638,7 @@ new PlayerText:Td::AutoSolon;
 new Menu:AutoSolonMenu;
 new Menu:GarageMenu;
 new TempVehicle[MAX_PLAYERS];
-new GarageParkPickup[3];
+new GarageParkPickup[4];
 
 new const ExtraVehicleLimit[] = {2, 4};
 new const ASModelCount[] = {12, 9, 21, 29, 8};
@@ -3642,7 +3642,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 		}
 		
 		case PLAYER_STATE_DRIVER : {
-			if(pickupid == GarageParkPickup[0] || pickupid == GarageParkPickup[1] || pickupid == GarageParkPickup[2]) {
+			if(GarageParkPickup[0] <= pickupid <= GarageParkPickup[3]) {
 				new veh = GetPlayerVehicleID(playerid);
 				new slot = GetIdxExtraVehicleFromVehicleID(playerid, veh);
 				if(slot == -1) return Send(playerid, COLOR_GREY, "* Этот транспорт нельзя сдать в гараж!");
@@ -4002,8 +4002,8 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				switch(BizzInfo[bidx][bID]) {
 					case Bizz_GarageLS : {
 						static const Float:exitPos[][4] = {
-							{814.8283,-1551.4712,13.3243,359.5168},
-							{836.8582,-1551.6245,13.3071,0.1846}
+							{2005.4939,-1275.3661,23.5474,180.8079},
+							{1999.4409,-1274.8125,23.5474,179.3494}
 						};
 						new rnd = random(sizeof exitPos);
 						Rac::SetPlayerPos(playerid, exitPos[rnd][0], exitPos[rnd][1], exitPos[rnd][2] + 2.0);
@@ -4019,8 +4019,8 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					
 					case Bizz_GarageLV : {
 						static const Float:_exitPos[][4] = {
-							{1631.6438,963.5118,10.5859,270.5770},
-							{1631.4854,959.2862,10.5494,268.9856}
+							{2099.0129,2479.8958,10.5474,179.2626},
+							{2090.7698,2480.0090,10.5481,179.6587}
 						};
 						new rnd = random(sizeof _exitPos);
 						Rac::SetPlayerPos(playerid, _exitPos[rnd][0], _exitPos[rnd][1], _exitPos[rnd][2] + 2.0);
@@ -4044,6 +4044,23 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 						ExtraVehicles[playerid][slot][evID2] = Veh::Create(
 							ExtraVehicles[playerid][slot][evModel],
 							__exitPos[rnd][0], __exitPos[rnd][1], __exitPos[rnd][2], __exitPos[rnd][3],
+							ExtraVehicles[playerid][slot][evColor1],
+							ExtraVehicles[playerid][slot][evColor2],
+							INFINITY
+						);
+						AutoInfo[ExtraVehicles[playerid][slot][evID2]][aOwner] = playerid;
+					}
+					
+					case Bizz_GarageRublovka : {
+						static const Float:___exitPos[][4] = {
+							{-2457.4387,2295.7983,4.7087,89.4643},
+							{-2457.5139,2289.9634,4.7085,91.8186}
+						};
+						new rnd = random(sizeof __exitPos);
+						Rac::SetPlayerPos(playerid, ___exitPos[rnd][0], ___exitPos[rnd][1], ___exitPos[rnd][2] + 2.0);
+						ExtraVehicles[playerid][slot][evID2] = Veh::Create(
+							ExtraVehicles[playerid][slot][evModel],
+							___exitPos[rnd][0], ___exitPos[rnd][1], ___exitPos[rnd][2], ___exitPos[rnd][3],
 							ExtraVehicles[playerid][slot][evColor1],
 							ExtraVehicles[playerid][slot][evColor2],
 							INFINITY
@@ -9780,7 +9797,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							return 1;
 						}
 					
-						case Bizz_GarageLS, Bizz_GarageSF, Bizz_GarageLV : {
+						case Bizz_GarageLS, Bizz_GarageSF, Bizz_GarageLV, Bizz_GarageRublovka : {
 							if(TotalExtraVehicles[playerid] <= 0) return Send(playerid, COLOR_GREY, "* У Вас нет личного транспорта!");
 							if(TotalVehicleInGarage[playerid] <= 0) return Send(playerid, COLOR_GREY, "* Вы забрали весь транспорт из гаража!");
 							if(IsPlayerTakeExtraVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Вы уже взяли транспорт из гаража!");
@@ -12988,9 +13005,10 @@ stock Obj::Init() {
 }
 
 stock Pup::Init() {
-	GarageParkPickup[0] = AddPickup(1239, 14, 823.5468,-1553.1484,13.5236, 0, "* Загнать в гараж *", 0x268DAEAA);
-	GarageParkPickup[1] = AddPickup(1239, 14, 1631.7609,980.2023,10.5921, 0, "* Загнать в гараж *", 0x268DAEAA);
+	GarageParkPickup[0] = AddPickup(1239, 14, 2014.6802,-1279.2001,23.8203, 0, "* Загнать в гараж *", 0x268DAEAA);
+	GarageParkPickup[1] = AddPickup(1239, 14, 2107.2600,2480.5522,10.8203, 0, "* Загнать в гараж *", 0x268DAEAA);
 	GarageParkPickup[2] = AddPickup(1239, 14, -2444.6260,525.1984,29.6734, 0, "* Загнать в гараж *", 0x268DAEAA);
+	GarageParkPickup[3] = AddPickup(1239, 14, -2456.4290,2292.9119,4.9844, 0, "* Загнать в гараж *", 0x268DAEAA);
 	
 	weapon1 = AddPickup(1239, 23,296.6332,-38.2177,1001.5156, -1); //аммо лс
 	weapon2 = AddPickup(1239, 23,312.2767,-166.1406,999.6010, -1); //аммо лв
