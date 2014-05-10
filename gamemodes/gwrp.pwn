@@ -288,6 +288,9 @@
 #define IsACopCar(%0)			(TEAM_COP <= Fc::FracID(%0) <= TEAM_ARMY)
 #define IsACompTruck(%0)		(comptruck[0] <= %0 <= comptruck[1])
 
+#define SetProp(%0,%1)			setproperty(.name = %0, .value= %1)
+#define GetProp(%0)				getproperty(.name = %0)
+
 #define AddObject				CreateDynamicObject
 #define Add3DText				CreateDynamic3DTextLabel
 
@@ -620,8 +623,8 @@ new bool:isEngined[MAX_VEHICLES char];
 new bool:useBannyHop[MAX_PLAYERS char];
 new bool:InAntiDmZone[MAX_PLAYERS char];
 new bool:PlayerLogged[MAX_PLAYERS char];
-new timeleft[MAX_PLAYERS];
 new slotused[MAX_PLAYERS char];
+new playerIp[MAX_PLAYERS][16];
 
 
 new noooc = 1;
@@ -2529,20 +2532,18 @@ public OnPlayerConnect(playerid) {
 		PlayerLogged{playerid} = true;
 		return 1;
 	}
-	
-	static playerIp[MAX_PLAYERS][16];
-	
+		
 	new ip[16], currtime = gettime();
 	GetPlayerIp(playerid, ip, 16);
 	if(slotused{playerid} && strcmp(playerIp[playerid], ip, false) == 0) {
 		return Rac::Ban(playerid, "Флуд коннектами");
 	}
-	if(currtime-timeleft[playerid] < 5) {
-		if(strcmp(playerIp[playerid], ip, false) == 0) {
-			Send(playerid, COLOR_LIGHTRED, "* Перезаходить можно не менее чем через 5 секунд!");
-			return Kick(playerid);
-		}
+	
+	if((currtime - GetProp(ip)) < 5) {
+		Send(playerid, COLOR_LIGHTRED, "* Перезаходить можно не менее чем через 5 секунд!");
+		return Kick(playerid);
 	}
+	
 	slotused{playerid} = true;
 	strmid(playerIp[playerid], ip, 0, strlen(ip), 16);
 	
@@ -2570,7 +2571,8 @@ public OnPlayerConnect(playerid) {
 
 public OnPlayerDisconnect(playerid, reason) {
 	slotused{playerid} = false;
-	timeleft[playerid] = gettime();
+	SetProp(playerIp[playerid], gettime());
+	
 	if(!Pl::isLogged(playerid)) return 1;	
 	
 	foreach(new i: Player) {
