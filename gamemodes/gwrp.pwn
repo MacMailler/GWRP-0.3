@@ -9097,14 +9097,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_LMENU+7 : {
 			if(response) {
-				new model_id;
-				name_to_id(inputtext, model_id);
-				
-				if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
-				if(Fc::IsForbiddenVeh(model_id)) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
-				
+				new model_id, model_limit;
+				sscanf(inputtext, "P<[]>k<name_to_id>i", model_id, model_limit);
+				if(!(400 <= model_id <= 611)) return Send(playerid, COLOR_GREY, "* Unknown model id!");
+				if(Fc::GetModelCount(Pl::FracID(playerid), model_id) >= model_limit) {
+					format(string, sizeof string, "* Достигнут лимит на установку %s!", VehicleNames[model_id-400]);
+					return Send(playerid, COLOR_GREY, string);
+				}
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
-				if(!Pl::isAdmin(playerid, ADMINISTRATOR) ) if(!IsInRespawn(Pl::FracID(playerid), carid))
+				if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
 					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
 				
 				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
@@ -9138,11 +9139,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_ADD_FC : {
 			if(response) {
-				new frac_id, model_id;
-				name_to_id( inputtext, model_id );
-				
-				if( model_id < 400 || model_id > 611 ) return Send(playerid, COLOR_GREY, "* Unknown model id!");
-				if( Fc::IsForbiddenVeh( model_id ) ) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
+				new frac_id, model_id, model_limit;
+				sscanf(inputtext, "P<[]>k<name_to_id>i", model_id, model_limit);
+				if(!(400 <= model_id <= 611)) return Send(playerid, COLOR_GREY, "* Unknown model id!");
 				frac_id = GetPVarInt( playerid, "SelectFrac");
 				new Float: r_pos[4]; GetPlayerPos( playerid, r_pos[0], r_pos[1], r_pos[2]); GetPlayerFacingAngle(playerid, r_pos[3]);
 				format(query, sizeof query, "INSERT INTO `"#__TableFracVehicles__"` (`model`,`frac`,`resp_pos`) VALUES \
@@ -9190,14 +9189,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!strcmp(inputtext, "Добавить", true)) {
 					ShowDialog( playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
 				}
-				else if(strcmp(inputtext, "------------", true)){
-					new model_id;
-					name_to_id( inputtext, model_id );
-					if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
-					if(Fc::IsForbiddenVeh(model_id)) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
+				else if(strcmp(inputtext, "------------", true)) {
+					new model_id, model_limit;
+					sscanf(inputtext, "P<[]>k<name_to_id>i", model_id, model_limit);
+					if(!(400 <= model_id <= 611)) return Send(playerid, COLOR_GREY, "* Unknown model id!");
 					
 					SetPVarInt( playerid, "SelectModel", model_id);
-					SPD( playerid, D_EDIT_MODEL, 2, "Options", "Изменить\nУдалить", "Ok", "Cancel");
+					SPD(playerid, D_EDIT_MODEL, 2, "Options", "Изменить модель\nИменить лимит\nУдалить", "Ok", "Cancel");
 				}
 			}
 		}
@@ -9207,13 +9205,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				switch(listitem) {
 					case 0 : {
-						SPD( playerid, D_EDIT_MODEL+1, 1, "Edit model", "Введите новый ID или название модели.\nПример: 400 или Landstalker", "Ok", "Cancel");
+						SPD(playerid, D_EDIT_MODEL+1, 1, "Изменить модель", "Введите новый ID или название модели.\nПример: 400 или Landstalker", "ENTER", "CANCEL");
 					}
+					
 					case 1 : {
-						new model_id = GetPVarInt( playerid, "SelectModel" );
-						format(query, sizeof query, "DELETE FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", frac_id, model_id);
-						Db::tquery(connDb, query, "", "");
-						Send( playerid, COLOR_WHITE, " Эта модель была удалена из списка доступных!");
+						SPD(playerid, D_EDIT_MODEL+2, 1, "Изменить лимит", "Введите лимит(от 1 до 10)", "ENTER", "CANCEL");
+					}
+					
+					case 2 : {
+						format(query, sizeof query, "DELETE FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", frac_id, GetPVarInt(playerid, "SelectModel"));
+						Db::tquery(connDb, query);
+						Send(playerid, COLOR_WHITE, "* Эта модель была удалена из списка доступных!");
 					}
 				}
 			} else {
@@ -9224,16 +9226,29 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_EDIT_MODEL+1 : {
 			if(response) {
 				new newmodel;
-				if(!name_to_id(inputtext, newmodel)) {
-					SPD( playerid, D_EDIT_MODEL+1, 1, "Edit model", "Введите новый ID или название модели.\nПример: 400 или Landstalker", "Ok", "Cancel");
+				sscanf(inputtext, "P<[]>k<name_to_id>", newmodel);
+				if(!(400 <= newmodel <= 611)) {
+					SPD(playerid, D_EDIT_MODEL+1, 1, "Изменить модель", "Введите новый ID или название модели.\nПример: 400 или Landstalker", "Ok", "Cancel");
 				} else {
-					if( Fc::IsForbiddenVeh( newmodel ) ) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
-					new frac_id = GetPVarInt( playerid, "SelectFrac" );
-					new model_id = GetPVarInt( playerid, "SelectModel" );
 					format(query, sizeof query, "UPDATE `"#__TableFracModels__"` SET `model_id` = '%i' WHERE \
-					`frac_id` = '%i' AND `model_id` = '%i'", newmodel, frac_id, model_id);
-					Db::tquery(connDb, query, "", "");
+					`frac_id` = '%i' AND `model_id` = '%i'", newmodel, GetPVarInt(playerid, "SelectFrac"), GetPVarInt(playerid, "SelectModel"));
+					Db::tquery(connDb, query);
 					Send(playerid, COLOR_WHITE, " Модель была изменена!");
+				}
+			}
+		}
+		
+		case D_EDIT_MODEL+2 : {
+			if(response) {
+				if(sscanf(inputtext, "i", inputtext[0])) {
+					SPD(playerid, D_EDIT_MODEL+2, 1, "Изменить лимит", "Введите лимит(от 1 до 10)", "ENTER", "CANCEL");
+				} else if(!(1 <= inputtext[0] <= 10)) {
+					SPD(playerid, D_EDIT_MODEL+2, 1, "Изменить лимит", "Введите лимит(от 1 до 10)", "ENTER", "CANCEL");
+				} else {
+					format(query, sizeof query, "UPDATE `"#__TableFracModels__"` SET `model_limit` = '%i' WHERE \
+					`frac_id` = '%i' AND `model_id` = '%i'", inputtext[0], GetPVarInt(playerid, "SelectFrac"), GetPVarInt(playerid, "SelectModel"));
+					Db::tquery(connDb, query);
+					Send(playerid, COLOR_WHITE, " Лимит был изменен!");
 				}
 			}
 		}
@@ -9241,15 +9256,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_ADD_MODEL : {
 			if(response) {
 				new model_id;
-				if(!name_to_id(inputtext, model_id)){
+				sscanf(inputtext, "P<[]>k<name_to_id>", model_id);
+				if(!(400 <= model_id <= 611)){
 					ShowDialog(playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
 				} else {
-					new frac_id = GetPVarInt( playerid, "SelectFrac" );
+					new frac_id = GetPVarInt(playerid, "SelectFrac");
 					if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
-					if(Fc::IsForbiddenVeh(model_id)) return Send( playerid, COLOR_GREY, "* Forbidden model id!");
 					if(Fc::IsThereModel(frac_id, model_id)) return Send(playerid, COLOR_RED, "* Эта модель уже есть в списке!");
 					format(query, sizeof query, "INSERT INTO `"#__TableFracModels__"` (`frac_id`, `model_id`) VALUES ('%i','%i')", frac_id, model_id);
-					Db::tquery(connDb, query, "", "");
+					Db::tquery(connDb, query);
 					format(string, sizeof(string), " Модель добвалена! Model_id: %i; Model_name: %s", model_id, VehicleNames[model_id-400]);
 					Send(playerid, COLOR_WHITE, string);
 				}
@@ -13534,6 +13549,16 @@ stock ShowDialog(playerid, dialogid, style, title[], filename[], buttom1[], butt
 	return SPD(playerid, D_NONE, 0, "ERROR", "* File dialog is not found!", "CLOSE", "");
 }
 
+stock Fc::GetModelCount(frac_id, model_id) {
+	new count;
+	foreach(new i : TeamVehicles[frac_id]) {
+		if(GetVehicleModel(i) == model_id) {
+			count ++;
+		}
+	}
+	return count;
+}
+
 stock Fc::GetInfo(vehicleid, format[]="", ...) {
 	for(new i; i < FC_TOTAL; i++) {
 		if(Fc::Info[i][Fc::Id][1] == vehicleid) {
@@ -13619,18 +13644,19 @@ stock Fc::IsThereModel(fracid, modelid) {
 }
 
 stock Fc::ShowModel( playerid, fracid, dialogid) {
-	format(query, sizeof query, "SELECT `model_id` FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i'", fracid);
+	format(query, sizeof query, "SELECT `model_id`,`model_limit` FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i'", fracid);
 	new Cache:result = Db::query(connDb, query, true);
 	new rows = cache_get_row_count();
 	if(rows) {
-		new model_id;
+		new model_id, model_limit;
 		dialog[0] = '\0';
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, model_id);
-			scf(dialog, query, "%s\n", VehicleNames[model_id-400], model_id);
+			cache_get_int(i, 1, model_limit);
+			scf(dialog, query, "%s [%i]\n", VehicleNames[model_id-400], model_limit);
 		}
-		if( Pl::Info[playerid][pAdmin] >= 5 && dialogid != D_ADD_FC && dialogid != D_LMENU+7 ) strcat( dialog, "------------\nДобавить");
-		SPD( playerid, dialogid, DIALOG_STYLE_LIST, "Frac Models", dialog, "SELECT", "CANCEL");
+		if(Pl::Info[playerid][pAdmin] >= 5 && dialogid != D_ADD_FC && dialogid != D_LMENU+7) strcat( dialog, "------------\nДобавить");
+		SPD(playerid, dialogid, DIALOG_STYLE_LIST, "Frac Models", dialog, "SELECT", "CANCEL");
 	} else {
 		if(Pl::Info[playerid][pAdmin] >= 5 && dialogid != D_ADD_FC && dialogid != D_LMENU+7) {
 			SPD(playerid, dialogid, 2, "Frac Models", "Добавить", "ENTER", "CANCLE");
@@ -13638,7 +13664,7 @@ stock Fc::ShowModel( playerid, fracid, dialogid) {
 			SPD(playerid, dialogid, 0, "Frac Models", "Нет моделей для выбора!", "ok", "");
 		}
 	}
-	SetPVarInt( playerid, "SelectFrac", fracid);
+	SetPVarInt(playerid, "SelectFrac", fracid);
 	cache_delete(result);
 	return 1;
 }
@@ -13689,19 +13715,20 @@ stock Fc::Delete(idx) {
 	return 0;
 }
 
-stock name_to_id(string[], &modelid) {
+SSCANF:name_to_id(string[]) {
+	new model;
 	if('0' <= string[0] <= '9') {
-		modelid = strval(string);
-		if(400 <= modelid <= 611) return 1;
+		model = strval(string);
+		if(400 <= model <= 611) return model;
 	} else {
 		for(new i; i < sizeof(VehicleNames); i++) {
-			if(strfind(VehicleNames[i], string, true) != -1) {
-				modelid += i + 400;
-				return 1;
+			if(strcmp(VehicleNames[i], string, true, strlen(VehicleNames[i])) == 0) {
+				model += i + 400;
+				break;
 			}
 		}
 	}
-	return 0;
+	return model;
 }
 
 stock UpdateStuffTD(playerid, vehid, type) {
