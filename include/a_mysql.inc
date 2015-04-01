@@ -1,5 +1,5 @@
 /**
- * MySQL plugin R38
+ * MySQL plugin R39-3
  */
 
 
@@ -57,7 +57,8 @@ enum E_VAR_DATATYPE
 
 enum E_MYSQL_OPTION
 {
-	DUPLICATE_CONNECTIONS
+	DUPLICATE_CONNECTIONS,
+	LOG_TRUNCATE_DATA
 };
 
 enum E_EXECTIME_UNIT
