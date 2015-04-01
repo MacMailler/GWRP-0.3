@@ -14560,17 +14560,18 @@ stock updateBenzinTD(playerid, vehicleid) {
 }
 
 stock ShowCantina(playerid) {
-	dialog[0] = '\0';
 	if(Pl::FracID(playerid) == 3) {
+		dialog = "Блюдо\n";
 		for(new i; i < sizeof EatInfo; i++) {
 			scf(dialog, temp, ""#_GREY_ARROW" %s\n", EatInfo[i][bDescription], EatInfo[i][bPrice]);
 		}
 	} else {
+		dialog = "Блюдо\tЦена\n";
 		for(new i; i < sizeof EatInfo; i++) {
-			scf(dialog, temp, ""#_GREY_ARROW" %s ({33AA33}%i${FFFFFF})\n", EatInfo[i][bDescription], EatInfo[i][bPrice]);
+			scf(dialog, temp, ""#_GREY_ARROW" %s\t{33AA33}%i${FFFFFF}\n", EatInfo[i][bDescription], EatInfo[i][bPrice]);
 		}
 	}
-	return SPD(playerid, 149, 2, "Столовая", dialog, "Взять", "Отмена");
+	return SPD(playerid, 149, DIALOG_STYLE_TABLIST_HEADERS, "Столовая", dialog, "Взять", "Отмена");
 }
 
 public: OnPlayerBankTransfer(playerid) {
