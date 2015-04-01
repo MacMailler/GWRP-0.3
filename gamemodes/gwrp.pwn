@@ -8029,12 +8029,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				switch(listitem) {
 					case 0..3 : {
-						dialog[0] = '\0';
+						format(dialog, sizeof dialog, "Машина\tЦена\n");
 						for(new i; i < ASModelCount[listitem]; i++) {
-							scf(dialog, string, ""#_GREY_ARROW"%s {33AA33}[$%i]\n", VehicleNames[AutoSolon[listitem][i][0] - 400], AutoSolon[listitem][i][1]);
+							scf(dialog, string, ""#_GREY_ARROW"%s {33AA33}\t$%i\n", VehicleNames[AutoSolon[listitem][i][0] - 400], AutoSolon[listitem][i][1]);
 						}
 						SetPVarInt(playerid, "SelectedCar", listitem);
-						SPD(playerid, D_HMENU+13, DIALOG_STYLE_LIST, "[House Menu] > Машина", dialog, "SELECT", "CANCEL");
+						SPD(playerid, D_HMENU+13, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > Машина", dialog, "SELECT", "CANCEL");
 					}
 					case 4 : {
 						new hid = Pl::Info[playerid][pHouseKey];
@@ -13288,12 +13288,13 @@ stock ShowOnline(playerid, id) {
 	dialogtext[0]='\0';
 	switch(id) {
 		case 0: {
+			format(dialogtext, sizeof dialogtext, "Фракция\tЛидер\n");
 			foreach(new i : LeaderPlayers) {
 				GetPlayerName(i, plname, 24);
-				scf(dialogtext, src, "{FFFF00}%s: {FFFFFF}%s [id: %i]\n", FracInfo[Pl::Info[i][pLeader]][fName], plname, i);
+				scf(dialogtext, src, "{FFFF00}%s\t{FFFFFF}%s [id: %i]\n", FracInfo[Pl::Info[i][pLeader]][fName], plname, i);
 			}
 			if(!strlen(dialogtext)) strcat(dialogtext, "Нет лидеров онлайн!");
-			return SPD(playerid, D_ONLINE+1, 0, "GrandWorld Leaders", dialogtext, "OK", "");
+			return SPD(playerid, D_ONLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "GrandWorld Leaders", dialogtext, "OK", "");
 		}
 		case 1: {
 			Send(playerid, COLOR_LIGHTRED, "Лицензиары онлайн:");
@@ -13484,16 +13485,6 @@ stock CreateZahvatTD(&Text:txdw) {
 }
 
 
-stock get_tab(name[], l=sizeof name) {
-	switch(strlen(name)) {
-		case 0..5	: strcat(name, "\t\t\t\t", l);
-		case 6..12	: strcat(name, "\t\t\t", l);
-		case 13..20 : strcat(name, "\t\t", l);
-		default		: strcat(name, "\t", l);
-	}
-}
-
-
 stock ShowOffline(playerid, id) {
 	switch(id) {
 		case 0 : format(query, sizeof query, "SELECT `Name`,`Leader`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__TableUsers__"` WHERE `Leader` >= '1' ORDER BY `Leader` ASC");
@@ -13513,7 +13504,7 @@ public: _ShowOffline(playerid, id) {
 			new num, rows = cache_get_row_count(rows);
 			if(rows > 0) {
 				new leaderid, leader;
-				strcat(dialogtext, "Лидер\t\tПоследний везит\tФракция\n\n");
+				strcat(dialogtext, "Лидер\tПоследний везит\tФракция\n");
 				while(rows--) {
 					cache_get_row(rows, 0, name);
 					cache_get_int(rows, 1, leader);
@@ -13523,8 +13514,7 @@ public: _ShowOffline(playerid, id) {
 						leaderid = ReturnUser(name);
 						if(!Pl::isLogged(leaderid)) {
 							num ++;
-							get_tab(name);
-							scf(dialogtext, src, "{ffffff}• %s {AA3333}%s{ffffff} \t{%h}%s\n", name, lastdate, rgb<GetFracColor(leader)>, FracInfo[leader][fName]);
+							scf(dialogtext, src, "{ffffff}%s\t{AA3333}%s{ffffff}\t{%h}%s\n", name, lastdate, rgb<GetFracColor(leader)>, FracInfo[leader][fName]);
 						}
 					}
 				}
@@ -13534,7 +13524,7 @@ public: _ShowOffline(playerid, id) {
 				SPD(playerid, D_OFFLINE+1, 0, "Лидеры оффлайн", "• Нет лидеров оффлайн •", "OK", "CANCEL");
 			} else {
 				format(temp, sizeof temp, "Лидеры оффлайн | Лидеров: %i", num);
-				SPD(playerid, D_OFFLINE+1, 0, temp, dialogtext, "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, temp, dialogtext, "OK", "CANCEL");
 			}
 		}
 		
@@ -13542,7 +13532,7 @@ public: _ShowOffline(playerid, id) {
 			new num, rows = cache_get_row_count(rows);
 			if(rows) {
 				new helperid, helper;
-				strcat(dialogtext, "Хелпер\t\tПоследний везит\tРанг\n\n");
+				strcat(dialogtext, "Хелпер\tПоследний везит\tРанг\n");
 				while(rows--) {
 					cache_get_row(rows, 0, name);
 					cache_get_int(rows, 1, helper);
@@ -13551,8 +13541,7 @@ public: _ShowOffline(playerid, id) {
 						helperid = ReturnUser(name);
 						if(!Pl::isLogged(helperid)) {
 							num ++;
-							get_tab(name);
-							scf(dialogtext, src, "{ffffff}• %s {AA3333}%s{ffffff} \t{33AA33}%s\n", name, lastdate, GetHelperRank(helper));
+							scf(dialogtext, src, "{ffffff}%s\t{AA3333}%s{ffffff}\t{33AA33}%s\n", name, lastdate, GetHelperRank(helper));
 						}
 					}
 				}
@@ -13561,7 +13550,7 @@ public: _ShowOffline(playerid, id) {
 			if(!num) {
 				SPD(playerid, D_OFFLINE+1, 0, "Хелперы оффлайн", "• Нет хелперов оффлайн •", "OK", "CANCEL");
 			} else {
-				SPD(playerid, D_OFFLINE+1, 0, "Хелперы оффлайн", dialogtext, "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "Хелперы оффлайн", dialogtext, "OK", "CANCEL");
 			}
 		}
 		
@@ -13569,7 +13558,7 @@ public: _ShowOffline(playerid, id) {
 			new num, rows = cache_get_row_count(rows);
 			if(rows) {
 				new adminid, admin;
-				strcat(dialogtext, "Админ\t\t\tПоследний везит\tРанг\n\n");
+				strcat(dialogtext, "Админ\tПоследний везит\tРанг\n");
 				while(rows--) {
 					cache_get_row(rows, 0, name);
 					cache_get_int(rows, 1, admin);
@@ -13578,8 +13567,7 @@ public: _ShowOffline(playerid, id) {
 						adminid = ReturnUser(name);
 						if(!Pl::isLogged(adminid)) {
 							num ++;
-							get_tab(name);
-							scf(dialogtext, src, "{FFFFFF} • %s {AA3333}%s{FFFFFF} \t{33AA33}%s\n", name, lastdate, GetAdminRank(admin));
+							scf(dialogtext, src, "{FFFFFF}%s\t{AA3333}%s{FFFFFF}\t{33AA33}%s\n", name, lastdate, GetAdminRank(admin));
 						}
 					}
 				}
@@ -13588,7 +13576,7 @@ public: _ShowOffline(playerid, id) {
 			if(!num) {
 				SPD(playerid, D_OFFLINE+1, 0, "Администраторы оффлайн", "• Нет админов оффлайн •", "OK", "CANCEL");
 			} else {
-				SPD(playerid, D_OFFLINE+1, 0, "Администраторы оффлайн", dialogtext, "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "Администраторы оффлайн", dialogtext, "OK", "CANCEL");
 			}
 		}
 	}
@@ -13610,25 +13598,25 @@ stock SafeMenu(playerid, hid, type = 0) {
 			case 0: {
 				new count;
 				for(new i; i < MAX_HWEAP; i++) if(HouseInfo[hid][hGuns][i] != 0) count ++;
-				format(dialog, sizeof dialog, ""#_GREY_ARROW"Деньги [{33AA33}$%i{ffffff}] [Лимит: {AA3333}$10000000 {ffffff}]\n", HouseInfo[hid][hSafe][0]);
-				scf(dialog, src, ""#_GREY_ARROW"Наркотики [{33AA33}%i{ffffff}] [Лимит: {AA3333}1000 грамм {ffffff}]\n", HouseInfo[hid][hSafe][1]);
-				scf(dialog, src, ""#_GREY_ARROW"Матиреалы [{33AA33}%i{ffffff}] [Лимит: {AA3333}100000 матов {ffffff}]\n", HouseInfo[hid][hSafe][2]);
-				scf(dialog, src, ""#_GREY_ARROW"Оружие [{33AA33}%i{ffffff}] [Лимит: {AA3333}6 слотов {ffffff}]\n", count);
-				scf(dialog, src, ""#_GREY_ARROW"Аптечки [{33AA33}%i{ffffff}] [Лимит: {AA3333}100 штук{ffffff}]\n", HouseInfo[hid][hSafe][3]);
-				scf(dialog, src, ""#_GREY_ARROW"Бронежилеты [{33AA33}%i{ffffff}] [Лимит: {AA3333}10 штук{ffffff}]\n", HouseInfo[hid][hSafe][4]);
-				SPD(playerid, D_HMENU+14, DIALOG_STYLE_LIST, "[House Menu] > Сейф", dialog, "SELECT", "CANCEL");
+				format(dialog, sizeof dialog, "Название\tКоличество\tЛимит\n"""#_GREY_ARROW"Деньги\t{33AA33}$%i{ffffff}\t{AA3333}$10000000{ffffff}\n", HouseInfo[hid][hSafe][0]);
+				scf(dialog, src, ""#_GREY_ARROW"Наркотики\t{33AA33}%i{ffffff}\t{AA3333}1000{ffffff}\n", HouseInfo[hid][hSafe][1]);
+				scf(dialog, src, ""#_GREY_ARROW"Матиреалы\t{33AA33}%i{ffffff}\t{AA3333}100000{ffffff}\n", HouseInfo[hid][hSafe][2]);
+				scf(dialog, src, ""#_GREY_ARROW"Оружие\t{33AA33}%i{ffffff}\t{AA3333}6{ffffff}\n", count);
+				scf(dialog, src, ""#_GREY_ARROW"Аптечки\t{33AA33}%i{ffffff}\t{AA3333}100{ffffff}\n", HouseInfo[hid][hSafe][3]);
+				scf(dialog, src, ""#_GREY_ARROW"Бронежилеты\t{33AA33}%i{ffffff}\t{AA3333}10{ffffff}\n", HouseInfo[hid][hSafe][4]);
+				SPD(playerid, D_HMENU+14, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > Сейф", dialog, "SELECT", "CANCEL");
 			}
 			case 1: {
-				dialog[0] = '\0';
+				format(dialog, sizeof dialog, "Оружие\tКоличество\n");
 				for(new i; i < MAX_HWEAP; i++) {
 					if(HouseInfo[hid][hGuns][i] != 0) {
 						GetWeaponName(HouseInfo[hid][hGuns][i], temp, 24);
-						scf(dialog, src, "[{33AA33}%s{ffffff} - Патрон: {AA3333}%i {ffffff}]\n", temp, HouseInfo[hid][hAmmos][i]);
+						scf(dialog, src, "{33AA33}%s{ffffff}\t{AA3333}%i{ffffff}\n", temp, HouseInfo[hid][hAmmos][i]);
 					} else {
-						strcat(dialog, "[{33AA33}Пусто{ffffff} - Патрон: {AA3333}0 {ffffff}]\n");
+						strcat(dialog, "{33AA33}Пусто{ffffff}\t{AA3333}0{ffffff}\n");
 					}
 				}
-				SPD(playerid, D_HMENU+21, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Оружие", dialog, "SELECT", "CANCEL");
+				SPD(playerid, D_HMENU+21, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > Сейф > Оружие", dialog, "SELECT", "CANCEL");
 			}
 		}
 		return 1;
