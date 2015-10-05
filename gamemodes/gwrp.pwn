@@ -1903,17 +1903,17 @@ public OnGameModeInit() {
 	DisableInteriorEnterExits		();
 	ManualVehicleEngineAndLights	();
 	
-	RegisterAlt("/c",		"/close");
-	RegisterAlt("/shout",	"/s");
-	RegisterAlt("/p",		"/pickup");
-	RegisterAlt("/h",		"/hangup");
-	RegisterAlt("/a",		"/admin");
-	RegisterAlt("/pm",		"/w");
-	RegisterAlt("/tp",		"/tplist");
-	RegisterAlt("/gl",		"/givelicense");
-	RegisterAlt("/sl",		"/showlicenses");
-	RegisterAlt("/pas",		"/pasport");
-	RegisterAlt("/vopros",	"/вопрос");
+	RegisterAlt("/close", "/c");
+	RegisterAlt("/shout", "/s");
+	RegisterAlt("/p", "/pickup");
+	RegisterAlt("/h", "/hangup");
+	RegisterAlt("/a", "/admin");
+	RegisterAlt("/pm", "/w");
+	RegisterAlt("/tp", "/tplist");
+	RegisterAlt("/gl", "/givelicense");
+	RegisterAlt("/sl", "/showlicenses");
+	RegisterAlt("/pas", "/pasport");
+	RegisterAlt("/vopros", "/вопрос");
 	RegisterAlt("/givegun",	"/ggun");
 	
 	foreach(new i : Frac) {
