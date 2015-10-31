@@ -232,7 +232,6 @@ server_log.txt
 samp.ban
 *.dll
 *.exe
-*.sql
 *.sql.gz
 *.zip
 
