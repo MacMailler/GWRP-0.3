@@ -1,7 +1,7 @@
 /***
 	The MIT License (MIT)
 
-	Copyright (c) 2014 MacMailler
+	Copyright © 2014 MacMailler
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +68,7 @@
 #define __SERVER_NAME_L			"grandworld"
 #define __SERVER_NAME_C			"GRANDWORLD"
 #define __SERVER_PREFIX			"[RP]"
-#define __SERVER_SITE			"www.rp-grandworld.ru"
+#define __SERVER_SITE			"www.gwrp.net"
 
 #define MAX_FC					(300)
 #define MAX_GAS 				(64)
@@ -893,8 +893,7 @@ static const correctAnswer[] = {
 	'd', 'b', 'b', 'd', 'b', 'a', 'd', 'b', 'b', 'a'
 };
 
-enum tpInfo
-{
+enum tpInfo {
 	tpVw,
 	tpInt,
 	tpLocal,
@@ -1852,7 +1851,7 @@ public OnGameModeInit() {
 	
 	if(!Db::Init()) panic("Не удалось подключится к базе данных, старт игрового режима невозможен!");
 	
-	Db::Update();
+	Db::Prepare();
 	
 	Iter::Init(GangSolder);
 	Iter::Init(JobPlayers);
@@ -2421,7 +2420,7 @@ stock PlayerFixRadio(playerid) {
 
 stock playerSpectateUpdate(i) {
 	static string[128];
-	static targetid, Float:sphealth;
+	new targetid, Float:sphealth;
 	
 	targetid = Pl::SpecInfo[i][pSpecID];
 	if(targetid != INVALID_PLAYER_ID) {
@@ -5727,6 +5726,7 @@ stock LoadHouses() {
 			cache_get_str(iter, 14, "p<,>a<f>[4]", HouseInfo[i][hEnter]);
 			cache_get_str(iter, 15, "p<,>a<f>[4]", HouseInfo[i][hExit]);
 			cache_get_int(iter, 16, HouseInfo[i][hvModel]);
+			
 			if(400 <= HouseInfo[i][hvModel] <= 611) {
 				cache_get_str(iter, 17, "p<,>a<i>[2]", HouseInfo[i][hvColor]);
 				cache_get_int(iter, 18, HouseInfo[i][hvPark]);
@@ -5879,8 +5879,8 @@ stock LoadGangInfo() {
 	new rows = cache_get_row_count();
 	if(rows) {
 		for(new i; i < rows; i++) {
-			cache_get_int(i, 0,GangInfo[i][fID]);
-			cache_get_int(i, 1,GangInfo[i][gRespect]);
+			cache_get_int(i, 0, GangInfo[i][fID]);
+			cache_get_int(i, 1, GangInfo[i][gRespect]);
 			cache_get_float(i, 2, GangInfo[i][gPosX]);
 			cache_get_float(i, 3, GangInfo[i][gPosY]);
 			cache_get_float(i, 4, GangInfo[i][gPosZ]);
@@ -10810,9 +10810,9 @@ public: Gm::Thread() {
 }
 
 stock vehicleStatusUpdate(playerid) {
-	//static Float:x, Float:y, Float:z;
-	static model, vehicle, speed;
-	static Float:health, string[255];
+	static string[255];
+	new model, vehicle, speed, Float:health;
+	
 	if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
 		vehicle = GetPlayerVehicleID(playerid);
 		model = GetVehicleModel(vehicle);
@@ -11584,8 +11584,8 @@ stock GetPlayerSerial(playerid) {
 }
 
 stock playerAFKUpdate(playerid) {
-	static paused;
-	static Float:x, Float:y, Float:z;
+	new paused;
+	new Float:x, Float:y, Float:z;
 	paused = Rac::IsPlayerInPause(playerid);
 	
 	GetPlayerPos(playerid, x, y, z);
@@ -11765,7 +11765,7 @@ stock Db::Init() {
 	connDb = Db::connect(Db::Conf[Db::Host], Db::Conf[Db::User], Db::Conf[Db::Base], Db::Conf[Db::Pass]);
 	
 	new errno = Db::errno();
-	if(errno) Db::FixCharset();
+	if(errno == 0) Db::FixCharset();
 	
 	return errno == 0;
 }
@@ -11801,7 +11801,7 @@ stock Db::FixCharset() {
 	return 1;
 }
 
-stock Db::Update() {
+stock Db::Prepare() {
 	if(fexist("update.sql")) {
 		new File:fhandle = fopen("update.sql", io_read);
 		while(fread(fhandle, temp)) {
@@ -12110,7 +12110,8 @@ stock ClearCrime(playerid) {
 
 
 stock Td::Init() {
-	Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~rp-"#__SERVER_NAME_C"~w~.ru");
+	//Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~gwrp~w~.net");
+	Logo[0] = Td::Create(510.000000, 6.000000, "~w~www.~g~gwrp~w~.net");
 	Td::BackgroundColor(Logo[0], 255);
 	Td::Font(Logo[0], 3);
 	Td::LetterSize(Logo[0], 0.35,1.70);
@@ -12853,7 +12854,11 @@ public OnQueryError(errorid, error[], callback[], querystr[], connectionHandle) 
 		case CR_SERVER_LOST : {
 			Db::reconnect(connectionHandle);
 			Db::FixCharset();
-			if(strfind(querystr, "UPDATE", true) != -1) Db::tquery(connDb, querystr, "", "");
+			
+			if(strfind(querystr, "UPDATE", true) != -1) {
+				Db::tquery(connDb, querystr, "", "");
+			}
+			
 			return 1;
 		}
 	}
@@ -13934,7 +13939,7 @@ stock LoadSkins() {
 			cache_get_int(i, 1, query[1]);
 			Container::Add(query[0], query[1]);
 		}
-		debug("Loadskins() - Ok! Skins: %i. Run time: %i (ms)", rows, GetTickCount()-time);
+		debug("LoadSkins() - Ok! Skins: %i. Run time: %i (ms)", rows, GetTickCount()-time);
 	}
 	cache_delete(result);
 	return 1;

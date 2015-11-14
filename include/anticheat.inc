@@ -31,7 +31,7 @@
 #define __AC_DEBUG					1
 #define __AC_TITLE					"Reality-Anticheat"
 #define __AC_VERSION				"0.4-alpha"
-#define __AC_COPYRIGHT				"(c) MacMailler, 2012—2014"
+#define __AC_COPYRIGHT				"© MacMailler, 2012-2014"
 #define __MP_VERSION 				"0.3x"
 
 
