@@ -114,7 +114,6 @@
 #include "..\include\kickfix"
 #include "..\include\ctime"
 #include "..\include\a_mysql"
-#include "..\include\encrypt"
 #include "..\include\sscanf2"
 #include "..\include\foreach"
 #include "..\include\streamer"
