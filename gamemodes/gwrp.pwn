@@ -291,9 +291,6 @@
 #define IsACopCar(%0)			(TEAM_COP <= Fc::FracID(%0) <= TEAM_ARMY)
 #define IsACompTruck(%0)		(comptruck[0] <= %0 <= comptruck[1])
 
-#define SetProp(%0,%1)			setproperty(.name = %0, .value= %1)
-#define GetProp(%0)				getproperty(.name = %0)
-
 #define AddObject				CreateDynamicObject
 #define Add3DText				CreateDynamic3DTextLabel
 
@@ -2552,7 +2549,7 @@ public OnPlayerConnect(playerid) {
 		return Rac::Ban(playerid, "Флуд коннектами");
 	}
 	
-	if((currtime - GetProp(ip)) < 5) {
+	if((currtime - GetSVarInt(ip)) < 5) {
 		Send(playerid, COLOR_LIGHTRED, "* Перезаходить можно не менее чем через 5 секунд!");
 		return Kick(playerid);
 	}
@@ -2584,7 +2581,7 @@ public OnPlayerConnect(playerid) {
 
 public OnPlayerDisconnect(playerid, reason) {
 	slotused{playerid} = false;
-	SetProp(playerIp[playerid], gettime());
+	SetSVarInt(playerIp[playerid], gettime());
 	
 	if(!Pl::isLogged(playerid)) return 1;	
 	
