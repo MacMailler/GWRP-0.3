@@ -989,12 +989,12 @@ CMD:deltun(playerid, params[]) {
 	return Send(playerid, COLOR_YELLOW, "* Ошибка, у этой машины нельзя удалить тюнинг!");
 }
 
-CMD:asetpass(playerid, params[]) { new string[144], uname[24], ukey[36], uhash[SHA1_HASH_LEN];
+CMD:asetpass(playerid, params[]) { new string[144], uname[24], ukey[36], uhash[SHA2_HASH_LEN];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "s[24]s[36]", uname, ukey)) return Send(playerid, COLOR_GREY, "Введите: /asetpass [name] [password]");
 	new pid=ReturnUser(uname);
 	if(Pl::isLogged(pid)) {
-		KeyProtect(ukey, uhash);
+		SHA256_PassHash(ukey, Db::Conf[Db::KeySult], uhash, SHA2_HASH_LEN);
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", uhash, Pl::Info[pid][pID]);
 		Db::tquery(connDb, query, "", "");
 	
@@ -1009,7 +1009,7 @@ CMD:asetpass(playerid, params[]) { new string[144], uname[24], ukey[36], uhash[S
 	} else {
 		new uid = GetIDFromName(uname);
 		if(uid == -1) return Send(playerid, COLOR_GREY, "* Нет такого юзера!");
-		KeyProtect(ukey, uhash);
+		SHA256_PassHash(ukey, Db::Conf[Db::KeySult], uhash, SHA2_HASH_LEN);
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", uhash, uid);
 		Db::tquery(connDb, query, "", "");
 		

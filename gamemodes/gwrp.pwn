@@ -311,6 +311,7 @@ enum Db::e_Conf {
 	Db::Pass[64],
 	Db::Charset[16],
 	Db::Debug,
+	Db::KeySult[32]
 }
 new Db::Conf[Db::e_Conf];
 new connDb;
@@ -7025,8 +7026,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(!WrongLogin[playerid]) return Rac::Kick(playerid, "Попытка взлома аккаунта");
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
-				new hash[SHA1_HASH_LEN];
-				KeyProtect(inputtext[0], hash);
+				new hash[SHA2_HASH_LEN];
+				SHA256_PassHash(inputtext[0], Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
 				format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
 				Db::tquery(connDb, query, "onPlayerLogin", "i", playerid);
 			} else {
@@ -7042,8 +7043,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_REGG + 1 : {
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны зарегистрироваться!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
-				new hash[SHA1_HASH_LEN];
-				KeyProtect(inputtext[0], hash);
+				new hash[SHA2_HASH_LEN];
+				SHA256_PassHash(inputtext[0], Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
 				format(query, sizeof query, "INSERT INTO `"#__TableUsers__"` (`Name`,`Key`,`Fightstyle`) VALUES ('%s', '%s', '%i')",
 				GetName(playerid), hash, FightStyles[random(sizeof FightStyles)]);
 				Db::tquery(connDb, query, "onPlayerRegister", "i", playerid);
@@ -9663,8 +9664,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_CHANGE_PASS : {
 			if(response) {
-				new hash[SHA1_HASH_LEN];
-				KeyProtect(inputtext, hash);
+				new hash[SHA2_HASH_LEN];
+				SHA256_PassHash(inputtext, Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
 				format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
 				new Cache:result = Db::query(connDb, query, true);
 				if(cache_get_row_count()) {
@@ -9685,8 +9686,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				if(!strlen(inputtext)) Send(playerid,COLOR_LIGHTRED,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы не ввели пароль!");
 				else {
-					new hash[SHA1_HASH_LEN];
-					KeyProtect(inputtext, hash);
+					new hash[SHA2_HASH_LEN];
+					SHA256_PassHash(inputtext, Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
 					format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", hash, Pl::Info[playerid][pID]);
 					Db::tquery(connDb, query, "", "");
 					format(string, sizeof(string), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВНИМАНИЕ! ПАРОЛЬ ИЗМЕНЕН! Ваш новый пароль: %s", inputtext);
@@ -10641,12 +10642,6 @@ public: Gm::Thread() {
 		SendToAll(COLOR_LIGHTGREEN,"На сервере "#__SERVER_PREFIX""#__SERVER_NAME_LC" запрещено: ДБ, ДМ, Флуд, Читы, CLEO скрипты, Капс, Розжиг межрасовой розни");
 		SendToAll(COLOR_LIGHTBLUE,"Все интересующие вас вопросы, касающиеся игры вы найдете на нашем форуме: "#__SERVER_SITE"");
 		SendToAll(COLOR_DBLUE,"Если вас оскорбили, унизили, убили без причины, либо вы увидели читера или того, кто нарушает правила - то пишите /report [id] жалоба.");
-		
-		new y, m, d;
-		getdate(y, m, d);
-		if(y >= 1993 && m == 8 && d == 29) {
-			SendToAll(COLOR_YELLOW, "Happy birthday, MacMailler!");
-		}
 	}
 
 	static syncTimer;
@@ -11785,6 +11780,7 @@ stock LoadConf() {
 		iniGet(iniFile, "mysql.pass", Db::Conf[Db::Pass], 64);
 		iniGet(iniFile, "mysql.charset", Db::Conf[Db::Charset], 16);
 		iniGetInt(iniFile, "mysql.debug", Db::Conf[Db::Debug]);
+		iniGet(iniFile, "mysql.key_salt", Db::Conf[Db::KeySult], 32);
 		
 		iniClose(iniFile);
 		
@@ -12110,7 +12106,6 @@ stock ClearCrime(playerid) {
 
 
 stock Td::Init() {
-	//Logo[0] = Td::Create(473.000000, 6.000000, "~w~www.~g~gwrp~w~.net");
 	Logo[0] = Td::Create(510.000000, 6.000000, "~w~www.~g~gwrp~w~.net");
 	Td::BackgroundColor(Logo[0], 255);
 	Td::Font(Logo[0], 3);

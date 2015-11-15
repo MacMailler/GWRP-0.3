@@ -423,9 +423,3 @@ stock ReturnUser(text[]) {
 #define MD5_HASH_LEN (33)
 #define SHA1_HASH_LEN (41)
 #define SHA2_HASH_LEN (65)
-
-stock KeyProtect(const __key[], __output[]) {
-	new __tmp_key_hash[SHA1_HASH_LEN];
-	sha1(__key, __tmp_key_hash);
-	return sha1(__tmp_key_hash, __output);
-}
