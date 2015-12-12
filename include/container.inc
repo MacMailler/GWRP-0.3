@@ -57,7 +57,7 @@ stock Container::Add(index, value) {
 }
 
 stock Container::AddEx(index, ...) {
-	for(new argCount = numarg(), i; i < argCount; i++) {
+	for(new argCount = numargs(), i; i < argCount; i++) {
 		Container::Add(index, getarg(i, 0));
 	}
 	return 1;
