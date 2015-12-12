@@ -18,9 +18,11 @@
 
 #define debug(%0,%1)				printf("[debug] "#%0"",%1)
 
-#define public:%0(%1) forward %0(%1); public %0(%1)
+#define public:%0(%1)				forward %0(%1); public %0(%1)
 
-#define stock:%0(%1) forward %0(%1); stock %0(%1)
+#define stock:%0(%1)				forward %0(%1); stock %0(%1)
+
+#define KickEx(%0,%1,%2)			Send(%0,%2,%1),Kick(%0)
 
 #define BODY_PART_TORSO (3)
 #define BODY_PART_GROIN (4)
@@ -111,7 +113,7 @@
 #define FOREACH_NO_BOTS
 
 
-#include "..\include\kickfix"
+#include "..\include\fix_Kick"
 #include "..\include\ctime"
 #include "..\include\a_mysql"
 #include "..\include\sscanf2"
