@@ -29,7 +29,7 @@
 
 #if defined _inc_a_npc
 	#pragma library sscanf
-#elseif !defined _inc_a_samp
+#elseif !defined _samp_included
 	#error Please include <a_npc> or <a_samp> first.
 #endif
 
