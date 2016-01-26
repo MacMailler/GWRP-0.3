@@ -419,6 +419,19 @@ stock ReturnUser(text[]) {
 	return userid;
 }
 
+stock GetXYInFrontOfPoint(&Float:x, &Float:y, Float:angl, Float:dist) {
+	x += (dist * floatsin(-angl, degrees));
+	y += (dist * floatcos(-angl, degrees));
+}
+
+stock GetVehicleRotation(vehicleid, &Float:x, &Float:y, &Float:z) {
+    new Float:quat_w,Float:quat_x,Float:quat_y,Float:quat_z;
+    GetVehicleRotationQuat(vehicleid,quat_w,quat_x,quat_y,quat_z);
+    x = atan2(2*((quat_x*quat_y)+(quat_w+quat_z)),(quat_w*quat_w)+(quat_x*quat_x)-(quat_y*quat_y)-(quat_z*quat_z));
+    y = atan2(2*((quat_y*quat_z)+(quat_w*quat_x)),(quat_w*quat_w)-(quat_x*quat_x)-(quat_y*quat_y)+(quat_z*quat_z));
+    z = asin(-2*((quat_x*quat_z)+(quat_w*quat_y)));
+    return 1;
+}
 
 #define MD5_HASH_LEN (33)
 #define SHA1_HASH_LEN (41)
