@@ -48,7 +48,25 @@ CMD:setzahvattime(playerid, params[]) { new string[144];
 	SendToAdmin(COLOR_YELLOW, string, SUPERMODER, 3);
 	return 1;
 }
-	
+
+CMD:addhouse(playerid, params[]) { new string[144], lvl, price;
+	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(sscanf(params, "ii", lvl, price)) return Send(playerid, COLOR_GREY, "Ведите: /addhouse [lvl] [price]");
+	if(GetPlayerInterior(playerid) != 0) return Send(playerid, COLOR_GREY, "* Дом можно добавлять только в 0-ом интерьере!");
+	if(GetPlayerVirtualWorld(playerid) != 0) return Send(playerid, COLOR_GREY, "* Дом можно добавлять только в 0-ом виртуальном мире!");
+	new Float:pos[4];
+	GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+	GetPlayerFacingAngle(playerid, pos[3]);
+	new house = AddHouse(lvl, price, pos);
+	if(house != INVALID_HOUSE_ID) {
+		format(string, sizeof string, "* Дом был добавлен, его ид: %i", house);
+		Send(playerid, COLOR_LIGHTBLUE, string);
+	} else {
+		Send(playerid, COLOR_LIGHTBLUE, "* Произошла ошибка!");
+	}
+	return 1;
+}
+
 CMD:deletehouse(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Ведите: /deletehouse [houseid]");

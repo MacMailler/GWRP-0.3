@@ -15174,6 +15174,29 @@ stock GiveBizzProfit(biz, money) {
 	return 1;
 }
 
+stock AddHouse(level, price, Float:enter[4]) {
+	new Cache:result = Db::query(connDb, "INSERT INTO `houses` (`owner`) VALUES ('The State')", true);
+	if(cache_affected_rows()) {
+		new h = Iter::Count(Houses) + 1;
+		Iter::Add(Houses, h);
+		new inter = random(sizeof HouseInt);
+		HouseInfo[h][hID] = cache_insert_id();
+		strmid(HouseInfo[h][hOwner], "The State", 0, 9, 24);
+		GetPoint3DZone(enter[0], enter[1], enter[2], HouseInfo[h][hDescription], 28);
+		HouseInfo[h][hLevel] = level;
+		HouseInfo[h][hPrice] = price;
+		HouseInfo[h][hInt] = HouseInt[inter][Interior];
+		CopyArray(HouseInfo[h][hEnter], enter, 4);
+		CopyArray(HouseInfo[h][hExit], HouseInt[inter][InteriorPos], 4);
+		ClearHouse(h);
+		UpdateHouse(h);
+		cache_delete(result);
+		return h;
+	}
+	cache_delete(result);
+	return INVALID_HOUSE_ID;
+}
+
 stock DeleteHouse(h) {
 	new last = Iter::Count(Houses);
 	

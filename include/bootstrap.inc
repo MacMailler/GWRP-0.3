@@ -125,6 +125,7 @@
 #include "..\include\mloader"
 #include "..\include\dc_cmd"
 #include "..\include\mxINI"
+#include "..\include\zones"
 
 
 native IsValidVehicle(vehicleid);
