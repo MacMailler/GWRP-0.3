@@ -124,7 +124,6 @@
 #include "..\include\container"
 #include "..\include\mloader"
 #include "..\include\dc_cmd"
-#include "..\include\a_cam"
 #include "..\include\mxINI"
 
 
