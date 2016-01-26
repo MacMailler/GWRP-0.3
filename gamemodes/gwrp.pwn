@@ -23,7 +23,7 @@
 ***/
 
 #include <a_samp>
-#include "..\include\main"
+#include "..\include\bootstrap"
 
 #define __GamemodeName__		"GWRP"
 #define __GamemodeVersion__		"0.3"
@@ -4015,15 +4015,15 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					}
 					
 					case Bizz_GarageLV : {
-						static const Float:_exitPos[][4] = {
+						static const Float:exitPos[][4] = {
 							{2099.0129,2479.8958,10.5474,179.2626},
 							{2090.7698,2480.0090,10.5481,179.6587}
 						};
-						new rnd = random(sizeof _exitPos);
-						Rac::SetPlayerPos(playerid, _exitPos[rnd][0], _exitPos[rnd][1], _exitPos[rnd][2] + 2.0);
+						new rnd = random(sizeof exitPos);
+						Rac::SetPlayerPos(playerid, exitPos[rnd][0], exitPos[rnd][1], exitPos[rnd][2] + 2.0);
 						ExtraVehicles[playerid][slot][evID2] = Veh::Create(
 							ExtraVehicles[playerid][slot][evModel],
-							_exitPos[rnd][0], _exitPos[rnd][1], _exitPos[rnd][2], _exitPos[rnd][3],
+							exitPos[rnd][0], exitPos[rnd][1], exitPos[rnd][2], exitPos[rnd][3],
 							ExtraVehicles[playerid][slot][evColor1],
 							ExtraVehicles[playerid][slot][evColor2],
 							INFINITY
@@ -4032,15 +4032,15 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					}
 					
 					case Bizz_GarageSF : {
-						static const Float:__exitPos[][4] = {
+						static const Float:exitPos[][4] = {
 							{-2429.4846,515.1774,29.6367,214.6334},
 							{-2425.7083,518.3276,29.7009,222.1388}
 						};
-						new rnd = random(sizeof __exitPos);
-						Rac::SetPlayerPos(playerid, __exitPos[rnd][0], __exitPos[rnd][1], __exitPos[rnd][2] + 2.0);
+						new rnd = random(sizeof exitPos);
+						Rac::SetPlayerPos(playerid, exitPos[rnd][0], exitPos[rnd][1], exitPos[rnd][2] + 2.0);
 						ExtraVehicles[playerid][slot][evID2] = Veh::Create(
 							ExtraVehicles[playerid][slot][evModel],
-							__exitPos[rnd][0], __exitPos[rnd][1], __exitPos[rnd][2], __exitPos[rnd][3],
+							exitPos[rnd][0], exitPos[rnd][1], exitPos[rnd][2], exitPos[rnd][3],
 							ExtraVehicles[playerid][slot][evColor1],
 							ExtraVehicles[playerid][slot][evColor2],
 							INFINITY
@@ -4049,15 +4049,15 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					}
 					
 					case Bizz_GarageRublovka : {
-						static const Float:___exitPos[][4] = {
+						static const Float:exitPos[][4] = {
 							{-2457.4387,2295.7983,4.7087,89.4643},
 							{-2457.5139,2289.9634,4.7085,91.8186}
 						};
-						new rnd = random(sizeof __exitPos);
-						Rac::SetPlayerPos(playerid, ___exitPos[rnd][0], ___exitPos[rnd][1], ___exitPos[rnd][2] + 2.0);
+						new rnd = random(sizeof exitPos);
+						Rac::SetPlayerPos(playerid, exitPos[rnd][0], exitPos[rnd][1], exitPos[rnd][2] + 2.0);
 						ExtraVehicles[playerid][slot][evID2] = Veh::Create(
 							ExtraVehicles[playerid][slot][evModel],
-							___exitPos[rnd][0], ___exitPos[rnd][1], ___exitPos[rnd][2], ___exitPos[rnd][3],
+							exitPos[rnd][0], exitPos[rnd][1], exitPos[rnd][2], exitPos[rnd][3],
 							ExtraVehicles[playerid][slot][evColor1],
 							ExtraVehicles[playerid][slot][evColor2],
 							INFINITY
@@ -4508,11 +4508,11 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			}
 			
 			case 1 : {
-				new __bidx = GetIndexFromBizID(Bizz_Lottery);
+				new bidx = GetIndexFromBizID(Bizz_Lottery);
 			    if(Rac::GetPlayerMoney(playerid) >= ScrathCardPrice) {
 					Rac::GivePlayerMoney(playerid, -ScrathCardPrice);
 					GiveBizzProfit(biz, PERCENT(ScrathCardPrice,10));
-					GiveBizzProfit(__bidx, ScrathCardPrice - PERCENT(ScrathCardPrice,10));
+					GiveBizzProfit(bidx, ScrathCardPrice - PERCENT(ScrathCardPrice,10));
 					format(temp, sizeof(temp), "~r~-$%d", ScrathCardPrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
