@@ -2442,10 +2442,10 @@ CMD:free(playerid, params[]) { new string[144], sendername[24], playername[24];
 CMD:cancel(playerid, params[]) { new string[144], sendername[24];
 	if(sscanf(params, "s[15]U(65535)", temp, params[0]))
 	{
-		Send(playerid, COLOR_WHITE, "| Аннулировать |");
+		Send(playerid, COLOR_WHITE, "_________| Аннулировать |_________");
 		Send(playerid, COLOR_WHITE, "{ffffff}Введите: /cancel [name]");
-		Send(playerid, COLOR_GREY, "Доступные названия: Sex, Drugs, Repair, Lawyer, Live, Refill, Car, Taxi, Bus");
-		Send(playerid, COLOR_GREY, "Доступные названия: Medic, Mechanic, Ticket, Nick");
+		Send(playerid, COLOR_GREY, "Доступные названия: Sex, Drugs, Repair, Live, Refill, Car, Taxi, Bus");
+		Send(playerid, COLOR_GREY, "Доступные названия: Medic, Mechanic, Ticket");
 		Send(playerid, COLOR_WHITE, "||");
 		return 1;
 	}
@@ -2587,15 +2587,15 @@ CMD:cancel(playerid, params[]) { new string[144], sendername[24];
 CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(Pl::isLogged(playerid)) {
 		if(sscanf(params, "s[32]U(65535)", temp, params[0])) {
-			Send(playerid, COLOR_WHITE, "| Принимать |");
+			Send(playerid, COLOR_WHITE, "_________| Принимать |_________");
 			Send(playerid, COLOR_WHITE, "* Введите: accept [name]");
-			Send(playerid, COLOR_GREY, "Доступные названия: Sex, Drugs, Repair, Lawyer, Live, Refill,House");
-			Send(playerid, COLOR_GREY, "Доступные названия: Car, Taxi, Bus, Boxing, Medic, Mechanic, Ticket, Nick");
+			Send(playerid, COLOR_GREY, "Доступные названия: Sex, Drugs, Repair, Live, Refill, House");
+			Send(playerid, COLOR_GREY, "Доступные названия: Car, Taxi, Bus, Medic, Mechanic, Ticket");
 			Send(playerid, COLOR_WHITE, "||");
 			return 1;
 		}
 		
-		if(strcmp(temp, "house",true) == 0) {
+		if(strcmp(temp, "house", true) == 0) {
 			if(!IsPlayerInBiz(playerid, 60.0, Bizz_EstateAgency)) return Send(playerid, COLOR_GREY, "* Вы должны находится в агенстве недвижимости!");
 			switch(GetPVarInt(playerid, "HouseType")) {
 				case 0 : {
