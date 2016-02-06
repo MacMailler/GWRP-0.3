@@ -433,6 +433,32 @@ stock GetVehicleRotation(vehicleid, &Float:x, &Float:y, &Float:z) {
     return 1;
 }
 
+stock split(dest[], const string[], &index, seperator=' ') { 
+	if(index != 0 && string[index] != '\0') index++; 
+	new i = 0; 
+	for(;;) {
+		if (i == 0) {
+			for(;;) { 
+				if(string[index] == seperator) { 
+					index++; 
+				} else { 
+					switch(string[index]) { 
+						case '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v': index++; 
+						default: break; 
+					} 
+				} 
+			} 
+		} 
+		if(string[index] == seperator) break; 
+		
+		switch(string[index]) { 
+			case '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v': break; 
+			default: dest[i++] = string[index++]; 
+		} 
+	} 
+	dest[i] = '\0'; 
+}
+
 #define MD5_HASH_LEN (33)
 #define SHA1_HASH_LEN (41)
 #define SHA2_HASH_LEN (65)
