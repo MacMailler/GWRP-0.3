@@ -79,7 +79,6 @@ stock map::Load(const mapfile[], worldid=-1, interiorid=-1, playerid=-1, Float:s
 			DynamicMaps[id][e_MapInterior] = interiorid;
 			DynamicMaps[id][e_MapPlayer] = playerid;
 			DynamicMaps[id][e_MapStreamDist] = streamdistance;
-		
 			while(fread(fhandle, buffer[0])) {
 				if(strcut(buffer[0], buffer[1], "CreateObject(", ")")
 				|| strcut(buffer[0], buffer[1], "CreateDynamicObject(", ")")) {
@@ -266,10 +265,11 @@ stock map::DestroyAllMaps() {
 stock strcut(dest[], buffer[], l[], r[], maxlen=sizeof buffer) {
 	new lpos = strfind(dest, l, true);
 	if(lpos != -1) {
+		lpos += strlen(l);
 		new rpos = strfind(dest, r, true, lpos);
 		if(rpos > 0) {
 			if(rpos > maxlen) rpos = maxlen;
-			for(new j, i=lpos+1; i < rpos; i++, j++) {
+			for(new j, i=lpos; i < rpos; i++, j++) {
 				buffer[j] = dest[i];
 			}
 			return 1;

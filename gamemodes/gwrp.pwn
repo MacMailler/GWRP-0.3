@@ -1869,6 +1869,7 @@ public OnGameModeInit() {
 	LoadGMInfo();
 	LoadSkins();
 	LoadRanks();
+	LoadMaps();
 	LoadGates();
 	LoadSpawns();
 	LoadHouses();
