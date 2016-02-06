@@ -11097,24 +11097,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 	}
-	
-	//if(((oldkeys & KEY_FIRE)||(oldkeys == KEY_FIRE))&&((newkeys & KEY_CROUCH)||(newkeys == KEY_CROUCH))) {
-	/*if((newkeys & KEY_FIRE) && (oldkeys & KEY_CROUCH) && !((oldkeys & KEY_FIRE) || (newkeys & KEY_HANDBRAKE)) || (oldkeys & KEY_FIRE) && (newkeys & KEY_CROUCH) && !((newkeys & KEY_FIRE) || (newkeys & KEY_HANDBRAKE)) ) {
-		if(!usePlusC{playerid}) {
-			switch(GetPlayerWeapon(playerid)) {
-				case 24, 25, 27, 29, 30, 31, 33, 34 : {
-					usePlusC{playerid} = true;
-					SetPlayerArmedWeapon(playerid, 0);
-					SlapPlayer(playerid, 0.88);
-					SetTimerEx("onUsePlusC", 1000, false, "i", playerid);
-					GameTextForPlayer(playerid, "~n~~n~~n~~w~NO ~g~C-BUG", 5000, 4);
-				}
-			}
-		} else {
-			SetPlayerArmedWeapon(playerid, 0);
-		}
-		return 1;
-	}*/
 
 	if(!useBannyHop{playerid}) {
 		if(PRESSED(KEY_SPRINT|KEY_JUMP)) {
@@ -14836,8 +14818,7 @@ stock LoadGates() {
 					cache_get_row(i, 2, temp);
 					for(new j, len = strlen(temp); j < len;) {
 						split(src, temp, j, ',');
-						sscanf(src, "p<=>ii", temp[0], temp[1]);
-						GateData[id][GateAllowed][temp[0]] = temp[1];
+						GateData[id][GateAllowed][strval(src)] = 1;
 					}
 				}
 				default : cache_get_int(i, 2, GateData[id][GateAllowed][0]);
@@ -14851,6 +14832,7 @@ stock LoadGates() {
 				case GATE_MODE_KEY : Iter::Add(GateModeKey, id);
 				default : Iter::Add(GateModePickup, id);
 			}
+			cache_set_active(result);
 		}
 		debug("LoadGates() - Ok! Gates: %i. Run time: %i (ms)", rows, GetTickCount()-time);
 	}
@@ -14866,7 +14848,6 @@ stock LoadGateLeaf(id, gateid) {
 			new Float:close_pos[6], Float:open_pos[6];
 			cache_get_str(i, 3, "p<,>a<f>[6]", close_pos);
 			cache_get_str(i, 4, "p<,>a<f>[6]", open_pos);
-
 			new leafid = AddLeafToGate(gateid, cache_get_row_int(i, 1), close_pos, open_pos);
 			SetLeafType(gateid, leafid, cache_get_row_int(i, 2));
 		}
