@@ -1455,9 +1455,9 @@ CMD:ainvite(playerid, params[]) { new string[144], sendername[24], playername[24
 	Pl::Info[params[0]][pMember] = params[1];
 	Pl::Info[params[0]][pRank] = 1;
 	Rac::SetPlayerInterior(params[0], 3);
-	Rac::SetPlayerVirtualWorld(params[0], 7);
+	Rac::SetPlayerVirtualWorld(params[0], Bizz_ProLaps);
 	Rac::SetPlayerPos(params[0],207.4872,-129.2266,1003.5078);
-	Pl::Info[params[0]][pLocal] = OFFSET_BIZZ + GetIndexFromBizID(7);
+	Pl::Info[params[0]][pLocal] = OFFSET_BIZZ + GetIndexFromBizID(Bizz_ProLaps);
 	SelectCharPlace[params[0]] = 0;
 	Pl::SetFracColor(params[0]);
 	Iter::Add(TeamPlayers[params[1]], params[0]);
@@ -1578,8 +1578,8 @@ CMD:makeleader(playerid, params[]) { new string[144], sendername[24], playername
 		Pl::Info[params[0]][pRank] = RankNums[params[1]];
 		
 		Rac::SetPlayerInterior(params[0], 3);
-		Rac::SetPlayerVirtualWorld(params[0], 7);
-		Pl::Info[params[0]][pLocal] = OFFSET_BIZZ + GetIndexFromBizID(7);
+		Rac::SetPlayerVirtualWorld(params[0], Bizz_ProLaps);
+		Pl::Info[params[0]][pLocal] = OFFSET_BIZZ + GetIndexFromBizID(Bizz_ProLaps);
 		Rac::SetPlayerPos(params[0], 207.4872, -129.2266, 1003.5078);
 		SetPlayerWeapons(params[0]);
 		Pl::SetFracColor(params[0]);
@@ -2528,7 +2528,7 @@ CMD:forceskin(playerid, params[]) {
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "¬ведите: /forceskin [id/Name]");
 	if(!Pl::isLogged(playerid)) return Send(playerid, COLOR_GREY, "* Ётот игрок не залогинен!");
 	
-	new bidx = GetIndexFromBizID(7);
+	new bidx = GetIndexFromBizID(Bizz_ProLaps);
 	Rac::SetPlayerInterior(params[0], 3);
 	Rac::SetPlayerVirtualWorld(params[0], BizzInfo[bidx][bVirtual]);
 	Pl::Info[params[0]][pLocal] = OFFSET_BIZZ + bidx;

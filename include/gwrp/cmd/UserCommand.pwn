@@ -2675,8 +2675,8 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 			Pl::Info[playerid][pMember] = frac;
 			Pl::Info[playerid][pRank] = 1;
 			Rac::SetPlayerInterior(playerid, 3);
-			Rac::SetPlayerVirtualWorld(playerid, 7);
-			Pl::Info[playerid][pLocal] = OFFSET_BIZZ + GetIndexFromBizID(7);
+			Rac::SetPlayerVirtualWorld(playerid, Bizz_ProLaps);
+			Pl::Info[playerid][pLocal] = OFFSET_BIZZ + GetIndexFromBizID(Bizz_ProLaps);
 			Rac::SetPlayerPos(playerid, 207.4872,-129.2266,1003.5078);
 			SelectCharPlace[playerid] = 0;
 			Pl::SetFracColor(playerid);
