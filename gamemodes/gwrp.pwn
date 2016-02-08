@@ -619,7 +619,6 @@ new Iterator:vehiclePassengers[MAX_VEHICLES]<MAX_PLAYERS>;
 new GangBiznes[MAX_FRAC char];
 new NameChange[MAX_PLAYERS char];
 new bool:GMTest[MAX_PLAYERS char];
-new bool:usePlusC[MAX_PLAYERS char];
 new bool:isEngined[MAX_VEHICLES char];
 new bool:useBannyHop[MAX_PLAYERS char];
 new bool:InAntiDmZone[MAX_PLAYERS char];
@@ -11082,7 +11081,6 @@ public OnPlayerStreamOut(playerid, forplayerid) {
 }
 
 public: AddsOn() adds = true;
-public: onUsePlusC(playerid) usePlusC{playerid} = false;
 public: onUseBannyHop(playerid) useBannyHop{playerid} = false;
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
@@ -11867,7 +11865,6 @@ stock GameTextForGang(gangid, const mess[], time, type) {
 
 stock Pl::Init(playerid) {
 	GMTest{playerid}					= false;
-	usePlusC{playerid}					= false;
 	useBannyHop{playerid}				= false;
 	InAntiDmZone{playerid}				= false;
 	
