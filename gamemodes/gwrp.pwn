@@ -3818,7 +3818,7 @@ stock PickupHndlr::Job(playerid, pickupid) {
 	new i = interpolationSearch2D(JobsInfo, pickupid, jP);
 	if(i != -1) {
 		if(Pl::Info[playerid][pPasport][0] != 0) {
-			if(Pl::Info[playerid][pJob] != 0) {
+			if(Pl::Info[playerid][pJob] != JOB_NONE) {
 				Send(playerid, COLOR_GREY, "* У Вас уже есть работа! /quitjob - уволится (если выполнен контракт)");
 			} else {
 				GettingJob[playerid] = JobsInfo[i][jID];
@@ -3945,7 +3945,7 @@ stock PickupHndlr::Houses(playerid, pickupid) {
 public: onPlayerPortal(playerid, portalid, pickupid) {
 	switch(portalid) {
 		case 11 : {
-			if(Pl::FracID(playerid) == 11) {
+			if(Pl::FracID(playerid) == TEAM_LICENZERS) {
 				return 1;
 			}
 		}
@@ -4716,7 +4716,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				Pt::Hide(playerid, Pt::Spec[playerid]);
 				Pt::Hide(playerid, Pt::Status[playerid]);
 				Pt::SetString(playerid, Pt::Name[playerid], "_");
-						
+
 				if(oldvehid != INVALID_VEHICLE_ID) {
 					if(TransportDuty[playerid] > 0) {
 						if(TransportDuty[playerid] == 1) TaxiDrivers -= 1;
