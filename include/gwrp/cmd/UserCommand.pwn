@@ -411,7 +411,7 @@ CMD:stats(playerid, params[]) {
 }
 
 CMD:delivery(playerid, params[]) {
-	if(Pl::Info[playerid][pJob] != 10) return Send(playerid,COLOR_GREY,"Вы не дальнобойщик!");
+	if(Pl::Info[playerid][pJob] != JOB_TRUCKER) return Send(playerid,COLOR_GREY,"Вы не дальнобойщик!");
 	if(GetPlayerState(playerid) != 2) return Send(playerid,COLOR_GREY,"* Вы не в транспорте!");
 	new veh = GetPlayerVehicleID(playerid);
 	if(!IsATruckCar(veh)) return Send(playerid,COLOR_GREY,"Вы не в тачке дальнобойщика!");
@@ -1679,7 +1679,7 @@ CMD:towcar(playerid, params[]) { new string[144];
 }
 
 CMD:fare(playerid, params[]) { new string[144];
-	if(Pl::FracID(playerid) != 10 && Pl::Info[playerid][pJob] != 9) return Send(playerid,COLOR_GREY,"* Вы не Таксист / Водетель Автобуса!");
+	if(Pl::FracID(playerid) != 10 && Pl::Info[playerid][pJob] != JOB_BUSMAN) return Send(playerid,COLOR_GREY,"* Вы не Таксист / Водетель Автобуса!");
 	new Veh = GetPlayerVehicleID(playerid);
 	if(TransportDuty[playerid] > 0) {
 		TaxiDrivers --;
@@ -1800,10 +1800,10 @@ CMD:frisk(playerid, params[]) { new string[144], sendername[24], playername[24];
 }
 
 CMD:sellcar(playerid, params[]) { new string[144];
-	if(Pl::Info[playerid][pJob] != 8) return Send(playerid,COLOR_GREY,"* Вы не Агент по продаже легковых автомобилей!");
+	if(Pl::Info[playerid][pJob] != JOB_AUTODEALER) return Send(playerid,COLOR_GREY,"* Вы не Агент по продаже легковых автомобилей!");
 	if(!IsPlayerInAnyVehicle(playerid)) return Send(playerid,COLOR_GREY,"* Вы не находитесь в атомобиле!");
 	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /sellvcar [playerid] [price]");
-	if(params[1] < 1 || params[1] > 99999) return Send(playerid, COLOR_GREY, "* Цена не ниже 1$ и не выше 99999$ !");
+	if(!(1 <= params[1] <= 99999)) return Send(playerid, COLOR_GREY, "* Цена не ниже 1$ и не выше 99999$ !");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Вы не можете продать себе автомобиль!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 5.0, params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок слишком далеко от вас!");
@@ -1819,13 +1819,13 @@ CMD:sellcar(playerid, params[]) { new string[144];
 }
 
 CMD:mats(playerid, params[]) { new string[144];
-	if(Pl::Info[playerid][pJob] != 7) return Send(playerid, COLOR_GREY, "* Вы не гандилер!");
+	if(Pl::Info[playerid][pJob] != JOB_GUNDEALER) return Send(playerid, COLOR_GREY, "* Вы не гандилер!");
 	if(sscanf(params, "s[10]I(0)", temp, params[0])) {
 		Send(playerid, COLOR_WHITE, "Введите: /mats [name]");
 		Send(playerid, COLOR_WHITE, "* Доступные названия: Get, Deliver.");
 	} else {
 		if(strcmp(temp, "get", false) == 0) {
-			if(params[0] < 1 || params[0] > 10) return Send(playerid, COLOR_GREY, "* Число Пакета не может быть ниже 1 или выше 10!");
+			if(!(1 <= params[0] <= 10)) return Send(playerid, COLOR_GREY, "* Число Пакета не может быть ниже 1 или выше 10!");
 			if(!IsPlayerInRangeOfPoint(playerid,3.0,597.3430,-1248.6998,18.2804)) return Send(playerid, COLOR_GREY, "* Вы не в Здании Пакетов Материалов в Лос Сантусе!");
 			if(MatsHolding[playerid] >= 10) return Send(playerid, COLOR_GREY, "* Максимум можно взять 10 пакетов!");
 			new price = (params[0] * 100);
@@ -2020,7 +2020,7 @@ CMD:loadmac(playerid, params[]) { new string[144];
 }
 
 CMD:sellgun(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(Pl::Info[playerid][pJob] != 7) return Send(playerid,COLOR_GREY,"* Вы не Гандилер!");
+	if(Pl::Info[playerid][pJob] != JOB_GUNDEALER) return Send(playerid,COLOR_GREY,"* Вы не Гандилер!");
 	if(sscanf(params, "s[15]u", temp, params[0])) {
 		return ShowDialog(playerid, D_NONE, 0, "• SellGun • Info", "dialog/sellgun.txt", "OK", "");
 	}
@@ -2053,7 +2053,7 @@ CMD:get(playerid, params[]) { new string[144];
 		Send(playerid, COLOR_GREY, " Доступные названия: Drugs, Fuel");
 	} else {
 		if(strcmp(params[1], "drugs", false) == 0) {
-			if(Pl::Info[playerid][pJob] != 4) return Send(playerid, COLOR_GREY, "* Вы не наркодилер!");
+			if(Pl::Info[playerid][pJob] != JOB_DRUGDEALER) return Send(playerid, COLOR_GREY, "* Вы не наркодилер!");
 			if(Pl::Info[playerid][pDrugs] > 15) return Send(playerid, COLOR_GREY, "* У Вас уже есть наркотики, продаете их сначала!");
 			if(!IsPlayerInRangeOfPoint(playerid, 2.0, 323.0342,1118.5804,1083.8828)) return Send(playerid, COLOR_GREY, "* Вы не в притоне!");
 			if((Gm::Info[Gm::PritonDrugs] - params[0]) < 0) return Send(playerid, COLOR_GREY,"* В притоне нехватает наркотиков.");
@@ -2061,23 +2061,23 @@ CMD:get(playerid, params[]) { new string[144];
 			switch(Pl::Info[playerid][pSkill][7]) {
 				case 0..50 : {
 					tel = 200;
-					if(params[0] < 1 || params[0] > 6) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 6 граммов наркотиков");
+					if(1 <= params[0] <= 6) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 6 граммов наркотиков");
 				}
 				case 51..100 : {
 					tel = 150;
-					if(params[0] < 1 || params[0] > 12) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 12 граммов наркотиков!");
+					if(1 <= params[0] <= 12) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 12 граммов наркотиков!");
 				}
 				case 101..200 : {
 					tel = 100;
-					if(params[0] < 1 || params[0] > 20) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 20 граммов наркотиков");
+					if(1 <= params[0] <= 20) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 20 граммов наркотиков");
 				}
 				case 201..400 : {
 					tel = 50;
-					if(params[0] < 1 || params[0] > 30) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 30 граммов наркотиков");
+					if(1 <= params[0] <= 30) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 30 граммов наркотиков");
 				}
 				case 401 : {
 					tel = 10;
-					if(params[0] < 1 || params[0] > 99) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 99 граммов наркотиков");
+					if(1 <= params[0] <= 99) return Send(playerid, COLOR_GREY, "* Вы можете с собой носить от 1 до 99 граммов наркотиков");
 				
 				}
 			}
@@ -2196,11 +2196,9 @@ CMD:origin(playerid, params[]) {
 }
 
 CMD:jack(playerid, params[]) {
-	if(Pl::Info[playerid][pJob] == 5)
-	{
+	if(Pl::Info[playerid][pJob] == JOB_THEFTAUTO){
 		if(JobWaitTime[playerid] != 0) return Send(playerid, COLOR_GREY, "* Машины можно взламывать раз в 3 минуты!");
-		if(GetPlayerState(playerid) == 1 && GetPlayerInterior(playerid) == 0)
-		{
+		if(GetPlayerState(playerid) == 1 && GetPlayerInterior(playerid) == 0) {
 			new c = ClosestVeh(playerid, 3.0);
 			if(c != INVALID_VEHICLE_ID) {
 				if(!gCarLock{c}) return Send(playerid, COLOR_GREY, "* Эта машины уже открыта!");
@@ -2366,7 +2364,7 @@ CMD:uncuff(playerid, params[]) { new string[144];
 }
 
 CMD:find(playerid, params[]) {
-	if(Pl::Info[playerid][pJob] != 1) return Send(playerid, COLOR_GREY, "* Вы не детектив!");
+	if(Pl::Info[playerid][pJob] != JOB_DETECTIVE) return Send(playerid, COLOR_GREY, "* Вы не детектив!");
 	if(UsedFind[playerid] != 0) return Send(playerid, COLOR_GREY, "* Вы уже искали кого-то, подождите!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /find [id]");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Вы не можете отыскать самого себя!");
@@ -2790,7 +2788,7 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 			}
 		
 		} else if(strcmp(temp,"mechanic",true) == 0) {
-			if(Pl::Info[playerid][pJob] != 6) return Send(playerid, COLOR_GREY, "* Вы не автомеханик!");
+			if(Pl::Info[playerid][pJob] != JOB_MECHANIC) return Send(playerid, COLOR_GREY, "* Вы не автомеханик!");
 			if(MechanicCallTime[playerid][0] != INVALID_ID) return Send(playerid, COLOR_GREY, "* Вы уже приняли другой вызов!");
 			if(!Iter::Count(MechanicCalls)) return Send(playerid, COLOR_GREY, "* В настоящие время нет вызовов!");
 			foreach(new caller : MechanicCalls) {
@@ -2895,13 +2893,13 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 			Rac::GivePlayerMoney(playerid, -SexPrice[playerid]);
 			Pl::Info[SexOffer[playerid]][pSkill][1] ++;
 			if(Pl::Info[SexOffer[playerid]][pSkill][1] == 50)
-			{ Send(SexOffer[playerid], COLOR_YELLOW, "* наш Сексуальный Навык - теперь Уровень 2, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
+			{ Send(SexOffer[playerid], COLOR_YELLOW, "* Ваш Сексуальный Навык - теперь Уровень 2, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
 			else if(Pl::Info[SexOffer[playerid]][pSkill][1] == 100)
-			{ Send(SexOffer[playerid], COLOR_YELLOW, "* наш Сексуальный Навык - теперь Уровень 3, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
+			{ Send(SexOffer[playerid], COLOR_YELLOW, "* Ваш Сексуальный Навык - теперь Уровень 3, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
 			else if(Pl::Info[SexOffer[playerid]][pSkill][1] == 200)
-			{ Send(SexOffer[playerid], COLOR_YELLOW, "* наш Сексуальный Навык - теперь Уровень 4, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
+			{ Send(SexOffer[playerid], COLOR_YELLOW, "* Ваш Сексуальный Навык - теперь Уровень 4, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
 			else if(Pl::Info[SexOffer[playerid]][pSkill][1] == 400)
-			{ Send(SexOffer[playerid], COLOR_YELLOW, "* наш Сексуальный Навык - теперь Уровень 5, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
+			{ Send(SexOffer[playerid], COLOR_YELLOW, "* Ваш Сексуальный Навык - теперь Уровень 5, Вы предлагаете лучший Пол (здоровье), и меньше случайно натыкается на СТАНД."); }
 			if(Condom[playerid] < 1) {
 				new rand, level = Pl::Info[SexOffer[playerid]][pSkill][1];
 				if(level >= 0 && level <= 50) {
@@ -2988,11 +2986,11 @@ CMD:accept(playerid, params[]) { new string[144], sendername[24], playername[24]
 }
 
 CMD:refill(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(Pl::Info[playerid][pJob] != 6) return Send(playerid, COLOR_GREY, "Вы не работаете Механиком!");
+	if(Pl::Info[playerid][pJob] != JOB_MECHANIC) return Send(playerid, COLOR_GREY, "Вы не работаете Механиком!");
 	if(sscanf(params, "ui", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /refill [playerid] [price]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(!IsAMehCar(GetPlayerVehicleID(playerid))) return Send(playerid,COLOR_GREY,"Вы не в тачке механика");
-	if(params[1] < 1 || params[1] > 5000) return Send(playerid, COLOR_GREY, "Цена не должна быть меньше 1, или выше 5000!");
+	if(!(1 <= params[1] <= 5000)) return Send(playerid, COLOR_GREY, "Цена не должна быть меньше 1, или выше 5000!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 8.0, params[1]) && !IsPlayerInAnyVehicle(params[1])) return Send(playerid, COLOR_GREY, "* Этот инрок слишком далеко от вас");
 	RefillOffer[params[0]] = playerid;
 	RefillPrice[params[0]] = params[1];
@@ -3025,9 +3023,9 @@ CMD:dt(playerid, params[]) {
 }
 
 CMD:repair(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(Pl::Info[playerid][pJob] != 6) return Send(playerid, COLOR_GREY, "Вы не Автомобильный Механик!");
+	if(Pl::Info[playerid][pJob] != JOB_MECHANIC) return Send(playerid, COLOR_GREY, "Вы не Автомобильный Механик!");
 	if(sscanf(params, "ud", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "* Введите: /repair [playerid] [price]");
-	if(params[1] < 1 || params[1] > 1000) return Send(playerid, COLOR_GREY, "Цена не должна быть меньше 1, или выше 1000!");
+	if(!(1 <= params[1] <= 1000)) return Send(playerid, COLOR_GREY, "Цена не должна быть меньше 1, или выше 1000!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 8.0, params[0]) && !IsPlayerInAnyVehicle(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок слишком далеко от вас!");
 	if(IsAMehCar(GetPlayerVehicleID(playerid))) {
 		getname(playerid->sendername,params[0]->playername);
@@ -3110,12 +3108,12 @@ CMD:live(playerid, params[]) { new string[144], sendername[24], playername[24];
 }
 
 CMD:selldrugs(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(Pl::Info[playerid][pJob] != 4) Send(playerid, COLOR_GREY, "Вы не Наркодилер!");
+	if(Pl::Info[playerid][pJob] != JOB_DRUGDEALER) Send(playerid, COLOR_GREY, "Вы не Наркодилер!");
 	if(sscanf(params, "uii", params[0], params[1], params[2])) return Send(playerid, COLOR_GREY, "Введите: /selldrugs [playerid] [ammount] [price]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Зачем вам покупать нарко у самого себя?");
-	if(params[1] < 1 || params[1] > 99) return Send(playerid, COLOR_GREY, "* Граммы не должны быть меньше 1, или выше 99!");
-	if(params[2] < 1 || params[2] > 99999) return Send(playerid, COLOR_GREY, "* Цена не должна быть не меньше 1, или выше 99999!");
+	if(!(1 <= params[1] <= 99)) return Send(playerid, COLOR_GREY, "* Граммы не должны быть меньше 1, или выше 99!");
+	if(!(1 <= params[2] <= 99999)) return Send(playerid, COLOR_GREY, "* Цена не должна быть не меньше 1, или выше 99999!");
 	if(params[1] > Pl::Info[playerid][pDrugs]) return Send(playerid, COLOR_GREY, "* Вы не имеете столько наркотиков!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 8.0, params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не рядом с вами!");
 	
@@ -3235,10 +3233,10 @@ CMD:eject(playerid, params[]) { new string[144], sendername[24], playername[24];
 }
 
 CMD:sex(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(Pl::Info[playerid][pJob] == 3) return Send(playerid, COLOR_GREY, "Вы не Шлюха!");
+	if(Pl::Info[playerid][pJob] == JOB_WHORE) return Send(playerid, COLOR_GREY, "Вы не Шлюха!");
 	if(!IsPlayerInAnyVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Вы не в автомобиле!");
 	if(sscanf(params, "ud", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /sex [playerid] [price]");
-	if(params[1] < 1 || params[1] > 99999) return Send(playerid, COLOR_GREY, "* Цена не должна быть меньше 1, или выше 99999!");
+	if(!(1 <= params[1] <= 99999)) return Send(playerid, COLOR_GREY, "* Цена не должна быть меньше 1, или выше 99999!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Вы не можите ублажать сами себя!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 8.0, params[0])) return Send(playerid, COLOR_GREY, "* Тот игрок не около Вас!");
@@ -3273,7 +3271,7 @@ CMD:wanted(playerid, params[]) { new string[144], playername[24];
 }
 
 CMD:dropcar(playerid, params[]) {
-	if(Pl::Info[playerid][pJob] != 5) return Send(playerid, COLOR_GREY, "Вы не Автоугонщик !");
+	if(Pl::Info[playerid][pJob] != JOB_THEFTAUTO) return Send(playerid, COLOR_GREY, "Вы не Автоугонщик !");
 	if(Pl::Info[playerid][pCarTime] != 0) return Send(playerid, COLOR_GREY, "Вы уже продали автомобиль, ждите пока закончится время!");
 	GameTextForPlayer(playerid, "~w~Car Selling ~n~~r~Drop the car at the Crane", 5000, 1);
 	CP[playerid] = 1;
@@ -3283,11 +3281,11 @@ CMD:dropcar(playerid, params[]) {
 }
 
 CMD:quitjob(playerid, params[]) { new string[144];
-	if(Pl::Info[playerid][pJob] <= 0) return Send(playerid, COLOR_GREY, "* Вы не устроены на работу!");
+	if(Pl::Info[playerid][pJob] == JOB_NONE) return Send(playerid, COLOR_GREY, "* Вы не устроены на работу!");
 	if(Pl::Info[playerid][pVip] > 0) {
 		if(Pl::Info[playerid][pContractTime] <= 4) {
 			Iter::Remove(JobPlayers[Pl::Info[playerid][pJob]], playerid);
-			Pl::Info[playerid][pJob] = 0;
+			Pl::Info[playerid][pJob] = JOB_NONE;
 			Pl::Info[playerid][pContractTime] = 0;
 			Send(playerid, COLOR_LIGHTBLUE, "* Вы уволились с работы!");
 		} else {
@@ -3297,7 +3295,7 @@ CMD:quitjob(playerid, params[]) { new string[144];
 	} else {
 		if(!Pl::Info[playerid][pContractTime]) {
 			Iter::Remove(JobPlayers[Pl::Info[playerid][pJob]], playerid);
-			Pl::Info[playerid][pJob] = 0;
+			Pl::Info[playerid][pJob] = JOB_NONE;
 			Pl::Info[playerid][pContractTime] = 0;
 			Send(playerid, COLOR_LIGHTBLUE, "* Вы отработали 5 часов по контракту и уволились с работы.");
 		} else {
