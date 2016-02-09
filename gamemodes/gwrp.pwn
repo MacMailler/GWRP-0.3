@@ -14159,16 +14159,8 @@ stock IsALawyer(playerid) {
 	return (Pl::Info[playerid][pJob] == 2 && Pl::FracID(playerid) == 7 && Pl::Info[playerid][pRank] == 10);
 }
 
-stock GetPayCheck(lvl) {
-	new p;
-	switch(lvl) {
-		case 1..3	: p = 1000;
-		case 4..10	: p = 1300;
-		case 11..20	: p = 1500;
-		case 21..30 : p = 1800;
-		case 31..40 : p = 2000;
-	}
-	return (lvl*p);
+stock GetPayCheck(level) {
+	return (level * 1500);
 }
 
 stock checkvar(varname[], string[]) {
