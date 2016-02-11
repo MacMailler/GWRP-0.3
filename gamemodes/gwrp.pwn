@@ -9643,7 +9643,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				dialog[0] = '\0';
 				new portal = GetPVarInt(playerid, "selectTeleport");
-				Ptl::Info[portal][Ptl::Allowed][listitem] = !Ptl::Info[portal][Ptl::Allowed][listitem];
+				Ptl::Info[portal][Ptl::Allowed][listitem + 1] = !Ptl::Info[portal][Ptl::Allowed][listitem + 1];
 				foreach(new i : Frac) {
 					if(Ptl::Info[portal][Ptl::Allowed][i]) {
 						scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
