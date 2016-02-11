@@ -297,6 +297,7 @@ INSERT INTO `frac_info` (`fID`, `fBank`, `fRConf`, `fBConf`, `fName`, `fTag`, `f
 CREATE TABLE IF NOT EXISTS `frac_models` (
   `frac_id` int(2) NOT NULL DEFAULT '0',
   `model_id` int(3) NOT NULL DEFAULT '400'
+  `model_limit` int(3) NOT NULL DEFAULT '5'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

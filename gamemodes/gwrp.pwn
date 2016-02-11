@@ -13807,10 +13807,10 @@ stock Fc::ShowModel( playerid, fracid, dialogid) {
 			cache_get_int(i, 1, model_limit);
 			scf(dialog, query, "%s [%i]\n", VehicleNames[model_id-400], model_limit);
 		}
-		if(Pl::Info[playerid][pAdmin] >= 5 && dialogid != D_ADD_FC && dialogid != D_LMENU+7) strcat( dialog, "------------\nДобавить");
+		if(Pl::Info[playerid][pAdmin] >= ADMINISTRATOR && dialogid != D_ADD_FC && dialogid != D_LMENU+7) strcat( dialog, "------------\nДобавить");
 		SPD(playerid, dialogid, DIALOG_STYLE_LIST, "Frac Models", dialog, "SELECT", "CANCEL");
 	} else {
-		if(Pl::Info[playerid][pAdmin] >= 5 && dialogid != D_ADD_FC && dialogid != D_LMENU+7) {
+		if(Pl::Info[playerid][pAdmin] >= ADMINISTRATOR && dialogid != D_ADD_FC && dialogid != D_LMENU+7) {
 			SPD(playerid, dialogid, 2, "Frac Models", "Добавить", "ENTER", "CANCLE");
 		} else {
 			SPD(playerid, dialogid, 0, "Frac Models", "Нет моделей для выбора!", "ok", "");
