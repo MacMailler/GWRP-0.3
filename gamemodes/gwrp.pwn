@@ -578,7 +578,7 @@ new bool:MedicBill			[MAX_PLAYERS char];
 new bool:SwitchKey			[MAX_PLAYERS char];
 new bool:AdminDuty			[MAX_PLAYERS char];
 new bool:WatchingTV			[MAX_PLAYERS char];
-new 	 WrongLogin			[MAX_PLAYERS char];
+new 	 WrongLogin			[MAX_PLAYERS];
 new bool:PlayerTied			[MAX_PLAYERS char];
 new bool:HelperDuty			[MAX_PLAYERS char];
 new bool:SpawnChange		[MAX_PLAYERS char];
