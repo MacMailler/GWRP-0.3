@@ -253,12 +253,12 @@ CMD:local(playerid, params[]) { new string[144];
 }
 
 CMD:switchkey(playerid, params[]) {
-	if(!SwitchKey[playerid]) {
+	if(!SwitchKey{playerid}) {
 		if(HireCar[playerid] == INVALID_VEHICLE_ID) return GameTextForPlayer(playerid, "~w~You do not hire a car", 5000, 6);
-		SwitchKey[playerid] = true;
+		SwitchKey{playerid} = true;
 		GameTextForPlayer(playerid, "~w~You control now your house car", 5000, 6);
 	} else {
-		SwitchKey[playerid] = false;
+		SwitchKey{playerid} = false;
 		GameTextForPlayer(playerid, "~w~You control now your hire car", 5000, 6);
 	}
 	return 1;
@@ -271,7 +271,7 @@ CMD:givekey(playerid, params[]) { new string[144], sendername[24], playername[24
 	if(!IsPlayerInRangeOfPlayer(playerid, 3.0, params[0])) return Send(playerid, COLOR_GREY, "* Игрок слишком далеко!");
 	
 	new vehicleid;
-	if(HireCar[playerid] != INVALID_VEHICLE_ID && !SwitchKey[playerid]) {
+	if(HireCar[playerid] != INVALID_VEHICLE_ID && !SwitchKey{playerid}) {
 		vehicleid = HireCar[playerid];
 		ToggleVehicleDoor(vehicleid, true);
 		HireCar[playerid] = INVALID_VEHICLE_ID;
@@ -541,30 +541,30 @@ CMD:gov(playerid, params[]) { new string[144], sendername[24];
 }
 
 CMD:togooc(playerid, params[]) { new string[144];
-	gOoc[playerid] = !gOoc[playerid];
-	format(string, sizeof string, "* Чат OOC %s!", (gOoc[playerid])?("включен"):("выключен"));
+	gOoc{playerid} = !gOoc{playerid};
+	format(string, sizeof string, "* Чат OOC %s!", (gOoc{playerid})?("включен"):("выключен"));
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
 
 CMD:tognews(playerid, params[]) { new string[144];
-	gNews[playerid] = !gNews[playerid];
-	format(string, sizeof string, "* Новости %s!", (gNews[playerid])?("включены"):("выключены"));
+	gNews{playerid} = !gNews{playerid};
+	format(string, sizeof string, "* Новости %s!", (gNews{playerid})?("включены"):("выключены"));
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
 
 CMD:togfam(playerid, params[]) { new string[144];
-	gFam[playerid] = !gFam[playerid];
-	format(string, sizeof string, "* Чат семьи %s!", (gFam[playerid])?("включен"):("выключен"));
+	gFam{playerid} = !gFam{playerid};
+	format(string, sizeof string, "* Чат семьи %s!", (gFam{playerid})?("включен"):("выключен"));
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
 
 CMD:togphone(playerid, params[]) { new string[144];
 	if(Pl::Info[playerid][pVip] != 1 && !Pl::isAdmin(playerid, 1)) return Send(playerid, COLOR_LIGHTRED2, "* Недостаточно прав!");
-	PhoneOnline[playerid] = !PhoneOnline[playerid];
-	format(string, sizeof string, "* Ваш телефон %s!", (PhoneOnline[playerid])?("включен"):("выключен"));
+	PhoneOnline{playerid} = !PhoneOnline{playerid};
+	format(string, sizeof string, "* Ваш телефон %s!", (PhoneOnline{playerid})?("включен"):("выключен"));
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
@@ -738,14 +738,14 @@ CMD:r(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255]
 CMD:duty(playerid, params[]) { new string[144];
 	if(Pl::FracID(playerid) == TEAM_COP) {
 		if(IsPlayerInRangeOfPoint(playerid,3,255.3,77.4,1003.6) || IsPlayerInRangeOfPoint(playerid,3,-1616.1294,681.1594,7.1875) || Pl::Info[playerid][pLocal] != 0) {
-			if(!OnDuty[playerid]) {
-				OnDuty[playerid] = true;
+			if(!OnDuty{playerid}) {
+				OnDuty{playerid} = true;
 				Rac::GivePlayerWeapon(playerid, 3, 200);
 				Rac::GivePlayerWeapon(playerid, 24, 70);
 				format(string, sizeof string, "* Офицер %s взял значок и оружие из своего шкафчика.", GetName(playerid));
 				ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			} else {
-				OnDuty[playerid] = false;
+				OnDuty{playerid} = false;
 				Rac::ResetPlayerWeapons(playerid);
 				format(string, sizeof string, "* Офицер %s ложит свой значок и оружие в свой шкафчик.", GetName(playerid));
 				ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -754,30 +754,30 @@ CMD:duty(playerid, params[]) { new string[144];
 		else return Send(playerid, COLOR_LIGHTRED2, "* Вы не в раздевалке!");
 	
 	} else if(Pl::FracID(playerid) == TEAM_MEDIC) {
-		switch(OnDuty[playerid]) {
+		switch(OnDuty{playerid}) {
 			case 0: {
 				Medics ++;
-				OnDuty[playerid] = true;
+				OnDuty{playerid} = true;
 				Send(playerid, COLOR_LIGHTBLUE, "* Вы заступили на работу!");
 			}
 			case 1: {
 				Medics --;
-				OnDuty[playerid] = false;
+				OnDuty{playerid} = false;
 				Send(playerid, COLOR_LIGHTBLUE, "* Вы теперь не на дежурстве!");
 			}
 		}
 	}
 	
 	if(Pl::Info[playerid][pJob] == JOB_MECHANIC) {
-		switch(OnDuty[playerid]) {
+		switch(OnDuty{playerid}) {
 			case 0: {
 				Mechanics ++;
-				OnDuty[playerid] = true;
+				OnDuty{playerid} = true;
 				Send(playerid, COLOR_LIGHTBLUE, "* Вы заступили на дежурство!");
 			}
 			case 1: {
 				Mechanics --;
-				OnDuty[playerid] = false;
+				OnDuty{playerid} = false;
 				Send(playerid, COLOR_LIGHTBLUE, "* Вы теперь не на дежурстве!");
 			}
 		}
@@ -802,7 +802,7 @@ CMD:d(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255]
 CMD:su(playerid, params[]) { new string[144];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY, "* Вы не законник.");
 	if(sscanf(params, "uis[64]", params[0], params[1], params[2])) return Send(playerid, COLOR_GRAD2, "Введите: /su [id/Name] [кол-во звезд] [преступление]");
-	if(!OnDuty[playerid] && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "* Вы не при исполнении служебных обязанностей!");
+	if(!OnDuty{playerid} && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "* Вы не при исполнении служебных обязанностей!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(IsACop(params[0])) return Send(playerid, COLOR_GREY, "* Вы не можете подозревать Полицейского!");
 	if(params[1] > 6) return Send(playerid,COLOR_GREY,"* Больше 6 звезд кидать нельзя!");
@@ -818,7 +818,7 @@ CMD:mdc(playerid, params[]) { new string[144], playername[24];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY, "* Вы не законник.");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GRAD2, "Введите: /mdc [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(!OnDuty[playerid] && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "* Вы не при исполнении служебных обязанностей!");
+	if(!OnDuty{playerid} && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "* Вы не при исполнении служебных обязанностей!");
 	if(Pl::Info[params[0]][pWantedL] == 0) return Send(playerid, COLOR_GREY, "* Игрок нет в базе данных!");
 	new veh = GetPlayerVehicleID(playerid);
 	if(IsACopCar(veh) || IsPlayerInRangeOfPoint(playerid, 5.0, 253.9280,69.6094,1003.6406)) {
@@ -899,7 +899,7 @@ CMD:pm(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(sscanf(params, "us[90]", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Введите: /w [id/Name] [ответ]");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Нельзя отправить сообщение себе!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(HidePM[params[0]]) return Send(playerid, COLOR_RED, "* Пэйджер отключен!");
+	if(HidePM{params[0]}) return Send(playerid, COLOR_RED, "* Пэйджер отключен!");
 	getname(playerid->sendername,params[0]->playername);
 	format(string, sizeof string, "PM от %s(ID:%i): %s", sendername, playerid, params[1]);
 	Send(params[0], COLOR_YELLOW, string);
@@ -1105,7 +1105,7 @@ CMD:call(playerid, params[]) { new string[144], sendername[24], playername[24];
 	foreach(new i: Player) {
 		if(Pl::isLogged(i)) {
 			if(Pl::Info[i][pNumber] == params[0]) {
-				if(!PhoneOnline[i]) return Send(playerid, COLOR_GREY, "* Телефон выключен!");
+				if(!PhoneOnline{i}) return Send(playerid, COLOR_GREY, "* Телефон выключен!");
 				if(Mobile[i] != INVALID_PLAYER_ID) return Send(playerid, COLOR_GREY, "* Линия занята!");
 				
 				Mobile[playerid] = i;
@@ -1172,7 +1172,7 @@ CMD:stay(playerid, params[]) {
 
 CMD:sms(playerid, params[]) { new string[144], sendername[24];
 	if(IsPMuted(playerid)) return Send(playerid, COLOR_GREY, "* У Вас молчанка!");
-	if(PlayerTied[playerid]) return Send(playerid,COLOR_GREY,"Вы связаны");
+	if(PlayerTied{playerid}) return Send(playerid,COLOR_GREY,"Вы связаны");
 	if(Pl::Info[playerid][pNumber] == 0) return Send(playerid, COLOR_GRAD2, "* У Вас нет телефона...");
 	if(Pl::Info[playerid][pTime] < 1) return Send(playerid, COLOR_GREY, "* Вы должны отыграть 1 час на сервере, чтобы использовать эту команду!");
 	if(sscanf(params, "ds[90]", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Введите: /sms [phonenumber] [text]");
@@ -1180,7 +1180,7 @@ CMD:sms(playerid, params[]) { new string[144], sendername[24];
 	foreach(new i: Player) {
 		if(Pl::isLogged(i)) {
 			if(Pl::Info[i][pNumber] == params[0]) {
-				if(!PhoneOnline[i]) return Send(playerid, COLOR_GREY, "* Телефон игрока отключен!");
+				if(!PhoneOnline{i}) return Send(playerid, COLOR_GREY, "* Телефон игрока отключен!");
 				new bidx = GetIndexFromBizID(Bizz_TelephoneCompany);
 				BizzInfo[bidx][bProds]--;
 				GiveBizzProfit(bidx, BizzInfo[bidx][bEnterCost]);
@@ -1368,8 +1368,8 @@ CMD:startlesson(playerid, params[]) { new string[144], sendername[24], playernam
 	if(Pl::FracID(playerid) != 11) return Send(playerid, COLOR_GREY, "Вы не Лицензер!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /startlesson [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
-	if(TakingLesson[params[0]]) return Send(playerid, COLOR_GREY, "* Урок уже начат!");
-	TakingLesson[params[0]] = true;
+	if(TakingLesson{params[0]}) return Send(playerid, COLOR_GREY, "* Урок уже начат!");
+	TakingLesson{params[0]} = true;
 	
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "* Вы начали урок у %s's", playername);
@@ -1383,8 +1383,8 @@ CMD:stoplesson(playerid, params[]) { new string[144], sendername[24], playername
 	if(Pl::FracID(playerid) != 11) return Send(playerid, COLOR_GREY, "Вы не Лицензер!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /startlesson [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
-	if(!TakingLesson[params[0]]) return Send(playerid, COLOR_GREY, "* Урок не был начат!");
-	TakingLesson[params[0]] = false;
+	if(!TakingLesson{params[0]}) return Send(playerid, COLOR_GREY, "* Урок не был начат!");
+	TakingLesson{params[0]} = false;
 	
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "* Вы закончели урок у %s's", playername);
@@ -1446,9 +1446,9 @@ CMD:settax(playerid, params[]) { new string[144];
 
 CMD:spawnchange(playerid, params[]) { new string[144];
 	if(!IsValidHouse(Pl::Info[playerid][pHouseKey])) return Send(playerid, COLOR_GREY, "У Вас нет дома или вы не арендуете");
-	SpawnChange[playerid] = !SpawnChange[playerid];
+	SpawnChange{playerid} = !SpawnChange{playerid};
 	Pl::SetSpawnInfo(playerid);
-	format(string, sizeof string, "* Вы теперь будете спавнится %s", (SpawnChange[playerid])?("на респавне своей фракции!"):("в своем или арендованном доме!"));
+	format(string, sizeof string, "* Вы теперь будете спавнится %s", (SpawnChange{playerid})?("на респавне своей фракции!"):("в своем или арендованном доме!"));
 	Send(playerid, COLOR_GREY, string);
 	return 1;
 }
@@ -1575,7 +1575,7 @@ CMD:tie(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Вы не можете связать себя!");
 	if(!IsPlayerInVehiclePlayer(playerid, params[0])) return Send(playerid, COLOR_GREY, "* Вы должны быть в одной машине!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 4.0, params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок слишком далеко от вас!");
-	if(PlayerTied[params[0]]) return Send(playerid, COLOR_GREY, "* Этот игрок уже связан!");
+	if(PlayerTied{params[0]}) return Send(playerid, COLOR_GREY, "* Этот игрок уже связан!");
 
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "* Вы были связаны %s.", sendername);
@@ -1584,7 +1584,7 @@ CMD:tie(playerid, params[]) { new string[144], sendername[24], playername[24];
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	format(string, sizeof string, "* %s связывает %s.", sendername, playername);
 	ProxDetector(15.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-	Rac::TogglePlayerControllable(params[0], 0); PlayerTied[params[0]] = true;
+	Rac::TogglePlayerControllable(params[0], 0); PlayerTied{params[0]} = true;
 	GameTextForPlayer(params[0], "~r~Tied", 3000, 3);
 	
 	return 1;
@@ -1596,7 +1596,7 @@ CMD:untie(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /untie [playerid]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Вы не можете развязать себя!");
-	if(!PlayerTied[params[0]]) return Send(playerid, COLOR_GREY, "* Этот игрок не связан!");
+	if(!PlayerTied{params[0]}) return Send(playerid, COLOR_GREY, "* Этот игрок не связан!");
 	if(!IsPlayerInVehiclePlayer(playerid, params[0])) return Send(playerid, COLOR_GREY, "* Вы должны быть в одной машине!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 5.0, params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок слишком далеко от вас!");
 	
@@ -1607,7 +1607,7 @@ CMD:untie(playerid, params[]) { new string[144], sendername[24], playername[24];
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	format(string, sizeof string, "* %s развязал %s", sendername, playername);
 	ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-	Rac::TogglePlayerControllable(params[0], 1); PlayerTied[params[0]] = false;
+	Rac::TogglePlayerControllable(params[0], 1); PlayerTied{params[0]} = false;
 	GameTextForPlayer(params[0], "~g~Untied", 3000, 3);
 	
 	return 1;
@@ -1619,8 +1619,8 @@ CMD:muted(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /muted [playerid]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Любите садомазо??? Но здесь таким заниматься к сожалению нельзя...!");
-	if(!PlayerTied[params[0]]) return Send(playerid, COLOR_GREY, "* Игрок не связан!");
-	if(Gag[params[0]]) return Send(playerid, COLOR_GREY, "* У этого игрока уже есть кляп во рту!");
+	if(!PlayerTied{params[0]}) return Send(playerid, COLOR_GREY, "* Игрок не связан!");
+	if(Gag{params[0]}) return Send(playerid, COLOR_GREY, "* У этого игрока уже есть кляп во рту!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 8.0, params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок слишком далеко от вас!");
 	if(!IsPlayerInVehiclePlayer(playerid, params[0])) return Send(playerid, COLOR_GREY, "* Вы должны быть в одной машине!");
 	
@@ -1631,7 +1631,7 @@ CMD:muted(playerid, params[]) { new string[144], sendername[24], playername[24];
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	format(string, sizeof string, "* %s запихивает кляп в рот %s", sendername, playername);
 	ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-	Gag[params[0]]=true; GameTextForPlayer(params[0], "~r~Muted", 30000, 3);
+	Gag{params[0]}=true; GameTextForPlayer(params[0], "~r~Muted", 30000, 3);
 	
 	return 1;
 }
@@ -1642,8 +1642,8 @@ CMD:unmuted(playerid, params[]) { new string[144], sendername[24], playername[24
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /muted [playerid]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	if(params[0] == playerid) return Send(playerid, COLOR_GREY, "* Любите садомазо??? Но здесь таким заниматься к сожалению нельзя...!");
-	if(!PlayerTied[params[0]]) return Send(playerid, COLOR_GREY, "* Игрок не связан!");
-	if(!Gag[params[0]]) return Send(playerid, COLOR_GREY, "* У этого игрока нет кляпа во рту!");
+	if(!PlayerTied{params[0]}) return Send(playerid, COLOR_GREY, "* Игрок не связан!");
+	if(!Gag{params[0]}) return Send(playerid, COLOR_GREY, "* У этого игрока нет кляпа во рту!");
 	if(!IsPlayerInVehiclePlayer(playerid, params[0])) return Send(playerid, COLOR_GREY, "* Вы должны быть в одной машине!");
 	if(!IsPlayerInRangeOfPlayer(playerid, 8.0, params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок слишком далеко от вас!");
 	
@@ -1654,7 +1654,7 @@ CMD:unmuted(playerid, params[]) { new string[144], sendername[24], playername[24
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	format(string, sizeof string, "* %s вытаскивает кляп изо рта %s ", sendername, playername);
 	ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-	Gag[params[0]]=false; GameTextForPlayer(params[0], "~g~Unmuted", 3000, 3);
+	Gag{params[0]}=false; GameTextForPlayer(params[0], "~g~Unmuted", 3000, 3);
 
 	return 1;
 }
@@ -2170,8 +2170,8 @@ CMD:zahvat(playerid, params[]) { new string[144], sendername[24];
 
 CMD:togpm(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, 2) && Pl::Info[playerid][pVip] < 1 && IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	HidePM[playerid] = !HidePM[playerid];
-	format(string, sizeof string, "* Личные сообщения %s!", (HidePM[playerid])?("отключены"):("включены"));
+	HidePM{playerid} = !HidePM{playerid};
+	format(string, sizeof string, "* Личные сообщения %s!", (HidePM{playerid})?("отключены"):("включены"));
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
@@ -2253,7 +2253,7 @@ CMD:lock(playerid, params[]) {
 CMD:tazer(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY, "* Вы не законник!");
 	if(IsPlayerInAnyVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Нельзя использовать это в автомобиле!");
-	if(PlayerUseTazed[playerid]) return Send(playerid, COLOR_GREY,"* Пользоватся тазером можно раз в 8 секунд");
+	if(PlayerUseTazed{playerid}) return Send(playerid, COLOR_GREY,"* Пользоватся тазером можно раз в 8 секунд");
 	params[0] = GetClosestPlayer(playerid, 4.0);
 	if(params[0] == INVALID_PLAYER_ID) return Send(playerid, COLOR_GREY, "* Около вас нет никого!");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
@@ -2279,7 +2279,7 @@ CMD:tazer(playerid, params[]) { new string[144], sendername[24], playername[24];
 		format(string, sizeof string, "* %s выстрелил электрошоком в %s и он был паролизован,.", sendername, playername);
 		ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
-	PlayerUseTazed[playerid] = true;
+	PlayerUseTazed{playerid} = true;
 	GameTextForPlayer(params[0], "~r~Tazed", 3000, 3);
 	Rac::TogglePlayerControllable(params[0], 0);
 	SetTimerEx("TazerTime", 1000*8, false, "i", playerid);
@@ -3063,19 +3063,19 @@ CMD:f(playerid, params[]) { new string[144], sendername[24], replacecmdtext[255]
 CMD:news(playerid, params[]) {
 	if(IsPMuted(playerid)) return Send(playerid, COLOR_GREY, "* У Вас молчанка!");
 	if(Pl::FracID(playerid) != 9) return Send(playerid, COLOR_GREY, "* Вы не репартер!");
-	if(!OnAir[playerid]) {
+	if(!OnAir{playerid}) {
 		if(OnAirMax >= 2) return Send(playerid, COLOR_GREY, "* В эфире уже видут другие люди!");
 		new veh = GetPlayerVehicleID(playerid);
 		if((!veh &&IsANews(veh)) || IsPlayerInRangeOfPoint(playerid,5.0,353.4343,272.8408,1008.6656)) {
 			Send(playerid, COLOR_GREY, "Вы не находитесь в фургоне новостей, вертолете или в студии!");
 		} else {
 			OnAirMax++;
-			OnAir[playerid] = true;
+			OnAir{playerid} = true;
 			Send(playerid,COLOR_LIGHTBLUE,"* Вы начали эфир! Говорите просто в чат, и ваши сообщения будут новостями");
 		}
 	} else {
 		OnAirMax--;
-		OnAir[playerid] = false;
+		OnAir{playerid} = false;
 		Send(playerid,COLOR_LIGHTBLUE,"* Вы закончили эфир!");
 	}
 	return 1;
@@ -3376,7 +3376,7 @@ CMD:clear(playerid, params[]) { new string[144], sendername[24], playername[24];
 
 CMD:ticket(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY, "* Вы не законник!");
-	if(!OnDuty[playerid] && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "Вы не при исполнении служебных обязанностей!");
+	if(!OnDuty{playerid} && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "Вы не при исполнении служебных обязанностей!");
 	if(sscanf(params, "uds[24]", params[0], params[1], params[2])) return Send(playerid, COLOR_GREY, "Введите: /ticket [playerid] [price] [reason]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
 	if(params[1] < 1 || params[1] > 99999) return Send(playerid, COLOR_GREY, "* Штраф не может быть ниже $1 или выше $99999!");
@@ -3396,7 +3396,7 @@ CMD:ticket(playerid, params[]) { new string[144], sendername[24], playername[24]
 
 CMD:arrest(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(!IsACop(playerid)) return Send(playerid, COLOR_GREY, "* Вы не законник!");
-	if(!OnDuty[playerid] && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "* Вы не при исполнении служебных обязанностей!");
+	if(!OnDuty{playerid} && Pl::FracID(playerid) == 1) return Send(playerid, COLOR_GREY, "* Вы не при исполнении служебных обязанностей!");
 	if(!IsPlayerInRangeOfPoint(playerid, 10.0, 268.3327,77.8972,1001.0391)) return Send(playerid, COLOR_GREY, "* Вы не около камеры, не может арестовать!");
 	if(sscanf(params, "uiiI(0)I(1)", params[0], params[1], params[2], params[3], params[4])) return Send(playerid, COLOR_GREY, "Введите: /arrest [id/Name] [price] [time] [bail] [bailprice]");
 	if(params[1] < 1 || params[1] > 99999) return Send(playerid, COLOR_GREY, "* Цена на арест не может быть ниже 1$ или выше 99999$ !");
@@ -3440,7 +3440,7 @@ CMD:arrest(playerid, params[]) { new string[144], sendername[24], playername[24]
 
 
 CMD:dice(playerid, params[]) { new string[144];
-	if(!gDice[playerid]) return Send(playerid, COLOR_GRAD2, "* У Вас нет костей!");
+	if(!gDice{playerid}) return Send(playerid, COLOR_GRAD2, "* У Вас нет костей!");
 	new dice = random(6)+1;
 	format(string, sizeof string, "* %s бросает кости. Выпало число %d", GetName(playerid), dice);
 	ProxDetector(5.0, playerid, string, COLOR_GREEN, COLOR_GREEN, COLOR_GREEN, COLOR_GREEN, COLOR_GREEN);

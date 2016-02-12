@@ -613,9 +613,9 @@ CMD:setpic2(playerid, params[]) {
 
 CMD:editmode(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	EditMode[playerid] = !EditMode[playerid];
+	EditMode{playerid} = !EditMode{playerid};
 	SetPVarInt(playerid, "selectTeleport", INVALID_ID);
-	format(string, sizeof string, "Режим редактирования: %s", (EditMode[playerid])?("{00cc00}Вкл."):("{ff0000}Выкл."));
+	format(string, sizeof string, "Режим редактирования: %s", (EditMode{playerid})?("{00cc00}Вкл."):("{ff0000}Выкл."));
 	Send(playerid, -1, string);
 	return 1;
 }
@@ -1058,16 +1058,16 @@ CMD:noooc(playerid, params[]) { new string[144];
 
 CMD:bigears(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, MODER3LVL)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
-	BigEar[playerid] = !BigEar[playerid];
-	format(string, sizeof string, "* Ваши уши %s!", (BigEar[playerid])?("выросли"):("стали нормальными"));
+	BigEar{playerid} = !BigEar{playerid};
+	format(string, sizeof string, "* Ваши уши %s!", (BigEar{playerid})?("выросли"):("стали нормальными"));
 	Send(playerid, COLOR_GREY, string);
 	return 1;
 }
 
 CMD:togtp(playerid, params[]) { new string[144];
 	if(!Pl::isAdmin(playerid, MODER1LVL)) return Send(playerid, COLOR_LIGHTRED2, "* Недостаточно прав!");
-	TogTP[playerid] = !TogTP[playerid];
-	format(string, sizeof string, "* Вы %s телепортироватся к себе!", (TogTP[playerid])?("разрешили"):("запретили"));
+	TogTP{playerid} = !TogTP{playerid};
+	format(string, sizeof string, "* Вы %s телепортироватся к себе!", (TogTP{playerid})?("разрешили"):("запретили"));
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
@@ -1096,9 +1096,9 @@ CMD:ot(playerid, params[]) { new string[144], sendername[24], playername[24];
 
 CMD:aduty(playerid, params[]) { new string[144], sendername[24];
 	if(!Pl::Info[playerid][pAdmin]) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	AdminDuty[playerid] = !AdminDuty[playerid];
+	AdminDuty{playerid} = !AdminDuty{playerid};
 	GetPlayerName(playerid, sendername, 24);
-	format(string, sizeof string, "(( [A] Админ %s %s ))", sendername, (AdminDuty[playerid])?("заступил на дежурство! (/report)"):("ушел с дежурства."));
+	format(string, sizeof string, "(( [A] Админ %s %s ))", sendername, (AdminDuty{playerid})?("заступил на дежурство! (/report)"):("ушел с дежурства."));
 	SendToAll(COLOR_OOC,string);
 	return 1;
 }
@@ -1304,8 +1304,8 @@ CMD:tv(playerid, params[]) { new string[144], playername[24];
 	new hkey = Pl::Info[playerid][pHouseKey];
 	if(sscanf(params, "s[24]", params[0])) return Send(playerid, COLOR_GREY, "Введите: /tv [id] (off - перестать смотреть тв)");
 	if(strcmp("off", params[0], true) == 0) {
-		if(WatchingTV[playerid]) {
-			WatchingTV[playerid] = false;
+		if(WatchingTV{playerid}) {
+			WatchingTV{playerid} = false;
 			Pl::SpecInfo[playerid][pSpecID] = 999;
 			Pt::Hide(playerid, Pt::Spec[playerid]);
 			GameTextForPlayer(playerid, "~w~                TV~n~~r~                Off", 5000, 6);
@@ -1317,7 +1317,7 @@ CMD:tv(playerid, params[]) { new string[144], playername[24];
 		new specid = ReturnUser(params[0]);
 		if(specid == playerid) return Send(playerid, COLOR_GREY, "* Вы не можете следить сами за собой!");
 		if(!Pl::isLogged(specid)) return Send(playerid, COLOR_GREY, "* Игрок не авторизирован!");
-		if(WatchingTV[specid]) return Send(playerid, COLOR_GREY, "* Этот игрок сам в ТВ!");
+		if(WatchingTV{specid}) return Send(playerid, COLOR_GREY, "* Этот игрок сам в ТВ!");
 		if(!Pl::isAdmin(playerid, 1) && HouseInfo[hkey][hTv] != 1) return GameTextForPlayer(playerid, "~r~This upgrade isn't installed", 5000, 1);
 		if(Pl::Info[specid][pAdmin] > 0 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Этот канал не работает!");
 		GetPlayerName(specid, playername, 24);
@@ -1343,7 +1343,7 @@ CMD:tv(playerid, params[]) { new string[144], playername[24];
 		Pt::Show(playerid, Pt::Spec[playerid]);
 		Rac::SetPlayerInterior(playerid, Pl::SpecInfo[specid][pSpecInt][0]);
 		Rac::SetPlayerVirtualWorld(playerid, Pl::SpecInfo[specid][pSpecVw][0]);
-		WatchingTV[playerid] = true;
+		WatchingTV{playerid} = true;
 	}
 	else Send(playerid, COLOR_GREEN, "* Вы не дома.");
 
@@ -1563,7 +1563,7 @@ CMD:makeleader(playerid, params[]) { new string[144], sendername[24], playername
 			case 2: Pl::Info[params[0]][pChar] = 55;
 			default: Pl::Info[params[0]][pChar] = 60;
 		}
-		MedicBill[params[0]] = false;
+		MedicBill{params[0]} = false;
 		Pl::SetSpawnInfo(params[0]);
 		Rac::SpawnPlayer(params[0]);
 		format(string, sizeof string, "* Вы были сняты с лидерки администратором %s", sendername);
@@ -1725,7 +1725,7 @@ CMD:goto(playerid, params[]) {
 	if(Pl::Info[playerid][pJailed] > 0) return Send(playerid, COLOR_GRAD1, "* Это вевозможно!");
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /goto [id]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(!TogTP[params[0]] && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid,COLOR_GREY,"* Админ запретил к нему телепортироваться!");
+	if(!TogTP{params[0]} && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid,COLOR_GREY,"* Админ запретил к нему телепортироваться!");
 	GetPlayerPos(params[0], posx, posy, posz);
 	if(GetPlayerState(playerid) == 2) Rac::SetVehiclePos(GetPlayerVehicleID(playerid), posx, posy+4, posz);
 	else Rac::SetPlayerPos(playerid,posx, posy+2, posz);
@@ -2727,7 +2727,7 @@ CMD:uval(playerid, params[]) { new string[144], sendername[24], playername[24];
 		case 2: Pl::Info[params[0]][pChar] = 55;
 		default: Pl::Info[params[0]][pChar] = 79;
 	}
-	MedicBill[params[0]] = false;
+	MedicBill{params[0]} = false;
 	Pl::SetSpawnInfo(playerid);
 	Rac::SpawnPlayer(params[0]);
 	Iter::Remove(TeamPlayers[fracid], params[0]);

@@ -278,7 +278,7 @@
 #define IsACop(%0) 				(TEAM_COP<=Pl::FracID(%0)<=TEAM_ARMY)
 #define IsALicenzer(%0) 		(Pl::FracID(%0)==TEAM_LICENZERS)
 #define IsPHelper(%0,%1)		(Pl::Info[%0][pHelper]>=%1)
-#define IsAHelperDuty(%0) 		(HelperDuty[%0])
+#define IsAHelperDuty(%0) 		(HelperDuty{%0})
 #define IsPMuted(%0) 			(Pl::Info[%0][pMuted]==1)
 
 #define IsAMehCar(%0)			(isJobVehicle(JOB_MECHANIC,%0))
@@ -563,30 +563,30 @@ new Pl::CuffedTime			[MAX_PLAYERS];
 new Pl::CheckpointStatus	[MAX_PLAYERS];
 
 
-new bool:Gag				[MAX_PLAYERS];
-new bool:gOoc				[MAX_PLAYERS];
-new bool:gFam				[MAX_PLAYERS];
-new bool:gNews				[MAX_PLAYERS];
-new bool:gDice				[MAX_PLAYERS];
-new bool:OnAir				[MAX_PLAYERS];
-new bool:TogTP				[MAX_PLAYERS];
-new bool:OnDuty				[MAX_PLAYERS];
-new bool:BigEar				[MAX_PLAYERS];
-new bool:HidePM				[MAX_PLAYERS];
-new bool:EditMode			[MAX_PLAYERS];
-new bool:MedicBill			[MAX_PLAYERS];
-new bool:SwitchKey			[MAX_PLAYERS];
-new bool:AdminDuty			[MAX_PLAYERS];
-new bool:WatchingTV			[MAX_PLAYERS];
-new 	 WrongLogin			[MAX_PLAYERS];
-new bool:PlayerTied			[MAX_PLAYERS];
-new bool:HelperDuty			[MAX_PLAYERS];
-new bool:SpawnChange		[MAX_PLAYERS];
-new bool:SuspectKill		[MAX_PLAYERS];
-new bool:PhoneOnline		[MAX_PLAYERS];
-new bool:MoneyMessage		[MAX_PLAYERS];
-new bool:TakingLesson		[MAX_PLAYERS];
-new bool:PlayerUseTazed		[MAX_PLAYERS];
+new bool:Gag				[MAX_PLAYERS char];
+new bool:gOoc				[MAX_PLAYERS char];
+new bool:gFam				[MAX_PLAYERS char];
+new bool:gNews				[MAX_PLAYERS char];
+new bool:gDice				[MAX_PLAYERS char];
+new bool:OnAir				[MAX_PLAYERS char];
+new bool:TogTP				[MAX_PLAYERS char];
+new bool:OnDuty				[MAX_PLAYERS char];
+new bool:BigEar				[MAX_PLAYERS char];
+new bool:HidePM				[MAX_PLAYERS char];
+new bool:EditMode			[MAX_PLAYERS char];
+new bool:MedicBill			[MAX_PLAYERS char];
+new bool:SwitchKey			[MAX_PLAYERS char];
+new bool:AdminDuty			[MAX_PLAYERS char];
+new bool:WatchingTV			[MAX_PLAYERS char];
+new 	 WrongLogin			[MAX_PLAYERS char];
+new bool:PlayerTied			[MAX_PLAYERS char];
+new bool:HelperDuty			[MAX_PLAYERS char];
+new bool:SpawnChange		[MAX_PLAYERS char];
+new bool:SuspectKill		[MAX_PLAYERS char];
+new bool:PhoneOnline		[MAX_PLAYERS char];
+new bool:MoneyMessage		[MAX_PLAYERS char];
+new bool:TakingLesson		[MAX_PLAYERS char];
+new bool:PlayerUseTazed		[MAX_PLAYERS char];
 
 new bool:gCarLock			[MAX_VEHICLES char] = {false, ...};
 new bool:VehicleBoot		[MAX_VEHICLES char] = {false, ...};
@@ -2270,7 +2270,7 @@ stock ProxDetector(Float:radi, playerid, const message[], col1=COLOR_FADE1, col2
 	
     foreach(new i : inStreamPlayers[playerid]) {
 		dist = GetPlayerDistanceFromPoint(i, x, y, z);
-		if(!BigEar[i]) {
+		if(!BigEar{i}) {
 			if(radi >= dist) {
 				if(GetPlayerInterior(i) == playerint && GetPlayerVirtualWorld(i) == playervirt) {
 					if(dist < (radi/16)) Send(i, col1, message);
@@ -2335,7 +2335,7 @@ stock EmptyMessageToAll(rows) {
 stock OOCOff(color, const string[]) {
 	foreach(new i: Player) {
 		if(Pl::isLogged(i)) {
-			if(gOoc[i]) {
+			if(gOoc{i}) {
 				Send(i, color, string);
 			}
 		}
@@ -2345,7 +2345,7 @@ stock OOCOff(color, const string[]) {
 stock OOCNews(color, const string[]) {
 	foreach(new i: Player) {
 		if(Pl::isLogged(i)) {
-			if(gNews[i]) {
+			if(gNews{i}) {
 				Send(i, color, string);
 			}
 		}
@@ -2371,7 +2371,7 @@ stock sendToTeam(color, const message[], forteam[] = { -1 }, size = sizeof forte
 
 stock sendToFamily(family, color, const string[]) {
 	foreach(new i: TeamPlayers[family]) {
-		if(gFam[i]) {
+		if(gFam{i}) {
 			Send(i, color, string);
 		}
 	}
@@ -2460,8 +2460,8 @@ stock playerSpectateUpdate(i) {
 				Rac::SetPlayerVirtualWorld(i, Pl::SpecInfo[targetid][pSpecVw][0]);
 			}
 		} else {
-			MedicBill[i] = false;
-			WatchingTV[i] = false;
+			MedicBill{i} = false;
+			WatchingTV{i} = false;
 			Pt::Hide(i, Pt::Spec[i]);
 			Pl::SpecInfo[i][pSpecID] = INVALID_PLAYER_ID;
 			Rac::TogglePlayerControllable(i, 1);
@@ -2528,7 +2528,7 @@ stock IsAtBar(playerid) {
 stock Pl::isAdmin(playerid, lvl) {
 	if(Rac::isValidPlayer(playerid)) {
 		if(Pl::Info[playerid][pAdmin] >= lvl) {
-			if(AdminDuty[playerid] || Pl::Info[playerid][pAdmin] == ADMINISTRATOR) {
+			if(AdminDuty{playerid} || Pl::Info[playerid][pAdmin] == ADMINISTRATOR) {
 				return 1;
 			}
 		}
@@ -2610,7 +2610,7 @@ public OnPlayerDisconnect(playerid, reason) {
 		case 2 : BusDrivers  --;
 	}
 
-	if(Pl::Info[playerid][pJob] == 6 && OnDuty[playerid]) {
+	if(Pl::Info[playerid][pJob] == 6 && OnDuty{playerid}) {
 		Mechanics --;
 	}
 	
@@ -2766,7 +2766,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 				}
 				ClearCrime(playerid);
 				Pl::Info[playerid][pWantedD] ++;
-				SuspectKill[playerid] = true;
+				SuspectKill{playerid} = true;
 				Pl::Info[playerid][pJailTime] = jtime;
 				format(temp, sizeof temp, "Вас убил законник с %d уровнем розыска. Вы посажены в тюрьму на %d минуты!", Pl::Info[playerid][pWantedL], jtime/60);
 				Send(playerid, COLOR_LIGHTRED, temp);
@@ -2852,9 +2852,9 @@ public OnPlayerDeath(playerid, killerid, reason) {
 		CellTime[playerid] = 0;
 	}
 	
-	if(OnAir[playerid]) {
+	if(OnAir{playerid}) {
 		OnAirMax--;
-		OnAir[playerid] = false;
+		OnAir{playerid} = false;
 	}
 
 	// *** Дальнобойщик ***
@@ -2877,7 +2877,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 		SetPVarInt(playerid, "NextCP", 0);
 	}
 
-	MedicBill[playerid] = true;
+	MedicBill{playerid} = true;
 	Pl::CarInt[playerid] = INVALID_VEHICLE_ID;
 	SetPlayerColor(playerid, COLOR_GRAD2);
 	
@@ -2897,8 +2897,8 @@ public OnPlayerSpawn(playerid) {
 		
  	} else {
 		SetPlayerSkin(playerid, Pl::Info[playerid][pChar]);
-		if(SuspectKill[playerid]) {
-			SuspectKill[playerid] = false;
+		if(SuspectKill{playerid}) {
+			SuspectKill{playerid} = false;
 			Jailed(playerid, Pl::Info[playerid][pJailTime], Pl::Info[playerid][pJailed]);
 			SetCameraBehindPlayer(playerid);
 		
@@ -2908,7 +2908,7 @@ public OnPlayerSpawn(playerid) {
 			Send(playerid, COLOR_LIGHTRED, "* Вы ещё не отсидели свой тюремный срок.");
 			SetCameraBehindPlayer(playerid);
 		
-		} else if(IsValidHouse(Pl::Info[playerid][pHouseKey]) && !SpawnChange[playerid]) {
+		} else if(IsValidHouse(Pl::Info[playerid][pHouseKey]) && !SpawnChange{playerid}) {
 			EnterHouse(playerid, Pl::Info[playerid][pHouseKey]);
 		} else {
 			new fracid = Pl::FracID(playerid);
@@ -2940,8 +2940,8 @@ public OnPlayerSpawn(playerid) {
 				}
 			}
 		}
-		if(MedicBill[playerid] && !Pl::Info[playerid][pJailed] && !SuspectKill[playerid]) {
-			MedicBill[playerid] = false;
+		if(MedicBill{playerid} && !Pl::Info[playerid][pJailed] && !SuspectKill{playerid}) {
+			MedicBill{playerid} = false;
 			Pl::Info[playerid][pDeaths]++;
 			new cut = Pl::Info[playerid][pLevel]*deathcost;
 			GiveFracMoney(4, cut);
@@ -3349,7 +3349,7 @@ stock AshQueue(playerid, reason) {
 	switch(reason) {
 		case 0 : {
 			if(!Iter::Contains(AshQueue, playerid)) {
-				if(!TakingLesson[playerid]) {
+				if(!TakingLesson{playerid}) {
 					Iter::Add(AshQueue, playerid);
 					GetPlayerName(playerid, plname, 24);
 					scf(string_ah, temp, "%i.%s\n", Iter::Count(AshQueue), plname);
@@ -3731,7 +3731,7 @@ stock PickupHndlr::Gas(playerid, pickupid) {
 stock PickupHndlr::Portal(playerid, pickupid) {
 	foreach(new i : Portal) {
 		if(Ptl::Info[i][Ptl::Pickup][0] == pickupid) {
-			if(EditMode[playerid]) {
+			if(EditMode{playerid}) {
 				SetPVarInt(playerid, "selectTeleport", i);
 				format(dialog, sizeof dialog, "Telepot №%i | | Пикап №1", Ptl::Info[i][Ptl::Id]);
 				SPD(playerid,TP_EDIT,2,dialog,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
@@ -3772,7 +3772,7 @@ stock PickupHndlr::Portal(playerid, pickupid) {
 		}
 		
 		else if(Ptl::Info[i][Ptl::Pickup][1] == pickupid) {
-			if(EditMode[playerid]) {
+			if(EditMode{playerid}) {
 				SetPVarInt(playerid, "selectTeleport", i);
 				format(dialog, sizeof dialog, "Telepot №%i | Пикап №2 ", Ptl::Info[i][Ptl::Id]);
 				SPD(playerid,TP_EDIT,2,dialog,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
@@ -3952,7 +3952,7 @@ public: onPlayerPortal(playerid, portalid, pickupid) {
 		case 12 : {
 			switch(pickupid) {
 				case 1 : {
-					if(!TakingLesson[playerid]) {
+					if(!TakingLesson{playerid}) {
 						Send(playerid, COLOR_WHITE, "* Дождитесь начала экзамена!");
 						return -1;
 					} else {
@@ -4298,7 +4298,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			case 2 : {
 				ChosenSkin[playerid] = 0;
 				SelectCharPlace[playerid] = 0;
-				MedicBill[playerid] = false;
+				MedicBill{playerid} = false;
 				PlayerLogged{playerid} = true;
 				Pl::Info[playerid][pReg] = 1;
 				Pl::Info[playerid][pLevel] = START_LEVEL;
@@ -4586,7 +4586,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			
 			case 3 : {
 			    if(Rac::GetPlayerMoney(playerid) >= DicePrice) {
-					gDice[playerid] = true;
+					gDice{playerid} = true;
 					Rac::GivePlayerMoney(playerid, -DicePrice);
 					GiveBizzProfit(biz, DicePrice);
 					BizzInfo[biz][bProds]--;
@@ -4799,7 +4799,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 					
 					case VEHICLE_TYPE_AIRPLANE, VEHICLE_TYPE_HELICOPTER : {
 						if(Pl::Info[playerid][pLic][1] < 1) {
-							if(!TakingLesson[playerid]) {
+							if(!TakingLesson{playerid}) {
 								Send(playerid, COLOR_GREY, "* У Вас нет лицензии на воздушный транспорт!");
 								return Rac::RemovePlayerFromVehicle(playerid);
 							}
@@ -4808,7 +4808,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 					
 					case VEHICLE_TYPE_AUTO : {
 						if(Pl::Info[playerid][pLic][0] < 1) {
-							if(!TakingLesson[playerid]) {
+							if(!TakingLesson{playerid}) {
 								Send(playerid, COLOR_GREY, "* У Вас нет лицензии на легковой транспорт!");
 								return Rac::RemovePlayerFromVehicle(playerid);
 							}
@@ -4819,7 +4819,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				new fc_frac, fc_rank;
 				if(Fc::GetInfo(vehid, "fr", fc_frac, fc_rank)) {
 					if(fc_frac == 11) {
-						if(TakingLesson[playerid]) {
+						if(TakingLesson{playerid}) {
 						} else {
 							if(fc_frac == fracid) {
 								if(fc_rank > Pl::Info[playerid][pRank]) {
@@ -4849,7 +4849,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				new vehjob;
 				if(GetVehDescription(vehid, "j", vehjob)) {
 					if(vehjob) {
-						if(Pl::Info[playerid][pJob] != vehjob && !EditMode[playerid]) {
+						if(Pl::Info[playerid][pJob] != vehjob && !EditMode{playerid}) {
 							static const jnames[][] = {
 								"-", "-", "-", "-", "-", "-",
 								"Механики", "-", "-",
@@ -5153,19 +5153,19 @@ stock Update(i) {
 		}
 
 		if(Rac::GetPlayerMoney(i) < 0) {
-			if(!MoneyMessage[i]) {
-				MoneyMessage[i] = true;
+			if(!MoneyMessage{i}) {
+				MoneyMessage{i} = true;
 				format(temp, sizeof(temp), "* У Вас задолжность штату, вы должны отдать сумму: $%d или сядете в тюрьму!", Rac::GetPlayerMoney(i));
 				Send(i, COLOR_LIGHTRED, temp);
 			}
 		} else if(Pl::Info[i][pBank] < 0) {
-			if(!MoneyMessage[i]) {
-				MoneyMessage[i] = true;
+			if(!MoneyMessage{i}) {
+				MoneyMessage{i} = true;
 				format(temp, sizeof(temp), "* У Вас задолжность банку, вы должны отдать сумму: $%d или сядете в тюрьму!", Pl::Info[i][pBank]);
 				Send(i, COLOR_LIGHTRED, temp);
 			}
 		} else {
-			MoneyMessage[i] = true;
+			MoneyMessage{i} = true;
 		}
 		
 		Pl::Update(i);
@@ -6171,8 +6171,8 @@ public: onPayDay() {
 				} else {
 					Send(i, COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы играли слишком мало, поэтому сервер не выдал вам зарплату за прошлый час.");
 				}
-				if(MoneyMessage[i] && !(Rac::GetPlayerMoney(i) > 0 || Pl::Info[i][pBank] > 0)) {
-					MoneyMessage[i] = false;
+				if(MoneyMessage{i} && !(Rac::GetPlayerMoney(i) > 0 || Pl::Info[i][pBank] > 0)) {
+					MoneyMessage{i} = false;
 					Jailed(i, 300, 3);
 					GameTextForPlayer(i, "~r~Busted!", 2000, 1);
 					format(src, sizeof(src), "* Вы заключены в тюрьму на 10 минут! Причина: Задолжность");
@@ -6618,13 +6618,13 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 public OnPlayerText(playerid, text[]) {
 	if(isnull(text) || text[0] == ' ') return 0;
 	if(!Pl::isLogged(playerid)) return !Send(playerid, COLOR_GREY, "* Вы не авторизованы!");
-	if(Gag[playerid]) return !Send(playerid,COLOR_GREY,"* У Вас кляп во рту!");
+	if(Gag{playerid}) return !Send(playerid,COLOR_GREY,"* У Вас кляп во рту!");
 	if(IsPMuted(playerid))return !Send(playerid, COLOR_CYAN, "* Админ отнял у вас возможность говорить в главном чате.");
 
 	new replacetext[144], tmp[32], string[144], sendername[24];
 	regex_replace_exid(text, ADBlock, REPLACE_TEXT, replacetext, sizeof replacetext);
 	
-	if(OnAir[playerid]) {
+	if(OnAir{playerid}) {
 		new veh = GetPlayerVehicleID(playerid);
 		if(IsPlayerInRangeOfPoint(playerid,5.0,353.4343,272.8408,1008.6656)) {
 			switch(++Pl::Info[playerid][pSkill][6]) {
@@ -9449,7 +9449,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if(Fc::IsThereModel(frac_id, model_id)) return Send(playerid, COLOR_RED, "* Эта модель уже есть в списке!");
 					format(query, sizeof query, "INSERT INTO `"#__TableFracModels__"` (`frac_id`, `model_id`) VALUES ('%i','%i')", frac_id, model_id);
 					Db::tquery(connDb, query);
-					format(string, sizeof(string), " Модель добвалена! Model_id: %i; Model_name: %s", model_id, VehicleNames[model_id-400]);
+					format(string, sizeof(string), " Модель добавлена! Model_id: %i; Model_name: %s", model_id, VehicleNames[model_id-400]);
 					Send(playerid, COLOR_WHITE, string);
 				}
 			}
@@ -10170,7 +10170,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 			} else {
-				if(Pl::FracID(playerid) == FracID[idx] || EditMode[playerid]) {
+				if(Pl::FracID(playerid) == FracID[idx] || EditMode{playerid}) {
 					format(string, sizeof(string), "Баланс %s:\n$%i", FracInfo[FracID[idx]][fName], GetFracMoney(FracID[idx]));
 					SPD(playerid, D_FBANK+2, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				} else {
@@ -11361,7 +11361,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 public OnPlayerClickPlayer(playerid, clickedplayerid, source) {
 	if(Pl::isAdmin(playerid, 3)) {
-		if(!TogTP[clickedplayerid] && !Pl::isAdmin(playerid, ADMINISTRATOR)) return 1;
+		if(!TogTP{clickedplayerid} && !Pl::isAdmin(playerid, ADMINISTRATOR)) return 1;
 
 		GetPlayerPos(clickedplayerid, posx, posy, posz);
 		if(GetPlayerState(playerid) == 2) {
@@ -11494,7 +11494,7 @@ stock GivePlayerBankMoney(playerid, amount) Pl::Info[playerid][pBank] += amount;
 
 public: ReduceTimer(playerid) ReduceTime[playerid] = 0;
 
-public: TazerTime(playerid) PlayerUseTazed[playerid] = false;
+public: TazerTime(playerid) PlayerUseTazed{playerid} = false;
 
 
 stock IsAtATM(playerid) {
@@ -12000,30 +12000,30 @@ stock Pl::Init(playerid) {
 	Pl::Info[playerid][pPasport]		= {0, 0, 0};
 
 
-	Gag[playerid]						= false;
-	gOoc[playerid]						= true;
-	gFam[playerid]						= true;
-	gNews[playerid]						= true;
-	gDice[playerid]						= false;
-	OnAir[playerid]						= false;
-	TogTP[playerid]						= true;
-	OnDuty[playerid]					= false;
-	BigEar[playerid]					= false;
-	HidePM[playerid]					= false;
-	EditMode[playerid]					= false;
-	MedicBill[playerid]					= false;
-	SwitchKey[playerid]					= false;
-	AdminDuty[playerid]					= false;
-	WatchingTV[playerid]				= false;
+	Gag{playerid}						= false;
+	gOoc{playerid}						= true;
+	gFam{playerid}						= true;
+	gNews{playerid}						= true;
+	gDice{playerid}						= false;
+	OnAir{playerid}						= false;
+	TogTP{playerid}						= true;
+	OnDuty{playerid}					= false;
+	BigEar{playerid}					= false;
+	HidePM{playerid}					= false;
+	EditMode{playerid}					= false;
+	MedicBill{playerid}					= false;
+	SwitchKey{playerid}					= false;
+	AdminDuty{playerid}					= false;
+	WatchingTV{playerid}				= false;
 	WrongLogin[playerid]				= 3;
-	PlayerTied[playerid]				= false;
-	HelperDuty[playerid]				= false;
-	SpawnChange[playerid]				= false;
-	SuspectKill[playerid]				= false;
-	PhoneOnline[playerid]				= true;
+	PlayerTied{playerid}				= false;
+	HelperDuty{playerid}				= false;
+	SpawnChange{playerid}				= false;
+	SuspectKill{playerid}				= false;
+	PhoneOnline{playerid}				= true;
 	MoneyMessage[playerid]				= false;
-	TakingLesson[playerid]				= false;
-	PlayerUseTazed[playerid]			= false;
+	TakingLesson{playerid}				= false;
+	PlayerUseTazed{playerid}			= false;
 	
 	TempVehicle[playerid]				= INVALID_VEHICLE_ID;
 
@@ -12734,7 +12734,7 @@ stock Pl::SetSpawnInfo(playerid) {
 	}
 	
 	i = Pl::Info[playerid][pHouseKey];
-	if(IsValidHouse(i) && !SpawnChange[playerid]) {
+	if(IsValidHouse(i) && !SpawnChange{playerid}) {
 		SetSpawnInfo(
 			playerid,
 			1,
@@ -13781,7 +13781,7 @@ stock GetVehDescription(vehicleid, format[]="", ...) {
 }
 
 
-stock Fc::IsEditMode(playerid) return (Pl::Info[playerid][pAdmin]>=5&&EditMode[playerid]);
+stock Fc::IsEditMode(playerid) return (Pl::Info[playerid][pAdmin]>=5&&EditMode{playerid});
 
 stock Fc::IsForbiddenVeh(modelid) {
 	return binarySearch(Fc::FORBIDDEN_VEH, modelid) != -1;
@@ -15054,10 +15054,10 @@ stock UpdateSpeedometer(playerid, speed) {
 
 stock GetSkillLevel(playerid, skill) {
 	new level = Pl::Info[playerid][pSkill][skill];
-	if(level >= 0 && level <= 50) return 1;
-	else if(level >= 51 && level <= 100) return 2;
-	else if(level >= 101 && level <= 200) return 3;
-	else if(level >= 201 && level <= 400) return 4;
+	if(0 <= level <= 50) return 1;
+	else if(51 <= level <= 100) return 2;
+	else if(101 <= level <= 200) return 3;
+	else if(201 <= level <= 400) return 4;
 	else if(level >= 401) return 5;
 	return 1;
 }

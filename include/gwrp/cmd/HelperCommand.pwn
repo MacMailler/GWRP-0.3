@@ -43,9 +43,9 @@ CMD:hmute(playerid, params[]) { new string[144], sendername[24], playername[24];
 
 CMD:hduty(playerid, params[]) { new string[144], sendername[24];
 	if(!IsPHelper(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	HelperDuty[playerid] = !HelperDuty[playerid];
+	HelperDuty{playerid} = !HelperDuty{playerid};
 	GetPlayerName(playerid, sendername, 24);
-	format(string, sizeof string, "(( [H] Хелпер %s %s ))", sendername, (HelperDuty[playerid])?("ждет ваши вопросы! (/вопрос)"):("не активен."));
+	format(string, sizeof string, "(( [H] Хелпер %s %s ))", sendername, (HelperDuty{playerid})?("ждет ваши вопросы! (/вопрос)"):("не активен."));
 	SendToAll(COLOR_OOC,string);
 	return 1;
 }
