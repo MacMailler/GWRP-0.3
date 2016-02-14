@@ -130,9 +130,6 @@
 
 native IsValidVehicle(vehicleid);
 
-native SendClientCheck(playerid, cmd, addr, offset, bytes_count);
-forward OnClientCheckResponse(playerid, cmd, addr, checksum);
-
 
 stock hexToString(x)
 {
