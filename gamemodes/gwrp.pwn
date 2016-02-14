@@ -11633,7 +11633,7 @@ stock UpdateGangInfo() {
 		);
 		UpdateDynamic3DTextLabelText(GangInfo[p][gText], GetFracColor(GangInfo[p][fID]), src);
 	}
-	Sort::Gnome2D(GangInfo, gInfo, gRespect, METHOD_DESC);
+	Sort::Gnome2D(GangInfo, gInfo, gRespect, Sort::METHOD_DESC);
 	SaveGI();
 }
 
