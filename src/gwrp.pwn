@@ -23,7 +23,7 @@
 ***/
 
 #include <a_samp>
-#include "GWRP\Core\bootstrap.p"
+#include "GWRP\Core\bootstrap.pwn"
 
 #define __GamemodeName__		"GWRP"
 #define __GamemodeVersion__		"0.3"
@@ -6609,10 +6609,10 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 }
 
 
-#include "GWRP\System\Admin\AdminCommand.p"
-#include "GWRP\System\User\UserCommand.p"
-#include "GWRP\System\User\LeaderCommand.p"
-#include "GWRP\System\User\HelperCommand.p"
+#include "GWRP\System\Admin\AdminCommand.pwn"
+#include "GWRP\System\User\UserCommand.pwn"
+#include "GWRP\System\User\LeaderCommand.pwn"
+#include "GWRP\System\User\HelperCommand.pwn"
 
 
 public OnPlayerText(playerid, text[]) {
