@@ -216,22 +216,18 @@ pip-log.txt
 
 
 #############
-## SA-MP
+## GWRP 0.3
 #############
-filterscripts/*.amx
-gamemodes/*.amx
-gamemodes/*.lst
-gamemodes/*.asm
-pawno/
-plugins/
-scriptfiles/logs/
-Debug.txt
+/server/scriptfiles/logs/
+*.amx
+*.lst
+*.asm
+*.dll
+*.pdb
+*.exe
+*.zip
 crashinfo.txt
 mysql_log.txt
 server_log.txt
 samp.ban
-*.dll
-*.exe
-*.sql.gz
-*.zip
 

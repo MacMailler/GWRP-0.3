@@ -108,24 +108,21 @@
 #define COLOR_MIDNIGHTBLUE		0x191970AA
 #define COLOR_MEDIUMMAGENTA		0x8B008BAA
 
-
-#pragma tabsize 0
 #define FOREACH_NO_BOTS
 
-
-#include "..\include\fix_Kick"
-#include "..\include\ctime"
-#include "..\include\a_mysql"
-#include "..\include\sscanf2"
-#include "..\include\foreach"
-#include "..\include\streamer"
-#include "..\include\regex"
-#include "..\include\sort-0.2"
-#include "..\include\container"
-#include "..\include\mloader"
-#include "..\include\dc_cmd"
-#include "..\include\mxINI"
-#include "..\include\zones"
+#include <fix_Kick>
+#include <ctime>
+#include <a_mysql>
+#include <sscanf2>
+#include <foreach>
+#include <streamer>
+#include <regex>
+#include <sort-0.2>
+#include <container>
+#include <mloader>
+#include <dc_cmd>
+#include <mxINI>
+#include <zones>
 
 
 native IsValidVehicle(vehicleid);

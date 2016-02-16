@@ -23,7 +23,7 @@
 ***/
 
 #include <a_samp>
-#include "..\include\bootstrap"
+#include "GWRP\Core\bootstrap.p"
 
 #define __GamemodeName__		"GWRP"
 #define __GamemodeVersion__		"0.3"
@@ -1817,9 +1817,9 @@ new MapInfo[MAX_MAPS][e_MapInfo];
 new Iterator:Maps<MAX_MAPS>;
 
 
-#include "..\include\r_utils"
-#include "..\include\anticheat"
-#include "..\include\gate"
+#include <r_utils>
+#include <anticheat>
+#include <gate>
 
 
 new cache_row[512];
@@ -6609,10 +6609,10 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 }
 
 
-#include "../include/gwrp/cmd/AdminCommand.pwn"
-#include "../include/gwrp/cmd/UserCommand.pwn"
-#include "../include/gwrp/cmd/LeaderCommand.pwn"
-#include "../include/gwrp/cmd/HelperCommand.pwn"
+#include "GWRP\System\Admin\AdminCommand.p"
+#include "GWRP\System\User\UserCommand.p"
+#include "GWRP\System\User\LeaderCommand.p"
+#include "GWRP\System\User\HelperCommand.p"
 
 
 public OnPlayerText(playerid, text[]) {
