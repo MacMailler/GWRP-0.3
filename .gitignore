@@ -226,6 +226,7 @@ pip-log.txt
 *.pdb
 *.exe
 *.zip
+*.so
 crashinfo.txt
 mysql_log.txt
 server_log.txt
