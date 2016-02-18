@@ -750,18 +750,19 @@ enum jInfo {
 	jName[24],
 }
 new JobsInfo[][jInfo] = {
-	{0,	-1,	0,	{0.0,	   0.0,		  0.0},		  "Безработный"},
-	{1,	-1, 7,	{359.54080, 206.76930, 1008.3828}, "Детектив"},
-	{2,	-1, 7,	{335.35450, 195.29080, 1014.1875}, "Адвокат"},
-	{3,	-1,	0,	{2415.8638,-1220.7854, 25.273400}, "Проститутка"},
-	{4,	-1,	0,	{2166.3772,-1675.3829, 15.085900}, "Наркодилер"},
-	{5,	-1,	0,	{1109.3318,-1796.3042, 16.593800}, "Автоугонщик"},
-	{6,	-1,	0,	{-1932.385, 276.21170, 41.039100}, "Автомеханик"},
-	{7,	-1,	0,	{1366.4325,-1275.2096, 13.546900}, "Гандилер"},
-	{8,	-1,	0,	{531.79300,-1292.4044, 17.242200}, "Автодилер"},
-	{9,	-1,	0,	{1154.2208,-1770.8203, 16.599200}, "Автобусник"},
-	{10,-1,	0,	{-77.72880,-1136.3896, 1.0781000}, "Дальнобойщик"}
+	{JOB_NONE,		-1,	0,	{0.0,	   0.0,		  0.0},		  "Безработный"},
+	{JOB_DETECTIVE,	-1, 7,	{359.54080, 206.76930, 1008.3828}, "Детектив"},
+	{JOB_LAWYER,	-1, 7,	{335.35450, 195.29080, 1014.1875}, "Адвокат"},
+	{JOB_WHORE,		-1,	0,	{2415.8638,-1220.7854, 25.273400}, "Проститутка"},
+	{JOB_DRUGDEALER,-1,	0,	{2166.3772,-1675.3829, 15.085900}, "Наркодилер"},
+	{JOB_THEFTAUTO,	-1,	0,	{1109.3318,-1796.3042, 16.593800}, "Автоугонщик"},
+	{JOB_MECHANIC,	-1,	0,	{-1932.385, 276.21170, 41.039100}, "Автомеханик"},
+	{JOB_GUNDEALER,	-1,	0,	{1366.4325,-1275.2096, 13.546900}, "Гандилер"},
+	{JOB_AUTODEALER,-1,	0,	{531.79300,-1292.4044, 17.242200}, "Автодилер"},
+	{JOB_BUSMAN,	-1,	0,	{1154.2208,-1770.8203, 16.599200}, "Автобусник"},
+	{JOB_TRUCKER,	-1,	0,	{-77.72880,-1136.3896, 1.0781000}, "Дальнобойщик"}
 };
+
 enum dInfo {
 	dPrice,
 	dDrunk,
@@ -2610,7 +2611,7 @@ public OnPlayerDisconnect(playerid, reason) {
 		case 2 : BusDrivers  --;
 	}
 
-	if(Pl::Info[playerid][pJob] == 6 && OnDuty{playerid}) {
+	if(Pl::Info[playerid][pJob] == JOB_MECHANIC && OnDuty{playerid}) {
 		Mechanics --;
 	}
 	
@@ -10304,25 +10305,25 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							}
 							
 							switch(fracid) {
-								case 1 : strcat(dialog, "{FFFF00}/duty - {FFFFFF}заступить на дежурство\n");
-								case 4 : {
+								case TEAM_COP : strcat(dialog, "{FFFF00}/duty - {FFFFFF}заступить на дежурство\n");
+								case TEAM_FARMERS : strcat(dialog, "{FFFF00}/loadmac - {FFFFFF}провеить, сколько мака в амбаре\n");
+								case TEAM_TAXI : strcat(dialog, "{FFFF00}/fare - {FFFFFF}установить таксу\n");
+								case TEAM_MEDIC : {
 									strcat(dialog, "{FFFF00}/duty - {FFFFFF}заступить на дежурство\n");
 									strcat(dialog, "{FFFF00}/heal - {FFFFFF}вылечить игрока\n");
 									strcat(dialog, "{FFFF00}/accept medic - {FFFFFF}принять вызов\n");
 								}
-								case 8 : strcat(dialog, "{FFFF00}/loadmac - {FFFFFF}провеить, сколько мака в амбаре\n");
-								case 9 : {
+								case TEAM_PRESS : {
 									strcat(dialog, "{FFFF00}/news - {FFFFFF}послать новости в эфир\n");
 									strcat(dialog, "{FFFF00}/live - {FFFFFF}начать интервью\n");
 								}
-								case 10 : strcat(dialog, "{FFFF00}/fare - {FFFFFF}установить таксу\n");
-								case 11 : {
+								case TEAM_LICENZERS : {
 									strcat(dialog, "{FFFF00}/startlesson - {FFFFFF}начать экзамен\n");
 									strcat(dialog, "{FFFF00}/stoplesson - {FFFFFF}завершить экзамен\n");
 									strcat(dialog, "{FFFF00}/givelicense - {FFFFFF}выдать лицензию игроку\n");
 									strcat(dialog, "{FFFF00}/take - {FFFFFF}отобрать что-то у игрока\n");
 								}
-								case 17 : {
+								case TEAM_RIFA : {
 									strcat(dialog, "{FFFF00}/buymats - {FFFFFF}купить материалы в доках ЛС\n");
 									strcat(dialog, "{FFFF00}/sellmats - {FFFFFF}продать материалы на базе\n");
 									strcat(dialog, "{FFFF00}/loadmats - {FFFFFF}посмотреть, на сколько загружен склад\n");
@@ -10334,49 +10335,46 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							}
 							if(IsAGang(playerid)) strcat(dialog, "{FFFF00}/zahvat - {FFFFFF}атаковать бизнес\n");
 							strcat(dialog, "{FFFF00}/color - {FFFFFF}активировать цвет\n");
+						} else {
+							strcat(dialog, "Вам это меню не доступно!");
 						}
-						else strcat(dialog, "Вам это меню не доступно!");
 					}
-					case 4:
-					{
+					case 4 : {
 						strmid(category, "Работа", 0, 50);
-						switch(Pl::Info[playerid][pJob])
-						{
-							case 1: strcat(dialog, "{FFFF00}/find - {FFFFFF}найти игрока\n");
-							case 2: strcat(dialog, "{FFFF00}/free - {FFFFFF}выпустить игрока из тюрьмы\n");
-							case 3: strcat(dialog, "{FFFF00}/sex - {FFFFFF}предложить заняться сексом\n");
-							case 4: strcat(dialog, "{FFFF00}/selldrugs - {FFFFFF}продать наркотики игроку\n");
-							case 5: {
+						switch(Pl::Info[playerid][pJob]) {
+							case JOB_DETECTIVE : strcat(dialog, "{FFFF00}/find - {FFFFFF}найти игрока\n");
+							case JOB_LAWYER : strcat(dialog, "{FFFF00}/free - {FFFFFF}выпустить игрока из тюрьмы\n");
+							case JOB_WHORE : strcat(dialog, "{FFFF00}/sex - {FFFFFF}предложить заняться сексом\n");
+							case JOB_DRUGDEALER : strcat(dialog, "{FFFF00}/selldrugs - {FFFFFF}продать наркотики игроку\n");
+							case JOB_AUTODEALER : strcat(dialog, "{FFFF00}/sellcar - {FFFFFF}продать авто игроку\n");
+							case JOB_BUSMAN : strcat(dialog, "{FFFF00}/fare - {FFFFFF}установить цену проезда\n");
+							case JOB_TRUCKER : strcat(dialog, "{FFFF00}/delivery - {FFFFFF}начать рэйс\n");
+							case JOB_THEFTAUTO : {
 								strcat(dialog, "{FFFF00}/jack - {FFFFFF}взломать замок автомобиля\n");
 								strcat(dialog, "{FFFF00}/dropcar - {FFFFFF}экспортировать автомобиль\n");
 							}
-							case 6: {
+							case JOB_MECHANIC : {
 								strcat(dialog, "{FFFF00}/at - {FFFFFF}прицепить прицеп\n");
 								strcat(dialog, "{FFFF00}/dt - {FFFFFF}отцепить прицеп\n");
 								strcat(dialog, "{FFFF00}/duty - {FFFFFF}заступить на дежурство\n");
 								strcat(dialog, "{FFFF00}/repair - {FFFFFF}починить автомобиль\n");
 								strcat(dialog, "{FFFF00}/refill - {FFFFFF}заправить автомобиль\n");
 							}
-							case 7: {
+							case JOB_GUNDEALER : {
 								strcat(dialog, "{FFFF00}/mats - {FFFFFF}купить/переработать материалы\n");
 								strcat(dialog, "{FFFF00}/sellgun - {FFFFFF}продать оружие игроку\n");
 							}
-							case 8: strcat(dialog, "{FFFF00}/sellcar - {FFFFFF}продать авто игроку\n");
-							case 9: strcat(dialog, "{FFFF00}/fare - {FFFFFF}установить цену проезда\n");
-							case 10: strcat(dialog, "{FFFF00}/delivery - {FFFFFF}начать рэйс\n");
 							default: strcat(dialog, "У Вас нет работы!");
 						}
-						if(Pl::Info[playerid][pJob] > 0) strcat(dialog, "{FFFF00}/quitjob - {FFFFFF}уволиться\n");
+						if(Pl::Info[playerid][pJob] != JOB_NONE) strcat(dialog, "{FFFF00}/quitjob - {FFFFFF}уволиться\n");
 					}
-					case 5:
-					{
+					case 5: {
 						strmid(category, "Чаты", 0, 50);
 						strcat(dialog, "{FFFF00}/w (/pm) - {FFFFFF}отправить личное сообщение игроку\n");
 						strcat(dialog, "{FFFF00}/s - {FFFFFF}крикнуть\n");
 						strcat(dialog, "{FFFF00}/b - {FFFFFF}OOC чат\n");
 						if(IsAFamily(playerid)) strcat(dialog, "{FFFF00}/f - {FFFFFF}отправить сообщение в фракционный чат\n");
-						if(IsATeam(playerid) || fracid == 11)
-						{
+						if(IsATeam(playerid) || fracid == TEAM_LICENZERS) {
 							strcat(dialog, "{FFFF00}/d - {FFFFFF}отправить сообщение в чат департамента\n");
 							strcat(dialog, "{FFFF00}/r - {FFFFFF}сказать по рации\n");
 							strcat(dialog, "{FFFF00}/m - {FFFFFF}крикнуть по мегафону\n");
@@ -10417,8 +10415,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						LoadFile("dialog/help/biznes.txt", dialog);
 					}
 					
-					case 11:
-					{
+					case 11 : {
 						strmid(category, "ЛИДЕРКА", 0, 50);
 						if(IsPlayerLeader(playerid) > 0) {
 							strcat(dialog, "{FFFF00}/lmenu - {FFFFFF}меню лидера\n");
@@ -10428,7 +10425,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							strcat(dialog, "{FFFF00}/fracpay - {FFFFFF}выдать зарплату\n");
 							strcat(dialog, "{FFFF00}/vigovor - {FFFFFF}дать выговор игроку\n");
 							strcat(dialog, "{FFFF00}/unvigovor - {FFFFFF}снять выговор с игрока\n");
-							if(fracid == 7) {
+							if(fracid == TEAM_GOV) {
 								strcat(dialog, "{FFFF00}/settax - {FFFFFF}установить налог\n");
 								strcat(dialog, "{FFFF00}/givetax - {FFFFFF}выдать зарплпту законникам\n");
 								strcat(dialog, "{FFFF00}/checktax - {FFFFFF}проверить казну\n");
@@ -10437,8 +10434,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							strcat(dialog, "Вы не лидер!");
 						}
 					}
-					case 12:
-					{
+					case 12 : {
 						strmid(category, "Хелперка", 0, 50);
 						if(!IsPHelper(playerid, 1)) strcat(dialog, "Вы не хелпер!");
 						strcat(dialog, "{FFFF00}/hc - {FFFFFF}отправить текст в чат хелперов\n");
@@ -10447,11 +10443,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if(IsPHelper(playerid, 2)) strcat(dialog, "{FFFF00}/hmute - {FFFFFF}дать мут игроку\n");
 						if(IsPHelper(playerid, 3)) strcat(dialog, "{FFFF00}/makehelper(1-3) - {FFFFFF}дать хелперку\n");
 					}
-					case 13:
-					{
-						if(!Pl::Info[playerid][pAdmin]) strcat(dialog, "Вы не админ!");
-						else
-						{
+					case 13 : {
+						if(!Pl::Info[playerid][pAdmin]) {
+							strcat(dialog, "Вы не админ!");
+						} else {
 							return ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > Команды админов", "dialog/help/admin.txt", "CANCEL", "");
 						}
 					}
@@ -10502,71 +10497,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_SKILL : {
 			if(response) {
-				switch(listitem) {
-					case 0: {
-						new score = Pl::Info[playerid][pSkill][0];
-						new level = GetSkillLevel(playerid, 0);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = %i.\n*Для повышения уровня необходимо найти ещё %i игроков!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии детектив = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
-					
-					case 1: {
-						new score = Pl::Info[playerid][pSkill][2];
-						new level = GetSkillLevel(playerid, 2);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = %i.\n*Для повышения уровня необходимо освободить ещё %i игроков!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии адвокат = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
-					
-					case 2: {
-						new score = Pl::Info[playerid][pSkill][1];
-						new level = GetSkillLevel(playerid, 1);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = %i.\n*Для повышения уровня необходимо обслужить ещё %i клиентов!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии шлюха = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
-					
-					case 3: {
-						new score = Pl::Info[playerid][pSkill][7];
-						new level = GetSkillLevel(playerid, 7);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = %i.\n*Для повышения уровня необходимо совершить ещё %i сделок!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии наркодилер = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
-					
-					case 4: {
-						new score = Pl::Info[playerid][pSkill][4];
-						new level = GetSkillLevel(playerid, 4);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = %i.\n*Для повышения уровня необходимо продать ещё %i машин!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии автоугонщик = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
-					
-					case 5:	{
-						new score = Pl::Info[playerid][pSkill][6];
-						new level = GetSkillLevel(playerid, 6);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = %i.\n*Для повышения уровня необходимо опубликовать ещё %i новостей в /news!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии репортер = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
-					
-					case 6: {
-						new score = Pl::Info[playerid][pSkill][3];
-						new level = GetSkillLevel(playerid, 3);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = %i.\n*Для повышения уровня необходимо починить/заправить ещё %i машин!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии механик = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
-					
-					case 7: {
-						new score = Pl::Info[playerid][pSkill][5];
-						new level = GetSkillLevel(playerid, 5);
-						if(level < 5) format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = %i.\n*Для повышения уровня необходимо оформить ещё %i автомобилей!", level, 50 - score);
-						else format(string,sizeof(string),"*Ваш уровень опыта по профессии автодилер = 5.");
-						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
-					}
+				static const skillName[][][] = {
+					{{"детектив"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо найти ещё %i игроков!"}},
+					{{"адвокат"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо освободить ещё %i игроков!"}},
+					{{"шлюха"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо обслужить ещё %i клиентов!"}},
+					{{"наркодилер"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо совершить ещё %i сделок!"}},
+					{{"автоугонщик"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо продать ещё %i машин!"}},
+					{{"репортер"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо опубликовать ещё %i новостей в /news!"}},
+					{{"механик"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо починить/заправить ещё %i машин!"}},
+					{{"автодилер"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо оформить ещё %i автомобилей!"}}
+				};
+				new level = GetSkillLevel(playerid, listitem);
+				if(level < 5) {
+					format(string,sizeof(string), skillName[listitem][1],
+					skillName[listitem][0], level, 50 - Pl::Info[playerid][pSkill][listitem]);
+				} else {
+					format(string,sizeof(string),"*Ваш уровень опыта по профессии %s = 5.", skillName[0][listitem]);
 				}
+				SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 			}
 		}
 		
@@ -11188,7 +11136,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 							SetVehicleParamsEx(c,engine,light,alarm,doors,VehicleBonnet{c},boot,objective);
 						}
 					}
-					if(Pl::Info[playerid][pJob] == 6) {
+					if(Pl::Info[playerid][pJob] == JOB_MECHANIC) {
 						switch(GetVehicleType(GetVehicleModel(c))) {
 							case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
 								if(JobWaitTime[playerid] != 0) return Send(playerid, COLOR_GREY, "* Невозможно чинить/заправлять слишком часто, качайте скилл!");
@@ -11954,7 +11902,7 @@ stock Pl::Init(playerid) {
 	Pl::Info[playerid][pSex]			= 0;
 	Pl::Info[playerid][pAge]			= 0;
 	Pl::Info[playerid][pExp]			= 0;
-	Pl::Info[playerid][pJob]			= 0;
+	Pl::Info[playerid][pJob]			= JOB_NONE;
 	Pl::Info[playerid][pBank]			= 0;
 	Pl::Info[playerid][pWait]			= 10;
 	Pl::Info[playerid][pLevel]			= 0;
@@ -14149,14 +14097,14 @@ stock IsATeam(playerid, mode = 0) {
 
 stock IsAFamily(playerid) {
 	switch(Pl::FracID(playerid)) {
-		case 5, 6	: return 1;
-		case 8..20	: return 1;
+		case TEAM_LCN, TEAM_YAKUZA, TEAM_FARMERS : return 1;
+		case TEAM_STREETDOGS..TEAM_VAGOS : return 1;
 	}
 	return 0;
 }
 
 stock IsALawyer(playerid) {
-	return (Pl::Info[playerid][pJob] == 2 && Pl::FracID(playerid) == 7 && Pl::Info[playerid][pRank] == 10);
+	return (Pl::Info[playerid][pJob] == JOB_LAWYER && Pl::FracID(playerid) == TEAM_GOV && Pl::Info[playerid][pRank] == 10);
 }
 
 stock GetPayCheck(level) {
