@@ -88,7 +88,7 @@ CMD:uninvite(playerid, params[]) { new string[144], sendername[24], playername[2
 		default: Pl::Info[params[0]][pChar] = 60;
 	}
 	MedicBill{params[0]} = false;
-	Pl::Info[params[0]][pJob] = 0;
+	Pl::Info[params[0]][pJob] = JOB_NONE;
 	Pl::Info[params[0]][pContractTime] = 0;
 	Pl::SetSpawnInfo(params[0]);
 	Rac::SpawnPlayer(params[0]);
@@ -143,7 +143,7 @@ CMD:vigovor(playerid, params[]) { new string[144], sendername[24], playername[24
 			default: Pl::Info[params[0]][pChar] = 60;
 		}
 		MedicBill{params[0]} = false;
-		Pl::Info[params[0]][pJob] = 0;
+		Pl::Info[params[0]][pJob] = JOB_NONE;
 		Pl::Info[params[0]][pContractTime] = 0;
 		Pl::Info[params[0]][pRebuke] = 0;
 		SetPlayerSkin(params[0], Pl::Info[params[0]][pChar]);

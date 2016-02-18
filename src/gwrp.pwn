@@ -7473,15 +7473,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						}
 						case 6:
 						{
-							if(amount < 0 || amount > 2) return Send(playerid, COLOR_GREY, "* Неверное значение.");
+							if(!(0 <= amount <= 2)) return Send(playerid, COLOR_GREY, "* Неверное значение.");
 							Pl::Info[setid][pVip] = amount;
 							format(string, sizeof(string), "* Вип статус игрока был изминен на %d", amount);
 							Send(playerid, COLOR_GREY, string);
 						}
 						case 7:
 						{
-							if(amount < 0 || amount > 11) return Send(playerid, COLOR_GREY, "* Неверное значение.");
-							if((amount == 7 || amount == 4) && !IsAMafia(setid)) return Send(playerid, COLOR_GREY, "* Он не мафиози!");
+							if(!(0 <= amount <= MAX_JOBS)) return Send(playerid, COLOR_GREY, "* Неверное значение.");
+							if((amount == JOB_GUNDEALER || amount == JOB_DRUGDEALER) && !IsAMafia(setid)) return Send(playerid, COLOR_GREY, "* Он не мафиози!");
 						
 							Iter::Remove(JobPlayers[Pl::Info[setid][pJob]], playerid);
 							Iter::Add(JobPlayers[amount], playerid);
@@ -7697,8 +7697,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_JOB : {
 			if(response) {
 				switch(GettingJob[playerid]) {
-					case 2 : {
-						if(Pl::FracID(playerid) != 7) return Send(playerid, COLOR_GREY, "* Вы не работаете в Правительстве!");
+					case JOB_LAWYER : {
+						if(Pl::FracID(playerid) != TEAM_GOV) return Send(playerid, COLOR_GREY, "* Вы не работаете в Правительстве!");
 						if(6 <= Pl::Info[playerid][pRank] <= 8) {
 							Pl::Info[playerid][pJob] = GettingJob[playerid];
 							Pl::Info[playerid][pContractTime] = 5;
@@ -7709,7 +7709,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							Send(playerid, COLOR_GREY, "* Вы не юрист!");
 						}
 					}
-					case 4, 7 : {
+					case JOB_DRUGDEALER, JOB_GUNDEALER : {
 						if(!IsAMafia(playerid)) return Send(playerid, COLOR_GREY, "* Вы не мафиози!");
 						Pl::Info[playerid][pJob] = GettingJob[playerid];
 						Pl::Info[playerid][pContractTime] = 5;

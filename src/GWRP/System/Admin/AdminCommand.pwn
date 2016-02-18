@@ -2703,7 +2703,7 @@ CMD:kickjob(playerid, params[]) { new string[144], sendername[24], playername[24
 	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GRAD2, "Введите: /kickjob [id/Name]");
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	Iter::Remove(JobPlayers[Pl::Info[params[0]][pJob]], playerid);
-	Pl::Info[params[0]][pJob] = 0;
+	Pl::Info[params[0]][pJob] = JOB_NONE;
 	Pl::Info[params[0]][pContractTime] = 0;
 	getname(playerid -> sendername,params[0] -> playername);
 	format(string, sizeof string, "[AdmWarn] * %s применил команду /kickjob к игроку %s[%d]", sendername, playername, params[0]);

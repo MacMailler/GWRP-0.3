@@ -1679,7 +1679,7 @@ CMD:towcar(playerid, params[]) { new string[144];
 }
 
 CMD:fare(playerid, params[]) { new string[144];
-	if(Pl::FracID(playerid) != 10 && Pl::Info[playerid][pJob] != JOB_BUSMAN) return Send(playerid,COLOR_GREY,"* Вы не Таксист / Водетель Автобуса!");
+	if(Pl::FracID(playerid) != TEAM_TAXI && Pl::Info[playerid][pJob] != JOB_BUSMAN) return Send(playerid,COLOR_GREY,"* Вы не Таксист / Водетель Автобуса!");
 	new Veh = GetPlayerVehicleID(playerid);
 	if(TransportDuty[playerid] > 0) {
 		TaxiDrivers --;
