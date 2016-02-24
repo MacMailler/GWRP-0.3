@@ -2294,7 +2294,7 @@ stock SendToAdmin(color, string[], lvl = 1, log = 0) {
 		}
 	}
 	switch(log) {
-		case 0: SendLog(LOG_ANTICHEAT, string);
+		case 0: SendLog(LOG_ADMINCHAT, string);
 		case 1: SendLog(LOG_ANTICHEAT, string);
 		case 2: SendLog(LOG_REPORT, string);
 		case 3: SendLog(LOG_ADMWARN, string);
