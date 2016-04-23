@@ -1,7 +1,7 @@
 /***
 	The MIT License (MIT)
 
-	Copyright © 2014 MacMailler
+	Copyright В© 2014 MacMailler
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 
 #define __GamemodeName__		"GWRP"
 #define __GamemodeVersion__		"0.3"
-#define __GamemodeCopyright__	"(c) MacMailler, 2012—2014"
+#define __GamemodeCopyright__	"(c) MacMailler, 2012вЂ”2014"
 
 #define __DBPrefix__			""
 
@@ -294,7 +294,7 @@
 #define AddObject				CreateDynamicObject
 #define Add3DText				CreateDynamic3DTextLabel
 
-#define _GREY_ARROW				"{888888}» {ffffff}"
+#define _GREY_ARROW				"{888888}В» {ffffff}"
 
 #define INFINITY 				0x7F800000
 #define REPLACE_TEXT 			"**ADBlock**"
@@ -750,19 +750,18 @@ enum jInfo {
 	jName[24],
 }
 new JobsInfo[][jInfo] = {
-	{JOB_NONE,		-1,	0,	{0.0,	   0.0,		  0.0},		  "Безработный"},
-	{JOB_DETECTIVE,	-1, 7,	{359.54080, 206.76930, 1008.3828}, "Детектив"},
-	{JOB_LAWYER,	-1, 7,	{335.35450, 195.29080, 1014.1875}, "Адвокат"},
-	{JOB_WHORE,		-1,	0,	{2415.8638,-1220.7854, 25.273400}, "Проститутка"},
-	{JOB_DRUGDEALER,-1,	0,	{2166.3772,-1675.3829, 15.085900}, "Наркодилер"},
-	{JOB_THEFTAUTO,	-1,	0,	{1109.3318,-1796.3042, 16.593800}, "Автоугонщик"},
-	{JOB_MECHANIC,	-1,	0,	{-1932.385, 276.21170, 41.039100}, "Автомеханик"},
-	{JOB_GUNDEALER,	-1,	0,	{1366.4325,-1275.2096, 13.546900}, "Гандилер"},
-	{JOB_AUTODEALER,-1,	0,	{531.79300,-1292.4044, 17.242200}, "Автодилер"},
-	{JOB_BUSMAN,	-1,	0,	{1154.2208,-1770.8203, 16.599200}, "Автобусник"},
-	{JOB_TRUCKER,	-1,	0,	{-77.72880,-1136.3896, 1.0781000}, "Дальнобойщик"}
+	{0,	-1,	0,	{0.0,	   0.0,		  0.0},		  "Р‘РµР·СЂР°Р±РѕС‚РЅС‹Р№"},
+	{1,	-1, 7,	{359.54080, 206.76930, 1008.3828}, "Р”РµС‚РµРєС‚РёРІ"},
+	{2,	-1, 7,	{335.35450, 195.29080, 1014.1875}, "РђРґРІРѕРєР°С‚"},
+	{3,	-1,	0,	{2415.8638,-1220.7854, 25.273400}, "РџСЂРѕСЃС‚РёС‚СѓС‚РєР°"},
+	{4,	-1,	0,	{2166.3772,-1675.3829, 15.085900}, "РќР°СЂРєРѕРґРёР»РµСЂ"},
+	{5,	-1,	0,	{1109.3318,-1796.3042, 16.593800}, "РђРІС‚РѕСѓРіРѕРЅС‰РёРє"},
+	{6,	-1,	0,	{-1932.385, 276.21170, 41.039100}, "РђРІС‚РѕРјРµС…Р°РЅРёРє"},
+	{7,	-1,	0,	{1366.4325,-1275.2096, 13.546900}, "Р“Р°РЅРґРёР»РµСЂ"},
+	{8,	-1,	0,	{531.79300,-1292.4044, 17.242200}, "РђРІС‚РѕРґРёР»РµСЂ"},
+	{9,	-1,	0,	{1154.2208,-1770.8203, 16.599200}, "РђРІС‚РѕР±СѓСЃРЅРёРє"},
+	{10,-1,	0,	{-77.72880,-1136.3896, 1.0781000}, "Р”Р°Р»СЊРЅРѕР±РѕР№С‰РёРє"}
 };
-
 enum dInfo {
 	dPrice,
 	dDrunk,
@@ -811,11 +810,11 @@ new PizzaInfo[][burgsInfo] = {
 };
 
 new EatInfo[][burgsInfo] = {
-	{10,	"Перловка",		10.0},
-	{15,	"Картофель",	18.0},
-	{15,	"Гречка",		15.0},
-	{10,	"Компот",		10.0},
-	{5,		"Чай",			10.0}
+	{10,	"РџРµСЂР»РѕРІРєР°",		10.0},
+	{15,	"РљР°СЂС‚РѕС„РµР»СЊ",	18.0},
+	{15,	"Р“СЂРµС‡РєР°",		15.0},
+	{10,	"РљРѕРјРїРѕС‚",		10.0},
+	{5,		"Р§Р°Р№",			10.0}
 };
 
 
@@ -908,11 +907,11 @@ new Float:angle,Float:distance;
 
 
 enum Fc::Enum {
-	Fc::Id[2],				// 0 - ид транспорта в Бд. 1 - ид созданного транспорта на сервере
+	Fc::Id[2],				// 0 - РёРґ С‚СЂР°РЅСЃРїРѕСЂС‚Р° РІ Р‘Рґ. 1 - РёРґ СЃРѕР·РґР°РЅРЅРѕРіРѕ С‚СЂР°РЅСЃРїРѕСЂС‚Р° РЅР° СЃРµСЂРІРµСЂРµ
 	Fc::Model,
 	Fc::FracId,
 	Fc::RankId,
-	Fc::Color[2],			// 0 - первый цет. 1 - второй цвет.
+	Fc::Color[2],			// 0 - РїРµСЂРІС‹Р№ С†РµС‚. 1 - РІС‚РѕСЂРѕР№ С†РІРµС‚.
 	Fc::Number[10],
 	Float:Fc::RespPos[4],	// 0 - x. 1 - y. 2 - z. 3 - angle.
 }
@@ -1315,7 +1314,7 @@ new EnterPos[][camEnum] = {
 	{{1097}, {0}, {99}, {465.9904,2503.9668,22.4554,4.0220},		{465.2324,2499.6450,22.7485},		{464.2286,2499.6545,22.7884}},
 	{{1185}, {0}, {99}, {2168.6704,2143.6128,10.9593,268.1124},		{2097.0530,2143.8245,37.3217},		{2098.0557,2143.8152,37.3817}},
 	{{1183}, {0}, {99}, {1794.9576,1699.7588,6.7283,158.0961},		{1851.6905,1689.8480,27.7645},		{1853.4328,1693.3073,28.7634}}*/
-//		звук				 Игрок									Камера								Вектор камеры
+//		Р·РІСѓРє				 РРіСЂРѕРє									РљР°РјРµСЂР°								Р’РµРєС‚РѕСЂ РєР°РјРµСЂС‹
 };
 
 enum gunInfo
@@ -1496,7 +1495,7 @@ new SAInteriors[146][e_SAInteriors] = {
 	{0, -1961.6281, 295.2378, 35.4688, 264.4891, "Wang Cars"}
 };
 
-static const MaxPassengers[27] = { // HEX смещения макс. кол-ва пассажиров на основной транспорт
+static const MaxPassengers[27] = { // HEX СЃРјРµС‰РµРЅРёСЏ РјР°РєСЃ. РєРѕР»-РІР° РїР°СЃСЃР°Р¶РёСЂРѕРІ РЅР° РѕСЃРЅРѕРІРЅРѕР№ С‚СЂР°РЅСЃРїРѕСЂС‚
 	0x10331113, 0x11311131, 0x11331313, 0x80133301,
 	0x1381F110, 0x10311103, 0x10001F10, 0x11113311,
 	0x13113311, 0x31101100, 0x30001301, 0x11031311,
@@ -1563,10 +1562,10 @@ new
 
 
 new const fightStyle[][] = {
-	{5, "Бокс"},
-	{6, "Кунг-фу"},
-	{7, "Самбо"},
-	{4, "Уличном стиле"}
+	{5, "Р‘РѕРєСЃ"},
+	{6, "РљСѓРЅРі-С„Сѓ"},
+	{7, "РЎР°РјР±Рѕ"},
+	{4, "РЈР»РёС‡РЅРѕРј СЃС‚РёР»Рµ"}
 };
 
 
@@ -1579,29 +1578,29 @@ enum e_BusRoute {
 }
 new const BusRoute[][][e_BusRoute] = {
 	{
-		{1, 2233.6335,-1145.0454,25.7969, "Отель ЛС"},
-		{2, -97.8188,-1147.8456,1.5352, "ДБ"},
-		{3, -1091.4415,-1333.1506,129.3996, "Ферма"},
-		{4, -1851.9949,-568.4989,21.3089, "Аэрапорт СФ"},
-		{0, -2026.9414,-75.8452,35.3203, "Автошкола"}
+		{1, 2233.6335,-1145.0454,25.7969, "РћС‚РµР»СЊ Р›РЎ"},
+		{2, -97.8188,-1147.8456,1.5352, "Р”Р‘"},
+		{3, -1091.4415,-1333.1506,129.3996, "Р¤РµСЂРјР°"},
+		{4, -1851.9949,-568.4989,21.3089, "РђСЌСЂР°РїРѕСЂС‚ РЎР¤"},
+		{0, -2026.9414,-75.8452,35.3203, "РђРІС‚РѕС€РєРѕР»Р°"}
 	}, {
-		{1, -2026.2756,-75.5938,35.3203, "Автошкола"},
-		{2, -1825.0438,-621.1991,16.4978, "Аэрапорт СФ"},
-		{3, -1066.8634,-1357.1820,129.9968, "Ферма"},
-		{4, -113.7366,-1150.3976,1.7633, "ДБ"},
-		{0, 2214.3008,-1139.4200,25.7969, "Отель ЛС"}
+		{1, -2026.2756,-75.5938,35.3203, "РђРІС‚РѕС€РєРѕР»Р°"},
+		{2, -1825.0438,-621.1991,16.4978, "РђСЌСЂР°РїРѕСЂС‚ РЎР¤"},
+		{3, -1066.8634,-1357.1820,129.9968, "Р¤РµСЂРјР°"},
+		{4, -113.7366,-1150.3976,1.7633, "Р”Р‘"},
+		{0, 2214.3008,-1139.4200,25.7969, "РћС‚РµР»СЊ Р›РЎ"}
 	}, {
-		{1, 2622.3635,2300.7500,10.8203, "Отель ЛВ"},
-		{2, 2035.5227,1655.9678,10.8203, "Калигула"},
-		{3, 2040.2583,1009.1813,10.8052, "Четыре Дракона"},
-		{4, -2015.0028,274.7591,32.9499, "Автосалон СФ"},
-		{0, -2038.8948,-63.9849,35.3138, "Автошкола"}
+		{1, 2622.3635,2300.7500,10.8203, "РћС‚РµР»СЊ Р›Р’"},
+		{2, 2035.5227,1655.9678,10.8203, "РљР°Р»РёРіСѓР»Р°"},
+		{3, 2040.2583,1009.1813,10.8052, "Р§РµС‚С‹СЂРµ Р”СЂР°РєРѕРЅР°"},
+		{4, -2015.0028,274.7591,32.9499, "РђРІС‚РѕСЃР°Р»РѕРЅ РЎР¤"},
+		{0, -2038.8948,-63.9849,35.3138, "РђРІС‚РѕС€РєРѕР»Р°"}
 	}, {
-		{1, -2025.6659,-75.7442,35.3203, "Автошкола"},
-		{2, -1994.7224,314.3866,35.1719, "Автосалон СФ"},
-		{3, 2074.9963,997.5345,10.8052, "Четыре Дракона"},
-		{4, 2080.3950,1679.1343,10.8203, "Калигула"},
-		{0, 2637.7947,2345.4346,10.6719, "Отель ЛВ"}
+		{1, -2025.6659,-75.7442,35.3203, "РђРІС‚РѕС€РєРѕР»Р°"},
+		{2, -1994.7224,314.3866,35.1719, "РђРІС‚РѕСЃР°Р»РѕРЅ РЎР¤"},
+		{3, 2074.9963,997.5345,10.8052, "Р§РµС‚С‹СЂРµ Р”СЂР°РєРѕРЅР°"},
+		{4, 2080.3950,1679.1343,10.8203, "РљР°Р»РёРіСѓР»Р°"},
+		{0, 2637.7947,2345.4346,10.6719, "РћС‚РµР»СЊ Р›Р’"}
 	}
 };
 
@@ -1843,11 +1842,11 @@ public OnGameModeInit() {
 	#emit SYSREQ.C		GetTickCount
 	#emit STOR.S.pri	time
 	
-	if(GetMaxPlayers() > MAX_PLAYERS) panic("Количество слотов больше MAX_PLAYERS, старт игрового режима невозможен!");
+	if(GetMaxPlayers() > MAX_PLAYERS) panic("РљРѕР»РёС‡РµСЃС‚РІРѕ СЃР»РѕС‚РѕРІ Р±РѕР»СЊС€Рµ MAX_PLAYERS, СЃС‚Р°СЂС‚ РёРіСЂРѕРІРѕРіРѕ СЂРµР¶РёРјР° РЅРµРІРѕР·РјРѕР¶РµРЅ!");
 	
-	if(!LoadConf()) panic("Отсутствует файл конфигурации, старт игрового режима невозможен!");
+	if(!LoadConf()) panic("РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ С„Р°Р№Р» РєРѕРЅС„РёРіСѓСЂР°С†РёРё, СЃС‚Р°СЂС‚ РёРіСЂРѕРІРѕРіРѕ СЂРµР¶РёРјР° РЅРµРІРѕР·РјРѕР¶РµРЅ!");
 	
-	if(!Db::Init()) panic("Не удалось подключится к базе данных, старт игрового режима невозможен!");
+	if(!Db::Init()) panic("РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЃСЏ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…, СЃС‚Р°СЂС‚ РёРіСЂРѕРІРѕРіРѕ СЂРµР¶РёРјР° РЅРµРІРѕР·РјРѕР¶РµРЅ!");
 	
 	Db::Prepare();
 	
@@ -1911,7 +1910,7 @@ public OnGameModeInit() {
 	RegisterAlt("/gl", "/givelicense");
 	RegisterAlt("/sl", "/showlicenses");
 	RegisterAlt("/pas", "/pasport");
-	RegisterAlt("/vopros", "/вопрос");
+	RegisterAlt("/vopros", "/РІРѕРїСЂРѕСЃ");
 	RegisterAlt("/givegun",	"/ggun");
 	
 	foreach(new i : Frac) {
@@ -1919,7 +1918,7 @@ public OnGameModeInit() {
 		GangOnBattle[i] = INVALID_BIZ_ID;
 	}
 	
-	ValidText = regex_build("[а-яА-Яa-zA-Z0-9_,!\\.\\?\\-\\+\\(\\)\\ ]+");
+	ValidText = regex_build("[Р°-СЏРђ-РЇa-zA-Z0-9_,!\\.\\?\\-\\+\\(\\)\\ ]+");
 	ValidRPName = regex_build("([A-Z]{1,1})[a-z]{2,9}+_([A-Z]{1,1})[a-z]{2,9}");
 	ADBlock = regex_build("(((\\w+):\\/\\/)|(www\\.|\\,|))+(([\\w\\.\\,_-]{2,}(\\.|\\,)[\\w]{2,6})|(([\\d]{1,3}(\\b))(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}))(((\\s+|)(\\:|\\;|\\s)(\\s+|)[\\d\\s]{2,}(\\b))|\\b)(\\/[\\w\\&amp\\;\\%_\\.\\/\\-\\~\\-]*)?");
 	
@@ -1975,7 +1974,7 @@ public: GameModeInitExitFunc(mode) {
 	SetGameModeText("RESTART");
 	SendRconCommand("hostname rebooting...");
 	
-	if(mode) SendToAll(COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Все были кикнуты, причина: Рестарт сервера");
+	if(mode) SendToAll(COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Р’СЃРµ Р±С‹Р»Рё РєРёРєРЅСѓС‚С‹, РїСЂРёС‡РёРЅР°: Р РµСЃС‚Р°СЂС‚ СЃРµСЂРІРµСЂР°");
 	
 	foreach(new p : Player) {
 		if(Pl::isLogged(p)) {
@@ -2036,7 +2035,7 @@ public: OnPlayerAFK(playerid, newstate, oldstate) {
 						Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 						format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 						GameTextForGangs(temp, 6000, 1);
-						format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
+						format(temp, sizeof(temp), "[GANG NEWS] %s[%d] СѓРґРµСЂР¶Р°Р»Р° С‚РµСЂСЂРёС‚РѕСЂРёСЋ СЃРІРѕРµРіРѕ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 						GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 						sendToTeam(GetFracColor(defend), temp, Gangs);
 
@@ -2095,7 +2094,7 @@ public: onZahvatBizz(biz, attack, defend) {
 			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
 			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s взяли без боя территорию бизнеса %s!", GetGangName(attack), BizzInfo[biz][bDescription]);
+			format(temp, sizeof(temp), "[GANG NEWS] %s РІР·СЏР»Рё Р±РµР· Р±РѕСЏ С‚РµСЂСЂРёС‚РѕСЂРёСЋ Р±РёР·РЅРµСЃР° %s!", GetGangName(attack), BizzInfo[biz][bDescription]);
 			sendToTeam(GetFracColor(attack), temp, Gangs);
 			
 		} else if(!ZahvatKills{attack} && !ZahvatKills{defend}) {
@@ -2107,7 +2106,7 @@ public: onZahvatBizz(biz, attack, defend) {
 			Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 			format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 			GameTextForGangs(temp, 6000, 1);
-			format(temp, sizeof(temp), "[GANG NEWS] %s удержали без боя территорию бизнеса %s!", GetGangName(defend), BizzInfo[biz][bDescription]);
+			format(temp, sizeof(temp), "[GANG NEWS] %s СѓРґРµСЂР¶Р°Р»Рё Р±РµР· Р±РѕСЏ С‚РµСЂСЂРёС‚РѕСЂРёСЋ Р±РёР·РЅРµСЃР° %s!", GetGangName(defend), BizzInfo[biz][bDescription]);
 			sendToTeam(GetFracColor(attack), temp, Gangs);
 		
 		} else {
@@ -2121,7 +2120,7 @@ public: onZahvatBizz(biz, attack, defend) {
 					GiveGangRespect(defend, ZahvatScore[defend]);
 					format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 					GameTextForGangs(temp, 6000, 1);
-					format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
+					format(temp, sizeof(temp), "[GANG NEWS] %s[%d] СѓРґРµСЂР¶Р°Р»Р° С‚РµСЂСЂРёС‚РѕСЂРёСЋ СЃРІРѕРµРіРѕ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 					GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 					sendToTeam(GetFracColor(defend), temp, Gangs);
 				
@@ -2134,7 +2133,7 @@ public: onZahvatBizz(biz, attack, defend) {
 					Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 					format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
 					GameTextForGangs(temp, 6000, 1);
-					format(temp, sizeof(temp), "[GANG NEWS] %s[%d] захватили территорию бизнеса %s, %s[%d] повержены!",
+					format(temp, sizeof(temp), "[GANG NEWS] %s[%d] Р·Р°С…РІР°С‚РёР»Рё С‚РµСЂСЂРёС‚РѕСЂРёСЋ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 					GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
 					sendToTeam(GetFracColor(attack), temp, Gangs);
 				
@@ -2146,7 +2145,7 @@ public: onZahvatBizz(biz, attack, defend) {
 					Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 					format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 					GameTextForGangs(temp, 6000, 1);
-					format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
+					format(temp, sizeof(temp), "[GANG NEWS] %s[%d] СѓРґРµСЂР¶Р°Р»Р° С‚РµСЂСЂРёС‚РѕСЂРёСЋ СЃРІРѕРµРіРѕ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 					GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 					sendToTeam(GetFracColor(defend), temp, Gangs);
 				}
@@ -2159,7 +2158,7 @@ public: onZahvatBizz(biz, attack, defend) {
 				Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 				format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 				GameTextForGangs(temp, 6000, 1);
-				format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
+				format(temp, sizeof(temp), "[GANG NEWS] %s[%d] СѓРґРµСЂР¶Р°Р»Р° С‚РµСЂСЂРёС‚РѕСЂРёСЋ СЃРІРѕРµРіРѕ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 				GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 				sendToTeam(GetFracColor(defend), temp, Gangs);
 			
@@ -2174,7 +2173,7 @@ public: onZahvatBizz(biz, attack, defend) {
 				format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
 				GameTextForGangs(temp, 6000, 1);
 				
-				format(temp, sizeof(temp), "[GANG NEWS] %s[%d] захватили территорию бизнеса %s, %s[%d] повержены!",
+				format(temp, sizeof(temp), "[GANG NEWS] %s[%d] Р·Р°С…РІР°С‚РёР»Рё С‚РµСЂСЂРёС‚РѕСЂРёСЋ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 				GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
 				sendToTeam(GetFracColor(attack), temp, Gangs);
 			}
@@ -2217,7 +2216,7 @@ stock UnJail(playerid, type)
 			Rac::SetPlayerVirtualWorld(playerid, 1);
 			Rac::SetPlayerFacingAngle(playerid, 180.4);
 			Rac::SetPlayerPos(playerid,246.5,67.5,1003.6);
-			Send(playerid,COLOR_LIGHTRED,"Вы были выпушены из тюрьмы!");
+			Send(playerid,COLOR_LIGHTRED,"Р’С‹ Р±С‹Р»Рё РІС‹РїСѓС€РµРЅС‹ РёР· С‚СЋСЂСЊРјС‹!");
 		}
 		case 2: {
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
@@ -2231,7 +2230,7 @@ stock UnJail(playerid, type)
 			Rac::SetPlayerVirtualWorld(playerid, 1);
 			Rac::SetPlayerFacingAngle(playerid,180.4);
 			Rac::SetPlayerPos(playerid,246.5,67.5,1003.6);
-			Send(playerid,COLOR_LIGHTRED,"Вы были выпушены из тюрьмы!");
+			Send(playerid,COLOR_LIGHTRED,"Р’С‹ Р±С‹Р»Рё РІС‹РїСѓС€РµРЅС‹ РёР· С‚СЋСЂСЊРјС‹!");
 		}
 	}
 	Pl::SetSpawnInfo(playerid);
@@ -2294,7 +2293,7 @@ stock SendToAdmin(color, string[], lvl = 1, log = 0) {
 		}
 	}
 	switch(log) {
-		case 0: SendLog(LOG_ADMINCHAT, string);
+		case 0: SendLog(LOG_ANTICHEAT, string);
 		case 1: SendLog(LOG_ANTICHEAT, string);
 		case 2: SendLog(LOG_REPORT, string);
 		case 3: SendLog(LOG_ADMWARN, string);
@@ -2547,11 +2546,11 @@ public OnPlayerConnect(playerid) {
 	new ip[16], currtime = gettime();
 	GetPlayerIp(playerid, ip, 16);
 	if(slotused{playerid} && strcmp(playerIp[playerid], ip, false) == 0) {
-		return Rac::Ban(playerid, "Флуд коннектами");
+		return Rac::Ban(playerid, "Р¤Р»СѓРґ РєРѕРЅРЅРµРєС‚Р°РјРё");
 	}
 	
 	if((currtime - GetSVarInt(ip)) < 5) {
-		Send(playerid, COLOR_LIGHTRED, "* Перезаходить можно не менее чем через 5 секунд!");
+		Send(playerid, COLOR_LIGHTRED, "* РџРµСЂРµР·Р°С…РѕРґРёС‚СЊ РјРѕР¶РЅРѕ РЅРµ РјРµРЅРµРµ С‡РµРј С‡РµСЂРµР· 5 СЃРµРєСѓРЅРґ!");
 		return Kick(playerid);
 	}
 	
@@ -2573,9 +2572,9 @@ public OnPlayerConnect(playerid) {
 		Rac::TogglePlayerSpectating(playerid, true);
 		Rac::TogglePlayerSpectating(playerid, false);
 	
-		format(dialog, sizeof dialog, "Дождитесь полной загрузки игры и нажмите ENTER!\n\
-		Осталось секунд: %i", Pl::Info[playerid][pWait]);
-		SPD(playerid, D_WAIT, 0, "Подождите...", dialog, "ENTER", "");
+		format(dialog, sizeof dialog, "Р”РѕР¶РґРёС‚РµСЃСЊ РїРѕР»РЅРѕР№ Р·Р°РіСЂСѓР·РєРё РёРіСЂС‹ Рё РЅР°Р¶РјРёС‚Рµ ENTER!\n\
+		РћСЃС‚Р°Р»РѕСЃСЊ СЃРµРєСѓРЅРґ: %i", Pl::Info[playerid][pWait]);
+		SPD(playerid, D_WAIT, 0, "РџРѕРґРѕР¶РґРёС‚Рµ...", dialog, "ENTER", "");
 	}
 	return 1;
 }
@@ -2611,7 +2610,7 @@ public OnPlayerDisconnect(playerid, reason) {
 		case 2 : BusDrivers  --;
 	}
 
-	if(Pl::Info[playerid][pJob] == JOB_MECHANIC && OnDuty{playerid}) {
+	if(Pl::Info[playerid][pJob] == 6 && OnDuty{playerid}) {
 		Mechanics --;
 	}
 	
@@ -2665,8 +2664,8 @@ public OnPlayerDisconnect(playerid, reason) {
 	DestroyDynamicPickup(pickupd[playerid][0]);
 	DestroyDynamicMapIcon(pickupd[playerid][1]);
 	
-	static rsn[][] = { "Обрыв связи", "Вышел", "Кикнут", "unknown"};
-	format(temp, sizeof temp, "* %s (ID: %i) сбежал(а) с ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]. (%s)", GetName(playerid), playerid, (0<=reason<=2)?(rsn[reason]):(rsn[3]));
+	static rsn[][] = { "РћР±СЂС‹РІ СЃРІСЏР·Рё", "Р’С‹С€РµР»", "РљРёРєРЅСѓС‚", "unknown"};
+	format(temp, sizeof temp, "* %s (ID: %i) СЃР±РµР¶Р°Р»(Р°) СЃ ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]. (%s)", GetName(playerid), playerid, (0<=reason<=2)?(rsn[reason]):(rsn[3]));
 	sendToLog(COLOR_GREY, temp);
 	
 	return 1;
@@ -2713,7 +2712,7 @@ public OnVehicleDeath(vehicleid, killerid) {
 	new Float:x, Float:y, Float:z;
 	GetVehicleRotation(vehicleid, x, y, z);
 	if((y < 90 && y > -90) && gLastCar[killerid] != vehicleid && killerid != INVALID_PLAYER_ID) {
-		Rac::Kick(killerid, "Уничтожении тачек читами");
+		Rac::Kick(killerid, "РЈРЅРёС‡С‚РѕР¶РµРЅРёРё С‚Р°С‡РµРє С‡РёС‚Р°РјРё");
 	}
 	return 1;
 }
@@ -2741,7 +2740,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 		GetPlayerPos(playerid, x, y, z);
 		if(IsPlayerInRangeOfPoint(killerid, 50.0, x, y, z)) {
 			if(Rac::GetPlayerState(killerid) == 2 && (reason == WEAPON_UZI || reason == WEAPON_MP5 || reason == WEAPON_TEC9)) {
-				format(temp, sizeof(temp),"[античит] * %s(%i) только, что совершил ДБ. Жертва:(%i)%s", killername, killerid, playerid, playername);
+				format(temp, sizeof(temp),"[Р°РЅС‚РёС‡РёС‚] * %s(%i) С‚РѕР»СЊРєРѕ, С‡С‚Рѕ СЃРѕРІРµСЂС€РёР» Р”Р‘. Р–РµСЂС‚РІР°:(%i)%s", killername, killerid, playerid, playername);
 				SendToAdmin(COLOR_NEWS, temp, 1, 1);
 			}
 		} else if(!IsPlayerStreamedIn(playerid, killerid)) {
@@ -2749,7 +2748,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 		}
 		
 		if(reason == WEAPON_MINIGUN) {
-			format(temp, sizeof(temp), "[античит] * %s[%i] только что убил игрока миниганом.", killername, killerid);
+			format(temp, sizeof(temp), "[Р°РЅС‚РёС‡РёС‚] * %s[%i] С‚РѕР»СЊРєРѕ С‡С‚Рѕ СѓР±РёР» РёРіСЂРѕРєР° РјРёРЅРёРіР°РЅРѕРј.", killername, killerid);
 			SendToAdmin(COLOR_YELLOW, temp, 1, 1);
 		}
 		
@@ -2769,28 +2768,28 @@ public OnPlayerDeath(playerid, killerid, reason) {
 				Pl::Info[playerid][pWantedD] ++;
 				SuspectKill{playerid} = true;
 				Pl::Info[playerid][pJailTime] = jtime;
-				format(temp, sizeof temp, "Вас убил законник с %d уровнем розыска. Вы посажены в тюрьму на %d минуты!", Pl::Info[playerid][pWantedL], jtime/60);
+				format(temp, sizeof temp, "Р’Р°СЃ СѓР±РёР» Р·Р°РєРѕРЅРЅРёРє СЃ %d СѓСЂРѕРІРЅРµРј СЂРѕР·С‹СЃРєР°. Р’С‹ РїРѕСЃР°Р¶РµРЅС‹ РІ С‚СЋСЂСЊРјСѓ РЅР° %d РјРёРЅСѓС‚С‹!", Pl::Info[playerid][pWantedL], jtime/60);
 				Send(playerid, COLOR_LIGHTRED, temp);
-				format(temp, sizeof temp, "Вы убили нарушителя с %d уровнем розыска. Он посажен в тюрьму на %d минуты!", Pl::Info[playerid][pWantedL], jtime/60);
+				format(temp, sizeof temp, "Р’С‹ СѓР±РёР»Рё РЅР°СЂСѓС€РёС‚РµР»СЏ СЃ %d СѓСЂРѕРІРЅРµРј СЂРѕР·С‹СЃРєР°. РћРЅ РїРѕСЃР°Р¶РµРЅ РІ С‚СЋСЂСЊРјСѓ РЅР° %d РјРёРЅСѓС‚С‹!", Pl::Info[playerid][pWantedL], jtime/60);
 				Send(killerid, COLOR_LIGHTRED, temp);
 			}
 		}
 
-		// Уважения за убийство при захвате бизнеса
+		// РЈРІР°Р¶РµРЅРёСЏ Р·Р° СѓР±РёР№СЃС‚РІРѕ РїСЂРё Р·Р°С…РІР°С‚Рµ Р±РёР·РЅРµСЃР°
 		#define InCapture(%0,%1) ((BizzInfo[%0][bAttack]==%1)||(BizzInfo[%0][bDefend]==%1))
 		if(GangOnBattle[killerfrac] != INVALID_BIZ_ID && killerfrac != playerfrac) {
 			new biz = GangOnBattle[killerfrac];
 			if(BizzInfo[biz][bOnBattle] && IsPlayerInDynamicArea(killerid, BizzInfo[biz][bZahvatArea])) {
 				if(!InCapture(biz, playerfrac) && InCapture(biz, killerfrac)) {
 					GiveGangRespect(killerfrac, -5);
-					format(temp, sizeof temp, "[GANG NEWS] %s[%s] завалил %s[%s] (уважение -5)", killername, GetGangName(killerfrac), playername, GetGangName(playerfrac));
+					format(temp, sizeof temp, "[GANG NEWS] %s[%s] Р·Р°РІР°Р»РёР» %s[%s] (СѓРІР°Р¶РµРЅРёРµ -5)", killername, GetGangName(killerfrac), playername, GetGangName(playerfrac));
 					SendZahvatMessage(BizzInfo[biz][bAttack], BizzInfo[biz][bDefend], GetFracColor(killerfrac), temp);
 				}
 				
 				else if(!InCapture(biz, killerfrac) && InCapture(biz, playerfrac)) {
 					ZahvatDeath[playerid] = 1;
 					GiveGangRespect(killerfrac, -50);
-					format(temp, sizeof temp, "[GANG NEWS] %s[%s] вмешался в захват бизнеса (уважение -50)", killername, GetGangName(killerfrac));
+					format(temp, sizeof temp, "[GANG NEWS] %s[%s] РІРјРµС€Р°Р»СЃСЏ РІ Р·Р°С…РІР°С‚ Р±РёР·РЅРµСЃР° (СѓРІР°Р¶РµРЅРёРµ -50)", killername, GetGangName(killerfrac));
 					SendZahvatMessage(BizzInfo[biz][bAttack], BizzInfo[biz][bDefend], GetFracColor(killerfrac), temp);
 					sendToFrac(killerfrac, GetFracColor(killerfrac), temp);
 				}
@@ -2807,28 +2806,28 @@ public OnPlayerDeath(playerid, killerid, reason) {
 					ZahvatKills{killerfrac} ++;
 					ZahvatScore[killerfrac] += rep;
 					GiveGangRespect(killerfrac, rep);
-					format(temp, sizeof temp, "[GANG NEWS] %s[%s] завалил %s[%s] (уважение +%i)", killername, GetGangName(killerfrac), playername, GetGangName(playerfrac), rep);
+					format(temp, sizeof temp, "[GANG NEWS] %s[%s] Р·Р°РІР°Р»РёР» %s[%s] (СѓРІР°Р¶РµРЅРёРµ +%i)", killername, GetGangName(killerfrac), playername, GetGangName(playerfrac), rep);
 					SendZahvatMessage(BizzInfo[biz][bAttack], BizzInfo[biz][bDefend], GetFracColor(killerfrac), temp);
 				}
 			}
 		}
 		
-		// Блэклист
+		// Р‘Р»СЌРєР»РёСЃС‚
 		if(Bl::Info[playerid][Bl::onFrac][killerfrac]) {
 			Bl::Info[playerid][Bl::isKilled] = true;
 			Bl::Info[playerid][Bl::Finder] = INVALID_PLAYER_ID;
 			Bl::Info[playerid][Bl::Kills][killerfrac] ++;
 			if(Bl::Info[playerid][Bl::Kills][killerfrac] >= FracInfo[killerfrac][fBConf][bKILLS]) {
 				Bl::Remove(playerid, killerfrac);
-				format(temp, sizeof temp, "[BLACK LIST] %s откупился кровью и был вычеркнут из черного списка %s.", playername, FracInfo[killerfrac][fName]);
+				format(temp, sizeof temp, "[BLACK LIST] %s РѕС‚РєСѓРїРёР»СЃСЏ РєСЂРѕРІСЊСЋ Рё Р±С‹Р» РІС‹С‡РµСЂРєРЅСѓС‚ РёР· С‡РµСЂРЅРѕРіРѕ СЃРїРёСЃРєР° %s.", playername, FracInfo[killerfrac][fName]);
 				sendToFamily(killerfrac, COLOR_AZTECAS, temp);
-				format(temp, sizeof temp, "[BLACK LIST] Вы откупились кровью и были вычеркнуты из черного списка %s.", FracInfo[killerfrac][fName]);
+				format(temp, sizeof temp, "[BLACK LIST] Р’С‹ РѕС‚РєСѓРїРёР»РёСЃСЊ РєСЂРѕРІСЊСЋ Рё Р±С‹Р»Рё РІС‹С‡РµСЂРєРЅСѓС‚С‹ РёР· С‡РµСЂРЅРѕРіРѕ СЃРїРёСЃРєР° %s.", FracInfo[killerfrac][fName]);
 				Send(playerid, COLOR_AZTECAS, temp);
 			} else {
 				Bl::Update(playerid, killerfrac);
-				format(temp, sizeof temp, "[BLACK LIST] Заплати или терпи, %s помнит о тебе.", FracInfo[killerfrac][fName]);
+				format(temp, sizeof temp, "[BLACK LIST] Р—Р°РїР»Р°С‚Рё РёР»Рё С‚РµСЂРїРё, %s РїРѕРјРЅРёС‚ Рѕ С‚РµР±Рµ.", FracInfo[killerfrac][fName]);
 				Send(playerid, COLOR_AZTECAS, temp);
-				format(temp, sizeof temp, "[BLACK LIST] %s завалил %s. Крепись братва, в следующий раз терпила даст монету.", killername, playername);
+				format(temp, sizeof temp, "[BLACK LIST] %s Р·Р°РІР°Р»РёР» %s. РљСЂРµРїРёСЃСЊ Р±СЂР°С‚РІР°, РІ СЃР»РµРґСѓСЋС‰РёР№ СЂР°Р· С‚РµСЂРїРёР»Р° РґР°СЃС‚ РјРѕРЅРµС‚Сѓ.", killername, playername);
 				sendToFamily(killerfrac, COLOR_AZTECAS, temp);
 			}
 		}
@@ -2845,7 +2844,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 	
 	new caller = Mobile[playerid];
 	if(Pl::isLogged(caller)) {
-		Send(caller, COLOR_GRAD2, "* Эта линия отключина.");
+		Send(caller, COLOR_GRAD2, "* Р­С‚Р° Р»РёРЅРёСЏ РѕС‚РєР»СЋС‡РёРЅР°.");
 		CellTime[caller] = 0;
 		CellTime[playerid] = 0;
 		Mobile[caller] = INVALID_PLAYER_ID;
@@ -2858,7 +2857,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 		OnAir{playerid} = false;
 	}
 
-	// *** Дальнобойщик ***
+	// *** Р”Р°Р»СЊРЅРѕР±РѕР№С‰РёРє ***
 	if(acceptgruz{playerid} != 0) {
 		acceptgruz{playerid} = 0;
 		DestroyDynamicPickup(pickupd[playerid][0]);
@@ -2893,7 +2892,7 @@ public OnPlayerSpawn(playerid) {
 		Pl::setCamPos(playerid, Pl::Info[playerid][pCamPos], playerid+99);
 		
 	} else if(!Pl::isLogged(playerid)) {
-    	Send(playerid, COLOR_LIGHTRED, "* Извините но этот сервере требует залогинится перед тем как войти в игру. (Kicked) **");
+    	Send(playerid, COLOR_LIGHTRED, "* РР·РІРёРЅРёС‚Рµ РЅРѕ СЌС‚РѕС‚ СЃРµСЂРІРµСЂРµ С‚СЂРµР±СѓРµС‚ Р·Р°Р»РѕРіРёРЅРёС‚СЃСЏ РїРµСЂРµРґ С‚РµРј РєР°Рє РІРѕР№С‚Рё РІ РёРіСЂСѓ. (Kicked) **");
         Kick(playerid);
 		
  	} else {
@@ -2906,7 +2905,7 @@ public OnPlayerSpawn(playerid) {
 		} else if(Pl::Info[playerid][pJailed] > 0) {
 		    if(Pl::Info[playerid][pJailed] != 2) Jailed(playerid, Pl::Info[playerid][pJailTime]);
 			else Jailed(playerid, Pl::Info[playerid][pJailTime], Pl::Info[playerid][pJailed]);
-			Send(playerid, COLOR_LIGHTRED, "* Вы ещё не отсидели свой тюремный срок.");
+			Send(playerid, COLOR_LIGHTRED, "* Р’С‹ РµС‰С‘ РЅРµ РѕС‚СЃРёРґРµР»Рё СЃРІРѕР№ С‚СЋСЂРµРјРЅС‹Р№ СЃСЂРѕРє.");
 			SetCameraBehindPlayer(playerid);
 		
 		} else if(IsValidHouse(Pl::Info[playerid][pHouseKey]) && !SpawnChange{playerid}) {
@@ -2948,7 +2947,7 @@ public OnPlayerSpawn(playerid) {
 			GiveFracMoney(4, cut);
 			Rac::GivePlayerMoney(playerid, -cut);
 			Rac::SetPlayerHealth(playerid, 100.0);
-			format(temp, sizeof(temp), "*Доктор: я взял с вас $%i за лечение, приятной игры.", cut);
+			format(temp, sizeof(temp), "*Р”РѕРєС‚РѕСЂ: СЏ РІР·СЏР» СЃ РІР°СЃ $%i Р·Р° Р»РµС‡РµРЅРёРµ, РїСЂРёСЏС‚РЅРѕР№ РёРіСЂС‹.", cut);
 			Send(playerid, COLOR_CYAN, temp);
 		}
 		
@@ -2989,39 +2988,39 @@ public OnPlayerEnterCheckpoint(playerid) {
 			if(Pl::Info[playerid][pSkill][4] < 401) level = ++Pl::Info[playerid][pSkill][4];
 			
 			switch(level) {
-				case 50 : Send(playerid, COLOR_YELLOW, "* Ваш скил угонщика машин увеличен до 2 уровня теперь вы можете продовать больше машин.");
-				case 100 : Send(playerid, COLOR_YELLOW, "* Ваш скил угонщика машин увеличен до 3 уровня теперь вы можете продовать больше машин.");
-				case 200 : Send(playerid, COLOR_YELLOW, "* Ваш скил угонщика машин увеличен до 4 уровня теперь вы можете продовать больше машин.");
-				case 400 : Send(playerid, COLOR_YELLOW, "* Ваш скил угонщика машин увеличен до 5 уровня теперь вы можете продовать больше машин.");
+				case 50 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ СЃРєРёР» СѓРіРѕРЅС‰РёРєР° РјР°С€РёРЅ СѓРІРµР»РёС‡РµРЅ РґРѕ 2 СѓСЂРѕРІРЅСЏ С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґРѕРІР°С‚СЊ Р±РѕР»СЊС€Рµ РјР°С€РёРЅ.");
+				case 100 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ СЃРєРёР» СѓРіРѕРЅС‰РёРєР° РјР°С€РёРЅ СѓРІРµР»РёС‡РµРЅ РґРѕ 3 СѓСЂРѕРІРЅСЏ С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґРѕРІР°С‚СЊ Р±РѕР»СЊС€Рµ РјР°С€РёРЅ.");
+				case 200 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ СЃРєРёР» СѓРіРѕРЅС‰РёРєР° РјР°С€РёРЅ СѓРІРµР»РёС‡РµРЅ РґРѕ 4 СѓСЂРѕРІРЅСЏ С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґРѕРІР°С‚СЊ Р±РѕР»СЊС€Рµ РјР°С€РёРЅ.");
+				case 400 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ СЃРєРёР» СѓРіРѕРЅС‰РёРєР° РјР°С€РёРЅ СѓРІРµР»РёС‡РµРЅ РґРѕ 5 СѓСЂРѕРІРЅСЏ С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґРѕРІР°С‚СЊ Р±РѕР»СЊС€Рµ РјР°С€РёРЅ.");
 			}
 			
 			if(0 <= level <= 50) {
 			    new rand = random(sizeof(SELLCAR1)); moneys = SELLCAR1[rand];
-			    format(string, sizeof(string), "Вы продали автомобиль за $%d, вы можете продать следующий через - 20 минут.", SELLCAR1[rand]);
+			    format(string, sizeof(string), "Р’С‹ РїСЂРѕРґР°Р»Рё Р°РІС‚РѕРјРѕР±РёР»СЊ Р·Р° $%d, РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґР°С‚СЊ СЃР»РµРґСѓСЋС‰РёР№ С‡РµСЂРµР· - 20 РјРёРЅСѓС‚.", SELLCAR1[rand]);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				Pl::Info[playerid][pCarTime] = 1200;
 				
 			} else if(51 <= level <= 100) {
 			    new rand = random(sizeof(SELLCAR2)); moneys = SELLCAR2[rand];
-			    format(string, sizeof(string), "Вы продали автомобиль за $%d, вы можете продать следующий через - 18 минут.", SELLCAR2[rand]);
+			    format(string, sizeof(string), "Р’С‹ РїСЂРѕРґР°Р»Рё Р°РІС‚РѕРјРѕР±РёР»СЊ Р·Р° $%d, РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґР°С‚СЊ СЃР»РµРґСѓСЋС‰РёР№ С‡РµСЂРµР· - 18 РјРёРЅСѓС‚.", SELLCAR2[rand]);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				Pl::Info[playerid][pCarTime] = 1080;
 				
 			} else if(101 <= level <= 200) {
 			    new rand = random(sizeof(SELLCAR3)); moneys = SELLCAR3[rand];
-			    format(string, sizeof(string), "Вы продали автомобиль за $%d, вы можете продать следующий через - 16 минут.", SELLCAR3[rand]);
+			    format(string, sizeof(string), "Р’С‹ РїСЂРѕРґР°Р»Рё Р°РІС‚РѕРјРѕР±РёР»СЊ Р·Р° $%d, РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґР°С‚СЊ СЃР»РµРґСѓСЋС‰РёР№ С‡РµСЂРµР· - 16 РјРёРЅСѓС‚.", SELLCAR3[rand]);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				Pl::Info[playerid][pCarTime] = 960;
 				
 			} else if(201 <= level <= 400) {
 			    new rand = random(sizeof(SELLCAR4)); moneys = SELLCAR4[rand];
-			    format(string, sizeof(string), "Вы продали автомобиль за $%d, вы можете продать следующий через - 14 минут.", moneys);
+			    format(string, sizeof(string), "Р’С‹ РїСЂРѕРґР°Р»Рё Р°РІС‚РѕРјРѕР±РёР»СЊ Р·Р° $%d, РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґР°С‚СЊ СЃР»РµРґСѓСЋС‰РёР№ С‡РµСЂРµР· - 14 РјРёРЅСѓС‚.", moneys);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				Pl::Info[playerid][pCarTime] = 840;
 				
 			} else if(level >= 401) {
 				moneys = 6000;
-				format(string, sizeof(string), "Вы продали автомобиль за $%d, вы можете продать следующий через - 12 минут.", moneys);
+				format(string, sizeof(string), "Р’С‹ РїСЂРѕРґР°Р»Рё Р°РІС‚РѕРјРѕР±РёР»СЊ Р·Р° $%d, РІС‹ РјРѕР¶РµС‚Рµ РїСЂРѕРґР°С‚СЊ СЃР»РµРґСѓСЋС‰РёР№ С‡РµСЂРµР· - 12 РјРёРЅСѓС‚.", moneys);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				Pl::Info[playerid][pCarTime] = 720;
 			}
@@ -3067,7 +3066,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid) {
 			Gm::Info[Gm::FactoryProds] += 1;
 			ApplyAnimation(playerid,"CARRY","putdwn",4.1,0,1,1,0,1);
 			RemovePlayerAttachedObject(playerid,1);
-			Send(playerid, COLOR_YELLOW, "Продукт доставлен на склад");
+			Send(playerid, COLOR_YELLOW, "РџСЂРѕРґСѓРєС‚ РґРѕСЃС‚Р°РІР»РµРЅ РЅР° СЃРєР»Р°Рґ");
 			UpdateFactory();
 		}
 	} else if(IsFactoryCP(playerid, 1)) {
@@ -3079,11 +3078,11 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid) {
 				GetPlayerPos(playerid, posx, posy, posz);
 				PlayerObject[playerid] = CreateObject(960, posx, posy+1, posz+0.3,0.00000000,0.00000000,0.00000000);
 				ApplyAnimation(playerid,"INT_SHOP","shop_cashier",4.1,1,0,0,1,11000); // WEAPON_csawlo
-				SetPlayerAttachedObject(playerid, 1, 18635, 14, 0.264531, 0.121060, 0.022172, 279.757507, 164.484985, 184.886245); // Даем молоток
-				SetPlayerAttachedObject(playerid, 2, 18644, 13, 0.334366, 0.015833, -0.035214, 294.913085, 188.347946, 235.000213); // Даем отвертку
+				SetPlayerAttachedObject(playerid, 1, 18635, 14, 0.264531, 0.121060, 0.022172, 279.757507, 164.484985, 184.886245); // Р”Р°РµРј РјРѕР»РѕС‚РѕРє
+				SetPlayerAttachedObject(playerid, 2, 18644, 13, 0.334366, 0.015833, -0.035214, 294.913085, 188.347946, 235.000213); // Р”Р°РµРј РѕС‚РІРµСЂС‚РєСѓ
 				SetTimerEx("OnPlayerEndJob", 8000+(random(3)*1000), false, "ii", playerid, 1);
 			} else {
-				Send(playerid, COLOR_GREY, "Возьмите металл раздаточного стола");
+				Send(playerid, COLOR_GREY, "Р’РѕР·СЊРјРёС‚Рµ РјРµС‚Р°Р»Р» СЂР°Р·РґР°С‚РѕС‡РЅРѕРіРѕ СЃС‚РѕР»Р°");
 			}
 		}
 	} else if(IsFactoryCP(playerid, 2)) {
@@ -3095,11 +3094,11 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid) {
 				GetPlayerPos(playerid, posx, posy, posz);
 				PlayerObject[playerid] = CreateObject(1957, posx, posy-0.67, posz+0.01,0.00000000,0.00000000,0.00000000);
 				ApplyAnimation(playerid,"INT_SHOP","shop_cashier",4.1,1,0,0,1,11000); // WEAPON_csawlo
-				SetPlayerAttachedObject(playerid, 1, 18635, 14, 0.264531, 0.121060, 0.022172, 279.757507, 164.484985, 184.886245); // Даем молоток
-				SetPlayerAttachedObject(playerid, 2, 18644, 13, 0.334366, 0.015833, -0.035214, 294.913085, 188.347946, 235.000213); // Даем отвертку
+				SetPlayerAttachedObject(playerid, 1, 18635, 14, 0.264531, 0.121060, 0.022172, 279.757507, 164.484985, 184.886245); // Р”Р°РµРј РјРѕР»РѕС‚РѕРє
+				SetPlayerAttachedObject(playerid, 2, 18644, 13, 0.334366, 0.015833, -0.035214, 294.913085, 188.347946, 235.000213); // Р”Р°РµРј РѕС‚РІРµСЂС‚РєСѓ
 				SetTimerEx("OnPlayerEndJob", 8000+(random(3)*1000), false, "ii", playerid, 1);
 			} else {
-				Send(playerid, COLOR_GREY, "Возьмите металл раздаточного стола");
+				Send(playerid, COLOR_GREY, "Р’РѕР·СЊРјРёС‚Рµ РјРµС‚Р°Р»Р» СЂР°Р·РґР°С‚РѕС‡РЅРѕРіРѕ СЃС‚РѕР»Р°");
 			}
 		}
 	}
@@ -3150,7 +3149,7 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 								if(strcmp(BusRoute[route][next-1][stopName], "NULL", false) != 0) {
 									SetVehicleVelocity(Veh, 0.0, 0.0, 0.0);
 									PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-									format(string, sizeof(string),  "** %s, следующия остановка - %s.", BusRoute[route][next-1][stopName], BusRoute[route][BusRoute[route][next - 1][stopNext]][stopName]);
+									format(string, sizeof(string),  "** %s, СЃР»РµРґСѓСЋС‰РёСЏ РѕСЃС‚Р°РЅРѕРІРєР° - %s.", BusRoute[route][next-1][stopName], BusRoute[route][BusRoute[route][next - 1][stopNext]][stopName]);
 									ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 								}
 								if((next + 1) >= BusRouteCount[route]) {
@@ -3192,13 +3191,13 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 								DestroyDynamic3DTextLabel(AttachText[Veh]);
 								SetVehicleVelocity(Veh, 0.0, 0.0, 0.0);
 								PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-								format(string, sizeof(string),  "** %s, конечная остановка.", BusRoute[route][next-1][stopName]);
+								format(string, sizeof(string),  "** %s, РєРѕРЅРµС‡РЅР°СЏ РѕСЃС‚Р°РЅРѕРІРєР°.", BusRoute[route][next-1][stopName]);
 								ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 								
 								new Float:health;
 								GetVehicleHealth(Veh, health);
 								new cost = floatround((health*5.0));
-								format(string, sizeof(string),  "* Маршрут закончен! Вы заработали $%i", cost);
+								format(string, sizeof(string),  "* РњР°СЂС€СЂСѓС‚ Р·Р°РєРѕРЅС‡РµРЅ! Р’С‹ Р·Р°СЂР°Р±РѕС‚Р°Р»Рё $%i", cost);
 								Send(playerid, COLOR_YELLOW, string);
 								format(string, sizeof(string),  "~g~+$%i", cost);
 								GameTextForPlayer(playerid, string, 7000, 1);
@@ -3261,7 +3260,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 	
 	else if(areaid == Area::jailField) {
 		if(Pl::Info[playerid][pJailed] == 1) {
-			format(temp, sizeof temp, "* {FF6347}%s[ID: %d] {CDFFFF}подозрение на побег из тюрьмы. {C2A2DA}(оставшийся срок: %d секунд).", GetName(playerid), playerid, Pl::Info[playerid][pJailTime]);
+			format(temp, sizeof temp, "* {FF6347}%s[ID: %d] {CDFFFF}РїРѕРґРѕР·СЂРµРЅРёРµ РЅР° РїРѕР±РµРі РёР· С‚СЋСЂСЊРјС‹. {C2A2DA}(РѕСЃС‚Р°РІС€РёР№СЃСЏ СЃСЂРѕРє: %d СЃРµРєСѓРЅРґ).", GetName(playerid), playerid, Pl::Info[playerid][pJailTime]);
 			SendToAdmin(COLOR_CHEATS, temp, 1, 1);
 		}	
 	}
@@ -3283,7 +3282,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 						Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 						format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(attack), ZahvatScore[attack]);
 						GameTextForGangs(temp, 6000, 1);
-						format(temp, sizeof temp, "[GANG NEWS] %s[%d] захватили территорию бизнеса %s, %s[%d] повержены!",
+						format(temp, sizeof temp, "[GANG NEWS] %s[%d] Р·Р°С…РІР°С‚РёР»Рё С‚РµСЂСЂРёС‚РѕСЂРёСЋ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 						GetGangName(attack), ZahvatScore[attack], BizzInfo[biz][bDescription], GetGangName(defend), ZahvatScore[defend]);
 						sendToTeam(GetFracColor(attack), temp, Gangs);
 					}
@@ -3296,7 +3295,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 						Gz::ShowForAll(BizzInfo[biz][bZone], GetFracColor(BizzInfo[biz][bFrac]));
 						format(temp, sizeof(temp), "~r~%s~g~~n~RESPECT~r~+%d", GetGangName(defend), ZahvatScore[defend]);
 						GameTextForGangs(temp, 6000, 1);
-						format(temp, sizeof(temp), "[GANG NEWS] %s[%d] удержала территорию своего бизнеса %s, %s[%d] повержены!",
+						format(temp, sizeof(temp), "[GANG NEWS] %s[%d] СѓРґРµСЂР¶Р°Р»Р° С‚РµСЂСЂРёС‚РѕСЂРёСЋ СЃРІРѕРµРіРѕ Р±РёР·РЅРµСЃР° %s, %s[%d] РїРѕРІРµСЂР¶РµРЅС‹!",
 						GetGangName(defend), ZahvatScore[defend], BizzInfo[biz][bDescription], GetGangName(attack), ZahvatScore[attack]);
 						sendToTeam(GetFracColor(defend), temp, Gangs);
 					}
@@ -3336,7 +3335,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 					OnJob[playerid] = 0;
 					StartJob[playerid] = 0;
 					SetPlayerSkin(playerid, Pl::Info[playerid][pChar]);
-					Send(playerid, -1, "Вы покинули завод, вы ничего не заработали.");
+					Send(playerid, -1, "Р’С‹ РїРѕРєРёРЅСѓР»Рё Р·Р°РІРѕРґ, РІС‹ РЅРёС‡РµРіРѕ РЅРµ Р·Р°СЂР°Р±РѕС‚Р°Р»Рё.");
 				}
 				InAntiDmZone{playerid} = false;
 				return 1;
@@ -3355,7 +3354,7 @@ stock AshQueue(playerid, reason) {
 					GetPlayerName(playerid, plname, 24);
 					scf(string_ah, temp, "%i.%s\n", Iter::Count(AshQueue), plname);
 					UpdateDynamic3DTextLabelText(ah_text, 0x42aaffFF, string_ah);
-					Send(playerid, COLOR_WHITE,"* Вы заняли место в очереди.");
+					Send(playerid, COLOR_WHITE,"* Р’С‹ Р·Р°РЅСЏР»Рё РјРµСЃС‚Рѕ РІ РѕС‡РµСЂРµРґРё.");
 				}
 			}
 		}
@@ -3364,14 +3363,14 @@ stock AshQueue(playerid, reason) {
 			if(Iter::Contains(AshQueue, playerid)) {
 				new pddp;
 				Iter::Remove(AshQueue, playerid);
-				format(string_ah,sizeof(string_ah),">> Очередь допущенных к практической части экзамена: <<\n");
+				format(string_ah,sizeof(string_ah),">> РћС‡РµСЂРµРґСЊ РґРѕРїСѓС‰РµРЅРЅС‹С… Рє РїСЂР°РєС‚РёС‡РµСЃРєРѕР№ С‡Р°СЃС‚Рё СЌРєР·Р°РјРµРЅР°: <<\n");
 				foreach(new i : AshQueue) {
 					pddp++;
 					GetPlayerName(i, plname, 24);
 					scf(string_ah, temp, "%i.%s\n", pddp, plname);
 				}
 				UpdateDynamic3DTextLabelText(ah_text, 0x42aaffFF, string_ah);
-				Send(playerid, COLOR_WHITE, "* Вы покинули очередь.");
+				Send(playerid, COLOR_WHITE, "* Р’С‹ РїРѕРєРёРЅСѓР»Рё РѕС‡РµСЂРµРґСЊ.");
 			}
 		}
 	}
@@ -3390,7 +3389,7 @@ public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
 							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
 						}
 					} else {
-						Send(playerid, COLOR_GREY, "* Для вас проезд закрыт!"); 
+						Send(playerid, COLOR_GREY, "* Р”Р»СЏ РІР°СЃ РїСЂРѕРµР·Рґ Р·Р°РєСЂС‹С‚!"); 
 					}
 				}
 				
@@ -3401,7 +3400,7 @@ public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
 							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
 						}
 					} else {
-						Send(playerid, COLOR_GREY, "* Для вас проезд закрыт!"); 
+						Send(playerid, COLOR_GREY, "* Р”Р»СЏ РІР°СЃ РїСЂРѕРµР·Рґ Р·Р°РєСЂС‹С‚!"); 
 					}
 				}
 				
@@ -3412,7 +3411,7 @@ public: OnPlayerGatePickUp(playerid, gateid, pickupid) {
 							SetTimerEx("GateClose", 1000 * 7, false, "i", gateid);
 						}
 					} else {
-						Send(playerid, COLOR_GREY, "* Для вас проезд закрыт!"); 
+						Send(playerid, COLOR_GREY, "* Р”Р»СЏ РІР°СЃ РїСЂРѕРµР·Рґ Р·Р°РєСЂС‹С‚!"); 
 					}
 				}
 				
@@ -3447,7 +3446,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 	switch(GetPlayerState(playerid)) {
 		case PLAYER_STATE_ONFOOT : {
 			if(pickupid == helpp[0] || pickupid == helpp[1] || pickupid == helpp[2]) {
-				ShowDialog(playerid, D_REF, DIALOG_STYLE_LIST, "{33CCFF}Справка.", "dialog/ref/main.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_REF, DIALOG_STYLE_LIST, "{33CCFF}РЎРїСЂР°РІРєР°.", "dialog/ref/main.txt", "SELECT", "CANCEL");
 			}
 			
 			else if(pickupid == healash || pickupid == healcnn || pickupid == healfbi) {
@@ -3461,34 +3460,34 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			}
 	
 			else if(pickupid == saveTuning) {
-				if(!IsValidHouse(Pl::Info[playerid][pHouseKey])) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
-				if(HouseInfo[Pl::Info[playerid][pHouseKey]][hvModel] == 0) return Send(playerid, COLOR_GREY, "* У Вас нет домашней машины!");
-				SPD(playerid, D_TUNING, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "Зарегистрировать тюнинг\nУдалить тюнинг", "SELECT", "CANCEL");
+				if(!IsValidHouse(Pl::Info[playerid][pHouseKey])) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
+				if(HouseInfo[Pl::Info[playerid][pHouseKey]][hvModel] == 0) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°С€РЅРµР№ РјР°С€РёРЅС‹!");
+				SPD(playerid, D_TUNING, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ С‚СЋРЅРёРЅРі\nРЈРґР°Р»РёС‚СЊ С‚СЋРЅРёРЅРі", "SELECT", "CANCEL");
 			}
 
 			else if(pickupid == givepasport) {
 				if(!Pl::Info[playerid][pPasport][0]) {
-					SPD(playerid, D_GIVE_PASS, 1, "{ffcf00}Паспортный стол", "Укажите ваш возраст", "Ввод", "Отмена");
+					SPD(playerid, D_GIVE_PASS, 1, "{ffcf00}РџР°СЃРїРѕСЂС‚РЅС‹Р№ СЃС‚РѕР»", "РЈРєР°Р¶РёС‚Рµ РІР°С€ РІРѕР·СЂР°СЃС‚", "Р’РІРѕРґ", "РћС‚РјРµРЅР°");
 				} else {
-					Send(playerid, COLOR_GREY, "* У Вас уже есть паспорт!");
+					Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ СѓР¶Рµ РµСЃС‚СЊ РїР°СЃРїРѕСЂС‚!");
 				}
 			}
 	
 			else if(pickupid == ammozakona[0]) {
-				if(!IsACop(playerid)) return Send(playerid,COLOR_GREY,"* Вы не законник!");
-				if(Pl::Info[playerid][pLic][3] <= 0) return Send(playerid,COLOR_WHITE,"Продавец: Я не могу продать вам оружие без лицензии!");
+				if(!IsACop(playerid)) return Send(playerid,COLOR_GREY,"* Р’С‹ РЅРµ Р·Р°РєРѕРЅРЅРёРє!");
+				if(Pl::Info[playerid][pLic][3] <= 0) return Send(playerid,COLOR_WHITE,"РџСЂРѕРґР°РІРµС†: РЇ РЅРµ РјРѕРіСѓ РїСЂРѕРґР°С‚СЊ РІР°Рј РѕСЂСѓР¶РёРµ Р±РµР· Р»РёС†РµРЅР·РёРё!");
 				ShowMenuForPlayer(Ammu2Menu,playerid);
 				Rac::TogglePlayerControllable(playerid, 0);
 			}
 	
 			else if(pickupid == ammozakona[1]) {
-				if(Pl::FracID(playerid) != 2) return Send(playerid,COLOR_GREY,"* Для вас нет комплекта одежды!");
-				if(Pl::Info[playerid][pRank] < 3) return Send(playerid,COLOR_GREY,"* Только с 3-го ранга!");
-				SPD(playerid, D_MASK+1, DIALOG_STYLE_LIST, "Скины скрытности","Японец\nКоронос\nБаллас\nГражданский\nВернуть свой","ВЫБОР","ОТМЕНА");
+				if(Pl::FracID(playerid) != 2) return Send(playerid,COLOR_GREY,"* Р”Р»СЏ РІР°СЃ РЅРµС‚ РєРѕРјРїР»РµРєС‚Р° РѕРґРµР¶РґС‹!");
+				if(Pl::Info[playerid][pRank] < 3) return Send(playerid,COLOR_GREY,"* РўРѕР»СЊРєРѕ СЃ 3-РіРѕ СЂР°РЅРіР°!");
+				SPD(playerid, D_MASK+1, DIALOG_STYLE_LIST, "РЎРєРёРЅС‹ СЃРєСЂС‹С‚РЅРѕСЃС‚Рё","РЇРїРѕРЅРµС†\nРљРѕСЂРѕРЅРѕСЃ\nР‘Р°Р»Р»Р°СЃ\nР“СЂР°Р¶РґР°РЅСЃРєРёР№\nР’РµСЂРЅСѓС‚СЊ СЃРІРѕР№","Р’Р«Р‘РћР ","РћРўРњР•РќРђ");
 			}
 	
 			else if(pickupid == ammozakona[2]) {
-				if(Pl::FracID(playerid) != 3) return Send(playerid,COLOR_GREY,"* Для вас нет комплекта одежды!");
+				if(Pl::FracID(playerid) != 3) return Send(playerid,COLOR_GREY,"* Р”Р»СЏ РІР°СЃ РЅРµС‚ РєРѕРјРїР»РµРєС‚Р° РѕРґРµР¶РґС‹!");
 				Container::At(Pl::FracID(playerid), Container::First, SelectCharPlace[playerid], ChosenSkin[playerid]);
 				SetPlayerSkin(playerid, ChosenSkin[playerid]);
 				ShowMenuForPlayer(ClothesMenu, playerid);
@@ -3496,8 +3495,8 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			}
 	
 			else if(pickupid == ammozakona[3]) {
-				if(!IsACop(playerid)) return Send(playerid,COLOR_GREY,"* Вы не законник!");
-				SPD(playerid, D_ARMOUR, DIALOG_STYLE_MSGBOX, "Одеть бронежилет?", "Вам приедеться заплатить $500", "ОДЕТЬ","ОТМЕНА");
+				if(!IsACop(playerid)) return Send(playerid,COLOR_GREY,"* Р’С‹ РЅРµ Р·Р°РєРѕРЅРЅРёРє!");
+				SPD(playerid, D_ARMOUR, DIALOG_STYLE_MSGBOX, "РћРґРµС‚СЊ Р±СЂРѕРЅРµР¶РёР»РµС‚?", "Р’Р°Рј РїСЂРёРµРґРµС‚СЊСЃСЏ Р·Р°РїР»Р°С‚РёС‚СЊ $500", "РћР”Р•РўР¬","РћРўРњР•РќРђ");
 			}
 	
 			else if(buy[0] <= pickupid <= buy[1]) {
@@ -3523,8 +3522,8 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			}
 	
 			else if(pickupid == boj) {
-				SPD(playerid, 2222, DIALOG_STYLE_LIST,"Выберите стиль боя. Стоимость 100.000",
-				"БОКС\nКУНГ-ФУ\nСАМБО\nУЛИЧНЫЙ","Выбрать","Отмена");
+				SPD(playerid, 2222, DIALOG_STYLE_LIST,"Р’С‹Р±РµСЂРёС‚Рµ СЃС‚РёР»СЊ Р±РѕСЏ. РЎС‚РѕРёРјРѕСЃС‚СЊ 100.000",
+				"Р‘РћРљРЎ\nРљРЈРќР“-Р¤РЈ\nРЎРђРњР‘Рћ\nРЈР›РР§РќР«Р™","Р’С‹Р±СЂР°С‚СЊ","РћС‚РјРµРЅР°");
 			}
 	
 			else if(pickupid == Piza) {
@@ -3533,16 +3532,16 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			}
 	
 			else if(pickupid == weapon1 || pickupid == weapon2 || pickupid == weapon3 || pickupid == weapon4) {
-				if(Pl::Info[playerid][pLic][3] <= 0) return Send(playerid,COLOR_WHITE,"Продавец: Я не могу продать вам оружие без лицензии!");
+				if(Pl::Info[playerid][pLic][3] <= 0) return Send(playerid,COLOR_WHITE,"РџСЂРѕРґР°РІРµС†: РЇ РЅРµ РјРѕРіСѓ РїСЂРѕРґР°С‚СЊ РІР°Рј РѕСЂСѓР¶РёРµ Р±РµР· Р»РёС†РµРЅР·РёРё!");
 				ShowMenuForPlayer(Ammu1Menu,playerid);
 				Rac::TogglePlayerControllable(playerid, 0);
 			}
 	
 			else if(pickupid == testpdd) {
-				if(Pl::Info[playerid][pLic][0]) return Send(playerid,COLOR_GREY,"* У Вас уже есть права!");
-				if(Pl::Info[playerid][pTest] == 999) return Send(playerid,COLOR_GREY,"* Вы уже сдали теорию!");
+				if(Pl::Info[playerid][pLic][0]) return Send(playerid,COLOR_GREY,"* РЈ Р’Р°СЃ СѓР¶Рµ РµСЃС‚СЊ РїСЂР°РІР°!");
+				if(Pl::Info[playerid][pTest] == 999) return Send(playerid,COLOR_GREY,"* Р’С‹ СѓР¶Рµ СЃРґР°Р»Рё С‚РµРѕСЂРёСЋ!");
 				SetPVarInt(playerid, "SelectedItem", 1);
-				return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", "dialog/pddtest/pdd_test_1.txt", "Ответ", "Отмена");
+				return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", "dialog/pddtest/pdd_test_1.txt", "РћС‚РІРµС‚", "РћС‚РјРµРЅР°");
 			}
 	
 			else if(pickupid == prolaps[0] || pickupid == prolaps[1]) {
@@ -3588,9 +3587,9 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			
 			else if(pickupid == FactoryPickup[2]) {
 				if(OnJob[playerid] == 1) {
-					SPD(playerid, D_FACTORY_JOB+1, 0, "{ffcf00}Производственный цех"," Вы действительно желаете закончить рабочий день?" ,"Да", "Нет");
+					SPD(playerid, D_FACTORY_JOB+1, 0, "{ffcf00}РџСЂРѕРёР·РІРѕРґСЃС‚РІРµРЅРЅС‹Р№ С†РµС…"," Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ Р¶РµР»Р°РµС‚Рµ Р·Р°РєРѕРЅС‡РёС‚СЊ СЂР°Р±РѕС‡РёР№ РґРµРЅСЊ?" ,"Р”Р°", "РќРµС‚");
 				} else {
-					SPD(playerid, D_FACTORY_JOB, 0, "{ffcf00}Производственный цех"," Вы действительно желаете начать рабочий день?" ,"Да", "Нет");
+					SPD(playerid, D_FACTORY_JOB, 0, "{ffcf00}РџСЂРѕРёР·РІРѕРґСЃС‚РІРµРЅРЅС‹Р№ С†РµС…"," Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ Р¶РµР»Р°РµС‚Рµ РЅР°С‡Р°С‚СЊ СЂР°Р±РѕС‡РёР№ РґРµРЅСЊ?" ,"Р”Р°", "РќРµС‚");
 				}
 			}
 			
@@ -3614,7 +3613,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			else if(pickupid == HGaragePickup[1]) {
 				/*new Float:x, Float:y;
 				new local = Pl::Info[playerid][pLocal] - OFFSET_HOUSE;
-				if(HouseInfo[local][hgStreetPos][3] <= 0.0) return Send(playerid, COLOR_GREY, "* Используйте команду /editgarstreet для установки выезда из гаража");
+				if(HouseInfo[local][hgStreetPos][3] <= 0.0) return Send(playerid, COLOR_GREY, "* РСЃРїРѕР»СЊР·СѓР№С‚Рµ РєРѕРјР°РЅРґСѓ /editgarstreet РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё РІС‹РµР·РґР° РёР· РіР°СЂР°Р¶Р°");
 				GetXYInFrontOfPoint(x, y, HouseInfo[local][hgStreetPos][3], 1.5);
 				Rac::SetPlayerPos(playerid, HouseInfo[local][hgStreetPos][0] + x, HouseInfo[local][hgStreetPos][1] + y, HouseInfo[local][hgStreetPos][2]);
 				SetPlayerFacingAngle(playerid, HouseInfo[local][hgStreetPos][3]);
@@ -3643,28 +3642,28 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 			if(GarageParkPickup[0] <= pickupid <= GarageParkPickup[3]) {
 				new veh = GetPlayerVehicleID(playerid);
 				new slot = GetIdxExtraVehicleFromVehicleID(playerid, veh);
-				if(slot == -1) return Send(playerid, COLOR_GREY, "* Этот транспорт нельзя сдать в гараж!");
+				if(slot == -1) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ С‚СЂР°РЅСЃРїРѕСЂС‚ РЅРµР»СЊР·СЏ СЃРґР°С‚СЊ РІ РіР°СЂР°Р¶!");
 				Veh::Destroy(ExtraVehicles[playerid][slot][evID2]);
 				ExtraVehicles[playerid][slot][evPark] = PARK_GARAGE;
 				AddExtraVehicleToGarage(playerid, slot);
 				UpdateExtraVehicle(playerid, slot);
-				Send(playerid, COLOR_GREY, "* Транспорт был сдан в гараж!");
+				Send(playerid, COLOR_GREY, "* РўСЂР°РЅСЃРїРѕСЂС‚ Р±С‹Р» СЃРґР°РЅ РІ РіР°СЂР°Р¶!");
 			}
 			
 			else if(pickupid == barn[0]) {
 				if(Pl::FracID(playerid) == TEAM_FARMERS) {
 					new vehid = GetPlayerVehicleID(playerid);
 					if(GetVehicleModel(vehid) == 532) {
-						SPD(playerid, D_BARN, 0, "Амбар", "Разгрузить мак?", "OK", "CANCEL");
+						SPD(playerid, D_BARN, 0, "РђРјР±Р°СЂ", "Р Р°Р·РіСЂСѓР·РёС‚СЊ РјР°Рє?", "OK", "CANCEL");
 					} else {
-						SPD(playerid, D_BARN+2, 1, "Амбар", "Взять мак:", "OK", "CANCEL");
+						SPD(playerid, D_BARN+2, 1, "РђРјР±Р°СЂ", "Р’Р·СЏС‚СЊ РјР°Рє:", "OK", "CANCEL");
 					}
 				}
 			}
 			
 			else if(pickupid == barn[1]) {
 				if(Pl::FracID(playerid) == TEAM_FARMERS) {
-					SPD(playerid, D_BARN+1, 0, "Притон", "Продать мак?", "OK", "CANCEL");
+					SPD(playerid, D_BARN+1, 0, "РџСЂРёС‚РѕРЅ", "РџСЂРѕРґР°С‚СЊ РјР°Рє?", "OK", "CANCEL");
 				}
 			}
 			
@@ -3682,14 +3681,14 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 							Rac::GivePlayerMoney(playerid, rnd);
 							SetVehicleToRespawn(trailer);
 							
-							format(temp, sizeof(temp),"* Груз доставлен. Заработано %d$", rnd);
+							format(temp, sizeof(temp),"* Р“СЂСѓР· РґРѕСЃС‚Р°РІР»РµРЅ. Р—Р°СЂР°Р±РѕС‚Р°РЅРѕ %d$", rnd);
 							Send(playerid,COLOR_YELLOW, temp);
 							format(temp, sizeof(temp),"~g~+$%i", rnd);
 							GameTextForPlayer(playerid, temp, 5000, 1);
 						} else {
 							DestroyDynamicPickup(pickupd[playerid][0]);
 							DestroyDynamicMapIcon(pickupd[playerid][1]);
-							Send(playerid,COLOR_YELLOW, "* Вы приехали без груза!");
+							Send(playerid,COLOR_YELLOW, "* Р’С‹ РїСЂРёРµС…Р°Р»Рё Р±РµР· РіСЂСѓР·Р°!");
 						}
 					}
 				} else {
@@ -3721,7 +3720,7 @@ stock PickupHndlr::Gas(playerid, pickupid) {
 					SetVehicleVelocity(veh, 0, 0, 0);
 					ShowRefillDialog(playerid, GetIndexFromBizID(RefillInfo[i][brBizID]));
 				}
-				default : Send(playerid,COLOR_GREY,"* Заправка непредназначена для вашего транспорта!");
+				default : Send(playerid,COLOR_GREY,"* Р—Р°РїСЂР°РІРєР° РЅРµРїСЂРµРґРЅР°Р·РЅР°С‡РµРЅР° РґР»СЏ РІР°С€РµРіРѕ С‚СЂР°РЅСЃРїРѕСЂС‚Р°!");
 			}
 			return 1;
 		}
@@ -3734,8 +3733,8 @@ stock PickupHndlr::Portal(playerid, pickupid) {
 		if(Ptl::Info[i][Ptl::Pickup][0] == pickupid) {
 			if(EditMode{playerid}) {
 				SetPVarInt(playerid, "selectTeleport", i);
-				format(dialog, sizeof dialog, "Telepot №%i | | Пикап №1", Ptl::Info[i][Ptl::Id]);
-				SPD(playerid,TP_EDIT,2,dialog,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
+				format(dialog, sizeof dialog, "Telepot в„–%i | | РџРёРєР°Рї в„–1", Ptl::Info[i][Ptl::Id]);
+				SPD(playerid,TP_EDIT,2,dialog,"РџРµСЂС‹Р№ РїРёРєР°Рї\nР’С‚РѕСЂРѕР№ РїРёРєР°Рї\nРћС‚РєСЂС‹С‚СЊ/Р—Р°РєСЂС‹С‚СЊ\nРЈРґР°Р»РёС‚СЊ","Р’С‹Р±РѕСЂ","Р’С‹С…РѕРґ");
 				return 1;
 			}
 			
@@ -3775,8 +3774,8 @@ stock PickupHndlr::Portal(playerid, pickupid) {
 		else if(Ptl::Info[i][Ptl::Pickup][1] == pickupid) {
 			if(EditMode{playerid}) {
 				SetPVarInt(playerid, "selectTeleport", i);
-				format(dialog, sizeof dialog, "Telepot №%i | Пикап №2 ", Ptl::Info[i][Ptl::Id]);
-				SPD(playerid,TP_EDIT,2,dialog,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
+				format(dialog, sizeof dialog, "Telepot в„–%i | РџРёРєР°Рї в„–2 ", Ptl::Info[i][Ptl::Id]);
+				SPD(playerid,TP_EDIT,2,dialog,"РџРµСЂС‹Р№ РїРёРєР°Рї\nР’С‚РѕСЂРѕР№ РїРёРєР°Рї\nРћС‚РєСЂС‹С‚СЊ/Р—Р°РєСЂС‹С‚СЊ\nРЈРґР°Р»РёС‚СЊ","Р’С‹Р±РѕСЂ","Р’С‹С…РѕРґ");
 				return 1;
 			}
 			
@@ -3820,15 +3819,15 @@ stock PickupHndlr::Job(playerid, pickupid) {
 	if(i != -1) {
 		if(Pl::Info[playerid][pPasport][0] != 0) {
 			if(Pl::Info[playerid][pJob] != JOB_NONE) {
-				Send(playerid, COLOR_GREY, "* У Вас уже есть работа! /quitjob - уволится (если выполнен контракт)");
+				Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ СѓР¶Рµ РµСЃС‚СЊ СЂР°Р±РѕС‚Р°! /quitjob - СѓРІРѕР»РёС‚СЃСЏ (РµСЃР»Рё РІС‹РїРѕР»РЅРµРЅ РєРѕРЅС‚СЂР°РєС‚)");
 			} else {
 				GettingJob[playerid] = JobsInfo[i][jID];
-				format(src, sizeof(src), "{ffffff}Вы хотите устроится на работу.\n— Должность: {ff0000}%s\n{ffffff}— Срок контракта: {ff0000}5 часов\n\n\
-				{ffffff}Вы не уволитесь пока не выполните контракт!\nВы согласны?", JobsInfo[i][jName]);
-				SPD(playerid, D_JOB, 0, "Трудоустройство", src, "Да", "Нет");
+				format(src, sizeof(src), "{ffffff}Р’С‹ С…РѕС‚РёС‚Рµ СѓСЃС‚СЂРѕРёС‚СЃСЏ РЅР° СЂР°Р±РѕС‚Сѓ.\nвЂ” Р”РѕР»Р¶РЅРѕСЃС‚СЊ: {ff0000}%s\n{ffffff}вЂ” РЎСЂРѕРє РєРѕРЅС‚СЂР°РєС‚Р°: {ff0000}5 С‡Р°СЃРѕРІ\n\n\
+				{ffffff}Р’С‹ РЅРµ СѓРІРѕР»РёС‚РµСЃСЊ РїРѕРєР° РЅРµ РІС‹РїРѕР»РЅРёС‚Рµ РєРѕРЅС‚СЂР°РєС‚!\nР’С‹ СЃРѕРіР»Р°СЃРЅС‹?", JobsInfo[i][jName]);
+				SPD(playerid, D_JOB, 0, "РўСЂСѓРґРѕСѓСЃС‚СЂРѕР№СЃС‚РІРѕ", src, "Р”Р°", "РќРµС‚");
 			}
 		} else {
-			Send(playerid, COLOR_GREY, "* У Вас нет паспорта! Получить его можно в мэрии.");
+			Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РїР°СЃРїРѕСЂС‚Р°! РџРѕР»СѓС‡РёС‚СЊ РµРіРѕ РјРѕР¶РЅРѕ РІ РјСЌСЂРёРё.");
 		}
 		return 1;
 	}
@@ -3841,24 +3840,24 @@ stock PickupHndlr::Bizz(playerid, pickupid) {
 		if(BizzInfo[i][bPickupEnter] == pickupid) {
 			if(BizzInfo[i][bOwned]) {
 				format(dialog, sizeof dialog,
-				"Название: %s\n\
-				Плата за вход: $%i\n\n\
-				Владелец: %s\n\
-				Команьон: %s\n\
-				Крыша: %s\n\
+				"РќР°Р·РІР°РЅРёРµ: %s\n\
+				РџР»Р°С‚Р° Р·Р° РІС…РѕРґ: $%i\n\n\
+				Р’Р»Р°РґРµР»РµС†: %s\n\
+				РљРѕРјР°РЅСЊРѕРЅ: %s\n\
+				РљСЂС‹С€Р°: %s\n\
 				Level: %i\n\
-				ID бизнеса: %i",
+				ID Р±РёР·РЅРµСЃР°: %i",
 				BizzInfo[i][bDescription], BizzInfo[i][bEnterCost], BizzInfo[i][bOwner], BizzInfo[i][bExtortion],
 				GetGangName(BizzInfo[i][bFrac]), BizzInfo[i][bLevel], BizzInfo[i][bID]);
 				SPD(playerid, D_EN_BIZ, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Business Info", dialog, "ENTER", "CANCEL");
 			} else {
 				format(dialog, sizeof dialog,
-				"Название: %s\n\n\
-				БИЗНЕС ПРОДАЕТСЯ\n\
-				Цена: $%i\n\
+				"РќР°Р·РІР°РЅРёРµ: %s\n\n\
+				Р‘РР—РќР•РЎ РџР РћР”РђР•РўРЎРЇ\n\
+				Р¦РµРЅР°: $%i\n\
 				Level: %i\n\
-				ID бизнеса: %i\n\
-				Введите /buybiz для покупки!",
+				ID Р±РёР·РЅРµСЃР°: %i\n\
+				Р’РІРµРґРёС‚Рµ /buybiz РґР»СЏ РїРѕРєСѓРїРєРё!",
 				BizzInfo[i][bDescription], BizzInfo[i][bPrice], BizzInfo[i][bLevel], BizzInfo[i][bID]);
 				SPD(playerid, D_EN_BIZ, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Business Info", dialog, "OK", "CANCEL");
 			}
@@ -3868,7 +3867,7 @@ stock PickupHndlr::Bizz(playerid, pickupid) {
 		
 		else if(BizzInfo[i][bPickupExit] == pickupid) {
 			SetPVarInt(playerid, "PlayerBizz", i);
-			SPD(playerid, D_EX_BIZ, 0, "EXIT", "Вы хотите выйти?", "OK", "CANCEL");
+			SPD(playerid, D_EX_BIZ, 0, "EXIT", "Р’С‹ С…РѕС‚РёС‚Рµ РІС‹Р№С‚Рё?", "OK", "CANCEL");
 			return 1;
 		}
 	}
@@ -3881,12 +3880,12 @@ stock PickupHndlr::Houses(playerid, pickupid) {
 			switch(HouseInfo[i][hOwned]) {
 				case 0 : {
 					format(dialog, sizeof dialog,
-					"ДОМ ПРОДАЕТСЯ!\n\
-					Описание: %s\n\
-					Цена: $%i\n\
+					"Р”РћРњ РџР РћР”РђР•РўРЎРЇ!\n\
+					РћРїРёСЃР°РЅРёРµ: %s\n\
+					Р¦РµРЅР°: $%i\n\
 					Level: %i\n\
-					ID дома: %i\n\
-					Введите /buyhouse, чтобы купить дом.",
+					ID РґРѕРјР°: %i\n\
+					Р’РІРµРґРёС‚Рµ /buyhouse, С‡С‚РѕР±С‹ РєСѓРїРёС‚СЊ РґРѕРј.",
 					HouseInfo[i][hDescription], HouseInfo[i][hPrice], HouseInfo[i][hLevel], i);
 				}
 				
@@ -3894,25 +3893,25 @@ stock PickupHndlr::Houses(playerid, pickupid) {
 					switch(HouseInfo[i][hRent][0]) {
 						case 0 : {
 							format(dialog, sizeof dialog,
-							"Владелец: %s\n\
+							"Р’Р»Р°РґРµР»РµС†: %s\n\
 							Level: %i\n\
-							ID дома: %i",
+							ID РґРѕРјР°: %i",
 							HouseInfo[i][hOwner],  HouseInfo[i][hLevel], i);
 						}
 						case 1 : {
 							format(dialog, sizeof dialog,
-							"Владелец: %s\n\
-							Стоимость аренды: $%i\n\
+							"Р’Р»Р°РґРµР»РµС†: %s\n\
+							РЎС‚РѕРёРјРѕСЃС‚СЊ Р°СЂРµРЅРґС‹: $%i\n\
 							Level: %i\n\
-							ID дома: %i\n\
-							Введите /rentroom, чтобы посилиться тут.",
+							ID РґРѕРјР°: %i\n\
+							Р’РІРµРґРёС‚Рµ /rentroom, С‡С‚РѕР±С‹ РїРѕСЃРёР»РёС‚СЊСЃСЏ С‚СѓС‚.",
 							HouseInfo[i][hOwner], HouseInfo[i][hRent][1], HouseInfo[i][hLevel], i);
 						}
 					}
 				}
 			}
 			SetPVarInt(playerid, "PlayerHouse", i);
-			SPD(playerid, D_EN_HOUSE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Информация о доме.", dialog, "ENTER", "CANCEL");
+			SPD(playerid, D_EN_HOUSE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РґРѕРјРµ.", dialog, "ENTER", "CANCEL");
 			return 1;
 		}
 		
@@ -3928,7 +3927,7 @@ stock PickupHndlr::Houses(playerid, pickupid) {
 		}
 		
 		else if(HouseInfo[i][hgPickupStreet] == pickupid) {
-			/*if(Pl::Info[playerid][pHouseKey] != HouseInfo[i][hID]) return Send(playerid, COLOR_GREY, "* У Вас нет ключей!");
+			/*if(Pl::Info[playerid][pHouseKey] != HouseInfo[i][hID]) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РєР»СЋС‡РµР№!");
 			new Float:x, Float:y;
 			Pl::Info[playerid][pLocal] = OFFSET_HOUSE + i;
 			GetXYInFrontOfPoint(x, y, HGaragePickupPos[1][3], 2.0);
@@ -3954,7 +3953,7 @@ public: onPlayerPortal(playerid, portalid, pickupid) {
 			switch(pickupid) {
 				case 1 : {
 					if(!TakingLesson{playerid}) {
-						Send(playerid, COLOR_WHITE, "* Дождитесь начала экзамена!");
+						Send(playerid, COLOR_WHITE, "* Р”РѕР¶РґРёС‚РµСЃСЊ РЅР°С‡Р°Р»Р° СЌРєР·Р°РјРµРЅР°!");
 						return -1;
 					} else {
 						return 1;
@@ -4143,12 +4142,12 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					
 					format(temp, sizeof temp, "~r~-$%i", AutoSolon[vclass][idx][1]);
 					GameTextForPlayer(playerid, temp, 1000, 1);
-					format(temp, sizeof temp, "* Вы купили личный транспорт %s, стоимостью: $%i", VehicleNames[AutoSolon[vclass][idx][0] - 400], AutoSolon[vclass][idx][1]);
+					format(temp, sizeof temp, "* Р’С‹ РєСѓРїРёР»Рё Р»РёС‡РЅС‹Р№ С‚СЂР°РЅСЃРїРѕСЂС‚ %s, СЃС‚РѕРёРјРѕСЃС‚СЊСЋ: $%i", VehicleNames[AutoSolon[vclass][idx][0] - 400], AutoSolon[vclass][idx][1]);
 					Send(playerid, COLOR_LIGHTBLUE, temp);
-					Send(playerid, COLOR_LIGHTBLUE, "* Транспорт был доставлен в ближайший гараж!");
+					Send(playerid, COLOR_LIGHTBLUE, "* РўСЂР°РЅСЃРїРѕСЂС‚ Р±С‹Р» РґРѕСЃС‚Р°РІР»РµРЅ РІ Р±Р»РёР¶Р°Р№С€РёР№ РіР°СЂР°Р¶!");
 				} else {
 					ShowMenuForPlayer(AutoSolonMenu, playerid);
-					Send(playerid, COLOR_GREY, "* У Вас не хватает средств!");
+					Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ СЃСЂРµРґСЃС‚РІ!");
 				}
 			}
 			
@@ -4195,8 +4194,8 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			
 			case 2: {
 				new idx = GetPVarInt(playerid, "SelectedItem");
-				format(dialog, sizeof dialog, "Цена интерьера:\t$%i\nВы точно хотите купить этот интерьер?", HouseInt[idx][InteriorPrice]);
-				SPD(playerid, D_HMENU+11, 0, "[House Menu] > Интерьер", dialog,  "ДА", "НЕТ");
+				format(dialog, sizeof dialog, "Р¦РµРЅР° РёРЅС‚РµСЂСЊРµСЂР°:\t$%i\nР’С‹ С‚РѕС‡РЅРѕ С…РѕС‚РёС‚Рµ РєСѓРїРёС‚СЊ СЌС‚РѕС‚ РёРЅС‚РµСЂСЊРµСЂ?", HouseInt[idx][InteriorPrice]);
+				SPD(playerid, D_HMENU+11, 0, "[House Menu] > РРЅС‚РµСЂСЊРµСЂ", dialog,  "Р”Рђ", "РќР•Рў");
 			}
 			
 			case 3 : {
@@ -4243,7 +4242,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 		}
 	}
 	
-//===================== Пролапс ================================
+//===================== РџСЂРѕР»Р°РїСЃ ================================
 	else if(current == ClothesMenu) {
 		switch(row) {
 			case 0 : {
@@ -4310,13 +4309,13 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				Rac::TogglePlayerControllable(playerid, 1);
 				Pl::Update(playerid);
 				
-				format(temp, sizeof temp, "* %s (ID: %i) прокрался(ась) на ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]", GetName(playerid), playerid);
+				format(temp, sizeof temp, "* %s (ID: %i) РїСЂРѕРєСЂР°Р»СЃСЏ(Р°СЃСЊ) РЅР° ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]", GetName(playerid), playerid);
 				sendToLog(COLOR_GREY, temp);
 				
 				Pl::SetSpawnInfo(playerid);
 				Rac::SpawnPlayer(playerid);
 
-				Send(playerid, COLOR_LIGHTGREEN, "Добро пожаловать на ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]");
+				Send(playerid, COLOR_LIGHTGREEN, "Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РЅР° ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]");
 				ShowDialog(playerid, D_NONE, DIALOG_STYLE_MSGBOX, "WELCOME", "dialog/welcome.txt", "OK", "");
 			}
 		}
@@ -4334,7 +4333,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				Rac::GivePlayerMoney(playerid, -PizzaInfo[row][bPrice]);
 				
 				GetPlayerName(playerid, plname, 24);
-				format(temp, sizeof temp, "* %s купил(а) %s.", plname, PizzaInfo[row][bDescription]);
+				format(temp, sizeof temp, "* %s РєСѓРїРёР»(Р°) %s.", plname, PizzaInfo[row][bDescription]);
 				ProxDetector(10.0, playerid, temp, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 				format(temp, sizeof temp, "~g~+%.1f HP", PizzaInfo[row][bHP]);
 				GameTextForPlayer(playerid, temp, 5000, 1);
@@ -4344,11 +4343,11 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				Rac::TogglePlayerControllable(playerid, false);
 				ShowMenuForPlayer(Menu:PizaMenu, playerid);
 			} else {
-				Send(playerid, COLOR_PURPLE, "* Вы сыты!");
+				Send(playerid, COLOR_PURPLE, "* Р’С‹ СЃС‹С‚С‹!");
 				Rac::TogglePlayerControllable(playerid, true);
 			}
 		} else {
-			Send(playerid, COLOR_PURPLE, "* У Вас нет столько денег!");
+			Send(playerid, COLOR_PURPLE, "* РЈ Р’Р°СЃ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
 			Rac::TogglePlayerControllable(playerid, true);
 		}
 	}
@@ -4363,7 +4362,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				BizzInfo[biz][bProds] --;
 				Rac::GivePlayerHealth(playerid, BurgerInfo[row][bHP], 100.0);
 				GetPlayerName(playerid, plname, 24);
-				format(temp, sizeof temp, "* %s купил(а) %s.", plname, BurgerInfo[row][bDescription]);
+				format(temp, sizeof temp, "* %s РєСѓРїРёР»(Р°) %s.", plname, BurgerInfo[row][bDescription]);
 				Rac::GivePlayerMoney(playerid, -BurgerInfo[row][bPrice]);
 				ProxDetector(10.0, playerid, temp, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 				format(temp, sizeof temp, "~g~+%.1f HP", BurgerInfo[row][bHP]);
@@ -4373,11 +4372,11 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				Rac::TogglePlayerControllable(playerid,0);
 				ShowMenuForPlayer(BurgerMenu, playerid);
 			} else {
-				Send(playerid, COLOR_PURPLE, "* Вы сыты!");
+				Send(playerid, COLOR_PURPLE, "* Р’С‹ СЃС‹С‚С‹!");
 				Rac::TogglePlayerControllable(playerid,1);
 			}
 		} else {
-			Send(playerid, COLOR_PURPLE, "* У Вас нет столько денег!");
+			Send(playerid, COLOR_PURPLE, "* РЈ Р’Р°СЃ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
 			Rac::TogglePlayerControllable(playerid,1);
 		}
 	}
@@ -4407,7 +4406,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				}
 				
 				GetPlayerName(playerid, plname, 24);
-				format(temp, sizeof temp, "* %s выпил(а) %s.", plname, DrinkInfo[row][dName]);
+				format(temp, sizeof temp, "* %s РІС‹РїРёР»(Р°) %s.", plname, DrinkInfo[row][dName]);
 				ProxDetector(10.0, playerid, temp, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 				
 				format(temp, sizeof temp, "~g~+%.1f HP", DrinkInfo[row][dHP]);
@@ -4419,11 +4418,11 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				Rac::TogglePlayerControllable(playerid,0);
 				ShowMenuForPlayer(BarMenu, playerid);
 			} else {
-				Send(playerid, COLOR_PURPLE, "* Бармен отказывается вам наливать!");
+				Send(playerid, COLOR_PURPLE, "* Р‘Р°СЂРјРµРЅ РѕС‚РєР°Р·С‹РІР°РµС‚СЃСЏ РІР°Рј РЅР°Р»РёРІР°С‚СЊ!");
 				Rac::TogglePlayerControllable(playerid,1);
 			}
 		} else {
-			Send(playerid, COLOR_PURPLE, "* У Вас нет столько денег!");
+			Send(playerid, COLOR_PURPLE, "* РЈ Р’Р°СЃ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
 			Rac::TogglePlayerControllable(playerid,1);
 		}
 	}
@@ -4438,11 +4437,11 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 				Rac::TogglePlayerControllable(playerid, 0);
 				ShowMenuForPlayer(HitmanMenu, playerid);
 			} else {
-				Send(playerid, COLOR_GREY, "* Вам не подходит это оружие!");
+				Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїРѕРґС…РѕРґРёС‚ СЌС‚Рѕ РѕСЂСѓР¶РёРµ!");
 				Rac::TogglePlayerControllable(playerid, 1);
 			}
 		} else {
-			Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+			Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 			Rac::TogglePlayerControllable(playerid, 1);
 		}
 	}
@@ -4455,14 +4454,14 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			BizzInfo[_bidx][bProds]--;
 			Rac::GivePlayerWeapon(playerid, Ammu1Info[row][gID], Ammu1Info[row][gAmmo]);
 			GetPlayerName(playerid, plname, 24);
-			format(temp, sizeof temp, "* %s купил(а) %s.", plname, Ammu1Info[row][gName]);
+			format(temp, sizeof temp, "* %s РєСѓРїРёР»(Р°) %s.", plname, Ammu1Info[row][gName]);
 			ProxDetector(10.0, playerid, temp, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 			format(temp, sizeof temp, "~r~-$%i", Ammu1Info[row][gPrice]);
 			GameTextForPlayer(playerid, temp, 3000, 1);
 			Rac::TogglePlayerControllable(playerid,0);
 			ShowMenuForPlayer(Ammu1Menu, playerid);
 		} else {
-			Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+			Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 			Rac::TogglePlayerControllable(playerid, 1);
 		}
 	}
@@ -4477,14 +4476,14 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 			}
 			Rac::GivePlayerWeapon(playerid, Ammu2Info[row][gID], Ammu2Info[row][gAmmo]);
 			GetPlayerName(playerid, plname, 24);
-			format(temp, sizeof temp, "* %s купил(а) %s.", plname, Ammu2Info[row][gName]);
+			format(temp, sizeof temp, "* %s РєСѓРїРёР»(Р°) %s.", plname, Ammu2Info[row][gName]);
 			ProxDetector(10.0, playerid, temp, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 			format(temp, sizeof temp, "~r~-$%i", Ammu2Info[row][gPrice]);
 			GameTextForPlayer(playerid, temp, 3000, 1);
 			Rac::TogglePlayerControllable(playerid,0);
 			ShowMenuForPlayer(Ammu2Menu, playerid);
 		} else {
-			Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+			Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 			Rac::TogglePlayerControllable(playerid, 1);
 		}
 	}
@@ -4502,9 +4501,9 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					GiveBizzProfit(biz, TelephonePrice);
 					BizzInfo[biz][bProds]--;
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					format(temp, sizeof(temp), "Вы купили телефон, номер: %d", randphone);
+					format(temp, sizeof(temp), "Р’С‹ РєСѓРїРёР»Рё С‚РµР»РµС„РѕРЅ, РЅРѕРјРµСЂ: %d", randphone);
 					Send(playerid, COLOR_GRAD4, temp);
-					Send(playerid, COLOR_GRAD5, "* Вы можете посмотреть свой номер, прописав /stats");
+					Send(playerid, COLOR_GRAD5, "* Р’С‹ РјРѕР¶РµС‚Рµ РїРѕСЃРјРѕС‚СЂРµС‚СЊ СЃРІРѕР№ РЅРѕРјРµСЂ, РїСЂРѕРїРёСЃР°РІ /stats");
 				}
 			}
 			
@@ -4579,9 +4578,9 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					GameTextForPlayer(playerid, temp, 5000, 1);
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 	                Pl::Info[playerid][pPhoneBook] = 1;
-					format(temp, sizeof(temp), "Вы купили телефонную книгу. Теперь можете узнать номер телефона любого игрока!");
+					format(temp, sizeof(temp), "Р’С‹ РєСѓРїРёР»Рё С‚РµР»РµС„РѕРЅРЅСѓСЋ РєРЅРёРіСѓ. РўРµРїРµСЂСЊ РјРѕР¶РµС‚Рµ СѓР·РЅР°С‚СЊ РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР° Р»СЋР±РѕРіРѕ РёРіСЂРѕРєР°!");
 					Send(playerid, COLOR_GRAD4, temp);
-					Send(playerid, COLOR_WHITE, "Используйте: /number [id/name].");
+					Send(playerid, COLOR_WHITE, "РСЃРїРѕР»СЊР·СѓР№С‚Рµ: /number [id/name].");
 				}
 			}
 			
@@ -4594,9 +4593,9 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					format(temp, sizeof(temp), "~r~-$%d", DicePrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					format(temp, sizeof(temp), "Вы купили кубики.");
+					format(temp, sizeof(temp), "Р’С‹ РєСѓРїРёР»Рё РєСѓР±РёРєРё.");
 					Send(playerid, COLOR_GRAD4, temp);
-					Send(playerid, COLOR_WHITE, "Используйте: /dice");
+					Send(playerid, COLOR_WHITE, "РСЃРїРѕР»СЊР·СѓР№С‚Рµ: /dice");
 				}
 			}
 			
@@ -4610,10 +4609,10 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 						GameTextForPlayer(playerid, temp, 5000, 1);
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 						HireCar[playerid] = gLastCar[playerid];
-						format(temp, sizeof(temp), "Вы купили ключи для тачки.");
+						format(temp, sizeof(temp), "Р’С‹ РєСѓРїРёР»Рё РєР»СЋС‡Рё РґР»СЏ С‚Р°С‡РєРё.");
 						Send(playerid, COLOR_GRAD4, temp);
 					}
-					else Send(playerid, COLOR_WHITE, "У Вас нет транспортного средства!");
+					else Send(playerid, COLOR_WHITE, "РЈ Р’Р°СЃ РЅРµС‚ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР°!");
 				}
 			}
 			
@@ -4626,7 +4625,7 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					format(temp, sizeof(temp), "~r~-$%d", CandomPrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					format(temp, sizeof(temp), "Вы купили гандон!");
+					format(temp, sizeof(temp), "Р’С‹ РєСѓРїРёР»Рё РіР°РЅРґРѕРЅ!");
 					Send(playerid, COLOR_GRAD4, temp);
 				}
 			}
@@ -4640,9 +4639,9 @@ public OnPlayerSelectedMenuRow(playerid, row) {
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					format(temp, sizeof(temp), "~r~-$%d", CDPlayerPrice);
 					GameTextForPlayer(playerid, temp, 5000, 1);
-					format(temp, sizeof(temp), "* %s купил(а) CD-Player.", GetName(playerid));
+					format(temp, sizeof(temp), "* %s РєСѓРїРёР»(Р°) CD-Player.", GetName(playerid));
 					ProxDetector(10.0, playerid, temp, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
-					Send(playerid, COLOR_WHITE, "Используйте: /music");
+					Send(playerid, COLOR_WHITE, "РСЃРїРѕР»СЊР·СѓР№С‚Рµ: /music");
 				}
 			}
 		}
@@ -4729,7 +4728,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 						DestroyDynamicRaceCP(checkpointb[playerid]);
 						DestroyDynamic3DTextLabel(AttachText[oldvehid]);
 						Rac::GivePlayerMoney(playerid, TransportMoney[playerid]);
-						Send(playerid, COLOR_LIGHTBLUE, "* Вы теперь не на дежурстве!");
+						Send(playerid, COLOR_LIGHTBLUE, "* Р’С‹ С‚РµРїРµСЂСЊ РЅРµ РЅР° РґРµР¶СѓСЂСЃС‚РІРµ!");
 					}
 
 					Iter::Remove(vehiclePassengers[oldvehid], playerid);
@@ -4793,7 +4792,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				switch(vehtype) {
 					case VEHICLE_TYPE_BOAT : {
 						if(Pl::Info[playerid][pLic][2] < 1) {
-							Send(playerid, COLOR_GREY, "* У Вас нет лицензии на водный транспорт!");
+							Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ Р»РёС†РµРЅР·РёРё РЅР° РІРѕРґРЅС‹Р№ С‚СЂР°РЅСЃРїРѕСЂС‚!");
 							return Rac::RemovePlayerFromVehicle(playerid);
 						}
 					}
@@ -4801,7 +4800,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 					case VEHICLE_TYPE_AIRPLANE, VEHICLE_TYPE_HELICOPTER : {
 						if(Pl::Info[playerid][pLic][1] < 1) {
 							if(!TakingLesson{playerid}) {
-								Send(playerid, COLOR_GREY, "* У Вас нет лицензии на воздушный транспорт!");
+								Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ Р»РёС†РµРЅР·РёРё РЅР° РІРѕР·РґСѓС€РЅС‹Р№ С‚СЂР°РЅСЃРїРѕСЂС‚!");
 								return Rac::RemovePlayerFromVehicle(playerid);
 							}
 						}
@@ -4810,7 +4809,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 					case VEHICLE_TYPE_AUTO : {
 						if(Pl::Info[playerid][pLic][0] < 1) {
 							if(!TakingLesson{playerid}) {
-								Send(playerid, COLOR_GREY, "* У Вас нет лицензии на легковой транспорт!");
+								Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ Р»РёС†РµРЅР·РёРё РЅР° Р»РµРіРєРѕРІРѕР№ С‚СЂР°РЅСЃРїРѕСЂС‚!");
 								return Rac::RemovePlayerFromVehicle(playerid);
 							}
 						}
@@ -4824,24 +4823,24 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 						} else {
 							if(fc_frac == fracid) {
 								if(fc_rank > Pl::Info[playerid][pRank]) {
-									format(src, sizeof(src), "* Этот транспорт доступен с ранга %s[%i]", RankInfo[fc_frac][fc_rank], fc_rank);
+									format(src, sizeof(src), "* Р­С‚РѕС‚ С‚СЂР°РЅСЃРїРѕСЂС‚ РґРѕСЃС‚СѓРїРµРЅ СЃ СЂР°РЅРіР° %s[%i]", RankInfo[fc_frac][fc_rank], fc_rank);
 									Send(playerid, COLOR_GREY, src);
 									return Rac::RemovePlayerFromVehicle(playerid);
 								}
 							} else {
-								format(src, sizeof(src), "* Транспорт зареверзирован (%s)", FracInfo[fc_frac][fName]);
+								format(src, sizeof(src), "* РўСЂР°РЅСЃРїРѕСЂС‚ Р·Р°СЂРµРІРµСЂР·РёСЂРѕРІР°РЅ (%s)", FracInfo[fc_frac][fName]);
 								Send(playerid,COLOR_GREY, src);
 								return Rac::RemovePlayerFromVehicle(playerid);
 							}
 						}
 					} else if(fc_frac == fracid) {
 						if(fc_rank > Pl::Info[playerid][pRank]) {
-							format(src, sizeof(src), "* Этот транспорт доступен с ранга %s[%i]", RankInfo[fc_frac][fc_rank], fc_rank);
+							format(src, sizeof(src), "* Р­С‚РѕС‚ С‚СЂР°РЅСЃРїРѕСЂС‚ РґРѕСЃС‚СѓРїРµРЅ СЃ СЂР°РЅРіР° %s[%i]", RankInfo[fc_frac][fc_rank], fc_rank);
 							Send(playerid, COLOR_GREY, src);
 							return Rac::RemovePlayerFromVehicle(playerid);
 						}
 					} else {
-						format(src, sizeof(src), "* Транспорт зареверзирован (%s)", FracInfo[fc_frac][fName]);
+						format(src, sizeof(src), "* РўСЂР°РЅСЃРїРѕСЂС‚ Р·Р°СЂРµРІРµСЂР·РёСЂРѕРІР°РЅ (%s)", FracInfo[fc_frac][fName]);
 						Send(playerid,COLOR_GREY, src);
 						return Rac::RemovePlayerFromVehicle(playerid);
 					}
@@ -4853,17 +4852,17 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 						if(Pl::Info[playerid][pJob] != vehjob && !EditMode{playerid}) {
 							static const jnames[][] = {
 								"-", "-", "-", "-", "-", "-",
-								"Механики", "-", "-",
-								"Автобусники",
-								"Дальнобойщики"
+								"РњРµС…Р°РЅРёРєРё", "-", "-",
+								"РђРІС‚РѕР±СѓСЃРЅРёРєРё",
+								"Р”Р°Р»СЊРЅРѕР±РѕР№С‰РёРєРё"
 							};
-							format(src, sizeof(src), "* Транспорт зареверзирован (%s)", jnames[vehjob]);
+							format(src, sizeof(src), "* РўСЂР°РЅСЃРїРѕСЂС‚ Р·Р°СЂРµРІРµСЂР·РёСЂРѕРІР°РЅ (%s)", jnames[vehjob]);
 							Send(playerid, COLOR_GREY, src);
 							return Rac::RemovePlayerFromVehicle(playerid);
 						} else {
 							switch(vehjob) {
 								case JOB_MECHANIC : {
-									Send(playerid, COLOR_YELLOW, "Используйте /at чтобы взять на буксир автомобиль, и /dt чтобы отцепить его.");
+									Send(playerid, COLOR_YELLOW, "РСЃРїРѕР»СЊР·СѓР№С‚Рµ /at С‡С‚РѕР±С‹ РІР·СЏС‚СЊ РЅР° Р±СѓРєСЃРёСЂ Р°РІС‚РѕРјРѕР±РёР»СЊ, Рё /dt С‡С‚РѕР±С‹ РѕС‚С†РµРїРёС‚СЊ РµРіРѕ.");
 								}
 							}
 						}
@@ -4872,11 +4871,11 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 
 				if(IsACompTruck(vehid)) {
 					if(HireCar[playerid] == vehid) {
-						Send(playerid, COLOR_GREEN, "* Вы можете доставлять продукты в бизнесы");
-						Send(playerid, COLOR_GREEN, "* Команды доставки /buyprods /sellprods");
+						Send(playerid, COLOR_GREEN, "* Р’С‹ РјРѕР¶РµС‚Рµ РґРѕСЃС‚Р°РІР»СЏС‚СЊ РїСЂРѕРґСѓРєС‚С‹ РІ Р±РёР·РЅРµСЃС‹");
+						Send(playerid, COLOR_GREEN, "* РљРѕРјР°РЅРґС‹ РґРѕСЃС‚Р°РІРєРё /buyprods /sellprods");
 					} else {
-						format(src, sizeof(src),"Стоимость: $%i\nВы хотите арендовать грузовик?", HireCost(vehid));
-						SPD(playerid, D_RENTCAR, 0, "Доставка продуктов", src, "ДА", "НЕТ");
+						format(src, sizeof(src),"РЎС‚РѕРёРјРѕСЃС‚СЊ: $%i\nР’С‹ С…РѕС‚РёС‚Рµ Р°СЂРµРЅРґРѕРІР°С‚СЊ РіСЂСѓР·РѕРІРёРє?", HireCost(vehid));
+						SPD(playerid, D_RENTCAR, 0, "Р”РѕСЃС‚Р°РІРєР° РїСЂРѕРґСѓРєС‚РѕРІ", src, "Р”Рђ", "РќР•Рў");
 						Rac::TogglePlayerControllable(playerid, 0);
 					}
 				}
@@ -4884,7 +4883,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				if(AutoInfo[vehid][aFuel] < 16.0) {
 					PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
 					format(src, sizeof(src), "~w~Benzin: ~r~%.1fL", AutoInfo[vehid][aFuel]);
-					if(AutoInfo[vehid][aFuel] < 1.0) GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~HET ЂEH€…HA", 5000, 5);
+					if(AutoInfo[vehid][aFuel] < 1.0) GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~HET Р‚EHв‚¬вЂ¦HA", 5000, 5);
 				} else {
 					format(src, sizeof(src), "~w~Benzin: ~b~%.1fL", AutoInfo[vehid][aFuel]);
 				}
@@ -4892,7 +4891,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				
 				if(Rac::GetVehicleHealth(vehid) < 450.0) {
 					PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
-					GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~C‡OMAHO", 7000, 5);
+					GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~CвЂЎOMAHO", 7000, 5);
 				}
 
 				if(!isEngined{vehid}) {
@@ -4906,7 +4905,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 							SetVehicleParamsEx(vehid,true,light,alarm,doors,bonnet,boot,objective);
 						}
 						case VEHICLE_TYPE_AUTO, VEHICLE_TYPE_BIKE : {
-							Send(playerid, COLOR_FADE1, "* Нажмите ALT, чтобы завести двигатель!");
+							Send(playerid, COLOR_FADE1, "* РќР°Р¶РјРёС‚Рµ ALT, С‡С‚РѕР±С‹ Р·Р°РІРµСЃС‚Рё РґРІРёРіР°С‚РµР»СЊ!");
 						}
 					}
 				}
@@ -4914,16 +4913,16 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				switch(fc_frac) {
 					case TEAM_RIFA : {
 						if(model == 482) {
-							format(src, sizeof(src), "* Материалы: %i/%i", AutoInfo[vehid][aMats], AutoInfo[vehid][aMaxMats]);
+							format(src, sizeof(src), "* РњР°С‚РµСЂРёР°Р»С‹: %i/%i", AutoInfo[vehid][aMats], AutoInfo[vehid][aMaxMats]);
 							Send(playerid, COLOR_GREEN, src);
-							Send(playerid, COLOR_GREEN, "* Команды доставки /buymats /sellmats");
+							Send(playerid, COLOR_GREEN, "* РљРѕРјР°РЅРґС‹ РґРѕСЃС‚Р°РІРєРё /buymats /sellmats");
 						}
 					}
 					
 					case TEAM_FARMERS : {
 						switch(vehtype) {
 							case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
-								format(src, sizeof(src), "* Мак: %i/%i", AutoInfo[vehid][aDrugs], AutoInfo[vehid][aMaxDrugs]);
+								format(src, sizeof(src), "* РњР°Рє: %i/%i", AutoInfo[vehid][aDrugs], AutoInfo[vehid][aMaxDrugs]);
 								Send(playerid, COLOR_GREEN, src);
 							}
 						}
@@ -4968,7 +4967,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				foreach(new driver : vehiclePassengers[vehid]) {
 					if(TransportDuty[driver] && Rac::GetPlayerState(driver) == 2) {
 						if(TransportValue[driver] > Rac::GetPlayerMoney(playerid)) {
-							format(temp, sizeof temp, "Вы нуждаетесь $%i для того чтобы сесть.", TransportValue[driver]);
+							format(temp, sizeof temp, "Р’С‹ РЅСѓР¶РґР°РµС‚РµСЃСЊ $%i РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ СЃРµСЃС‚СЊ.", TransportValue[driver]);
 							Send(playerid, COLOR_LIGHTBLUE, temp);
 							Rac::RemovePlayerFromVehicle(playerid);
 						} else {
@@ -4980,16 +4979,16 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 									TransportCost[driver] = TransportValue[driver];
 									TransportDriver[playerid] = driver;
 									
-									format(temp, sizeof temp, " Вы заплатили $%i Таксисту.", TransportValue[driver]);
+									format(temp, sizeof temp, " Р’С‹ Р·Р°РїР»Р°С‚РёР»Рё $%i РўР°РєСЃРёСЃС‚Сѓ.", TransportValue[driver]);
 									Send(playerid, COLOR_LIGHTBLUE, temp);
-									format(temp, sizeof temp, " Пассажир %s вошел в ваше Такси.", GetName(playerid));
+									format(temp, sizeof temp, " РџР°СЃСЃР°Р¶РёСЂ %s РІРѕС€РµР» РІ РІР°С€Рµ РўР°РєСЃРё.", GetName(playerid));
 									Send(driver, COLOR_LIGHTBLUE, temp);
 								}
 								
 								case 2 : {
-									format(temp, sizeof temp, " Вы заплатили $%d водителю автобуса.", TransportValue[driver]);
+									format(temp, sizeof temp, " Р’С‹ Р·Р°РїР»Р°С‚РёР»Рё $%d РІРѕРґРёС‚РµР»СЋ Р°РІС‚РѕР±СѓСЃР°.", TransportValue[driver]);
 									Send(playerid, COLOR_LIGHTBLUE, temp);
-									format(temp, sizeof temp, " Пассажир %s вошел в ваш автобус.", GetName(playerid));
+									format(temp, sizeof temp, " РџР°СЃСЃР°Р¶РёСЂ %s РІРѕС€РµР» РІ РІР°С€ Р°РІС‚РѕР±СѓСЃ.", GetName(playerid));
 									Send(driver, COLOR_LIGHTBLUE, temp);
 								}
 							}
@@ -5085,20 +5084,20 @@ stock SetPlayerCriminal(playerid, declare, reason[], wlevel = 1) {
 		if(Pl::isLogged(declare)) {
 			GetPlayerName(declare, turner, sizeof(turner));
 		} else {
-			strmid(turner, "*Неизвестно", 0, 38, sizeof turner);
+			strmid(turner, "*РќРµРёР·РІРµСЃС‚РЅРѕ", 0, 38, sizeof turner);
 		}
 		WantedTime[playerid] = 180;
 		Pl::SetWantedLevel(playerid, Pl::Info[playerid][pWantedL] + wlevel);
 		strmid(Pl::Crime[playerid][pVictim], turner, 0, strlen(turner), 255);
 		strmid(Pl::Crime[playerid][pAccusing], reason, 0, strlen(reason), 255);
 		strmid(Pl::Crime[playerid][pAccused], turner, 0, strlen(turner), 255);
-		format(src, sizeof(src), "* Вы совершили преступление! ( %s ); Обвинитель: %s",reason,turner);
+		format(src, sizeof(src), "* Р’С‹ СЃРѕРІРµСЂС€РёР»Рё РїСЂРµСЃС‚СѓРїР»РµРЅРёРµ! ( %s ); РћР±РІРёРЅРёС‚РµР»СЊ: %s",reason,turner);
 		Send(playerid, COLOR_LIGHTRED, src);
 		if(Pl::Info[playerid][pWantedL] > 0) {
-			format(src, sizeof(src), "* Ваш уровень розыска: %i", Pl::Info[playerid][pWantedL]);
+			format(src, sizeof(src), "* Р’Р°С€ СѓСЂРѕРІРµРЅСЊ СЂРѕР·С‹СЃРєР°: %i", Pl::Info[playerid][pWantedL]);
 			Send(playerid, COLOR_YELLOW, src);
 			if(IsPlayerConnected(ReturnUser(turner))) {
-				format(src, sizeof(src), "%s(рация):ПРЕСТУПЛЕНИЕ! %s. Обвиняемый: %s", turner, reason, turned);
+				format(src, sizeof(src), "%s(СЂР°С†РёСЏ):РџР Р•РЎРўРЈРџР›Р•РќРР•! %s. РћР±РІРёРЅСЏРµРјС‹Р№: %s", turner, reason, turned);
 				sendToFrac(1, COLOR_RADIO, src);
 			}
 		}
@@ -5110,9 +5109,9 @@ stock SetPlayerCriminal(playerid, declare, reason[], wlevel = 1) {
 stock SetPlayerFree(playerid, declare, reason[]) {
 	if(Pl::isLogged(playerid)) {
 		ClearCrime(playerid);
-		format(src, sizeof(src), "*SMS: %s, поскольку Вы %s, Вы больше не преступник. Отправитель: "#__SERVER_PREFIX""#__SERVER_NAME_LC"(555)", GetName(declare), reason);
+		format(src, sizeof(src), "*SMS: %s, РїРѕСЃРєРѕР»СЊРєСѓ Р’С‹ %s, Р’С‹ Р±РѕР»СЊС€Рµ РЅРµ РїСЂРµСЃС‚СѓРїРЅРёРє. РћС‚РїСЂР°РІРёС‚РµР»СЊ: "#__SERVER_PREFIX""#__SERVER_NAME_LC"(555)", GetName(declare), reason);
 		Send(playerid, COLOR_YELLOW, src);
-		format(src, sizeof(src), "ШТАБ - КВАРТИРА: Офицер %s посадил на нары", GetName(playerid));
+		format(src, sizeof(src), "РЁРўРђР‘ - РљР’РђР РўРР Рђ: РћС„РёС†РµСЂ %s РїРѕСЃР°РґРёР» РЅР° РЅР°СЂС‹", GetName(playerid));
 		sendToFrac(1, COLOR_DBLUE, src);
 	}
 }
@@ -5139,30 +5138,30 @@ stock Update(i) {
 		switch(STDPlayer[i]) {
 			case 1 : {
 				Rac::GivePlayerHealth(i, -5.0);
-				Send(i, COLOR_LIGHTBLUE, "* Потеряно 4 здоровья.");
+				Send(i, COLOR_LIGHTBLUE, "* РџРѕС‚РµСЂСЏРЅРѕ 4 Р·РґРѕСЂРѕРІСЊСЏ.");
 			}
 
 			case 2 : {
 				Rac::GivePlayerHealth(i, -12.0);
-				Send(i, COLOR_LIGHTBLUE, "* Потеряно 8 здоровья.");
+				Send(i, COLOR_LIGHTBLUE, "* РџРѕС‚РµСЂСЏРЅРѕ 8 Р·РґРѕСЂРѕРІСЊСЏ.");
 			}
 
 			case 3 : {
 				Rac::GivePlayerHealth(i, -20.0);
-				Send(i, COLOR_LIGHTBLUE, "* Потеряно 12 здоровья.");
+				Send(i, COLOR_LIGHTBLUE, "* РџРѕС‚РµСЂСЏРЅРѕ 12 Р·РґРѕСЂРѕРІСЊСЏ.");
 			}
 		}
 
 		if(Rac::GetPlayerMoney(i) < 0) {
 			if(!MoneyMessage{i}) {
 				MoneyMessage{i} = true;
-				format(temp, sizeof(temp), "* У Вас задолжность штату, вы должны отдать сумму: $%d или сядете в тюрьму!", Rac::GetPlayerMoney(i));
+				format(temp, sizeof(temp), "* РЈ Р’Р°СЃ Р·Р°РґРѕР»Р¶РЅРѕСЃС‚СЊ С€С‚Р°С‚Сѓ, РІС‹ РґРѕР»Р¶РЅС‹ РѕС‚РґР°С‚СЊ СЃСѓРјРјСѓ: $%d РёР»Рё СЃСЏРґРµС‚Рµ РІ С‚СЋСЂСЊРјСѓ!", Rac::GetPlayerMoney(i));
 				Send(i, COLOR_LIGHTRED, temp);
 			}
 		} else if(Pl::Info[i][pBank] < 0) {
 			if(!MoneyMessage{i}) {
 				MoneyMessage{i} = true;
-				format(temp, sizeof(temp), "* У Вас задолжность банку, вы должны отдать сумму: $%d или сядете в тюрьму!", Pl::Info[i][pBank]);
+				format(temp, sizeof(temp), "* РЈ Р’Р°СЃ Р·Р°РґРѕР»Р¶РЅРѕСЃС‚СЊ Р±Р°РЅРєСѓ, РІС‹ РґРѕР»Р¶РЅС‹ РѕС‚РґР°С‚СЊ СЃСѓРјРјСѓ: $%d РёР»Рё СЃСЏРґРµС‚Рµ РІ С‚СЋСЂСЊРјСѓ!", Pl::Info[i][pBank]);
 				Send(i, COLOR_LIGHTRED, temp);
 			}
 		} else {
@@ -5251,7 +5250,7 @@ stock Update(i) {
 		if(--WantedTime[i] == 0) {
 			Pl::SetWantedLevel(i, Pl::Info[i][pWantedL]-1);
 			if(Pl::Info[i][pWantedL] > 0) WantedTime[i] = 180;
-			format(temp, sizeof(temp),"* Понижение уровня розыска, осталось звезд: %i!", Pl::Info[i][pWantedL]);
+			format(temp, sizeof(temp),"* РџРѕРЅРёР¶РµРЅРёРµ СѓСЂРѕРІРЅСЏ СЂРѕР·С‹СЃРєР°, РѕСЃС‚Р°Р»РѕСЃСЊ Р·РІРµР·Рґ: %i!", Pl::Info[i][pWantedL]);
 			Send(i, COLOR_LIGHTBLUE, temp);
 		}
 	}
@@ -5270,17 +5269,17 @@ stock Update(i) {
 					if(Mobile[Mobile[i]] == i) {
 						CellTime[Mobile[i]] = 0;
 						Mobile[Mobile[i]] = INVALID_PLAYER_ID;
-						Send(Mobile[i], COLOR_GRAD2, "Абонент положил трубку.");
+						Send(Mobile[i], COLOR_GRAD2, "РђР±РѕРЅРµРЅС‚ РїРѕР»РѕР¶РёР» С‚СЂСѓР±РєСѓ.");
 						SetPlayerSpecialAction(Mobile[i],SPECIAL_ACTION_STOPUSECELLPHONE);
 					}
-					Send(i, COLOR_YELLOW, "* У Вас кончались деньги!");
+					Send(i, COLOR_YELLOW, "* РЈ Р’Р°СЃ РєРѕРЅС‡Р°Р»РёСЃСЊ РґРµРЅСЊРіРё!");
 					SetPlayerSpecialAction(i,SPECIAL_ACTION_STOPUSECELLPHONE);
 				}
 			}
 		}
 		if(Mobile[Mobile[i]] == INVALID_PLAYER_ID && CellTime[i] == 5) {
 			GetPlayerName(Mobile[i], plname, 24);
-			format(temp, sizeof(temp), "* %s's звонит телефон", plname);
+			format(temp, sizeof(temp), "* %s's Р·РІРѕРЅРёС‚ С‚РµР»РµС„РѕРЅ", plname);
 			ProxDetector(30.0, Mobile[i], temp, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		}
 	}
@@ -5312,7 +5311,7 @@ stock Update(i) {
 		if(--Pl::Info[i][pMutedTime] <= 0 && Pl::Info[i][pMuted] > 0) {
 			Pl::Info[i][pMuted] = 0;
 			Pl::Info[i][pMutedTime] = 0;
-			format(temp, sizeof(temp),""#__SERVER_PREFIX""#__SERVER_NAME_LC": %s выплюнул(а) тряпку изо рта!", GetName(i));
+			format(temp, sizeof(temp),""#__SERVER_PREFIX""#__SERVER_NAME_LC": %s РІС‹РїР»СЋРЅСѓР»(Р°) С‚СЂСЏРїРєСѓ РёР·Рѕ СЂС‚Р°!", GetName(i));
 			SendToAll(COLOR_GREY, temp);
 		}
 	}
@@ -5385,7 +5384,7 @@ stock Update(i) {
 				MedicCallTime[i][1] ++;
 			} else {
 				MedicCallTime[i][1] = 300;
-				format(temp, sizeof temp, "* Клиент %s, вышел из игры.", GetName(MedicCallTime[i][0]));
+				format(temp, sizeof temp, "* РљР»РёРµРЅС‚ %s, РІС‹С€РµР» РёР· РёРіСЂС‹.", GetName(MedicCallTime[i][0]));
 				Send(i, COLOR_AZTECAS, temp);
 			}
 		}
@@ -5405,7 +5404,7 @@ stock Update(i) {
 				MechanicCallTime[i][1] ++;
 			} else {
 				MechanicCallTime[i][1] = 300;
-				format(temp, sizeof temp, "* Клиент %s, вышел из игры.", GetName(MechanicCallTime[i][0]));
+				format(temp, sizeof temp, "* РљР»РёРµРЅС‚ %s, РІС‹С€РµР» РёР· РёРіСЂС‹.", GetName(MechanicCallTime[i][0]));
 				Send(i, COLOR_AZTECAS, temp);
 			}
 		}
@@ -5438,7 +5437,7 @@ public: Fillup(playerid, amount, price, sec) {
 				new veh = GetPlayerVehicleID(playerid);
 				AutoInfo[veh][aFuel] += float(amount);
 				updateBenzinTD(playerid, veh);
-				format(temp, sizeof temp,"* Машина заправлена, с вас: $%i.", price);
+				format(temp, sizeof temp,"* РњР°С€РёРЅР° Р·Р°РїСЂР°РІР»РµРЅР°, СЃ РІР°СЃ: $%i.", price);
 				Send(playerid, COLOR_LIGHTBLUE, temp);
 				Rac::GivePlayerMoney(playerid, -price);
 			}
@@ -5499,17 +5498,17 @@ stock PrintBizInfo(playerid, bizid) {
 	new i = GetIndexFromBizID(bizid);
 	if(i != -1) {
 		format(dialog, sizeof dialog, "%s\n\n{ffffff}----------------------------------------------------------\n", BizzInfo[i][bDescription]);
-		scf(dialog, src, "{ffa500}Владелец: {ffffff}%s\n",BizzInfo[i][bOwner]);
-		scf(dialog, src, "{ffa500}Компоньон: {AA3333}%s\n",BizzInfo[i][bExtortion]);
-		scf(dialog, src, "{ffa500}Крыша: {%h}%s\n", rgb<GetFracColor(BizzInfo[i][bFrac])>, GetGangName(BizzInfo[i][bFrac]));
+		scf(dialog, src, "{ffa500}Р’Р»Р°РґРµР»РµС†: {ffffff}%s\n",BizzInfo[i][bOwner]);
+		scf(dialog, src, "{ffa500}РљРѕРјРїРѕРЅСЊРѕРЅ: {AA3333}%s\n",BizzInfo[i][bExtortion]);
+		scf(dialog, src, "{ffa500}РљСЂС‹С€Р°: {%h}%s\n", rgb<GetFracColor(BizzInfo[i][bFrac])>, GetGangName(BizzInfo[i][bFrac]));
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-		scf(dialog, src, "{ffa500}Статус: %s\n", BizzInfo[i][bLocked]?("{AA3333}[закрыт]"):("{33AA33}[открыт]"));
-		scf(dialog, src, "{ffa500}Стоимость входа: {33AA33}$%i\n",BizzInfo[i][bEnterCost]);
-		scf(dialog, src, "{ffa500}На счету бизнеса: {33AA33}$%i\n", BizzInfo[i][bSafe]);
+		scf(dialog, src, "{ffa500}РЎС‚Р°С‚СѓСЃ: %s\n", BizzInfo[i][bLocked]?("{AA3333}[Р·Р°РєСЂС‹С‚]"):("{33AA33}[РѕС‚РєСЂС‹С‚]"));
+		scf(dialog, src, "{ffa500}РЎС‚РѕРёРјРѕСЃС‚СЊ РІС…РѕРґР°: {33AA33}$%i\n",BizzInfo[i][bEnterCost]);
+		scf(dialog, src, "{ffa500}РќР° СЃС‡РµС‚Сѓ Р±РёР·РЅРµСЃР°: {33AA33}$%i\n", BizzInfo[i][bSafe]);
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-		scf(dialog, src, "{ffa500}Стоимость продуктов: {33AA33}$%i\n",BizzInfo[i][bPriceProd]);
-		scf(dialog, src, "{ffa500}Продуктов в бизнесе: {ffffff}%i/%i",BizzInfo[i][bProds],BizzInfo[i][bMaxProds]);
-		SPD(playerid, D_NONE, 0, "Информация о бизнесе", dialog, "ENTER", "");
+		scf(dialog, src, "{ffa500}РЎС‚РѕРёРјРѕСЃС‚СЊ РїСЂРѕРґСѓРєС‚РѕРІ: {33AA33}$%i\n",BizzInfo[i][bPriceProd]);
+		scf(dialog, src, "{ffa500}РџСЂРѕРґСѓРєС‚РѕРІ РІ Р±РёР·РЅРµСЃРµ: {ffffff}%i/%i",BizzInfo[i][bProds],BizzInfo[i][bMaxProds]);
+		SPD(playerid, D_NONE, 0, "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р±РёР·РЅРµСЃРµ", dialog, "ENTER", "");
 	}
 	return 1;
 }
@@ -5517,25 +5516,25 @@ stock PrintBizInfo(playerid, bizid) {
 stock PrintHouseInfo(playerid, i, mode = 0) {
     if(IsValidHouse(i)) {
 		format(dialog, sizeof dialog, "%s\n\n{ffffff}----------------------------------------------------------\n", HouseInfo[i][hDescription]);
-		scf(dialog, src, "{ffa500}Владелец:{0080ff} %s\n", HouseInfo[i][hOwner]);
-		scf(dialog, src, "{ffa500}Цена дома:{33AA33} $%d\n", HouseInfo[i][hPrice]);
-		scf(dialog, src, "{ffa500}Статус: {33AA33}%s\n", HouseInfo[i][hLock]?("{AA3333}[закрыт]"):("{33AA33}[открыт]"));
-		scf(dialog, src, "{ffa500}Аренда: {33AA33}%s\n", HouseInfo[i][hRent][0]?("{33AA33}[открыта]"):("{AA3333}[закрыта]"));
-		scf(dialog, src, "{ffa500}Цена аренды: {33AA33}$%d\n", HouseInfo[i][hRent][1]);
+		scf(dialog, src, "{ffa500}Р’Р»Р°РґРµР»РµС†:{0080ff} %s\n", HouseInfo[i][hOwner]);
+		scf(dialog, src, "{ffa500}Р¦РµРЅР° РґРѕРјР°:{33AA33} $%d\n", HouseInfo[i][hPrice]);
+		scf(dialog, src, "{ffa500}РЎС‚Р°С‚СѓСЃ: {33AA33}%s\n", HouseInfo[i][hLock]?("{AA3333}[Р·Р°РєСЂС‹С‚]"):("{33AA33}[РѕС‚РєСЂС‹С‚]"));
+		scf(dialog, src, "{ffa500}РђСЂРµРЅРґР°: {33AA33}%s\n", HouseInfo[i][hRent][0]?("{33AA33}[РѕС‚РєСЂС‹С‚Р°]"):("{AA3333}[Р·Р°РєСЂС‹С‚Р°]"));
+		scf(dialog, src, "{ffa500}Р¦РµРЅР° Р°СЂРµРЅРґС‹: {33AA33}$%d\n", HouseInfo[i][hRent][1]);
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-		scf(dialog, src, "{ffa500}Денег в сейфе: {33AA33}$%d\n", HouseInfo[i][hSafe][0]);
-		scf(dialog, src, "{ffa500}Нарко в сейфе: {33AA33}%d грамм\n", HouseInfo[i][hSafe][1]);
-		scf(dialog, src, "{ffa500}Матов в сейфе: {33AA33}%d матов\n", HouseInfo[i][hSafe][2]);
+		scf(dialog, src, "{ffa500}Р”РµРЅРµРі РІ СЃРµР№С„Рµ: {33AA33}$%d\n", HouseInfo[i][hSafe][0]);
+		scf(dialog, src, "{ffa500}РќР°СЂРєРѕ РІ СЃРµР№С„Рµ: {33AA33}%d РіСЂР°РјРј\n", HouseInfo[i][hSafe][1]);
+		scf(dialog, src, "{ffa500}РњР°С‚РѕРІ РІ СЃРµР№С„Рµ: {33AA33}%d РјР°С‚РѕРІ\n", HouseInfo[i][hSafe][2]);
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-		scf(dialog, src, "{ffa500}Аптечек: {33AA33}%i штук\n", HouseInfo[i][hSafe][3]);
-		scf(dialog, src, "{ffa500}Бронежилетов: {33AA33}%i штук\n", HouseInfo[i][hSafe][4]);
-		scf(dialog, src, "{ffa500}Телевизор: %s\n", HouseInfo[i][hTv]?("{33AA33}[есть]"):("{AA3333}[нету]"));
-		scf(dialog, src, "{ffa500}Домашнее авто: {33AA33}%s\n", (400<=HouseInfo[i][hvModel]<=611)?(VehicleNames[HouseInfo[i][hvModel]-400]):("unknown"));
+		scf(dialog, src, "{ffa500}РђРїС‚РµС‡РµРє: {33AA33}%i С€С‚СѓРє\n", HouseInfo[i][hSafe][3]);
+		scf(dialog, src, "{ffa500}Р‘СЂРѕРЅРµР¶РёР»РµС‚РѕРІ: {33AA33}%i С€С‚СѓРє\n", HouseInfo[i][hSafe][4]);
+		scf(dialog, src, "{ffa500}РўРµР»РµРІРёР·РѕСЂ: %s\n", HouseInfo[i][hTv]?("{33AA33}[РµСЃС‚СЊ]"):("{AA3333}[РЅРµС‚Сѓ]"));
+		scf(dialog, src, "{ffa500}Р”РѕРјР°С€РЅРµРµ Р°РІС‚Рѕ: {33AA33}%s\n", (400<=HouseInfo[i][hvModel]<=611)?(VehicleNames[HouseInfo[i][hvModel]-400]):("unknown"));
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
 		if(mode && Pl::isAdmin(playerid, MODER2LVL)) {
-			scf(dialog, src, "{ffa500}Без хозяина уже: {33AA33}%i/20", getday(gettime(), HouseInfo[i][hDate]));
+			scf(dialog, src, "{ffa500}Р‘РµР· С…РѕР·СЏРёРЅР° СѓР¶Рµ: {33AA33}%i/20", getday(gettime(), HouseInfo[i][hDate]));
 		}
-		SPD(playerid, D_NONE, 0, "Информация о доме", dialog, "ENTER", "");
+		SPD(playerid, D_NONE, 0, "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РґРѕРјРµ", dialog, "ENTER", "");
 	}
 	return 1;
 }
@@ -5547,49 +5546,49 @@ public: ShowStats(playerid, statid, mode) {
 	if(!Pl::isLogged(statid)) return 0;
 	GetPlayerVersion(statid, temp, sizeof temp);	
 	format(dialog,sizeof dialog,"{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Уровень: {ffffff}%d\n", 			Pl::Info[statid][pLevel]);
-	scf(dialog, src, "{"#FIELD_COL"}Респекты: {ffffff}%d/%d\n", 		Pl::Info[statid][pExp], EXP(statid));
-	scf(dialog, src, "{"#FIELD_COL"}Цена уровня: {ffffff}$%d\n",		costlvl(statid));
-	scf(dialog, src, "{"#FIELD_COL"}Пол: {ffffff}%s\n",					GetPlayerSex(statid));
-	scf(dialog, src, "{"#FIELD_COL"}Возраст: {ffffff}%s\n",				GetPlayerAge(statid));
-	scf(dialog, src, "{"#FIELD_COL"}Местонахождение: {ffffff}%s\n",		GetPlayerOrigin(statid));
-	scf(dialog, src, "{"#FIELD_COL"}Предупреждения: {ffffff}%d / 3\n",	Pl::Info[statid][pWarns]);
-	scf(dialog, src, "{"#FIELD_COL"}VIP аккаунт: {ffffff}%s\n",			Pl::Info[statid][pVip]?("Есть"):("Нету"));
-	scf(dialog, src, "{"#FIELD_COL"}Часов в игре: {ffffff}%d\n",		Pl::Info[statid][pTime]);
+	scf(dialog, src, "{"#FIELD_COL"}РЈСЂРѕРІРµРЅСЊ: {ffffff}%d\n", 			Pl::Info[statid][pLevel]);
+	scf(dialog, src, "{"#FIELD_COL"}Р РµСЃРїРµРєС‚С‹: {ffffff}%d/%d\n", 		Pl::Info[statid][pExp], EXP(statid));
+	scf(dialog, src, "{"#FIELD_COL"}Р¦РµРЅР° СѓСЂРѕРІРЅСЏ: {ffffff}$%d\n",		costlvl(statid));
+	scf(dialog, src, "{"#FIELD_COL"}РџРѕР»: {ffffff}%s\n",					GetPlayerSex(statid));
+	scf(dialog, src, "{"#FIELD_COL"}Р’РѕР·СЂР°СЃС‚: {ffffff}%s\n",				GetPlayerAge(statid));
+	scf(dialog, src, "{"#FIELD_COL"}РњРµСЃС‚РѕРЅР°С…РѕР¶РґРµРЅРёРµ: {ffffff}%s\n",		GetPlayerOrigin(statid));
+	scf(dialog, src, "{"#FIELD_COL"}РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ: {ffffff}%d / 3\n",	Pl::Info[statid][pWarns]);
+	scf(dialog, src, "{"#FIELD_COL"}VIP Р°РєРєР°СѓРЅС‚: {ffffff}%s\n",			Pl::Info[statid][pVip]?("Р•СЃС‚СЊ"):("РќРµС‚Сѓ"));
+	scf(dialog, src, "{"#FIELD_COL"}Р§Р°СЃРѕРІ РІ РёРіСЂРµ: {ffffff}%d\n",		Pl::Info[statid][pTime]);
 	scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Работа: {ffffff}%s\n", 				JobsInfo[Pl::Info[statid][pJob]][jName]);
-	scf(dialog, src, "{"#FIELD_COL"}Организация: {ffffff}%s\n", 		FracInfo[Pl::FracID(statid)][fName]);
-	scf(dialog, src, "{"#FIELD_COL"}Ранг: {ffffff}%s\n",				RankInfo[Pl::FracID(statid)][Pl::Info[statid][pRank]]);
+	scf(dialog, src, "{"#FIELD_COL"}Р Р°Р±РѕС‚Р°: {ffffff}%s\n", 				JobsInfo[Pl::Info[statid][pJob]][jName]);
+	scf(dialog, src, "{"#FIELD_COL"}РћСЂРіР°РЅРёР·Р°С†РёСЏ: {ffffff}%s\n", 		FracInfo[Pl::FracID(statid)][fName]);
+	scf(dialog, src, "{"#FIELD_COL"}Р Р°РЅРі: {ffffff}%s\n",				RankInfo[Pl::FracID(statid)][Pl::Info[statid][pRank]]);
 	scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Деньги(наличные): {ffffff}$%d\n", 	Rac::GetPlayerMoney(statid));
-	scf(dialog, src, "{"#FIELD_COL"}Деньги(в банке): {ffffff}$%d\n",	Pl::Info[statid][pBank]);
-	scf(dialog, src, "{"#FIELD_COL"}Номер телефона: {ffffff}%d\n",		Pl::Info[statid][pNumber]);
+	scf(dialog, src, "{"#FIELD_COL"}Р”РµРЅСЊРіРё(РЅР°Р»РёС‡РЅС‹Рµ): {ffffff}$%d\n", 	Rac::GetPlayerMoney(statid));
+	scf(dialog, src, "{"#FIELD_COL"}Р”РµРЅСЊРіРё(РІ Р±Р°РЅРєРµ): {ffffff}$%d\n",	Pl::Info[statid][pBank]);
+	scf(dialog, src, "{"#FIELD_COL"}РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°: {ffffff}%d\n",		Pl::Info[statid][pNumber]);
 	scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Лотторейный №: {ffffff}%d\n",		Pl::Info[statid][pLottoNr]);
-	scf(dialog, src, "{"#FIELD_COL"}Кол-во преступлений: {ffffff}%d\n",	Pl::Info[statid][pCrimes]);
-	scf(dialog, src, "{"#FIELD_COL"}Кол-во арестов: {ffffff}%d\n",		Pl::Info[statid][pArrested]);
-	scf(dialog, src, "{"#FIELD_COL"}Смертей с розыском: {ffffff}%d\n",	Pl::Info[statid][pWantedD]);
-	scf(dialog, src, "{"#FIELD_COL"}Уровень розыска: {ffffff}%d\n", 	Pl::Info[statid][pWantedL]);
-	scf(dialog, src, "{"#FIELD_COL"}Убийств: {ffffff}%d\n",				Pl::Info[statid][pKills]);
-	scf(dialog, src, "{"#FIELD_COL"}Смертей: {ffffff}%d\n",				Pl::Info[statid][pDeaths]);
-	scf(dialog, src, "{"#FIELD_COL"}Выговоров: {ffffff}%d\n", 			Pl::Info[statid][pRebuke]);
+	scf(dialog, src, "{"#FIELD_COL"}Р›РѕС‚С‚РѕСЂРµР№РЅС‹Р№ в„–: {ffffff}%d\n",		Pl::Info[statid][pLottoNr]);
+	scf(dialog, src, "{"#FIELD_COL"}РљРѕР»-РІРѕ РїСЂРµСЃС‚СѓРїР»РµРЅРёР№: {ffffff}%d\n",	Pl::Info[statid][pCrimes]);
+	scf(dialog, src, "{"#FIELD_COL"}РљРѕР»-РІРѕ Р°СЂРµСЃС‚РѕРІ: {ffffff}%d\n",		Pl::Info[statid][pArrested]);
+	scf(dialog, src, "{"#FIELD_COL"}РЎРјРµСЂС‚РµР№ СЃ СЂРѕР·С‹СЃРєРѕРј: {ffffff}%d\n",	Pl::Info[statid][pWantedD]);
+	scf(dialog, src, "{"#FIELD_COL"}РЈСЂРѕРІРµРЅСЊ СЂРѕР·С‹СЃРєР°: {ffffff}%d\n", 	Pl::Info[statid][pWantedL]);
+	scf(dialog, src, "{"#FIELD_COL"}РЈР±РёР№СЃС‚РІ: {ffffff}%d\n",				Pl::Info[statid][pKills]);
+	scf(dialog, src, "{"#FIELD_COL"}РЎРјРµСЂС‚РµР№: {ffffff}%d\n",				Pl::Info[statid][pDeaths]);
+	scf(dialog, src, "{"#FIELD_COL"}Р’С‹РіРѕРІРѕСЂРѕРІ: {ffffff}%d\n", 			Pl::Info[statid][pRebuke]);
 	scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Наркотики: {ffffff}%d\n", 			Pl::Info[statid][pDrugs]);
-	scf(dialog, src, "{"#FIELD_COL"}Материалы: {ffffff}%d\n", 			Pl::Info[statid][pMats]);
+	scf(dialog, src, "{"#FIELD_COL"}РќР°СЂРєРѕС‚РёРєРё: {ffffff}%d\n", 			Pl::Info[statid][pDrugs]);
+	scf(dialog, src, "{"#FIELD_COL"}РњР°С‚РµСЂРёР°Р»С‹: {ffffff}%d\n", 			Pl::Info[statid][pMats]);
 
 	if(Pl::isAdmin(playerid, 1) && mode) {
 		scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
 		scf(dialog, src, "{"#FIELD_COL"}UserID: {ffffff}%i\n", 		Pl::Info[statid][pID]);
 		scf(dialog, src, "{"#FIELD_COL"}Client: {ffffff}%s\n", 		temp);
-		scf(dialog, src, "{"#FIELD_COL"}Дом: {ffffff}%i\n",  		Pl::Info[statid][pHouseKey]);
-		scf(dialog, src, "{"#FIELD_COL"}Бизнес: {ffffff}%i\n", 		Pl::Info[statid][pBizKey]);
-		scf(dialog, src, "{"#FIELD_COL"}Лицензии: {ffffff}D:%i, F:%i, B:%i, G:%i\n", Pl::Info[statid][pLic][0], Pl::Info[statid][pLic][1], Pl::Info[statid][pLic][2], Pl::Info[statid][pLic][3]);
-		scf(dialog, src, "{"#FIELD_COL"}Локация: {ffffff}%i\n", 	Pl::Info[statid][pLocal]);
-		scf(dialog, src, "{"#FIELD_COL"}Вирт. Мир: {ffffff}%i\n",	GetPlayerVirtualWorld(statid));
-		scf(dialog, src, "{"#FIELD_COL"}Интерьер: {ffffff}%i\n", 	GetPlayerInterior(statid));
+		scf(dialog, src, "{"#FIELD_COL"}Р”РѕРј: {ffffff}%i\n",  		Pl::Info[statid][pHouseKey]);
+		scf(dialog, src, "{"#FIELD_COL"}Р‘РёР·РЅРµСЃ: {ffffff}%i\n", 		Pl::Info[statid][pBizKey]);
+		scf(dialog, src, "{"#FIELD_COL"}Р›РёС†РµРЅР·РёРё: {ffffff}D:%i, F:%i, B:%i, G:%i\n", Pl::Info[statid][pLic][0], Pl::Info[statid][pLic][1], Pl::Info[statid][pLic][2], Pl::Info[statid][pLic][3]);
+		scf(dialog, src, "{"#FIELD_COL"}Р›РѕРєР°С†РёСЏ: {ffffff}%i\n", 	Pl::Info[statid][pLocal]);
+		scf(dialog, src, "{"#FIELD_COL"}Р’РёСЂС‚. РњРёСЂ: {ffffff}%i\n",	GetPlayerVirtualWorld(statid));
+		scf(dialog, src, "{"#FIELD_COL"}РРЅС‚РµСЂСЊРµСЂ: {ffffff}%i\n", 	GetPlayerInterior(statid));
 	}
 	
-	format(temp, sizeof temp,"{"#TITLE_COL"}Статистика аккуанта: {ffffff}%s", GetName(statid));
+	format(temp, sizeof temp,"{"#TITLE_COL"}РЎС‚Р°С‚РёСЃС‚РёРєР° Р°РєРєСѓР°РЅС‚Р°: {ffffff}%s", GetName(statid));
 	return SPD(playerid, D_NONE, 0, temp, dialog, "ENTER","");
 }
 
@@ -5601,25 +5600,25 @@ stock ShowPass(playerid, showforid, dialogid) {
 	GetPlayerName(playerid, plname, 24), sscanf(plname, "p<_>s[12]S(-)[12]", fio[0], fio[1]);
 
 	format(dialog, sizeof dialog,"{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Имя: {ffffff}%s\n", fio[0]);
-	scf(dialog, src, "{"#FIELD_COL"}Фамилия: {ffffff}%s\n", fio[1]);
-	scf(dialog, src, "{"#FIELD_COL"}Возраст: {ffffff}%s\n", GetPlayerAge(playerid));
-	scf(dialog, src, "{"#FIELD_COL"}Пол: {ffffff}%s\n", GetPlayerSex(playerid));
+	scf(dialog, src, "{"#FIELD_COL"}РРјСЏ: {ffffff}%s\n", fio[0]);
+	scf(dialog, src, "{"#FIELD_COL"}Р¤Р°РјРёР»РёСЏ: {ffffff}%s\n", fio[1]);
+	scf(dialog, src, "{"#FIELD_COL"}Р’РѕР·СЂР°СЃС‚: {ffffff}%s\n", GetPlayerAge(playerid));
+	scf(dialog, src, "{"#FIELD_COL"}РџРѕР»: {ffffff}%s\n", GetPlayerSex(playerid));
 	scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Организация: {%h}%s\n", rgb<GetFracColor(fracid)>, FracInfo[fracid][fName]);
-	scf(dialog, src, "{"#FIELD_COL"}Должность: {ffffff}%s\n", RankInfo[fracid][Pl::Info[playerid][pRank]]);
-	scf(dialog, src, "{"#FIELD_COL"}Преступлений: {ffffff}%i\n", Pl::Info[playerid][pCrimes]);
-	scf(dialog, src, "{"#FIELD_COL"}Проживание в штате: {ffffff}%i(в годах)\n", Pl::Info[playerid][pLevel]);
-	scf(dialog, src, "{"#FIELD_COL"}Работа: {ffffff}%s\n", JobsInfo[Pl::Info[playerid][pJob]][jName]);
+	scf(dialog, src, "{"#FIELD_COL"}РћСЂРіР°РЅРёР·Р°С†РёСЏ: {%h}%s\n", rgb<GetFracColor(fracid)>, FracInfo[fracid][fName]);
+	scf(dialog, src, "{"#FIELD_COL"}Р”РѕР»Р¶РЅРѕСЃС‚СЊ: {ffffff}%s\n", RankInfo[fracid][Pl::Info[playerid][pRank]]);
+	scf(dialog, src, "{"#FIELD_COL"}РџСЂРµСЃС‚СѓРїР»РµРЅРёР№: {ffffff}%i\n", Pl::Info[playerid][pCrimes]);
+	scf(dialog, src, "{"#FIELD_COL"}РџСЂРѕР¶РёРІР°РЅРёРµ РІ С€С‚Р°С‚Рµ: {ffffff}%i(РІ РіРѕРґР°С…)\n", Pl::Info[playerid][pLevel]);
+	scf(dialog, src, "{"#FIELD_COL"}Р Р°Р±РѕС‚Р°: {ffffff}%s\n", JobsInfo[Pl::Info[playerid][pJob]][jName]);
 	scf(dialog, src, "{ffffff}----------------------------------------------------------\n");
-	scf(dialog, src, "{"#FIELD_COL"}Действует от: {ffffff}%s\n", _date[0]);
-	scf(dialog, src, "{"#FIELD_COL"}Действует до: {ffffff}%s\n", _date[1]);
+	scf(dialog, src, "{"#FIELD_COL"}Р”РµР№СЃС‚РІСѓРµС‚ РѕС‚: {ffffff}%s\n", _date[0]);
+	scf(dialog, src, "{"#FIELD_COL"}Р”РµР№СЃС‚РІСѓРµС‚ РґРѕ: {ffffff}%s\n", _date[1]);
 	
 	if(playerid != showforid) {
-		format(temp, sizeof(temp),"{"#TITLE_COL"}Паспорт гражданина: {ffffff}%s", plname);
+		format(temp, sizeof(temp),"{"#TITLE_COL"}РџР°СЃРїРѕСЂС‚ РіСЂР°Р¶РґР°РЅРёРЅР°: {ffffff}%s", plname);
 		SPD(showforid, dialogid, 0, temp, dialog, "ENTER","");
 	} else {
-		SPD(showforid, dialogid, 0, "Ваш паспорт", dialog, "ENTER","");
+		SPD(showforid, dialogid, 0, "Р’Р°С€ РїР°СЃРїРѕСЂС‚", dialog, "ENTER","");
 	}
 	return 1;
 }
@@ -6034,7 +6033,7 @@ stock DateProp(playerid, ...) {
 							Pl::Info[playerid][pPasport][0] = 0;
 							Pl::Info[playerid][pPasport][1] = 0;
 							Pl::Info[playerid][pPasport][2] = 0;
-							Send(playerid, COLOR_YELLOW, "* Ваш паспорт больше не действителен, новый можно получить в Мэрии.");
+							Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РїР°СЃРїРѕСЂС‚ Р±РѕР»СЊС€Рµ РЅРµ РґРµР№СЃС‚РІРёС‚РµР»РµРЅ, РЅРѕРІС‹Р№ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РІ РњСЌСЂРёРё.");
 						}
 					}
 				}
@@ -6105,7 +6104,7 @@ public: onPayDay() {
 					} else {
 						if(rent > Rac::GetPlayerMoney(i)) {
 							Pl::Info[i][pHouseKey] = INVALID_HOUSE_ID;
-							Send(i, COLOR_WHITE, "* Вы были выселены.");
+							Send(i, COLOR_WHITE, "* Р’С‹ Р±С‹Р»Рё РІС‹СЃРµР»РµРЅС‹.");
 							rent = 0;
 						}
 					}
@@ -6132,13 +6131,13 @@ public: onPayDay() {
 					tax = floatround(PERCENT(Pl::Info[i][pPayCheck], Gm::Info[Gm::TaxValue]));
 					Pl::Info[i][pExp]++;
 					Pl::Info[i][pTime]++;
-					Send(i, 0x34c92400, "|________________ЗАРПЛАТА______________|");
-					sendf(i, src, COLOR_GREY, "* Чек: $%i Налог: -$%i", Pl::Info[i][pPayCheck], tax);
-					sendf(i, src, COLOR_GREY, "* Баланс: $%i", Pl::Info[i][pBank]-interest);
-					sendf(i, src, COLOR_GREY, "* Вклад в банке под: 0.%i процентов",tmpintrate);
-					if(hkey != INVALID_HOUSE_ID) sendf(i, src, COLOR_GREY, "* Счет за электричество: -$%i", ebill);
-					sendf(i, src, COLOR_GREY, "* Полученные средства по банковскому вкладу: $%i", interest);
-					sendf(i, src, COLOR_GREY, "* Плата за аренду: -$%i", rent);
+					Send(i, 0x34c92400, "|________________Р—РђР РџР›РђРўРђ______________|");
+					sendf(i, src, COLOR_GREY, "* Р§РµРє: $%i РќР°Р»РѕРі: -$%i", Pl::Info[i][pPayCheck], tax);
+					sendf(i, src, COLOR_GREY, "* Р‘Р°Р»Р°РЅСЃ: $%i", Pl::Info[i][pBank]-interest);
+					sendf(i, src, COLOR_GREY, "* Р’РєР»Р°Рґ РІ Р±Р°РЅРєРµ РїРѕРґ: 0.%i РїСЂРѕС†РµРЅС‚РѕРІ",tmpintrate);
+					if(hkey != INVALID_HOUSE_ID) sendf(i, src, COLOR_GREY, "* РЎС‡РµС‚ Р·Р° СЌР»РµРєС‚СЂРёС‡РµСЃС‚РІРѕ: -$%i", ebill);
+					sendf(i, src, COLOR_GREY, "* РџРѕР»СѓС‡РµРЅРЅС‹Рµ СЃСЂРµРґСЃС‚РІР° РїРѕ Р±Р°РЅРєРѕРІСЃРєРѕРјСѓ РІРєР»Р°РґСѓ: $%i", interest);
+					sendf(i, src, COLOR_GREY, "* РџР»Р°С‚Р° Р·Р° Р°СЂРµРЅРґСѓ: -$%i", rent);
 					Send(i, COLOR_GREY, "|--------------------------------------|");
 					if(tax > 0) {
 						totaltax += tax;
@@ -6148,7 +6147,7 @@ public: onPayDay() {
 					GivePlayerBankMoney(i, interest);
 					GivePlayerBankMoney(i, -Gm::Info[Gm::TaxValue]);
 					GivePlayerBankMoney(i, Pl::Info[i][pPayCheck]);
-					sendf(i, src, COLOR_GREY, "* Текущий баланс: $%i", Pl::Info[i][pBank]);
+					sendf(i, src, COLOR_GREY, "* РўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i", Pl::Info[i][pBank]);
 					GameTextForPlayer(i, "~y~Bank~n~~w~Paycheck", 5000, 1);
 					PlayerPlayMusic(i);
 					DEBUG[TOTAL_PLAYER_PAID] ++;
@@ -6170,13 +6169,13 @@ public: onPayDay() {
 					DateProp(i, 1);
 					Pl::Update(i);
 				} else {
-					Send(i, COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы играли слишком мало, поэтому сервер не выдал вам зарплату за прошлый час.");
+					Send(i, COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Р’С‹ РёРіСЂР°Р»Рё СЃР»РёС€РєРѕРј РјР°Р»Рѕ, РїРѕСЌС‚РѕРјСѓ СЃРµСЂРІРµСЂ РЅРµ РІС‹РґР°Р» РІР°Рј Р·Р°СЂРїР»Р°С‚Сѓ Р·Р° РїСЂРѕС€Р»С‹Р№ С‡Р°СЃ.");
 				}
 				if(MoneyMessage{i} && !(Rac::GetPlayerMoney(i) > 0 || Pl::Info[i][pBank] > 0)) {
 					MoneyMessage{i} = false;
 					Jailed(i, 300, 3);
 					GameTextForPlayer(i, "~r~Busted!", 2000, 1);
-					format(src, sizeof(src), "* Вы заключены в тюрьму на 10 минут! Причина: Задолжность");
+					format(src, sizeof(src), "* Р’С‹ Р·Р°РєР»СЋС‡РµРЅС‹ РІ С‚СЋСЂСЊРјСѓ РЅР° 10 РјРёРЅСѓС‚! РџСЂРёС‡РёРЅР°: Р—Р°РґРѕР»Р¶РЅРѕСЃС‚СЊ");
 					Send(i, COLOR_LIGHTBLUE, src);
 				}
 			}
@@ -6186,9 +6185,9 @@ public: onPayDay() {
 	GiveFracMoney(7, totaltax);
 	GiveBizzProfit(bidx, totalebill);
 	
-	format(src, sizeof(src), "PAYDAY STATS: Получивших зарплату: %i, Собрано налога: $%i, Ушло на зарплату: $%i, Счета за электричество: $%i", DEBUG[TOTAL_PLAYER_PAID], totaltax, totalchecks, totalebill);
+	format(src, sizeof(src), "PAYDAY STATS: РџРѕР»СѓС‡РёРІС€РёС… Р·Р°СЂРїР»Р°С‚Сѓ: %i, РЎРѕР±СЂР°РЅРѕ РЅР°Р»РѕРіР°: $%i, РЈС€Р»Рѕ РЅР° Р·Р°СЂРїР»Р°С‚Сѓ: $%i, РЎС‡РµС‚Р° Р·Р° СЌР»РµРєС‚СЂРёС‡РµСЃС‚РІРѕ: $%i", DEBUG[TOTAL_PLAYER_PAID], totaltax, totalchecks, totalebill);
 	SendToAdmin(COLOR_YELLOW, src, 1, 4);
-	format(src, sizeof(src), "PAYDAY STATS: Сохранений аккаунтов: %i, houses:%i/biznes:%i, MySQL-ошибок: %i, Сейчас играют: %i",
+	format(src, sizeof(src), "PAYDAY STATS: РЎРѕС…СЂР°РЅРµРЅРёР№ Р°РєРєР°СѓРЅС‚РѕРІ: %i, houses:%i/biznes:%i, MySQL-РѕС€РёР±РѕРє: %i, РЎРµР№С‡Р°СЃ РёРіСЂР°СЋС‚: %i",
 	DEBUG[TOTAL_SAVE_ACCOUNT], DEBUG[TOTAL_SAVE_HOUSES], DEBUG[TOTAL_SAVE_BIZNES], DEBUG[TOTAL_QUERY_ERRORS], Iter::Count(Player));
 	SendToAdmin(COLOR_YELLOW, src, 1, 4);
 
@@ -6263,14 +6262,14 @@ public: onPlayerLogin(playerid) {
 		cache_get_int(0, 53, Pl::Info[playerid][pLastVisit]);
 	} else {
 		WrongLogin[playerid]--;
-		Send(playerid, COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Неверный пароль! В случае 3-х кратного неверного ввода КИК!");
+		Send(playerid, COLOR_LIGHTRED, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! Р’ СЃР»СѓС‡Р°Рµ 3-С… РєСЂР°С‚РЅРѕРіРѕ РЅРµРІРµСЂРЅРѕРіРѕ РІРІРѕРґР° РљРРљ!");
 		ShowLoginForm(playerid, 1);
 		return 1;
 	}
 	
 	if(Pl::Info[playerid][pBanned] == 1) {
-		Send(playerid, COLOR_YELLOW, "{ffffff}Введите {e85209}/(q)uit {ffffff}чтобы выйти из игры");
-		SPD(playerid, D_NONE, 0, "• ACCOUNT BLOCKED •", "Этот аккуант был отключен администратором!\nВведите /q чтобы выйти из игры", "Ок", "");
+		Send(playerid, COLOR_YELLOW, "{ffffff}Р’РІРµРґРёС‚Рµ {e85209}/(q)uit {ffffff}С‡С‚РѕР±С‹ РІС‹Р№С‚Рё РёР· РёРіСЂС‹");
+		SPD(playerid, D_NONE, 0, "вЂў ACCOUNT BLOCKED вЂў", "Р­С‚РѕС‚ Р°РєРєСѓР°РЅС‚ Р±С‹Р» РѕС‚РєР»СЋС‡РµРЅ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј!\nР’РІРµРґРёС‚Рµ /q С‡С‚РѕР±С‹ РІС‹Р№С‚Рё РёР· РёРіСЂС‹", "РћРє", "");
 		Kick(playerid);
 		return 1;
 	}
@@ -6288,14 +6287,14 @@ public: onPlayerLogin(playerid) {
 		SetPlayerCameraPos(playerid, 210.4674, -131.8238, 1004.2631);
 		SetPlayerCameraLookAt(playerid, 214.3328, -132.8457, 1004.1403);
 		Rac::TogglePlayerControllable(playerid, false);
-		SPD(playerid, D_REGG + 2, 0, "Sex", "Выберете пол вашего персонажа.", "ЖЕН", "МУЖ");
+		SPD(playerid, D_REGG + 2, 0, "Sex", "Р’С‹Р±РµСЂРµС‚Рµ РїРѕР» РІР°С€РµРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.", "Р–Р•Рќ", "РњРЈР–");
 	} else {
-		sendf(playerid, temp, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Мы рады видеть тебя на сервере, %s!", plname);
+		sendf(playerid, temp, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": РњС‹ СЂР°РґС‹ РІРёРґРµС‚СЊ С‚РµР±СЏ РЅР° СЃРµСЂРІРµСЂРµ, %s!", plname);
 		
 		if(Pl::Info[playerid][pWantedL] > 0) {
 			WantedTime[playerid] = 180;
 			Pl::SetWantedLevel(playerid, Pl::Info[playerid][pWantedL]);
-			sendf(playerid, temp, COLOR_YELLOW, "* Восстановление уровня розыска! Текущий уровень: %i зв.", Pl::Info[playerid][pWantedL]);
+			sendf(playerid, temp, COLOR_YELLOW, "* Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СѓСЂРѕРІРЅСЏ СЂРѕР·С‹СЃРєР°! РўРµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ: %i Р·РІ.", Pl::Info[playerid][pWantedL]);
 		}
 		
 		
@@ -6308,7 +6307,7 @@ public: onPlayerLogin(playerid) {
 		Rac::SpawnPlayer(playerid);
 		
 		if(!Pl::Info[playerid][pAdmin]) {
-			format(temp, sizeof temp, "* %s (ID: %i) прокрался(ась) на ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]", plname, playerid);
+			format(temp, sizeof temp, "* %s (ID: %i) РїСЂРѕРєСЂР°Р»СЃСЏ(Р°СЃСЊ) РЅР° ..::"#__SERVER_PREFIX""#__SERVER_NAME_LC"::.. [RUS]", plname, playerid);
 			sendToLog(COLOR_GREY, src);
 		}
 		PlayerLogged{playerid} = true;
@@ -6597,14 +6596,14 @@ stock updateAntiDmZone(zone) {
 
 
 public OnPlayerCommandReceived(playerid, cmdtext[]) {
-	if(!Pl::isLogged(playerid)) return Send(playerid, COLOR_GREY, "* Вы не авторизованы!");
+	if(!Pl::isLogged(playerid)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅС‹!");
 	return 1;
 }
 
 
 public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 	switch(success) {
-		case -1 : Send(playerid, COLOR_GRAD1, "* Такой команды не существует!");
+		case -1 : Send(playerid, COLOR_GRAD1, "* РўР°РєРѕР№ РєРѕРјР°РЅРґС‹ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!");
 	}
     return 1;
 }
@@ -6618,9 +6617,9 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 
 public OnPlayerText(playerid, text[]) {
 	if(isnull(text) || text[0] == ' ') return 0;
-	if(!Pl::isLogged(playerid)) return !Send(playerid, COLOR_GREY, "* Вы не авторизованы!");
-	if(Gag{playerid}) return !Send(playerid,COLOR_GREY,"* У Вас кляп во рту!");
-	if(IsPMuted(playerid))return !Send(playerid, COLOR_CYAN, "* Админ отнял у вас возможность говорить в главном чате.");
+	if(!Pl::isLogged(playerid)) return !Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅС‹!");
+	if(Gag{playerid}) return !Send(playerid,COLOR_GREY,"* РЈ Р’Р°СЃ РєР»СЏРї РІРѕ СЂС‚Сѓ!");
+	if(IsPMuted(playerid))return !Send(playerid, COLOR_CYAN, "* РђРґРјРёРЅ РѕС‚РЅСЏР» Сѓ РІР°СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РіРѕРІРѕСЂРёС‚СЊ РІ РіР»Р°РІРЅРѕРј С‡Р°С‚Рµ.");
 
 	new replacetext[144], tmp[32], string[144], sendername[24];
 	regex_replace_exid(text, ADBlock, REPLACE_TEXT, replacetext, sizeof replacetext);
@@ -6629,24 +6628,24 @@ public OnPlayerText(playerid, text[]) {
 		new veh = GetPlayerVehicleID(playerid);
 		if(IsPlayerInRangeOfPoint(playerid,5.0,353.4343,272.8408,1008.6656)) {
 			switch(++Pl::Info[playerid][pSkill][6]) {
-				case 50 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 2");
-				case 100 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 3");
-				case 200 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 4, теперь вы можете управлять вертолетом");
-				case 400 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 5, теперь вы можете брать интервью");
+				case 50 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 2");
+				case 100 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 3");
+				case 200 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 4, С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ СѓРїСЂР°РІР»СЏС‚СЊ РІРµСЂС‚РѕР»РµС‚РѕРј");
+				case 400 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 5, С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ Р±СЂР°С‚СЊ РёРЅС‚РµСЂРІСЊСЋ");
 			}
 			GetPlayerName(playerid, sendername, 24);
-			format(string, sizeof(string), "*[Пресса] %s: %s", sendername, replacetext);
+			format(string, sizeof(string), "*[РџСЂРµСЃСЃР°] %s: %s", sendername, replacetext);
 			OOCNews(COLOR_LIGHTBLUE, string);
 		} else if(veh != 0) {
 			if(IsANews(veh)) {
 				switch(++Pl::Info[playerid][pSkill][6]) {
-					case 50 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 2");
-					case 100 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 3");
-					case 200 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 4, теперь вы можете управлять вертолетом");
-					case 400 : Send(playerid, COLOR_YELLOW, "* Ваш Навык Репортера Новостей - теперь Уровень 5, теперь вы можете брать интервью");
+					case 50 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 2");
+					case 100 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 3");
+					case 200 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 4, С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ СѓРїСЂР°РІР»СЏС‚СЊ РІРµСЂС‚РѕР»РµС‚РѕРј");
+					case 400 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РќР°РІС‹Рє Р РµРїРѕСЂС‚РµСЂР° РќРѕРІРѕСЃС‚РµР№ - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 5, С‚РµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ Р±СЂР°С‚СЊ РёРЅС‚РµСЂРІСЊСЋ");
 				}
 				GetPlayerName(playerid, sendername, 24);
-				format(string, sizeof(string), "*[Пресса] %s: %s", sendername, replacetext);
+				format(string, sizeof(string), "*[РџСЂРµСЃСЃР°] %s: %s", sendername, replacetext);
 				OOCNews(COLOR_LIGHTBLUE, string);
 			}
 		}
@@ -6656,10 +6655,10 @@ public OnPlayerText(playerid, text[]) {
 	if(TalkingLive[playerid] != INVALID_PLAYER_ID) {
 		GetPlayerName(playerid, sendername, sizeof(sendername));
 		if(Pl::FracID(playerid) == 9) {
-		    format(string, sizeof(string), "*[Пресса] Репортер %s: %s", sendername, replacetext);
+		    format(string, sizeof(string), "*[РџСЂРµСЃСЃР°] Р РµРїРѕСЂС‚РµСЂ %s: %s", sendername, replacetext);
 			OOCNews(0x5CFEB9AA, string);
 		} else {
-		    format(string, sizeof(string), "*[Пресса] Интервьюер %s: %s", sendername, replacetext);
+		    format(string, sizeof(string), "*[РџСЂРµСЃСЃР°] РРЅС‚РµСЂРІСЊСЋРµСЂ %s: %s", sendername, replacetext);
 			OOCNews(0x5CFEB9AA, string);
 		}
 		return 0;
@@ -6671,15 +6670,15 @@ public OnPlayerText(playerid, text[]) {
 			WantLawyer[playerid] = 0;
 			CallLawyer[playerid] = 0;
 		    GetPlayerName(playerid, sendername, sizeof(sendername));
-		    format(string, sizeof(string), "** %s находится в Тюрьме, и нуждается в Адвокате. Пройдите в Отделение полиции.", sendername);
+		    format(string, sizeof(string), "** %s РЅР°С…РѕРґРёС‚СЃСЏ РІ РўСЋСЂСЊРјРµ, Рё РЅСѓР¶РґР°РµС‚СЃСЏ РІ РђРґРІРѕРєР°С‚Рµ. РџСЂРѕР№РґРёС‚Рµ РІ РћС‚РґРµР»РµРЅРёРµ РїРѕР»РёС†РёРё.", sendername);
 	    	SendJobMessage(2, COLOR_AZTECAS, string);
-	    	SendJobMessage(2, COLOR_AZTECAS, "* Когда Вы в Отделении полиции, попросите, чтобы офицер одобрил Вас с /accept lawyer.");
-	    	Send(playerid, COLOR_LIGHTRED, "Сообщение послали всем доступным Адвокатам, пожалуйста ждите.");
+	    	SendJobMessage(2, COLOR_AZTECAS, "* РљРѕРіРґР° Р’С‹ РІ РћС‚РґРµР»РµРЅРёРё РїРѕР»РёС†РёРё, РїРѕРїСЂРѕСЃРёС‚Рµ, С‡С‚РѕР±С‹ РѕС„РёС†РµСЂ РѕРґРѕР±СЂРёР» Р’Р°СЃ СЃ /accept lawyer.");
+	    	Send(playerid, COLOR_LIGHTRED, "РЎРѕРѕР±С‰РµРЅРёРµ РїРѕСЃР»Р°Р»Рё РІСЃРµРј РґРѕСЃС‚СѓРїРЅС‹Рј РђРґРІРѕРєР°С‚Р°Рј, РїРѕР¶Р°Р»СѓР№СЃС‚Р° Р¶РґРёС‚Рµ.");
 	    	return 0;
 		} else {
 			WantLawyer[playerid] = 0;
 			CallLawyer[playerid] = 0;
-		    Send(playerid, COLOR_LIGHTRED, "Нет Адвоката, доступного для Вас, Тюремное заключение началось.");
+		    Send(playerid, COLOR_LIGHTRED, "РќРµС‚ РђРґРІРѕРєР°С‚Р°, РґРѕСЃС‚СѓРїРЅРѕРіРѕ РґР»СЏ Р’Р°СЃ, РўСЋСЂРµРјРЅРѕРµ Р·Р°РєР»СЋС‡РµРЅРёРµ РЅР°С‡Р°Р»РѕСЃСЊ.");
 		}
 		return 0;
 	}
@@ -6688,7 +6687,7 @@ public OnPlayerText(playerid, text[]) {
 		if(Pl::isLogged(Mobile[playerid])) {
 			if(Mobile[Mobile[playerid]] == playerid) {
 				GetPlayerName(playerid, sendername, sizeof(sendername));
-				format(string, sizeof(string), "%s говорит (телефон): %s", sendername, replacetext);
+				format(string, sizeof(string), "%s РіРѕРІРѕСЂРёС‚ (С‚РµР»РµС„РѕРЅ): %s", sendername, replacetext);
 				ProxDetector(10.0, playerid, string);
 				Send(Mobile[playerid], COLOR_FADE1, string);
 			}
@@ -6697,7 +6696,7 @@ public OnPlayerText(playerid, text[]) {
 	}
 	
 	if(Pl::Info[playerid][pMaskOn]) {
-		format(string, sizeof(string), "Неизвесный говорит: %s", replacetext);
+		format(string, sizeof(string), "РќРµРёР·РІРµСЃРЅС‹Р№ РіРѕРІРѕСЂРёС‚: %s", replacetext);
 		ProxDetector(20.0, playerid, string);
 		if(!IsPlayerInAnyVehicle(playerid)) {
 			AnimClear[playerid] = 4;
@@ -6705,7 +6704,7 @@ public OnPlayerText(playerid, text[]) {
 		}
 	} else {
 		GetPlayerName(playerid, sendername, sizeof(sendername));
-		format(string, sizeof(string), "* %s[%i] сказал: %s", sendername, playerid, replacetext);
+		format(string, sizeof(string), "* %s[%i] СЃРєР°Р·Р°Р»: %s", sendername, playerid, replacetext);
 		SetPlayerChatBubble(playerid, replacetext, COLOR_GREEN, 50.0, 10000);
 		ProxDetector(20.0, playerid, string);
 		if(!IsPlayerInAnyVehicle(playerid)) {
@@ -6739,15 +6738,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_EDIT_MAPS : {
 			if(response) {
-				if(!strcmp(inputtext, "Добавить", true)) {
-					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Добавить", "Введите имя карты\n\
-					Пример: maps/karta.map", "ENTER", "CANCEL");
+				if(!strcmp(inputtext, "Р”РѕР±Р°РІРёС‚СЊ", true)) {
+					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Р”РѕР±Р°РІРёС‚СЊ", "Р’РІРµРґРёС‚Рµ РёРјСЏ РєР°СЂС‚С‹\n\
+					РџСЂРёРјРµСЂ: maps/karta.map", "ENTER", "CANCEL");
 				}
 				else if(strcmp(inputtext, "------------", true) != 0) {
 					inputtext[strfind(inputtext, ".")] = '\0';
 					new id = strval(inputtext);
 					SetPVarInt(playerid, "SelectedItem", id);
-					SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+					SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "РР·РјРµРЅРёС‚СЊ\nРџРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ\nРР·РјРµРЅРёС‚СЊ РІРёСЂС‚. РјРёСЂ\nРР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ\nРЈРґР°Р»РёС‚СЊ", "SELECT", "CANCEL");
 				}
 			}
 		}
@@ -6755,12 +6754,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_EDIT_MAPS + 1 : {
 			if(response) {
 				if(sscanf(inputtext, "s[36]", inputtext[0])) {
-					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Добавить", "Введите путь до карты\n\
-					Пример: karta.map", "ENTER", "CANCEL");
+					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Р”РѕР±Р°РІРёС‚СЊ", "Р’РІРµРґРёС‚Рµ РїСѓС‚СЊ РґРѕ РєР°СЂС‚С‹\n\
+					РџСЂРёРјРµСЂ: karta.map", "ENTER", "CANCEL");
 				} else if(!fexist(inputtext[0])) {
-					Send(playerid, COLOR_GREY, "* Нет такого файла!");
-					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Добавить", "Введите путь до карты\n\
-					Пример: maps/karta.map", "ENTER", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµС‚ С‚Р°РєРѕРіРѕ С„Р°Р№Р»Р°!");
+					SPD(playerid, D_EDIT_MAPS + 1, DIALOG_STYLE_INPUT, "Р”РѕР±Р°РІРёС‚СЊ", "Р’РІРµРґРёС‚Рµ РїСѓС‚СЊ РґРѕ РєР°СЂС‚С‹\n\
+					РџСЂРёРјРµСЂ: maps/karta.map", "ENTER", "CANCEL");
 				} else {
 					new escapetext[36];
 					Db::escape_string(inputtext[0], escapetext);
@@ -6773,9 +6772,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						strmid(MapInfo[id][MapFile], inputtext[0], 0, strlen(inputtext[0]), 36);
 						MapInfo[id][MapWorld] = -1;
 						MapInfo[id][MapInt] = -1;
-						Send(playerid, COLOR_YELLOW, "* Карта была добавлена!");
+						Send(playerid, COLOR_YELLOW, "* РљР°СЂС‚Р° Р±С‹Р»Р° РґРѕР±Р°РІР»РµРЅР°!");
 					} else {
-						Send(playerid, COLOR_LIGHTRED, "* При добавлении произошла ошибка!");
+						Send(playerid, COLOR_LIGHTRED, "* РџСЂРё РґРѕР±Р°РІР»РµРЅРёРё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°!");
 					}
 					cache_delete(result);
 				}
@@ -6785,18 +6784,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_EDIT_MAPS + 2 : {
 			if(response) {
 				switch(listitem) {
-					case 0 : SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "Изменить", "Введите новый путь до карты:", "ENTER", "CANCEL");
+					case 0 : SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "РР·РјРµРЅРёС‚СЊ", "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РїСѓС‚СЊ РґРѕ РєР°СЂС‚С‹:", "ENTER", "CANCEL");
 					case 1 : {
 						new id = GetPVarInt(playerid, "SelectedItem");
 						SetPVarInt(playerid, "SelectedItem", -1);
 						map::Destroy(MapInfo[id][MapID]);
 						MapInfo[id][MapID] = map::Load(MapInfo[id][MapFile], MapInfo[id][MapWorld], MapInfo[id][MapInt]);
-						Send(playerid, COLOR_GREY, "* Карта была перезагружена!");
+						Send(playerid, COLOR_GREY, "* РљР°СЂС‚Р° Р±С‹Р»Р° РїРµСЂРµР·Р°РіСЂСѓР¶РµРЅР°!");
 					}
 					
-					case 2 : SPD(playerid, D_EDIT_MAPS + 4, DIALOG_STYLE_INPUT, "Изменить вирт. мир", "Введите ид виртуального мира:", "ENTER", "CANCEL");
-					case 3 : SPD(playerid, D_EDIT_MAPS + 5, DIALOG_STYLE_INPUT, "Изменить интерьер", "Введите ид интерьера:", "ENTER", "CANCEL");
-					case 4 : SPD(playerid, D_EDIT_MAPS + 6, DIALOG_STYLE_MSGBOX, "Удалить", "Вы точно хотите удалить карту?", "YES", "NO");
+					case 2 : SPD(playerid, D_EDIT_MAPS + 4, DIALOG_STYLE_INPUT, "РР·РјРµРЅРёС‚СЊ РІРёСЂС‚. РјРёСЂ", "Р’РІРµРґРёС‚Рµ РёРґ РІРёСЂС‚СѓР°Р»СЊРЅРѕРіРѕ РјРёСЂР°:", "ENTER", "CANCEL");
+					case 3 : SPD(playerid, D_EDIT_MAPS + 5, DIALOG_STYLE_INPUT, "РР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ", "Р’РІРµРґРёС‚Рµ РёРґ РёРЅС‚РµСЂСЊРµСЂР°:", "ENTER", "CANCEL");
+					case 4 : SPD(playerid, D_EDIT_MAPS + 6, DIALOG_STYLE_MSGBOX, "РЈРґР°Р»РёС‚СЊ", "Р’С‹ С‚РѕС‡РЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ РєР°СЂС‚Сѓ?", "YES", "NO");
 				}
 			} else {
 				SetPVarInt(playerid, "SelectedItem", -1);
@@ -6807,12 +6806,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new id = GetPVarInt(playerid, "SelectedItem");
 			if(response) {
 				if(sscanf(inputtext, "s[36]", inputtext[0])) {
-					SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "Изменить", "Введите путь до карты\n\
-					Пример: karta.map", "ENTER", "CANCEL");
+					SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "РР·РјРµРЅРёС‚СЊ", "Р’РІРµРґРёС‚Рµ РїСѓС‚СЊ РґРѕ РєР°СЂС‚С‹\n\
+					РџСЂРёРјРµСЂ: karta.map", "ENTER", "CANCEL");
 				} else if(!fexist(inputtext[0])) {
-					Send(playerid, COLOR_GREY, "* Нет такого файла!");
-					SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "Изменить", "Введите путь до карты\n\
-					Пример: maps/karta.map", "ENTER", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµС‚ С‚Р°РєРѕРіРѕ С„Р°Р№Р»Р°!");
+					SPD(playerid, D_EDIT_MAPS + 3, DIALOG_STYLE_INPUT, "РР·РјРµРЅРёС‚СЊ", "Р’РІРµРґРёС‚Рµ РїСѓС‚СЊ РґРѕ РєР°СЂС‚С‹\n\
+					РџСЂРёРјРµСЂ: maps/karta.map", "ENTER", "CANCEL");
 				} else {
 					new escapetext[36];
 					Db::escape_string(inputtext[0], escapetext);
@@ -6822,11 +6821,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					map::Destroy(MapInfo[id][MapID]);
 					MapInfo[id][MapID] = map::Load(inputtext[0], MapInfo[id][MapWorld], MapInfo[id][MapInt]);
 					strmid(MapInfo[id][MapFile], inputtext[0], 0, strlen(inputtext[0]), 36);
-					Send(playerid, COLOR_YELLOW, "* Карта была изменина!");
+					Send(playerid, COLOR_YELLOW, "* РљР°СЂС‚Р° Р±С‹Р»Р° РёР·РјРµРЅРёРЅР°!");
 					SetPVarInt(playerid, "SelectedItem", -1);
 				}
 			} else {
-				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "РР·РјРµРЅРёС‚СЊ\nРџРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ\nРР·РјРµРЅРёС‚СЊ РІРёСЂС‚. РјРёСЂ\nРР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ\nРЈРґР°Р»РёС‚СЊ", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -6834,16 +6833,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new id = GetPVarInt(playerid, "SelectedItem");
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_EDIT_MAPS + 4, DIALOG_STYLE_INPUT, "Изменить вирт. мир", "Введите ид виртуального мира:", "ENTER", "CANCEL");
+					SPD(playerid, D_EDIT_MAPS + 4, DIALOG_STYLE_INPUT, "РР·РјРµРЅРёС‚СЊ РІРёСЂС‚. РјРёСЂ", "Р’РІРµРґРёС‚Рµ РёРґ РІРёСЂС‚СѓР°Р»СЊРЅРѕРіРѕ РјРёСЂР°:", "ENTER", "CANCEL");
 				} else {
 					format(query, sizeof query, "UPDATE `maps` SET `map_world` = '%i' WHERE `id` = '%i'", inputtext[0], id);
 					Db::tquery(connDb, query);
 					map::SetWorld(MapInfo[id][MapID], inputtext[0]);
-					Send(playerid, COLOR_YELLOW, "* Виртуальный мир карты был изменен!");
+					Send(playerid, COLOR_YELLOW, "* Р’РёСЂС‚СѓР°Р»СЊРЅС‹Р№ РјРёСЂ РєР°СЂС‚С‹ Р±С‹Р» РёР·РјРµРЅРµРЅ!");
 					SetPVarInt(playerid, "SelectedItem", -1);
 				}
 			} else {
-				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "РР·РјРµРЅРёС‚СЊ\nРџРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ\nРР·РјРµРЅРёС‚СЊ РІРёСЂС‚. РјРёСЂ\nРР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ\nРЈРґР°Р»РёС‚СЊ", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -6851,16 +6850,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new id = GetPVarInt(playerid, "SelectedItem");
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_EDIT_MAPS + 5, DIALOG_STYLE_INPUT, "Изменить интерьер", "Введите ид интерьера:", "ENTER", "CANCEL");
+					SPD(playerid, D_EDIT_MAPS + 5, DIALOG_STYLE_INPUT, "РР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ", "Р’РІРµРґРёС‚Рµ РёРґ РёРЅС‚РµСЂСЊРµСЂР°:", "ENTER", "CANCEL");
 				} else {
 					format(query, sizeof query, "UPDATE `maps` SET `map_int` = '%i' WHERE `id` = '%i'", inputtext[0], id);
 					Db::tquery(connDb, query);
 					map::SetInterior(MapInfo[id][MapID], inputtext[0]);
-					Send(playerid, COLOR_YELLOW, "* Интерьер карты карты был изменен!");
+					Send(playerid, COLOR_YELLOW, "* РРЅС‚РµСЂСЊРµСЂ РєР°СЂС‚С‹ РєР°СЂС‚С‹ Р±С‹Р» РёР·РјРµРЅРµРЅ!");
 					SetPVarInt(playerid, "SelectedItem", -1);
 				}
 			} else {
-				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "РР·РјРµРЅРёС‚СЊ\nРџРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ\nРР·РјРµРЅРёС‚СЊ РІРёСЂС‚. РјРёСЂ\nРР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ\nРЈРґР°Р»РёС‚СЊ", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -6887,9 +6886,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				format(query, sizeof query, "ALTER TABLE `maps` AUTO_INCREMENT = %i", last - 1);
 				Db::tquery(connDb, query);
 				
-				Send(playerid, COLOR_YELLOW, "* Карта была удалена!");
+				Send(playerid, COLOR_YELLOW, "* РљР°СЂС‚Р° Р±С‹Р»Р° СѓРґР°Р»РµРЅР°!");
 			} else {
-				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "Изменить\nПерезагрузить\nИзменить вирт. мир\nИзменить интерьер\nУдалить", "SELECT", "CANCEL");
+				SPD(playerid, D_EDIT_MAPS + 2, DIALOG_STYLE_LIST, MapInfo[id][MapFile], "РР·РјРµРЅРёС‚СЊ\nРџРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ\nРР·РјРµРЅРёС‚СЊ РІРёСЂС‚. РјРёСЂ\nРР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ\nРЈРґР°Р»РёС‚СЊ", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -6898,10 +6897,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				format(string, sizeof string, "extra[%i]", listitem);
 				new item = GetPVarInt(playerid, string);
 				SetPVarInt(playerid, "SelectedItem", item);
-				format(string, sizeof string, "Транспорт: %s", VehicleNames[ExtraVehicles[playerid][item][evModel] - 400]);
+				format(string, sizeof string, "РўСЂР°РЅСЃРїРѕСЂС‚: %s", VehicleNames[ExtraVehicles[playerid][item][evModel] - 400]);
 				dialog[0]='\0';
-				if(IsValidHouse(Pl::Info[playerid][pHouseKey])) scf(dialog, temp, "Заспавнить\nПрипарковать");
-				scf(dialog, temp, "\nИзменить цвет");
+				if(IsValidHouse(Pl::Info[playerid][pHouseKey])) scf(dialog, temp, "Р—Р°СЃРїР°РІРЅРёС‚СЊ\nРџСЂРёРїР°СЂРєРѕРІР°С‚СЊ");
+				scf(dialog, temp, "\nРР·РјРµРЅРёС‚СЊ С†РІРµС‚");
 				SPD(playerid, D_EV_MENU+1, DIALOG_STYLE_LIST, string, dialog, "SELECT", "CANCEL");
 			}
 		}
@@ -6909,7 +6908,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_EV_MENU+1 : {
 			if(response) {
 				new item = GetPVarInt(playerid, "SelectedItem");
-				if(strfind(inputtext, "Заспавнить") != -1) {
+				if(strfind(inputtext, "Р—Р°СЃРїР°РІРЅРёС‚СЊ") != -1) {
 					if(GetVehiclePassengers(ExtraVehicles[playerid][item][evID2])) return GameTextForPlayer(playerid, "~w~Car is~n~in ~r~use", 5000, 1);
 					if(ExtraVehicles[playerid][item][evPark] == PARK_GARAGE) {
 						Veh::Destroy(ExtraVehicles[playerid][item][evID2]);
@@ -6917,20 +6916,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						SetVehicleToRespawn(ExtraVehicles[playerid][item][evID2]);
 					}
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					Send(playerid, COLOR_LIGHTBLUE, "* Транспорт отбуксирован на место парковки!");
+					Send(playerid, COLOR_LIGHTBLUE, "* РўСЂР°РЅСЃРїРѕСЂС‚ РѕС‚Р±СѓРєСЃРёСЂРѕРІР°РЅ РЅР° РјРµСЃС‚Рѕ РїР°СЂРєРѕРІРєРё!");
 				}
 				
-				else if(strfind(inputtext, "Припарковать") != -1) {
+				else if(strfind(inputtext, "РџСЂРёРїР°СЂРєРѕРІР°С‚СЊ") != -1) {
 					new hid = Pl::Info[playerid][pHouseKey];
 					new veh = GetPlayerVehicleID(playerid);
-					if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
-					if(veh != ExtraVehicles[playerid][item][evID2]) return Send(playerid, COLOR_GREY, "* Вы должны сидеть в траспорте!");
+					if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
+					if(veh != ExtraVehicles[playerid][item][evID2]) return Send(playerid, COLOR_GREY, "* Р’С‹ РґРѕР»Р¶РЅС‹ СЃРёРґРµС‚СЊ РІ С‚СЂР°СЃРїРѕСЂС‚Рµ!");
 					if(IsPlayerInRangeOfPoint(playerid, 50.0, HouseInfo[hid][hEnter][0], HouseInfo[hid][hEnter][1], HouseInfo[hid][hEnter][2])) {
 						ExtraVehicles[playerid][item][evPark] = PARK_HOME;
 					} else if(IsPlayerInHouseGarage(playerid)) {
 						ExtraVehicles[playerid][item][evPark] = PARK_HOME_GARAGE * hid;
 					} else {
-						return Send(playerid, COLOR_GREY, "* Вы слишком далеко от дома!");
+						return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ РґРѕРјР°!");
 					}
 					GetVehiclePos(veh, ExtraVehicles[playerid][item][evSpawnX], ExtraVehicles[playerid][item][evSpawnY], ExtraVehicles[playerid][item][evSpawnZ]);
 					GetVehicleZAngle(veh, ExtraVehicles[playerid][item][evSpawnA]);
@@ -6955,13 +6954,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Rac::PutPlayerInVehicle(playerid, ExtraVehicles[playerid][item][evID2], 0);
 					UpdateExtraVehicle(playerid, item);
 					UpdateHouse(hid);
-					format(string, sizeof string, "* Транспорт %s был припаркован!", VehicleNames[ExtraVehicles[playerid][item][evModel] - 400]);
+					format(string, sizeof string, "* РўСЂР°РЅСЃРїРѕСЂС‚ %s Р±С‹Р» РїСЂРёРїР°СЂРєРѕРІР°РЅ!", VehicleNames[ExtraVehicles[playerid][item][evModel] - 400]);
 					Send(playerid, COLOR_YELLOW, string);
 					
 				}
 				
-				else if(strfind(inputtext, "Изменить цвет") != -1) {
-					ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
+				else if(strfind(inputtext, "РР·РјРµРЅРёС‚СЊ С†РІРµС‚") != -1) {
+					ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "РџРµСЂРµРєСЂР°СЃРєР°", "dialog/colors.txt", "ENTER", "CANCEL");
 				}
 			} else {
 				ShowExtraVehiclesMenu(playerid);
@@ -6971,14 +6970,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_EV_MENU+2 : {
 			if(response) {
 				if(sscanf(inputtext, "p<,>ii", inputtext[0], inputtext[1])) {
-					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµ РІР°Р»РёРґРЅР°СЏ СЃС‚СЂРѕРєР°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ!");
+					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "РџРµСЂРµРєСЂР°СЃРєР°", "dialog/colors.txt", "ENTER", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 127) {
-					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµ РІР°Р»РёРґРЅР°СЏ СЃС‚СЂРѕРєР°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ!");
+					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "РџРµСЂРµРєСЂР°СЃРєР°", "dialog/colors.txt", "ENTER", "CANCEL");
 				} else if(inputtext[1] < 0 || inputtext[1] > 127) {
-					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "Перекраска", "dialog/colors.txt", "ENTER", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµ РІР°Р»РёРґРЅР°СЏ СЃС‚СЂРѕРєР°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ!");
+					return ShowDialog(playerid, D_EV_MENU+2, DIALOG_STYLE_INPUT, "РџРµСЂРµРєСЂР°СЃРєР°", "dialog/colors.txt", "ENTER", "CANCEL");
 				} else {
 					new item = GetPVarInt(playerid, "SelectedItem");
 					ExtraVehicles[playerid][item][evColor1] = inputtext[0];
@@ -6986,7 +6985,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					ChangeVehicleColor(ExtraVehicles[playerid][item][evID2], inputtext[0], inputtext[1]);
 					UpdateExtraVehicle(playerid, item);
 					
-					format(string, sizeof string, "* Цвет транспорта %s был изминен на %i|%i!", VehicleNames[ExtraVehicles[playerid][item][evModel] - 400], inputtext[0], inputtext[1]);
+					format(string, sizeof string, "* Р¦РІРµС‚ С‚СЂР°РЅСЃРїРѕСЂС‚Р° %s Р±С‹Р» РёР·РјРёРЅРµРЅ РЅР° %i|%i!", VehicleNames[ExtraVehicles[playerid][item][evModel] - 400], inputtext[0], inputtext[1]);
 					Send(playerid, COLOR_YELLOW, string);
 				}
 			} else {
@@ -7002,27 +7001,27 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SetPVarInt(playerid, "SelectedPlayer", INVALID_PLAYER_ID);
 				if(Pl::isLogged(targetid)) {
 					if(RemoveExtraVehicle(targetid, item)) {
-						Send(playerid, COLOR_YELLOW, "* Доп. траспорт был удален!");
+						Send(playerid, COLOR_YELLOW, "* Р”РѕРї. С‚СЂР°СЃРїРѕСЂС‚ Р±С‹Р» СѓРґР°Р»РµРЅ!");
 					}
 				} else {
-					Send(playerid, COLOR_GREY, "* Игрок вышел из игры!");
+					Send(playerid, COLOR_GREY, "* РРіСЂРѕРє РІС‹С€РµР» РёР· РёРіСЂС‹!");
 				}
 			}
 		}
 		
 		case D_WAIT : {
-			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);	
+			if(!response) return KickEx(playerid, "Р”Р»СЏ РёРіСЂС‹ РЅР° СЃРµСЂРІРµСЂРµ, Р’С‹ РґРѕР»Р¶РЅС‹ Р°РІС‚РѕСЂРёР·РѕРІР°С‚СЃСЏ!", COLOR_LIGHTRED);	
 			if(Pl::Info[playerid][pWait] > 0) {
-				format(dialog, sizeof dialog, "Дождитесь полной загрузки игры и нажмите ENTER!\n\
-				Осталось секунд: %i", Pl::Info[playerid][pWait]);
-				SPD(playerid, D_WAIT, 0, "Подождите...",dialog, "ENTER", "");
+				format(dialog, sizeof dialog, "Р”РѕР¶РґРёС‚РµСЃСЊ РїРѕР»РЅРѕР№ Р·Р°РіСЂСѓР·РєРё РёРіСЂС‹ Рё РЅР°Р¶РјРёС‚Рµ ENTER!\n\
+				РћСЃС‚Р°Р»РѕСЃСЊ СЃРµРєСѓРЅРґ: %i", Pl::Info[playerid][pWait]);
+				SPD(playerid, D_WAIT, 0, "РџРѕРґРѕР¶РґРёС‚Рµ...",dialog, "ENTER", "");
 			}
 			return 1;
 		}
 		
 		case D_AUTH : {
-			if(!WrongLogin[playerid]) return Rac::Kick(playerid, "Попытка взлома аккаунта");
-			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);
+			if(!WrongLogin[playerid]) return Rac::Kick(playerid, "РџРѕРїС‹С‚РєР° РІР·Р»РѕРјР° Р°РєРєР°СѓРЅС‚Р°");
+			if(!response) return KickEx(playerid, "Р”Р»СЏ РёРіСЂС‹ РЅР° СЃРµСЂРІРµСЂРµ, Р’С‹ РґРѕР»Р¶РЅС‹ Р°РІС‚РѕСЂРёР·РѕРІР°С‚СЃСЏ!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA2_HASH_LEN];
 				SHA256_PassHash(inputtext[0], Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
@@ -7034,12 +7033,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 
 		case D_REGG : {
-			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны согласится с правилами игры!", COLOR_LIGHTRED);
+			if(!response) return KickEx(playerid, "Р”Р»СЏ РёРіСЂС‹ РЅР° СЃРµСЂРІРµСЂРµ, Р’С‹ РґРѕР»Р¶РЅС‹ СЃРѕРіР»Р°СЃРёС‚СЃСЏ СЃ РїСЂР°РІРёР»Р°РјРё РёРіСЂС‹!", COLOR_LIGHTRED);
 			ShowLoginForm(playerid, 0);
 		}
 		
 		case D_REGG + 1 : {
-			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны зарегистрироваться!", COLOR_LIGHTRED);
+			if(!response) return KickEx(playerid, "Р”Р»СЏ РёРіСЂС‹ РЅР° СЃРµСЂРІРµСЂРµ, Р’С‹ РґРѕР»Р¶РЅС‹ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA2_HASH_LEN];
 				SHA256_PassHash(inputtext[0], Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
@@ -7065,7 +7064,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SetPlayerSkin(playerid, skin);
 				ShowMenuForPlayer(SkinMenu, playerid);
 			} else {
-				SPD(playerid, D_REGG + 3, DIALOG_STYLE_MSGBOX, "Sex", " Выберете пол вашего персонажа.", "ЖЕН", "МУЖ");
+				SPD(playerid, D_REGG + 3, DIALOG_STYLE_MSGBOX, "Sex", " Р’С‹Р±РµСЂРµС‚Рµ РїРѕР» РІР°С€РµРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.", "Р–Р•Рќ", "РњРЈР–");
 			}
 			return 1;
 		}
@@ -7076,8 +7075,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(IsPlayerAttachedObjectSlotUsed(playerid,2)) RemovePlayerAttachedObject(playerid,2);
 				OnJob[playerid] = 1;
 				SetPlayerSkin(playerid, 27);
-				SendClientMessage(playerid, COLOR_LIGHTBLUE, "Вы начали работу в Производственном Цеху!");
-				SendClientMessage(playerid, COLOR_LIGHTBLUE, "Идите к столу, чтобы начать работу");
+				SendClientMessage(playerid, COLOR_LIGHTBLUE, "Р’С‹ РЅР°С‡Р°Р»Рё СЂР°Р±РѕС‚Сѓ РІ РџСЂРѕРёР·РІРѕРґСЃС‚РІРµРЅРЅРѕРј Р¦РµС…Сѓ!");
+				SendClientMessage(playerid, COLOR_LIGHTBLUE, "РРґРёС‚Рµ Рє СЃС‚РѕР»Сѓ, С‡С‚РѕР±С‹ РЅР°С‡Р°С‚СЊ СЂР°Р±РѕС‚Сѓ");
 				ApplyAnimation(playerid,"INT_SHOP","shop_cashier",4.1,1,0,0,0,1); //    WEAPON_csawlo
 				ClearAnimations(playerid);
 			}
@@ -7091,7 +7090,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				OnJob[playerid] = 0;
 				SetPlayerSkin(playerid, Pl::Info[playerid][pChar]);
 				Rac::GivePlayerMoney(playerid, KG[playerid][1] * 50);
-				format(string, sizeof(string), "Вы заработали %d$ за изготовление %dкг продуктов", KG[playerid][1] * 50, KG[playerid][1]);
+				format(string, sizeof(string), "Р’С‹ Р·Р°СЂР°Р±РѕС‚Р°Р»Рё %d$ Р·Р° РёР·РіРѕС‚РѕРІР»РµРЅРёРµ %dРєРі РїСЂРѕРґСѓРєС‚РѕРІ", KG[playerid][1] * 50, KG[playerid][1]);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				KG[playerid][0] = 0;
 				KG[playerid][1] = 0;
@@ -7107,7 +7106,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 2 : {}
 					case 3 .. sizeof Colors : SetPlayerColor(playerid, Colors[(listitem - 3)][e_color]);
 				}
-				Send(playerid, COLOR_WHITE, "* Цвет установлен!");
+				Send(playerid, COLOR_WHITE, "* Р¦РІРµС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅ!");
 			}
 		}
 		
@@ -7116,14 +7115,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				switch(listitem) {
 					case 0..2 : {
 						static const skinInfo[][] = {
-							{280, "Полиции"},
-							{286, "ФБР"},
-							{287, "Армии"}
+							{280, "РџРѕР»РёС†РёРё"},
+							{286, "Р¤Р‘Р "},
+							{287, "РђСЂРјРёРё"}
 						};
 						SetPlayerSkin(playerid, skinInfo[listitem][0]);
 						HideNameTag(playerid, true);
 						
-						format(string, sizeof string, "* Вы скрылись в одежде %s", skinInfo[listitem][1]);
+						format(string, sizeof string, "* Р’С‹ СЃРєСЂС‹Р»РёСЃСЊ РІ РѕРґРµР¶РґРµ %s", skinInfo[listitem][1]);
 						Send(playerid,COLOR_LIGHTBLUE, string);
 					}
 					
@@ -7135,13 +7134,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						SetPlayerSkin(playerid, _skinInfo[Pl::Info[playerid][pSex]][random(3)]);
 						HideNameTag(playerid, true);
 						
-						Send(playerid,COLOR_LIGHTBLUE,"Вы скрылись в одежде гражданского!");
+						Send(playerid,COLOR_LIGHTBLUE,"Р’С‹ СЃРєСЂС‹Р»РёСЃСЊ РІ РѕРґРµР¶РґРµ РіСЂР°Р¶РґР°РЅСЃРєРѕРіРѕ!");
 					}
 					
 					case 4 : {
 						HideNameTag(playerid, false);
 						SetPlayerSkin(playerid, Pl::Info[playerid][pChar]);
-						Send(playerid,COLOR_LIGHTBLUE, "Вы вернули себе свою одежду");
+						Send(playerid,COLOR_LIGHTBLUE, "Р’С‹ РІРµСЂРЅСѓР»Рё СЃРµР±Рµ СЃРІРѕСЋ РѕРґРµР¶РґСѓ");
 					}
 				}
 			}
@@ -7153,19 +7152,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 0: {
 						SetPlayerSkin(playerid, 120);
 						HideNameTag( playerid, true );
-						Send(playerid,COLOR_LIGHTBLUE,"* Вы скрылись в одежде Японца");
+						Send(playerid,COLOR_LIGHTBLUE,"* Р’С‹ СЃРєСЂС‹Р»РёСЃСЊ РІ РѕРґРµР¶РґРµ РЇРїРѕРЅС†Р°");
 					}
 
 					case 1: {
 						SetPlayerSkin(playerid, 115);
 						HideNameTag( playerid, true );
-						Send(playerid,COLOR_LIGHTBLUE,"* Вы скрылись в одежде Коронос");
+						Send(playerid,COLOR_LIGHTBLUE,"* Р’С‹ СЃРєСЂС‹Р»РёСЃСЊ РІ РѕРґРµР¶РґРµ РљРѕСЂРѕРЅРѕСЃ");
 					}
 					
 					case 2: {
 						SetPlayerSkin(playerid, 104);
 						HideNameTag( playerid, true );
-						Send(playerid,COLOR_LIGHTBLUE,"* Вы скрылись в одежде Баллас");
+						Send(playerid,COLOR_LIGHTBLUE,"* Р’С‹ СЃРєСЂС‹Р»РёСЃСЊ РІ РѕРґРµР¶РґРµ Р‘Р°Р»Р»Р°СЃ");
 					}
 					
 					case 3: {
@@ -7186,11 +7185,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								}
 							}
 						}
-						Send(playerid,COLOR_LIGHTBLUE,"* Вы скрылись в одежде гражданского");
+						Send(playerid,COLOR_LIGHTBLUE,"* Р’С‹ СЃРєСЂС‹Р»РёСЃСЊ РІ РѕРґРµР¶РґРµ РіСЂР°Р¶РґР°РЅСЃРєРѕРіРѕ");
 					}
 					case 4: {
 						SetPlayerSkin(playerid, Pl::Info[playerid][pChar]);
-						Send(playerid,COLOR_LIGHTBLUE,"* Вы вернули себе свою одежду");
+						Send(playerid,COLOR_LIGHTBLUE,"* Р’С‹ РІРµСЂРЅСѓР»Рё СЃРµР±Рµ СЃРІРѕСЋ РѕРґРµР¶РґСѓ");
 					}
 				}
 			}
@@ -7203,12 +7202,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response)
 			{
 				new vehid = GetPlayerVehicleID(playerid);
-				if(!vehid) return Send(playerid,COLOR_GREY,"* Вы не в машине!");
-				if(AutoInfo[vehid][aDrugs] <= 0) return Send(playerid,COLOR_GREY,"* В вашей машине нету наркотиков!");
-				if(Gm::Info[Gm::AmbarDrugs] >= 20000) return Send(playerid,COLOR_GREY,"* Амбар переполнен! Максимум 20000 грамм.");
+				if(!vehid) return Send(playerid,COLOR_GREY,"* Р’С‹ РЅРµ РІ РјР°С€РёРЅРµ!");
+				if(AutoInfo[vehid][aDrugs] <= 0) return Send(playerid,COLOR_GREY,"* Р’ РІР°С€РµР№ РјР°С€РёРЅРµ РЅРµС‚Сѓ РЅР°СЂРєРѕС‚РёРєРѕРІ!");
+				if(Gm::Info[Gm::AmbarDrugs] >= 20000) return Send(playerid,COLOR_GREY,"* РђРјР±Р°СЂ РїРµСЂРµРїРѕР»РЅРµРЅ! РњР°РєСЃРёРјСѓРј 20000 РіСЂР°РјРј.");
 				inputtext[0] = AutoInfo[vehid][aDrugs]*50;
 				Gm::Info[Gm::AmbarDrugs] += AutoInfo[vehid][aDrugs]; Rac::GivePlayerMoney(playerid, inputtext[0]);
-				format(string, sizeof(string), "* Вы продали %i грамм притону за %i$", AutoInfo[vehid][aDrugs], inputtext[0]);
+				format(string, sizeof(string), "* Р’С‹ РїСЂРѕРґР°Р»Рё %i РіСЂР°РјРј РїСЂРёС‚РѕРЅСѓ Р·Р° %i$", AutoInfo[vehid][aDrugs], inputtext[0]);
 				Send(playerid,COLOR_LIGHTBLUE,string);
 				AutoInfo[vehid][aDrugs] = 0;
 			}
@@ -7220,12 +7219,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if( response )
 			{
 				new vehid = GetPlayerVehicleID(playerid);
-				if( !vehid ) return Send(playerid,COLOR_GREY,"* Вы не в машине!");
-				if(AutoInfo[vehid][aDrugs] <= 0) return Send(playerid,COLOR_GREY,"* В вашей машине нету наркотиков!");
-				if(Gm::Info[Gm::AmbarDrugs] >= 20000) return Send(playerid,COLOR_GREY,"* Амбар переполнен! Максимум 20000 грамм.");
+				if( !vehid ) return Send(playerid,COLOR_GREY,"* Р’С‹ РЅРµ РІ РјР°С€РёРЅРµ!");
+				if(AutoInfo[vehid][aDrugs] <= 0) return Send(playerid,COLOR_GREY,"* Р’ РІР°С€РµР№ РјР°С€РёРЅРµ РЅРµС‚Сѓ РЅР°СЂРєРѕС‚РёРєРѕРІ!");
+				if(Gm::Info[Gm::AmbarDrugs] >= 20000) return Send(playerid,COLOR_GREY,"* РђРјР±Р°СЂ РїРµСЂРµРїРѕР»РЅРµРЅ! РњР°РєСЃРёРјСѓРј 20000 РіСЂР°РјРј.");
 				inputtext[0] = AutoInfo[vehid][aDrugs]*70;
 				Gm::Info[Gm::PritonDrugs] += AutoInfo[vehid][aDrugs]; Rac::GivePlayerMoney(playerid, inputtext[0]);
-				format(string, sizeof(string), "* Вы продали %d грамм притону за %d$", AutoInfo[vehid][aDrugs], inputtext[0]);
+				format(string, sizeof(string), "* Р’С‹ РїСЂРѕРґР°Р»Рё %d РіСЂР°РјРј РїСЂРёС‚РѕРЅСѓ Р·Р° %d$", AutoInfo[vehid][aDrugs], inputtext[0]);
 				Send(playerid,COLOR_LIGHTBLUE,string);
 				AutoInfo[vehid][aDrugs] = 0;
 			}
@@ -7237,31 +7236,31 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if( response )
 			{
 				new vehid = GetPlayerVehicleID(playerid);
-				if( !vehid ) return Send(playerid,COLOR_GREY,"* Вы не в машине!");
+				if( !vehid ) return Send(playerid,COLOR_GREY,"* Р’С‹ РЅРµ РІ РјР°С€РёРЅРµ!");
 				if( sscanf(inputtext, "i", inputtext[0]) )
 				{
-					SPD(playerid, D_BARN+2, 1, "Амбар", "Кол-во мака которое хотите взять.", "Взять", "Отмена");
+					SPD(playerid, D_BARN+2, 1, "РђРјР±Р°СЂ", "РљРѕР»-РІРѕ РјР°РєР° РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ.", "Р’Р·СЏС‚СЊ", "РћС‚РјРµРЅР°");
 				}
 				else if(inputtext[0] > 100)
 				{
-					Send(playerid,COLOR_GREY,"* Больше 100 грамм возить нельзя!");
-					SPD(playerid, D_BARN+2, 1, "Амбар", "Кол-во мака которое хотите взять.", "Взять", "Отмена");
+					Send(playerid,COLOR_GREY,"* Р‘РѕР»СЊС€Рµ 100 РіСЂР°РјРј РІРѕР·РёС‚СЊ РЅРµР»СЊР·СЏ!");
+					SPD(playerid, D_BARN+2, 1, "РђРјР±Р°СЂ", "РљРѕР»-РІРѕ РјР°РєР° РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ.", "Р’Р·СЏС‚СЊ", "РћС‚РјРµРЅР°");
 				}
 				else
 				{
 					inputtext[1] = inputtext[0]*50;
-					if(Rac::GetPlayerMoney(playerid) < inputtext[1]) Send(playerid,COLOR_GREY,"* У Вас не хватает денег!");
+					if(Rac::GetPlayerMoney(playerid) < inputtext[1]) Send(playerid,COLOR_GREY,"* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 					else if(AutoInfo[vehid][aDrugs]+inputtext[0] > AutoInfo[vehid][aMaxDrugs])
 					{
-						Send(playerid,COLOR_LIGHTRED2,"* За один раз можно везти 100 грамм!");
-						SPD(playerid, D_BARN+2, 1, "Амбар", "Кол-во мака которое хотите взять.", "Взять", "Отмена");
+						Send(playerid,COLOR_LIGHTRED2,"* Р—Р° РѕРґРёРЅ СЂР°Р· РјРѕР¶РЅРѕ РІРµР·С‚Рё 100 РіСЂР°РјРј!");
+						SPD(playerid, D_BARN+2, 1, "РђРјР±Р°СЂ", "РљРѕР»-РІРѕ РјР°РєР° РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ.", "Р’Р·СЏС‚СЊ", "РћС‚РјРµРЅР°");
 					}
 					else
 					{
 						AutoInfo[vehid][aDrugs] += inputtext[0];
 						Gm::Info[Gm::AmbarDrugs] -= inputtext[0];
 						Rac::GivePlayerMoney(playerid, -inputtext[1]);
-						format(string, sizeof(string), "* Вы взяли %d грамм за $%d", inputtext[0], inputtext[1]);
+						format(string, sizeof(string), "* Р’С‹ РІР·СЏР»Рё %d РіСЂР°РјРј Р·Р° $%d", inputtext[0], inputtext[1]);
 						Send(playerid,COLOR_LIGHTBLUE,string);
 					}
 				}
@@ -7273,25 +7272,25 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new houseid = Pl::Info[playerid][pLocal] - OFFSET_HOUSE;
 				if(!IsValidHouse(houseid)) return Send(playerid, COLOR_GREY, "* Invalid house id!");
-				if(!IsPlayerInHouse(playerid, 9.0, houseid)) return Send(playerid, COLOR_GREY, "* Вы не в доме!");
+				if(!IsPlayerInHouse(playerid, 9.0, houseid)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ РІ РґРѕРјРµ!");
 				switch(listitem) {
 					case 0 : {
-						if(!HouseInfo[houseid][hSafe][3]) return Send(playerid, COLOR_GREY, "* В доме нет аптечек!");
-						if(Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Вы уже вылечены!");
+						if(!HouseInfo[houseid][hSafe][3]) return Send(playerid, COLOR_GREY, "* Р’ РґРѕРјРµ РЅРµС‚ Р°РїС‚РµС‡РµРє!");
+						if(Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Р’С‹ СѓР¶Рµ РІС‹Р»РµС‡РµРЅС‹!");
 						HouseInfo[houseid][hSafe][3] --;
 						Rac::SetPlayerHealth(playerid, 100.0);
 						GameTextForPlayer(playerid, "~w~You~n~~r~healed", 1, 5000);
-						format(string, sizeof(string), "* Оталось аптечек: %i штук.", HouseInfo[houseid][hSafe][3]);
+						format(string, sizeof(string), "* РћС‚Р°Р»РѕСЃСЊ Р°РїС‚РµС‡РµРє: %i С€С‚СѓРє.", HouseInfo[houseid][hSafe][3]);
 						Send(playerid, COLOR_GREEN, string);
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					}
 					case 1 : {
-						if(!HouseInfo[houseid][hSafe][4]) return Send(playerid, COLOR_GREY, "* В доме нет брони!");
-						if(Rac::GetPlayerArmour(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Вы уже в бронежелете!");
+						if(!HouseInfo[houseid][hSafe][4]) return Send(playerid, COLOR_GREY, "* Р’ РґРѕРјРµ РЅРµС‚ Р±СЂРѕРЅРё!");
+						if(Rac::GetPlayerArmour(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Р’С‹ СѓР¶Рµ РІ Р±СЂРѕРЅРµР¶РµР»РµС‚Рµ!");
 						HouseInfo[houseid][hSafe][4] --;
 						Rac::SetPlayerArmour(playerid, 100.0);
 						GameTextForPlayer(playerid, "~w~You are dressed ~r~~n~in body armor", 1, 5000);
-						format(string, sizeof(string), "* Оталось брони: %i штук.", HouseInfo[houseid][hSafe][4]);
+						format(string, sizeof(string), "* РћС‚Р°Р»РѕСЃСЊ Р±СЂРѕРЅРё: %i С€С‚СѓРє.", HouseInfo[houseid][hSafe][4]);
 						Send(playerid, COLOR_GREEN, string);
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					}
@@ -7303,16 +7302,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_GIVE_PASS : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					Send(playerid, COLOR_GREY, "* Вы ошиблись, попробуйте еще раз!");
-					SPD(playerid, D_GIVE_PASS, 1, "{ffcf00}Паспортный стол", "Укажите ваш возраст", "Ввод", "Отмена");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РѕС€РёР±Р»РёСЃСЊ, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·!");
+					SPD(playerid, D_GIVE_PASS, 1, "{ffcf00}РџР°СЃРїРѕСЂС‚РЅС‹Р№ СЃС‚РѕР»", "РЈРєР°Р¶РёС‚Рµ РІР°С€ РІРѕР·СЂР°СЃС‚", "Р’РІРѕРґ", "РћС‚РјРµРЅР°");
 				} else if(inputtext[0] < 10 || inputtext[0] > 90) {
-					Send(playerid, COLOR_GREY, "* Вы ошиблись, попробуйте еще раз!");
-					SPD(playerid, D_GIVE_PASS, 1, "{ffcf00}Паспортный стол", "Укажите ваш возраст", "Ввод", "Отмена");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РѕС€РёР±Р»РёСЃСЊ, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·!");
+					SPD(playerid, D_GIVE_PASS, 1, "{ffcf00}РџР°СЃРїРѕСЂС‚РЅС‹Р№ СЃС‚РѕР»", "РЈРєР°Р¶РёС‚Рµ РІР°С€ РІРѕР·СЂР°СЃС‚", "Р’РІРѕРґ", "РћС‚РјРµРЅР°");
 				} else {
 					Pl::Info[playerid][pAge] = inputtext[0];
-					format(dialog, sizeof dialog, "Вы хотите купить паспорт?\n\
-					Стоимость: $%i\nСрок действия: 20 дней", (500*Pl::Info[playerid][pLevel]));
-					SPD(playerid, D_GIVE_PASS+1, 0, "{ffcf00}Паспортный стол", dialog, "Взять", "Отмена");
+					format(dialog, sizeof dialog, "Р’С‹ С…РѕС‚РёС‚Рµ РєСѓРїРёС‚СЊ РїР°СЃРїРѕСЂС‚?\n\
+					РЎС‚РѕРёРјРѕСЃС‚СЊ: $%i\nРЎСЂРѕРє РґРµР№СЃС‚РІРёСЏ: 20 РґРЅРµР№", (500*Pl::Info[playerid][pLevel]));
+					SPD(playerid, D_GIVE_PASS+1, 0, "{ffcf00}РџР°СЃРїРѕСЂС‚РЅС‹Р№ СЃС‚РѕР»", dialog, "Р’Р·СЏС‚СЊ", "РћС‚РјРµРЅР°");
 				}
 			}
 			return 1;
@@ -7326,10 +7325,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Pl::Info[playerid][pPasport][1] = currtime;
 					Pl::Info[playerid][pPasport][2] = ((20*86400) + currtime);
 					Rac::GivePlayerMoney(playerid, -(500*Pl::Info[playerid][pLevel]));
-					format(string, sizeof(string), "* Вы получили паспорт. Чтобы показать его игроку, введите /pasport.");
+					format(string, sizeof(string), "* Р’С‹ РїРѕР»СѓС‡РёР»Рё РїР°СЃРїРѕСЂС‚. Р§С‚РѕР±С‹ РїРѕРєР°Р·Р°С‚СЊ РµРіРѕ РёРіСЂРѕРєСѓ, РІРІРµРґРёС‚Рµ /pasport.");
 					Send(playerid, COLOR_LIGHTBLUE, string);
 				} else {
-					Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+					Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 				}
 			}
 			return 1;
@@ -7389,7 +7388,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				Rac::SetPlayerInterior(playerid, 3);
 				Rac::SetPlayerVirtualWorld(playerid, BizzInfo[bidx][bVirtual]);
 				Rac::SetPlayerPos(playerid, 207.4872,-129.2266,1003.5078);
-				Send(playerid, COLOR_YELLOW, "* Вы приняли подарок. Желаем удачной игры на сервере!");
+				Send(playerid, COLOR_YELLOW, "* Р’С‹ РїСЂРёРЅСЏР»Рё РїРѕРґР°СЂРѕРє. Р–РµР»Р°РµРј СѓРґР°С‡РЅРѕР№ РёРіСЂС‹ РЅР° СЃРµСЂРІРµСЂРµ!");
 			}
 
 			return 1;
@@ -7401,16 +7400,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new setid, weaponid, amount;
 				if(!sscanf(inputtext, "uii", setid, weaponid, amount))
 				{
-					if(!Pl::isLogged(setid)) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-					if(IsWrongWeponID(weaponid) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* Не правельный ID оружия!");
-					if(amount < 1 || amount > 999 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* Не ниже 1 и не выше 999 патронов!");
-					if( Rac::GetPlayerAmmo(setid, weaponid) >= 999 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* У этого игрока слишком много оружия!");
-					format(string, sizeof(string), "[AdmWarn] * %s применил команду /ggun к игроку %s[%s]", GetName(playerid), GetName(setid), FracInfo[Pl::FracID(setid)][fName]);
+					if(!Pl::isLogged(setid)) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
+					if(IsWrongWeponID(weaponid) && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* РќРµ РїСЂР°РІРµР»СЊРЅС‹Р№ ID РѕСЂСѓР¶РёСЏ!");
+					if(amount < 1 || amount > 999 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* РќРµ РЅРёР¶Рµ 1 Рё РЅРµ РІС‹С€Рµ 999 РїР°С‚СЂРѕРЅРѕРІ!");
+					if( Rac::GetPlayerAmmo(setid, weaponid) >= 999 && !Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GRAD1, "* РЈ СЌС‚РѕРіРѕ РёРіСЂРѕРєР° СЃР»РёС€РєРѕРј РјРЅРѕРіРѕ РѕСЂСѓР¶РёСЏ!");
+					format(string, sizeof(string), "[AdmWarn] * %s РїСЂРёРјРµРЅРёР» РєРѕРјР°РЅРґСѓ /ggun Рє РёРіСЂРѕРєСѓ %s[%s]", GetName(playerid), GetName(setid), FracInfo[Pl::FracID(setid)][fName]);
 					SendToAdmin(COLOR_YELLOW, string, 1, 3); Rac::GivePlayerWeapon(setid, weaponid, amount);
 				}
 				else
 				{
-					ShowDialog(playerid, D_GGUN, DIALOG_STYLE_INPUT, "GIVEGUN", "dialog/ggun.txt", "Ввод", "Отмена");
+					ShowDialog(playerid, D_GGUN, DIALOG_STYLE_INPUT, "GIVEGUN", "dialog/ggun.txt", "Р’РІРѕРґ", "РћС‚РјРµРЅР°");
 				}
 			}
 			return 1;
@@ -7422,36 +7421,36 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new setid, statcode, amount;
 				if(!sscanf(inputtext, "uii", setid, statcode, amount))
 				{
-					if(!IsPlayerConnected(setid)) return Send(playerid, COLOR_GREY, "* Этот игрок не подлючен!");
-					if(!Pl::isLogged(setid)) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
+					if(!IsPlayerConnected(setid)) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ РїРѕРґР»СЋС‡РµРЅ!");
+					if(!Pl::isLogged(setid)) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
 
 					switch(statcode)
 					{
 						case 1:
 						{
 							Pl::Info[setid][pLevel] = amount;
-							format(string, sizeof(string), "* Уровень игрока был изменен на %d", amount);
+							format(string, sizeof(string), "* РЈСЂРѕРІРµРЅСЊ РёРіСЂРѕРєР° Р±С‹Р» РёР·РјРµРЅРµРЅ РЅР° %d", amount);
 							Send(playerid, COLOR_GREY, string);
 						}
 						case 2:
 						{
 							Pl::Info[setid][pExp] = amount;
-							format(string, sizeof(string), "* Респекты игрока были изменены на %d", amount);
+							format(string, sizeof(string), "* Р РµСЃРїРµРєС‚С‹ РёРіСЂРѕРєР° Р±С‹Р»Рё РёР·РјРµРЅРµРЅС‹ РЅР° %d", amount);
 							Send(playerid, COLOR_GREY, string);
 						}
 						case 3:
 						{
 							if((amount<1000||amount>999999) && !Pl::isAdmin(playerid, ADMINISTRATOR)) {
-								Send(playerid, COLOR_GREY, "* Слишком длинный или короткий номер.");
+								Send(playerid, COLOR_GREY, "* РЎР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ РёР»Рё РєРѕСЂРѕС‚РєРёР№ РЅРѕРјРµСЂ.");
 							} else {
 								format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `Number` = '%i'", amount);
 								new Cache:result = Db::query(connDb, query, true);
 								if(cache_get_row_count()) {
-									format(string, sizeof(string), "* Номер телефона %d уже есть у другого игрока.", amount);
+									format(string, sizeof(string), "* РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР° %d СѓР¶Рµ РµСЃС‚СЊ Сѓ РґСЂСѓРіРѕРіРѕ РёРіСЂРѕРєР°.", amount);
 									Send(playerid, COLOR_GREY, string);
 								} else {
 									Pl::Info[setid][pNumber] = amount;
-									format(string, sizeof(string), "* Номер телефона игрока был измунен на %d", amount);
+									format(string, sizeof(string), "* РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР° РёРіСЂРѕРєР° Р±С‹Р» РёР·РјСѓРЅРµРЅ РЅР° %d", amount);
 									Send(playerid, COLOR_GREY, string);
 								}
 								cache_delete(result);
@@ -7459,51 +7458,51 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						}
 						case 4:
 						{
-							if(!IsValidHouse(amount) && amount != INVALID_HOUSE_ID) return Send(playerid, COLOR_GREY, "* Дома с таким ID не существует!");
+							if(!IsValidHouse(amount) && amount != INVALID_HOUSE_ID) return Send(playerid, COLOR_GREY, "* Р”РѕРјР° СЃ С‚Р°РєРёРј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!");
 							Pl::Info[setid][pHouseKey] = amount;
-							format(string, sizeof(string), "* Дом игрока был изменен на %d", amount);
+							format(string, sizeof(string), "* Р”РѕРј РёРіСЂРѕРєР° Р±С‹Р» РёР·РјРµРЅРµРЅ РЅР° %d", amount);
 							Send(playerid, COLOR_GREY, string);
 						}
 						case 5:
 						{
-							if(!IsValidBiz(amount) && amount != INVALID_BIZ_ID) return Send(playerid, COLOR_GREY, "* Бизнеса с таким ID не существует!");
+							if(!IsValidBiz(amount) && amount != INVALID_BIZ_ID) return Send(playerid, COLOR_GREY, "* Р‘РёР·РЅРµСЃР° СЃ С‚Р°РєРёРј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!");
 							Pl::Info[setid][pBizKey] = amount;
-							format(string, sizeof(string), "* Бизнес игрока был изменен на %d", amount);
+							format(string, sizeof(string), "* Р‘РёР·РЅРµСЃ РёРіСЂРѕРєР° Р±С‹Р» РёР·РјРµРЅРµРЅ РЅР° %d", amount);
 							Send(playerid, COLOR_GREY, string);
 						}
 						case 6:
 						{
-							if(!(0 <= amount <= 2)) return Send(playerid, COLOR_GREY, "* Неверное значение.");
+							if(amount < 0 || amount > 2) return Send(playerid, COLOR_GREY, "* РќРµРІРµСЂРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ.");
 							Pl::Info[setid][pVip] = amount;
-							format(string, sizeof(string), "* Вип статус игрока был изминен на %d", amount);
+							format(string, sizeof(string), "* Р’РёРї СЃС‚Р°С‚СѓСЃ РёРіСЂРѕРєР° Р±С‹Р» РёР·РјРёРЅРµРЅ РЅР° %d", amount);
 							Send(playerid, COLOR_GREY, string);
 						}
 						case 7:
 						{
-							if(!(0 <= amount <= MAX_JOBS)) return Send(playerid, COLOR_GREY, "* Неверное значение.");
-							if((amount == JOB_GUNDEALER || amount == JOB_DRUGDEALER) && !IsAMafia(setid)) return Send(playerid, COLOR_GREY, "* Он не мафиози!");
+							if(amount < 0 || amount > 11) return Send(playerid, COLOR_GREY, "* РќРµРІРµСЂРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ.");
+							if((amount == 7 || amount == 4) && !IsAMafia(setid)) return Send(playerid, COLOR_GREY, "* РћРЅ РЅРµ РјР°С„РёРѕР·Рё!");
 						
 							Iter::Remove(JobPlayers[Pl::Info[setid][pJob]], playerid);
 							Iter::Add(JobPlayers[amount], playerid);
 							
 							Pl::Info[setid][pJob] = amount;
-							format(string, sizeof(string), "* Работа игрока была изменена %s", JobsInfo[Pl::Info[setid][pJob]][jName]);
+							format(string, sizeof(string), "* Р Р°Р±РѕС‚Р° РёРіСЂРѕРєР° Р±С‹Р»Р° РёР·РјРµРЅРµРЅР° %s", JobsInfo[Pl::Info[setid][pJob]][jName]);
 							Send(playerid, COLOR_GREY, string);
 						}
 						default:
 						{
-							format(string, sizeof(string), "* Неверное значение.");
-							return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "dialog/setstat.txt", "Ввод", "Отмена");
+							format(string, sizeof(string), "* РќРµРІРµСЂРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ.");
+							return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "dialog/setstat.txt", "Р’РІРѕРґ", "РћС‚РјРµРЅР°");
 						}
 					}
-					format(string, sizeof(string), "[AdmWarn] * %s применил команду /setstat к игроку %s[%s]. Statcode: %i",
+					format(string, sizeof(string), "[AdmWarn] * %s РїСЂРёРјРµРЅРёР» РєРѕРјР°РЅРґСѓ /setstat Рє РёРіСЂРѕРєСѓ %s[%s]. Statcode: %i",
 					GetName(playerid), GetName(setid), FracInfo[Pl::FracID(setid)][fName], statcode); SendToAdmin(COLOR_YELLOW, string, 1, 3);
 				}
 				else
 				{
-					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-					Send(playerid, COLOR_GREY, "* Вы нечего не ввели!");
-					return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "dialog/setstat.txt", "Ввод", "Отмена");
+					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµС‡РµРіРѕ РЅРµ РІРІРµР»Рё!");
+					return ShowDialog(playerid, D_SETSTAT, DIALOG_STYLE_INPUT, "SETSTAT", "dialog/setstat.txt", "Р’РІРѕРґ", "РћС‚РјРµРЅР°");
 				}
 			}
 			return 1;
@@ -7515,9 +7514,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!sscanf(inputtext, "s[24]i", name, amount)) {
 					if(IsPlayerInAnyVehicle(playerid) && GetPlayerState(playerid) == 2) {
 						new idx = GetCarID(playerid);
-						if(idx == -1) return Send(playerid, COLOR_GREY, "* Эту машину нельзя редактировать!");
+						if(idx == -1) return Send(playerid, COLOR_GREY, "* Р­С‚Сѓ РјР°С€РёРЅСѓ РЅРµР»СЊР·СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ!");
 						if(!strcmp(name, "Model", true)) {
-							if(amount < 400 || amount > 611) return Send(playerid, COLOR_GREY, "* Неверный ID моднли!");
+							if(amount < 400 || amount > 611) return Send(playerid, COLOR_GREY, "* РќРµРІРµСЂРЅС‹Р№ ID РјРѕРґРЅР»Рё!");
 							VehicleInfo[idx][vModel] = amount;
 							AutoInfo[0][aMileage] = AutoInfo[VehicleInfo[idx][cID]][aMileage];
 							GetVehiclePos(VehicleInfo[idx][cID], posx, posy, posz);
@@ -7542,7 +7541,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							Rac::PutPlayerInVehicle(playerid, VehicleInfo[idx][cID], 0);
 							
 						} else if(strcmp(name, "Color1", true) == 0) {
-							if(amount < -1 || amount > 126) return Send(playerid, COLOR_GREY, "* ID цвета не может быть ниже 0 или выше 126!");
+							if(amount < -1 || amount > 126) return Send(playerid, COLOR_GREY, "* ID С†РІРµС‚Р° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅРёР¶Рµ 0 РёР»Рё РІС‹С€Рµ 126!");
 							VehicleInfo[idx][vColor1] = amount;
 							AutoInfo[0][aMileage] = AutoInfo[VehicleInfo[idx][cID]][aMileage];
 							GetVehiclePos(VehicleInfo[idx][cID], posx, posy, posz);
@@ -7567,7 +7566,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							Rac::PutPlayerInVehicle(playerid, VehicleInfo[idx][cID], 0);
 							
 						} else if(!strcmp(name, "Color2", true)) {
-							if(amount < -1 || amount > 126) return Send(playerid, COLOR_GREY, "* ID цвета не может быть ниже 0 или выше 126!");
+							if(amount < -1 || amount > 126) return Send(playerid, COLOR_GREY, "* ID С†РІРµС‚Р° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅРёР¶Рµ 0 РёР»Рё РІС‹С€Рµ 126!");
 							VehicleInfo[idx][vColor2] = amount;
 							AutoInfo[0][aMileage] = AutoInfo[VehicleInfo[idx][cID]][aMileage];
 							GetVehiclePos(VehicleInfo[idx][cID], posx, posy, posz);
@@ -7592,7 +7591,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							Rac::PutPlayerInVehicle(playerid, VehicleInfo[idx][cID], 0);
 						
 						} else if(!strcmp(name, "Resptime", true)) {
-							if(amount < 300 || amount > 2000) return Send(playerid, COLOR_GREY, "* Время спавна может быть от 300 до 2000 сек.");
+							if(amount < 300 || amount > 2000) return Send(playerid, COLOR_GREY, "* Р’СЂРµРјСЏ СЃРїР°РІРЅР° РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚ 300 РґРѕ 2000 СЃРµРє.");
 							VehicleInfo[idx][vRespTime] = amount;
 							AutoInfo[0][aMileage] = AutoInfo[VehicleInfo[idx][cID]][aMileage];
 							GetVehiclePos(VehicleInfo[idx][cID], posx, posy, posz);
@@ -7621,7 +7620,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							UpdateToSQL(idx, 0);
 						}
 						
-						format(string, sizeof(string), "[AdmWarn] * %s применил команду /edit. Params: car %s %i", GetName(playerid), name, amount);
+						format(string, sizeof(string), "[AdmWarn] * %s РїСЂРёРјРµРЅРёР» РєРѕРјР°РЅРґСѓ /edit. Params: car %s %i", GetName(playerid), name, amount);
 						SendToAdmin(COLOR_YELLOW, string, 4, 3);
 					} else {
 						foreach(new i : Biznes) {
@@ -7636,7 +7635,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 									else if(!strcmp(name,"maxprods",true))		BizzInfo[i][bMaxProds] = amount;
 									else if(!strcmp(name,"enterprice",true)) 	BizzInfo[i][bEnterCost] = amount;
 									else if(!strcmp(name,"priceprods",true)) 	BizzInfo[i][bPriceProd] = amount;
-									format(string, sizeof(string), "[AdmWarn] * %s применил команду /edit. Params: %s %i", GetName(playerid), name, amount);
+									format(string, sizeof(string), "[AdmWarn] * %s РїСЂРёРјРµРЅРёР» РєРѕРјР°РЅРґСѓ /edit. Params: %s %i", GetName(playerid), name, amount);
 									SendToAdmin(COLOR_YELLOW, string, 3, 3);
 									
 									return 1;
@@ -7651,7 +7650,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 									if(!strcmp(name,"level",true)) 		HouseInfo[i][hLevel] = amount;
 									else if(!strcmp(name,"price",true))	HouseInfo[i][hPrice] = amount;
 									else if(!strcmp(name,"safe",true))	HouseInfo[i][hSafe][0] = amount;
-									format(string, sizeof(string), "[AdmWarn] * %s применил команду /edit. Params: %s %i", GetName(playerid), name, amount);
+									format(string, sizeof(string), "[AdmWarn] * %s РїСЂРёРјРµРЅРёР» РєРѕРјР°РЅРґСѓ /edit. Params: %s %i", GetName(playerid), name, amount);
 									SendToAdmin(COLOR_YELLOW, string, 3, 3);
 									
 									return 1;
@@ -7662,9 +7661,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				}
 				else
 				{
-					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-					Send(playerid, COLOR_GREY, "* Вы нечего не ввели!");
-					ShowDialog(playerid, D_EDIT, DIALOG_STYLE_INPUT, "EDIT", "dialog/edit.txt", "OK", "ОТМЕНА");
+					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµС‡РµРіРѕ РЅРµ РІРІРµР»Рё!");
+					ShowDialog(playerid, D_EDIT, DIALOG_STYLE_INPUT, "EDIT", "dialog/edit.txt", "OK", "РћРўРњР•РќРђ");
 				}
 			}
 			return 1;
@@ -7677,7 +7676,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_ONLINE+1: {
 			if(response) {
-				ShowDialog(playerid, D_ONLINE,DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC" Онлайн", "dialog/online.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_ONLINE,DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC" РћРЅР»Р°Р№РЅ", "dialog/online.txt", "SELECT", "CANCEL");
 			}
 			return 1;
 		}
@@ -7697,26 +7696,26 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_JOB : {
 			if(response) {
 				switch(GettingJob[playerid]) {
-					case JOB_LAWYER : {
-						if(Pl::FracID(playerid) != TEAM_GOV) return Send(playerid, COLOR_GREY, "* Вы не работаете в Правительстве!");
+					case 2 : {
+						if(Pl::FracID(playerid) != 7) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ СЂР°Р±РѕС‚Р°РµС‚Рµ РІ РџСЂР°РІРёС‚РµР»СЊСЃС‚РІРµ!");
 						if(6 <= Pl::Info[playerid][pRank] <= 8) {
 							Pl::Info[playerid][pJob] = GettingJob[playerid];
 							Pl::Info[playerid][pContractTime] = 5;
 							GettingJob[playerid] = 0;
-							Send(playerid, COLOR_LIGHTBLUE, "* Теперь, когда Вы подтвердили, что Вы хотите Работу, Вы получили 5-часовой Контракт.");
-							Send(playerid, COLOR_LIGHTBLUE, "* Поздравления с Вашей новой Работой, напечатайте /help, чтобы видеть Вашу новую команду.");
+							Send(playerid, COLOR_LIGHTBLUE, "* РўРµРїРµСЂСЊ, РєРѕРіРґР° Р’С‹ РїРѕРґС‚РІРµСЂРґРёР»Рё, С‡С‚Рѕ Р’С‹ С…РѕС‚РёС‚Рµ Р Р°Р±РѕС‚Сѓ, Р’С‹ РїРѕР»СѓС‡РёР»Рё 5-С‡Р°СЃРѕРІРѕР№ РљРѕРЅС‚СЂР°РєС‚.");
+							Send(playerid, COLOR_LIGHTBLUE, "* РџРѕР·РґСЂР°РІР»РµРЅРёСЏ СЃ Р’Р°С€РµР№ РЅРѕРІРѕР№ Р Р°Р±РѕС‚РѕР№, РЅР°РїРµС‡Р°С‚Р°Р№С‚Рµ /help, С‡С‚РѕР±С‹ РІРёРґРµС‚СЊ Р’Р°С€Сѓ РЅРѕРІСѓСЋ РєРѕРјР°РЅРґСѓ.");
 						} else {
-							Send(playerid, COLOR_GREY, "* Вы не юрист!");
+							Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ СЋСЂРёСЃС‚!");
 						}
 					}
-					case JOB_DRUGDEALER, JOB_GUNDEALER : {
-						if(!IsAMafia(playerid)) return Send(playerid, COLOR_GREY, "* Вы не мафиози!");
+					case 4, 7 : {
+						if(!IsAMafia(playerid)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ РјР°С„РёРѕР·Рё!");
 						Pl::Info[playerid][pJob] = GettingJob[playerid];
 						Pl::Info[playerid][pContractTime] = 5;
 						Iter::Add(JobPlayers[GettingJob[playerid]], playerid);
 						
 						GettingJob[playerid] = 0;
-						ShowDialog(playerid, D_NONE, 0, "Трудоустройство", "dialog/job_success.txt", "OK", "");
+						ShowDialog(playerid, D_NONE, 0, "РўСЂСѓРґРѕСѓСЃС‚СЂРѕР№СЃС‚РІРѕ", "dialog/job_success.txt", "OK", "");
 					}
 					default : {
 						Pl::Info[playerid][pJob] = GettingJob[playerid];
@@ -7724,8 +7723,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						Iter::Add(JobPlayers[GettingJob[playerid]], playerid);
 						
 						GettingJob[playerid] = 0;
-						Send(playerid, COLOR_LIGHTBLUE, "* Теперь, когда Вы подтвердили, что Вы хотите Работу, Вы получили 5-часовой Контракт.");
-						Send(playerid, COLOR_LIGHTBLUE, "* Поздравления с Вашей новой Работой, напечатайте /help, чтобы видеть Вашу новую команду.");
+						Send(playerid, COLOR_LIGHTBLUE, "* РўРµРїРµСЂСЊ, РєРѕРіРґР° Р’С‹ РїРѕРґС‚РІРµСЂРґРёР»Рё, С‡С‚Рѕ Р’С‹ С…РѕС‚РёС‚Рµ Р Р°Р±РѕС‚Сѓ, Р’С‹ РїРѕР»СѓС‡РёР»Рё 5-С‡Р°СЃРѕРІРѕР№ РљРѕРЅС‚СЂР°РєС‚.");
+						Send(playerid, COLOR_LIGHTBLUE, "* РџРѕР·РґСЂР°РІР»РµРЅРёСЏ СЃ Р’Р°С€РµР№ РЅРѕРІРѕР№ Р Р°Р±РѕС‚РѕР№, РЅР°РїРµС‡Р°С‚Р°Р№С‚Рµ /help, С‡С‚РѕР±С‹ РІРёРґРµС‚СЊ Р’Р°С€Сѓ РЅРѕРІСѓСЋ РєРѕРјР°РЅРґСѓ.");
 					}
 				}
 			}
@@ -7737,9 +7736,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new playername[24];
 				GetPVarString(playerid, "UnbanPlayer", playername, 24);
 				DeletePVar(playerid, "UnbanPlayer");
-				if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+				if(!Pl::isAdmin(playerid, SUPERMODER)) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
 				if(RemoveBanList(GetIDFromName(playername))) {
-					format(string, sizeof(string), "[UNBAN] * %s[%i] разбанил игрока %s", GetName(playerid), playerid, playername);
+					format(string, sizeof(string), "[UNBAN] * %s[%i] СЂР°Р·Р±Р°РЅРёР» РёРіСЂРѕРєР° %s", GetName(playerid), playerid, playername);
 					SendToAdmin(COLOR_LIGHTBLUE, string, 1, 3);
 				}
 			}
@@ -7747,22 +7746,22 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 		case D_HMENU: {
 			new hid = Pl::Info[playerid][pHouseKey];
-			if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+			if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 			if(response) {
 				switch(listitem) {
 					case 0: PrintHouseInfo(playerid, hid);
 					
 					case 1 : {
-						if(!IsPlayerInHouse(playerid, 20.0, hid)) return Send(playerid, COLOR_GREY, "Вы сейчас не в своем доме!");
+						if(!IsPlayerInHouse(playerid, 20.0, hid)) return Send(playerid, COLOR_GREY, "Р’С‹ СЃРµР№С‡Р°СЃ РЅРµ РІ СЃРІРѕРµРј РґРѕРјРµ!");
 						return SafeMenu(playerid, hid);
 					}
 					
-					case 2 : SPD(playerid, D_HMENU+4, DIALOG_STYLE_LIST, "[House Menu] > Аренда", "Вкл./Откл. аренду\nЦена аренды", "ENTER", "CANCLE");
+					case 2 : SPD(playerid, D_HMENU+4, DIALOG_STYLE_LIST, "[House Menu] > РђСЂРµРЅРґР°", "Р’РєР»./РћС‚РєР». Р°СЂРµРЅРґСѓ\nР¦РµРЅР° Р°СЂРµРЅРґС‹", "ENTER", "CANCLE");
 						
-					case 3 : ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
+					case 3 : ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > РђРІС‚Рѕ", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
 					
 					case 4 : {
-						if(!IsPlayerInHouse(playerid, 15.0, hid)) return SPD(playerid, D_NONE, 0, "[House Menu] > Интерьер", "Вы должны находится в своем доме, чтобы изменить интерьер!", "OK", "");
+						if(!IsPlayerInHouse(playerid, 15.0, hid)) return SPD(playerid, D_NONE, 0, "[House Menu] > РРЅС‚РµСЂСЊРµСЂ", "Р’С‹ РґРѕР»Р¶РЅС‹ РЅР°С…РѕРґРёС‚СЃСЏ РІ СЃРІРѕРµРј РґРѕРјРµ, С‡С‚РѕР±С‹ РёР·РјРµРЅРёС‚СЊ РёРЅС‚РµСЂСЊРµСЂ!", "OK", "");
 						SetPVarInt(playerid, "SelectedItem", 0);
 						Rac::SetPlayerPos(playerid, HouseInt[0][InteriorPos][0], HouseInt[0][InteriorPos][1], HouseInt[0][InteriorPos][2]);
 						SetPlayerFacingAngle(playerid, HouseInt[0][InteriorPos][3]);
@@ -7772,8 +7771,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 					
 					case 5 : {
-						SPD(playerid, D_HMENU+3, DIALOG_STYLE_LIST, "[House Menu] > Улучшения",
-						""#_GREY_ARROW"Покупка гаража {33AA33}[$100000]\n"#_GREY_ARROW"Покупка телевизора {33AA33}[$20000]", "SELECT", "CANCEL");
+						SPD(playerid, D_HMENU+3, DIALOG_STYLE_LIST, "[House Menu] > РЈР»СѓС‡С€РµРЅРёСЏ",
+						""#_GREY_ARROW"РџРѕРєСѓРїРєР° РіР°СЂР°Р¶Р° {33AA33}[$100000]\n"#_GREY_ARROW"РџРѕРєСѓРїРєР° С‚РµР»РµРІРёР·РѕСЂР° {33AA33}[$20000]", "SELECT", "CANCEL");
 					}
 				}
 			}
@@ -7782,11 +7781,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_HMENU+1: {
 			if(response) {
 				new hid = Pl::Info[playerid][pHouseKey];
-				if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				switch(listitem) {
 					case 0: {
-						if(Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Вы уже в вылечены!");
-						if(!HouseInfo[hid][hSafe][3]) return Send(playerid, COLOR_GREY, "* В доме нет аптечек!");
+						if(Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Р’С‹ СѓР¶Рµ РІ РІС‹Р»РµС‡РµРЅС‹!");
+						if(!HouseInfo[hid][hSafe][3]) return Send(playerid, COLOR_GREY, "* Р’ РґРѕРјРµ РЅРµС‚ Р°РїС‚РµС‡РµРє!");
 						HouseInfo[hid][hSafe][3] --;
 						Rac::SetPlayerHealth(playerid, 100.0);
 						GameTextForPlayer(playerid, "~w~You~n~~r~healed", 5000, 1);
@@ -7794,14 +7793,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case 1: {
 						new bidx = GetIndexFromBizID(Bizz_HouseService);
 						if(!BizzInfo[bidx][bProds]) return GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
-						if(HouseInfo[hid][hSafe][3] >= 100) return Send(playerid, COLOR_GREY, "* В доме максимальное кол-во аптечек!");
-						if(HouseInfo[hid][hSafe][0] < 1000) return Send(playerid, COLOR_GREY, "* На счету дома недостаточно средств!");
+						if(HouseInfo[hid][hSafe][3] >= 100) return Send(playerid, COLOR_GREY, "* Р’ РґРѕРјРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»-РІРѕ Р°РїС‚РµС‡РµРє!");
+						if(HouseInfo[hid][hSafe][0] < 1000) return Send(playerid, COLOR_GREY, "* РќР° СЃС‡РµС‚Сѓ РґРѕРјР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!");
 						HouseInfo[hid][hSafe][3] ++;
 						HouseInfo[hid][hSafe][0] -= 1000;
 						GiveBizzProfit(bidx, 1000);
 						BizzInfo[bidx][bProds]--;
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-						SPD(playerid, D_HMENU+1, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Аптечки", ""#_GREY_ARROW"Использовать\n"#_GREY_ARROW"Купить {33AA33}[$1000]", "SELECT", "CANCEL");
+						SPD(playerid, D_HMENU+1, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„ > РђРїС‚РµС‡РєРё", ""#_GREY_ARROW"РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ\n"#_GREY_ARROW"РљСѓРїРёС‚СЊ {33AA33}[$1000]", "SELECT", "CANCEL");
 					}
 				}
 			} else {
@@ -7814,9 +7813,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new hid = Pl::Info[playerid][pHouseKey];
 				switch(listitem) {
 					case 0: {
-						if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
-						if(Rac::GetPlayerArmour(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Вы уже в бронежилете!");
-						if(!HouseInfo[hid][hSafe][4]) return Send(playerid, COLOR_GREY, "* В доме нет бронежилета!");
+						if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
+						if(Rac::GetPlayerArmour(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Р’С‹ СѓР¶Рµ РІ Р±СЂРѕРЅРµР¶РёР»РµС‚Рµ!");
+						if(!HouseInfo[hid][hSafe][4]) return Send(playerid, COLOR_GREY, "* Р’ РґРѕРјРµ РЅРµС‚ Р±СЂРѕРЅРµР¶РёР»РµС‚Р°!");
 						HouseInfo[hid][hSafe][4] --;
 						Rac::SetPlayerArmour(playerid, 100.0);
 						GameTextForPlayer(playerid, "~w~You are dressed ~r~~n~in body armor", 1, 5000);
@@ -7824,16 +7823,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					
 					case 1: {
 						new bidx = GetIndexFromBizID(Bizz_HouseService);
-						if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+						if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 						if(!BizzInfo[bidx][bProds]) return GameTextForPlayer(playerid, "~r~Out of stock", 1, 5000);
-						if(HouseInfo[hid][hSafe][4] >= 50) return Send(playerid, COLOR_GREY, "* В доме максимальное кол-во брони!");
-						if(HouseInfo[hid][hSafe][0] < 3000) return Send(playerid, COLOR_GREY, "* На счету дома недостаточно средств!");
+						if(HouseInfo[hid][hSafe][4] >= 50) return Send(playerid, COLOR_GREY, "* Р’ РґРѕРјРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»-РІРѕ Р±СЂРѕРЅРё!");
+						if(HouseInfo[hid][hSafe][0] < 3000) return Send(playerid, COLOR_GREY, "* РќР° СЃС‡РµС‚Сѓ РґРѕРјР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!");
 						HouseInfo[hid][hSafe][4] ++;
 						HouseInfo[hid][hSafe][0] -= 3000;
 						GiveBizzProfit(bidx, 3000);
 						BizzInfo[bidx][bProds]--;
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-						SPD(playerid, D_HMENU+2, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Бронежелеты", ""#_GREY_ARROW"Использовать\n"#_GREY_ARROW"Купить {33AA33}[$1000]", "SELECT", "CANCEL");
+						SPD(playerid, D_HMENU+2, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„ > Р‘СЂРѕРЅРµР¶РµР»РµС‚С‹", ""#_GREY_ARROW"РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ\n"#_GREY_ARROW"РљСѓРїРёС‚СЊ {33AA33}[$1000]", "SELECT", "CANCEL");
 					}
 				}
 			} else {
@@ -7843,11 +7842,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_HMENU+3: {
 			if(response) {
 				new hid = Pl::Info[playerid][pHouseKey];
-				if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				switch(listitem) {
 					case 0 : {
-						if(HouseInfo[hid][hgGarage]) return Send(playerid, COLOR_GREY, "* У Вас есть гараж!");
-						if(HouseInfo[hid][hSafe][0] < 100000) return Send(playerid, COLOR_GREY, "* На счету дома недостаточно средств!");
+						if(HouseInfo[hid][hgGarage]) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РµСЃС‚СЊ РіР°СЂР°Р¶!");
+						if(HouseInfo[hid][hSafe][0] < 100000) return Send(playerid, COLOR_GREY, "* РќР° СЃС‡РµС‚Сѓ РґРѕРјР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!");
 						HouseInfo[hid][hSafe][0] -= 100000;
 						GameTextForPlayer(playerid, "~r~-$100000", 1000, 1);
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
@@ -7856,17 +7855,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						HouseInfo[hid][hgGarage] = true;
 						Streamer_AppendArrayData(STREAMER_TYPE_PICKUP, HGaragePickup[0], E_STREAMER_WORLD_ID, HouseInfo[hid][hVirtual]);
 						Streamer_AppendArrayData(STREAMER_TYPE_PICKUP, HGaragePickup[1], E_STREAMER_WORLD_ID, HouseInfo[hid][hVirtual]);
-						Send(playerid, COLOR_GREY, "* В ваш дом добавлен гараж! Установите точку входа в доме (/editgarint) и точку выезда у дома (/editgarstreet)!");
+						Send(playerid, COLOR_GREY, "* Р’ РІР°С€ РґРѕРј РґРѕР±Р°РІР»РµРЅ РіР°СЂР°Р¶! РЈСЃС‚Р°РЅРѕРІРёС‚Рµ С‚РѕС‡РєСѓ РІС…РѕРґР° РІ РґРѕРјРµ (/editgarint) Рё С‚РѕС‡РєСѓ РІС‹РµР·РґР° Сѓ РґРѕРјР° (/editgarstreet)!");
 					}
 					case 1 : {
 						new bidx = GetIndexFromBizID(Bizz_HouseService);
-						if(HouseInfo[hid][hSafe][0] < 20000) return Send(playerid, COLOR_GREY, "* На счету дома недостаточно средств!");
+						if(HouseInfo[hid][hSafe][0] < 20000) return Send(playerid, COLOR_GREY, "* РќР° СЃС‡РµС‚Сѓ РґРѕРјР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!");
 						HouseInfo[hid][hTv] = 1;
 						HouseInfo[hid][hSafe][0] -= 20000;
 						GiveBizzProfit(bidx, 20000);
 						BizzInfo[bidx][bProds]--;
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-						Send(playerid, COLOR_GRAD5, "Вы можете теперь смотреть телек, пишите /tv.");
+						Send(playerid, COLOR_GRAD5, "Р’С‹ РјРѕР¶РµС‚Рµ С‚РµРїРµСЂСЊ СЃРјРѕС‚СЂРµС‚СЊ С‚РµР»РµРє, РїРёС€РёС‚Рµ /tv.");
 					}
 				}
 			} else {
@@ -7878,7 +7877,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response)
 			{
 				new hid = Pl::Info[playerid][pHouseKey];
-				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				switch(listitem)
 				{
 					case 0:
@@ -7889,24 +7888,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							{
 								HouseInfo[hid][hRent][0] = 1;
 								return SPD(playerid, D_NONE, 0,
-								"[House Menu] > Аренда",
-								"Аренда была включена!", "ОК", "");
+								"[House Menu] > РђСЂРµРЅРґР°",
+								"РђСЂРµРЅРґР° Р±С‹Р»Р° РІРєР»СЋС‡РµРЅР°!", "РћРљ", "");
 							}
 							case 1:
 							{
 								HouseInfo[hid][hRent][0] = 0;
 								return SPD(playerid, D_NONE, 0,
-								"[House Menu] > Аренда",
-								"Аренда была отключена!", "ОК", "");
+								"[House Menu] > РђСЂРµРЅРґР°",
+								"РђСЂРµРЅРґР° Р±С‹Р»Р° РѕС‚РєР»СЋС‡РµРЅР°!", "РћРљ", "");
 							}
 						}
 					}
 					case 1:
 					{
 						return SPD(playerid, D_HMENU+5, DIALOG_STYLE_INPUT,
-						"[House Menu] > Аренда",
-						"Введите сумму аренды.\n\
-						Максемальная сумма: $99999","ENTER", "CANCEL");
+						"[House Menu] > РђСЂРµРЅРґР°",
+						"Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ Р°СЂРµРЅРґС‹.\n\
+						РњР°РєСЃРµРјР°Р»СЊРЅР°СЏ СЃСѓРјРјР°: $99999","ENTER", "CANCEL");
 					}
 				}
 			} else {
@@ -7918,50 +7917,50 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response)
 			{
 				new hid = Pl::Info[playerid][pHouseKey];
-				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				if(sscanf(inputtext, "d", inputtext[0]))
 				{
 					return SPD(playerid, D_HMENU+5, DIALOG_STYLE_INPUT,
-					"[House Menu] > Аренда",
-					"Введите сумму аренды.\n\
-					Максемальная сумма: $99999","ENTER", "CANCEL");
+					"[House Menu] > РђСЂРµРЅРґР°",
+					"Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ Р°СЂРµРЅРґС‹.\n\
+					РњР°РєСЃРµРјР°Р»СЊРЅР°СЏ СЃСѓРјРјР°: $99999","ENTER", "CANCEL");
 				}
 				if(inputtext[0] < 1 || inputtext[0] > 99999)
 				{
-					Send(playerid, COLOR_GREY, "* Стоимость аренды может быть от $1 до $9999");
+					Send(playerid, COLOR_GREY, "* РЎС‚РѕРёРјРѕСЃС‚СЊ Р°СЂРµРЅРґС‹ РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚ $1 РґРѕ $9999");
 					return SPD(playerid, D_HMENU+5, DIALOG_STYLE_INPUT,
-					"[House Menu] > Аренда",
-					"Введите сумму аренды.\n\
-					Максемальная сумма: $99999", "ENTER", "CANCEL");
+					"[House Menu] > РђСЂРµРЅРґР°",
+					"Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ Р°СЂРµРЅРґС‹.\n\
+					РњР°РєСЃРµРјР°Р»СЊРЅР°СЏ СЃСѓРјРјР°: $99999", "ENTER", "CANCEL");
 				}
 				HouseInfo[hid][hRent][1] = inputtext[0];
-				format(string, sizeof(string), "Цена аренды была установлена!\nТепрь аренда стоит:\t$%d", inputtext[0]);
-				SPD(playerid, D_NONE, 0, "[House Menu] > Аренда", string, "OK", "");
+				format(string, sizeof(string), "Р¦РµРЅР° Р°СЂРµРЅРґС‹ Р±С‹Р»Р° СѓСЃС‚Р°РЅРѕРІР»РµРЅР°!\nРўРµРїСЂСЊ Р°СЂРµРЅРґР° СЃС‚РѕРёС‚:\t$%d", inputtext[0]);
+				SPD(playerid, D_NONE, 0, "[House Menu] > РђСЂРµРЅРґР°", string, "OK", "");
 			}
 			else
 			{
 				return SPD(playerid, D_HMENU+4, DIALOG_STYLE_LIST,
-				"[House Menu] > Аренда",
-				"Вкл./Откл. аренду\n\
-				Цена аренды", "SELECT", "CANCEL");
+				"[House Menu] > РђСЂРµРЅРґР°",
+				"Р’РєР»./РћС‚РєР». Р°СЂРµРЅРґСѓ\n\
+				Р¦РµРЅР° Р°СЂРµРЅРґС‹", "SELECT", "CANCEL");
 			}
 		}
 		case D_HMENU+6:
 		{
 			new hid = Pl::Info[playerid][pHouseKey];
 			if(response) {
-				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				switch(listitem)
 				{
 					case 0:
 					{
 						return SPD(playerid, D_HMENU+7, DIALOG_STYLE_INPUT,
-						"[House Menu] > Сейф", "Сколько хотите положить?", "ENTER", "CANCEL");
+						"[House Menu] > РЎРµР№С„", "РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 					}
 					case 1:
 					{
 						return  SPD(playerid, D_HMENU+8, DIALOG_STYLE_INPUT,
-						"[House Menu] > Сейф", "Сколько хотите взять?", "ENTER", "CANCEL");
+						"[House Menu] > РЎРµР№С„", "РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 					}
 				}
 			}
@@ -7979,27 +7978,27 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new hid = Pl::Info[playerid][pHouseKey];
 				if(sscanf(inputtext, "d", inputtext[0])) {
 					SPD(playerid, D_HMENU+7, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф", "Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„", "РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				else if((HouseInfo[hid][hSafe][0] + inputtext[0]) > 10000000)
 				{
-					Send(playerid, COLOR_GREY, "* В сейф столько не влезит!");
+					Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„ СЃС‚РѕР»СЊРєРѕ РЅРµ РІР»РµР·РёС‚!");
 					SPD(playerid, D_HMENU+7, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф", "Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„", "РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				else if(inputtext[0] < 1 || inputtext[0] > Rac::GetPlayerMoney(playerid)) {
-					Send(playerid, COLOR_GREY, "* У Вас нет столько денег!");
+					Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
 					SPD(playerid, D_HMENU+7, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф", "Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„", "РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				} else {
 					HouseInfo[hid][hSafe][0] += inputtext[0];
 					Rac::GivePlayerMoney(playerid, -inputtext[0]);
-					format(string, sizeof(string), "Вы положили в сейф: {33AA33}$%d", inputtext[0]);
-					SPD(playerid, D_NONE, 0, "[House Menu] > Сейф", string, "OK", "");
+					format(string, sizeof(string), "Р’С‹ РїРѕР»РѕР¶РёР»Рё РІ СЃРµР№С„: {33AA33}$%d", inputtext[0]);
+					SPD(playerid, D_NONE, 0, "[House Menu] > РЎРµР№С„", string, "OK", "");
 				}
 			} else {
 				SPD(playerid, D_HMENU+6, DIALOG_STYLE_LIST,
-				"[House Menu] > Сейф", "Положить\nВзять", "SELECT", "CANCEL");
+				"[House Menu] > РЎРµР№С„", "РџРѕР»РѕР¶РёС‚СЊ\nР’Р·СЏС‚СЊ", "SELECT", "CANCEL");
 			}
 			return 1;
 		}
@@ -8008,19 +8007,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new hid = Pl::Info[playerid][pHouseKey];
 				if(sscanf(inputtext, "d", inputtext[0])) {
 					SPD(playerid, D_HMENU+7, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф","Сколько хотите взять?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„","РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 				} else if(inputtext[0] < 1 || inputtext[0] > HouseInfo[hid][hSafe][0]) {
-					Send(playerid, COLOR_GREY, "* В сейфе не столько денег!");
+					Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„Рµ РЅРµ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
 					SPD(playerid, D_HMENU+7, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф","Сколько хотите взять?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„","РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 				} else {
 					HouseInfo[hid][hSafe][0] -= inputtext[0];
 					Rac::GivePlayerMoney(playerid, inputtext[0]);
-					format(string, sizeof(string), "Вы взяли из сейфа: {33AA33}$%d", inputtext[0]);
-					SPD(playerid, D_NONE, 0, "[House Menu] > Сейф", string, "OK", "");
+					format(string, sizeof(string), "Р’С‹ РІР·СЏР»Рё РёР· СЃРµР№С„Р°: {33AA33}$%d", inputtext[0]);
+					SPD(playerid, D_NONE, 0, "[House Menu] > РЎРµР№С„", string, "OK", "");
 				}
 			} else {
-				SPD(playerid, D_HMENU+6, DIALOG_STYLE_LIST, "[House Menu] > Сейф", "Положить\nВзять", "SELECT", "CANCEL");
+				SPD(playerid, D_HMENU+6, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„", "РџРѕР»РѕР¶РёС‚СЊ\nР’Р·СЏС‚СЊ", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -8028,19 +8027,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				switch(listitem) {
 					case 0..3 : {
-						format(dialog, sizeof dialog, "Машина\tЦена\n");
+						format(dialog, sizeof dialog, "РњР°С€РёРЅР°\tР¦РµРЅР°\n");
 						for(new i; i < ASModelCount[listitem]; i++) {
 							scf(dialog, string, ""#_GREY_ARROW"%s {33AA33}\t$%i\n", VehicleNames[AutoSolon[listitem][i][0] - 400], AutoSolon[listitem][i][1]);
 						}
 						SetPVarInt(playerid, "SelectedCar", listitem);
-						SPD(playerid, D_HMENU+13, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > Машина", dialog, "SELECT", "CANCEL");
+						SPD(playerid, D_HMENU+13, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > РњР°С€РёРЅР°", dialog, "SELECT", "CANCEL");
 					}
 					case 4 : {
 						new hid = Pl::Info[playerid][pHouseKey];
 						if(!(400 <= HouseInfo[hid][hvModel] <= 611)) {
-							SPD(playerid, D_NONE, 0, "[House Menu] > Авто", "У Вас нет домашнего авто!", "OK", "");
+							SPD(playerid, D_NONE, 0, "[House Menu] > РђРІС‚Рѕ", "РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°С€РЅРµРіРѕ Р°РІС‚Рѕ!", "OK", "");
 						} else {
-							ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
+							ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > РђРІС‚Рѕ > РџРѕРєСЂР°СЃРєР°", "dialog/colors.txt", "SELECT", "CANCEL");
 						}
 					}
 				}
@@ -8056,14 +8055,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new hid = Pl::Info[playerid][pHouseKey];
 				new bidx = GetIndexFromBizID(Bizz_HouseService);
-				if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				if(!BizzInfo[bidx][bProds]) {
 					GameTextForPlayer(playerid, "~r~Out of Stock", 1, 5000);
 					ShowMenuForPlayer(IntMenu, playerid);
 					return 1;
 				}
 				if(HouseInfo[hid][hSafe][0] < HouseInt[idx][InteriorPrice]) {
-					Send(playerid, COLOR_GREY, "* На счету дома недастаточно средств!");
+					Send(playerid, COLOR_GREY, "* РќР° СЃС‡РµС‚Сѓ РґРѕРјР° РЅРµРґР°СЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!");
 					ShowMenuForPlayer(IntMenu, playerid);
 					return 1;
 				}
@@ -8074,7 +8073,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				GiveBizzProfit(bidx, HouseInt[idx][InteriorPrice]);
 				BizzInfo[bidx][bProds]--;
 				Rac::SpawnPlayer(playerid);
-				Send(playerid, COLOR_LIGHTBLUE, "* Интерьер был успешно изменен!");
+				Send(playerid, COLOR_LIGHTBLUE, "* РРЅС‚РµСЂСЊРµСЂ Р±С‹Р» СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅ!");
 			} else {
 				SetPVarInt(playerid, "SelectedItem", idx);
 				Rac::SetPlayerPos(playerid, HouseInt[0][InteriorPos][0], HouseInt[0][InteriorPos][1], HouseInt[0][InteriorPos][2]);
@@ -8089,66 +8088,66 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new hid = Pl::Info[playerid][pHouseKey];
 				new bidx = GetIndexFromBizID(Bizz_HouseService);
-				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* Вы бомж, сначала купите дом.");
-				if(!IsPlayerInSquare2D(playerid, 50.0, HouseInfo[hid][hEnter][0], HouseInfo[hid][hEnter][1])) return Send(playerid, COLOR_GREY, "* Вы слишком далеко от дома!");
+				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* Р’С‹ Р±РѕРјР¶, СЃРЅР°С‡Р°Р»Р° РєСѓРїРёС‚Рµ РґРѕРј.");
+				if(!IsPlayerInSquare2D(playerid, 50.0, HouseInfo[hid][hEnter][0], HouseInfo[hid][hEnter][1])) return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ РґРѕРјР°!");
 				if(!BizzInfo[bidx][bProds]) return GameTextForPlayer(playerid, "~r~Out of Stock", 1, 5000);
 
 				new vclass = GetPVarInt(playerid, "SelectedCar");
-				if(HouseInfo[hid][hSafe][0] < AutoSolon[vclass][listitem][1]) return Send(playerid, COLOR_GREY, "* В сейфе дома нет столько денег!");
+				if(HouseInfo[hid][hSafe][0] < AutoSolon[vclass][listitem][1]) return Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„Рµ РґРѕРјР° РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
 				CarUpgrade(playerid, hid, AutoSolon[vclass][listitem][0]);
 				HouseInfo[hid][hSafe][0] -= AutoSolon[vclass][listitem][1];
 				GiveBizzProfit(bidx, PERCENT(AutoSolon[vclass][listitem][1], 20));
 				BizzInfo[bidx][bProds] --;
-				format(string, sizeof(string), "* Новая Модернизация: Ваш автомобиль теперь %s", VehicleNames[AutoSolon[vclass][listitem][0] - 400]);
+				format(string, sizeof(string), "* РќРѕРІР°СЏ РњРѕРґРµСЂРЅРёР·Р°С†РёСЏ: Р’Р°С€ Р°РІС‚РѕРјРѕР±РёР»СЊ С‚РµРїРµСЂСЊ %s", VehicleNames[AutoSolon[vclass][listitem][0] - 400]);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				SetPVarInt(playerid, "SelectedCar", -1);
 				PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 			} else {
-				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > РђРІС‚Рѕ", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
 			}
 		}
 		
 		case D_HMENU+24 : {
 			if(response) {
 				if(sscanf(inputtext, "p<,>ii", inputtext[0], inputtext[1])) {
-					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµ РІР°Р»РёРґРЅР°СЏ СЃС‚СЂРѕРєР°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ!");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > РђРІС‚Рѕ > РџРѕРєСЂР°СЃРєР°", "dialog/colors.txt", "SELECT", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 127) {
-					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµ РІР°Р»РёРґРЅР°СЏ СЃС‚СЂРѕРєР°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ!");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > РђРІС‚Рѕ > РџРѕРєСЂР°СЃРєР°", "dialog/colors.txt", "SELECT", "CANCEL");
 				} else if(inputtext[1] < 0 || inputtext[1] > 127) {
-					Send(playerid, COLOR_GREY, "* Не валидная строка, повторите ввод!");
-					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > Авто > Покраска", "dialog/colors.txt", "SELECT", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РќРµ РІР°Р»РёРґРЅР°СЏ СЃС‚СЂРѕРєР°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ!");
+					return ShowDialog(playerid, D_HMENU+24, DIALOG_STYLE_INPUT, "[House Menu] > РђРІС‚Рѕ > РџРѕРєСЂР°СЃРєР°", "dialog/colors.txt", "SELECT", "CANCEL");
 				}
 				new hid = Pl::Info[playerid][pHouseKey];
 				new bidx = GetIndexFromBizID(Bizz_HouseService);
-				if(!IsPlayerInSquare2D(playerid, 50.0, HouseInfo[hid][hEnter][0], HouseInfo[hid][hEnter][1])) return Send(playerid, COLOR_GREY, "* Вы слишком далеко от дома!");
+				if(!IsPlayerInSquare2D(playerid, 50.0, HouseInfo[hid][hEnter][0], HouseInfo[hid][hEnter][1])) return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ РґРѕРјР°!");
 				if(!BizzInfo[bidx][bProds]) return GameTextForPlayer(playerid, "~r~Out of Stock", 1, 5000);
-				if(HouseInfo[hid][hSafe][0] < 10000) return Send(playerid, COLOR_GREY, "* В сейфе дома нет столько денег!");
+				if(HouseInfo[hid][hSafe][0] < 10000) return Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„Рµ РґРѕРјР° РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
 				ChangeVehicleColor(HouseInfo[hid][hAuto], inputtext[0], inputtext[1]);
 				HouseInfo[hid][hvColor][0] = inputtext[0];
 				HouseInfo[hid][hvColor][1] = inputtext[1];
-				format(string, sizeof(string), "* Новая Модернизация: Ваш автомобиль был перекрашен в цвета %i/%i", inputtext[0], inputtext[1]);
+				format(string, sizeof(string), "* РќРѕРІР°СЏ РњРѕРґРµСЂРЅРёР·Р°С†РёСЏ: Р’Р°С€ Р°РІС‚РѕРјРѕР±РёР»СЊ Р±С‹Р» РїРµСЂРµРєСЂР°С€РµРЅ РІ С†РІРµС‚Р° %i/%i", inputtext[0], inputtext[1]);
 				Send(playerid, COLOR_LIGHTBLUE, string);
 				GameTextForPlayer(playerid, "~r~-$10000", 5000, 1);
 			} else {
-				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > Авто", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_HMENU+10, DIALOG_STYLE_LIST, "[House Menu] > РђРІС‚Рѕ", "dialog/hmenu_auto.txt", "SELECT", "CANCEL");
 			}
 		}
 		
 		case D_HMENU+14 : {
 			if(response) {
 				switch(listitem) {
-					case 0: SPD(playerid, D_HMENU+6, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Денги", ""#_GREY_ARROW"Положить\n"#_GREY_ARROW"Взять", "SELECT", "CANCEL");
-					case 1: SPD(playerid, D_HMENU+15, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Наркотики", ""#_GREY_ARROW"Положить\n"#_GREY_ARROW"Взять", "SELECT", "CANCEL");
-					case 2: SPD(playerid, D_HMENU+18, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Матиреалы", ""#_GREY_ARROW"Положить\n"#_GREY_ARROW"Взять", "SELECT", "CANCEL");
+					case 0: SPD(playerid, D_HMENU+6, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„ > Р”РµРЅРіРё", ""#_GREY_ARROW"РџРѕР»РѕР¶РёС‚СЊ\n"#_GREY_ARROW"Р’Р·СЏС‚СЊ", "SELECT", "CANCEL");
+					case 1: SPD(playerid, D_HMENU+15, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё", ""#_GREY_ARROW"РџРѕР»РѕР¶РёС‚СЊ\n"#_GREY_ARROW"Р’Р·СЏС‚СЊ", "SELECT", "CANCEL");
+					case 2: SPD(playerid, D_HMENU+18, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„ > РњР°С‚РёСЂРµР°Р»С‹", ""#_GREY_ARROW"РџРѕР»РѕР¶РёС‚СЊ\n"#_GREY_ARROW"Р’Р·СЏС‚СЊ", "SELECT", "CANCEL");
 					case 3: SafeMenu(playerid, Pl::Info[playerid][pHouseKey], 1);
-					case 4: SPD(playerid, D_HMENU+1, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Аптечки", ""#_GREY_ARROW"Использовать\n"#_GREY_ARROW"Купить {33AA33}[$1000]", "SELECT", "CANCEL");
+					case 4: SPD(playerid, D_HMENU+1, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„ > РђРїС‚РµС‡РєРё", ""#_GREY_ARROW"РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ\n"#_GREY_ARROW"РљСѓРїРёС‚СЊ {33AA33}[$1000]", "SELECT", "CANCEL");
 					case 5: {
 						if(IsACop(playerid) && Pl::Info[playerid][pRank] >= 3) {
-							SPD(playerid, D_HMENU+2, DIALOG_STYLE_LIST, "[House Menu] > Сейф > Бронежилеты", ""#_GREY_ARROW"Использовать\n"#_GREY_ARROW"Купить {33AA33}[$3000]", "SELECT", "CANCEL");
+							SPD(playerid, D_HMENU+2, DIALOG_STYLE_LIST, "[House Menu] > РЎРµР№С„ > Р‘СЂРѕРЅРµР¶РёР»РµС‚С‹", ""#_GREY_ARROW"РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ\n"#_GREY_ARROW"РљСѓРїРёС‚СЊ {33AA33}[$3000]", "SELECT", "CANCEL");
 						} else {
-							Send(playerid, COLOR_GREY, "* Только законики могут использовать бронижелет!");
+							Send(playerid, COLOR_GREY, "* РўРѕР»СЊРєРѕ Р·Р°РєРѕРЅРёРєРё РјРѕРіСѓС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р±СЂРѕРЅРёР¶РµР»РµС‚!");
 							SafeMenu(playerid, Pl::Info[playerid][pHouseKey]);
 						}
 					}
@@ -8162,20 +8161,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new hid = Pl::Info[playerid][pHouseKey];
 			if(response)
 			{
-				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				switch(listitem)
 				{
 					case 0:
 					{
 						return SPD(playerid, D_HMENU+16, DIALOG_STYLE_INPUT,
-						"[House Menu] > Сейф > Наркотики",
-						"Сколько хотите положить?", "ENTER", "CANCEL");
+						"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё",
+						"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 					}
 					case 1:
 					{
 						return SPD(playerid, D_HMENU+17, DIALOG_STYLE_INPUT,
-						"[House Menu] > Сейф > Наркотики",
-						"Сколько хотите взять?", "ENTER", "CANCEL");
+						"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё",
+						"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 					}
 				}
 			}
@@ -8192,32 +8191,32 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(sscanf(inputtext, "i", inputtext[0]))
 				{
 					return SPD(playerid, D_HMENU+16, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Наркотики > Положить",
-					"Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё > РџРѕР»РѕР¶РёС‚СЊ",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				if((HouseInfo[hid][hSafe][1] + inputtext[0]) > 1000)
 				{
-					Send(playerid, COLOR_GREY, "* В сейф столько не влезит!");
+					Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„ СЃС‚РѕР»СЊРєРѕ РЅРµ РІР»РµР·РёС‚!");
 					return SPD(playerid, D_HMENU+16, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Наркотики > Положить",
-					"Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё > РџРѕР»РѕР¶РёС‚СЊ",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				if(inputtext[0] < 1 || inputtext[0] > Pl::Info[playerid][pDrugs])
 				{
-					Send(playerid, COLOR_GREY, "* У Вас нет столько наркоты!");
+					Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РЅР°СЂРєРѕС‚С‹!");
 					return SPD(playerid, D_HMENU+16, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Наркотики > Положить",
-					"Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё > РџРѕР»РѕР¶РёС‚СЊ",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				HouseInfo[hid][hSafe][1] += inputtext[0];
 				Pl::Info[playerid][pDrugs] -= inputtext[0];
-				format(string, sizeof(string), "Вы положили в сейф: %i грамм", inputtext[0]);
-				return SPD(playerid, D_NONE, 0, "[House Menu] > Сейф > Наркотики > Положить", string, "OK", "");
+				format(string, sizeof(string), "Р’С‹ РїРѕР»РѕР¶РёР»Рё РІ СЃРµР№С„: %i РіСЂР°РјРј", inputtext[0]);
+				return SPD(playerid, D_NONE, 0, "[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё > РџРѕР»РѕР¶РёС‚СЊ", string, "OK", "");
 			}
 			else
 			{
 				SPD(playerid, D_HMENU+15, DIALOG_STYLE_LIST,
-				"[House Menu] > Сейф > Наркотики", "Положить\nВзять", "ENTER", "CANCLE");
+				"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё", "РџРѕР»РѕР¶РёС‚СЊ\nР’Р·СЏС‚СЊ", "ENTER", "CANCLE");
 				return 1;
 			}
 		}
@@ -8229,24 +8228,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(sscanf(inputtext, "i", inputtext[0]))
 				{
 					return SPD(playerid, D_HMENU+17, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Наркотики > Взять",
-					"Сколько хотите взять?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё > Р’Р·СЏС‚СЊ",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 				}
 				if(inputtext[0] < 1 || inputtext[0] > HouseInfo[hid][hSafe][1])
 				{
-					Send(playerid, COLOR_GREY, "* В сейфе нет столько!");
+					Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„Рµ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ!");
 					return SPD(playerid, D_HMENU+17, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Наркотики > Взять",
-					"Сколько хотите взять?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё > Р’Р·СЏС‚СЊ",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 				}
 				HouseInfo[hid][hSafe][1] -= inputtext[0]; Pl::Info[playerid][pDrugs] += inputtext[0];
-				format(string, sizeof(string), "Вы взяли из сейфа: %i грамм", inputtext[0]);
-				return SPD(playerid, D_NONE, 0, "[House Menu] > Сейф > Наркотики > Взять", string, "OK", "");
+				format(string, sizeof(string), "Р’С‹ РІР·СЏР»Рё РёР· СЃРµР№С„Р°: %i РіСЂР°РјРј", inputtext[0]);
+				return SPD(playerid, D_NONE, 0, "[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё > Р’Р·СЏС‚СЊ", string, "OK", "");
 			}
 			else
 			{
 				return SPD(playerid, D_HMENU+15, DIALOG_STYLE_LIST,
-				"[House Menu] > Сейф > Наркотики", "Положить\nВзять", "ENTER", "CANCLE");
+				"[House Menu] > РЎРµР№С„ > РќР°СЂРєРѕС‚РёРєРё", "РџРѕР»РѕР¶РёС‚СЊ\nР’Р·СЏС‚СЊ", "ENTER", "CANCLE");
 			}
 		}
 		case D_HMENU+18:
@@ -8254,20 +8253,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new hid = Pl::Info[playerid][pHouseKey];
 			if(response)
 			{
-				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+				if(!IsPlayerHouseOwner(playerid, hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				switch(listitem)
 				{
 					case 0:
 					{
 						return SPD(playerid, D_HMENU+19, DIALOG_STYLE_INPUT,
-						"[House Menu] > Сейф > Материалы",
-						"Сколько хотите положить?", "ENTER", "CANCEL");
+						"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹",
+						"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 					}
 					case 1:
 					{
 						return SPD(playerid, D_HMENU+20, DIALOG_STYLE_INPUT,
-						"[House Menu] > Сейф > Материалы",
-						"Сколько хотите взять?", "ENTER", "CANCEL");
+						"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹",
+						"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 					}
 				}
 			}
@@ -8284,31 +8283,31 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(sscanf(inputtext, "i", inputtext[0]))
 				{
 					return SPD(playerid, D_HMENU+19, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Материалы",
-					"Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				if((HouseInfo[hid][hSafe][2] + inputtext[0]) > 100000)
 				{
-					Send(playerid, COLOR_GREY, "* В сейф столько не влезит!");
+					Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„ СЃС‚РѕР»СЊРєРѕ РЅРµ РІР»РµР·РёС‚!");
 					return SPD(playerid, D_HMENU+19, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Материалы",
-					"Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				if(inputtext[0] < 1 || inputtext[0] > Pl::Info[playerid][pMats])
 				{
-					Send(playerid, COLOR_GREY, "* У Вас нет столько материалов!");
+					Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РјР°С‚РµСЂРёР°Р»РѕРІ!");
 					return SPD(playerid, D_HMENU+19, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Материалы",
-					"Сколько хотите положить?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ?", "ENTER", "CANCEL");
 				}
 				HouseInfo[hid][hSafe][2] += inputtext[0]; Pl::Info[playerid][pMats] -= inputtext[0];
-				format(string, sizeof(string), "Вы положили в сейф: %i материалов", inputtext[0]);
-				return SPD(playerid, D_NONE, 0, "[House Menu] > Сейф > Материалы > Положить", string, "OK", "");
+				format(string, sizeof(string), "Р’С‹ РїРѕР»РѕР¶РёР»Рё РІ СЃРµР№С„: %i РјР°С‚РµСЂРёР°Р»РѕРІ", inputtext[0]);
+				return SPD(playerid, D_NONE, 0, "[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹ > РџРѕР»РѕР¶РёС‚СЊ", string, "OK", "");
 			}
 			else
 			{
 				return SPD(playerid, D_HMENU+18, DIALOG_STYLE_LIST,
-				"[House Menu] > Сейф > Материалы", "Положить\nВзять", "ENTER", "CANCLE");
+				"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹", "РџРѕР»РѕР¶РёС‚СЊ\nР’Р·СЏС‚СЊ", "ENTER", "CANCLE");
 			}
 		}
 		case D_HMENU+20:
@@ -8319,32 +8318,32 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(sscanf(inputtext, "i", inputtext[0]))
 				{
 					return SPD(playerid, D_HMENU+20, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Материалы",
-					"Сколько хотите взять?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 				}
 				if(inputtext[0] < 1 || inputtext[0] > HouseInfo[hid][hSafe][2])
 				{
-					Send(playerid, COLOR_GREY, "* В сейфе нет столько!");
+					Send(playerid, COLOR_GREY, "* Р’ СЃРµР№С„Рµ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ!");
 					return SPD(playerid, D_HMENU+20, DIALOG_STYLE_INPUT,
-					"[House Menu] > Сейф > Материалы",
-					"Сколько хотите взять?", "ENTER", "CANCEL");
+					"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹",
+					"РЎРєРѕР»СЊРєРѕ С…РѕС‚РёС‚Рµ РІР·СЏС‚СЊ?", "ENTER", "CANCEL");
 				}
 				HouseInfo[hid][hSafe][2] -= inputtext[0];
 				Pl::Info[playerid][pMats] += inputtext[0];
-				format(string, sizeof(string), "Вы взяли из сейфа: %i материалов", inputtext[0]);
-				return SPD(playerid, D_NONE, 0, "[House Menu] > Сейф > Материалы > Взять", string, "OK", "");
+				format(string, sizeof(string), "Р’С‹ РІР·СЏР»Рё РёР· СЃРµР№С„Р°: %i РјР°С‚РµСЂРёР°Р»РѕРІ", inputtext[0]);
+				return SPD(playerid, D_NONE, 0, "[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹ > Р’Р·СЏС‚СЊ", string, "OK", "");
 			}
 			else
 			{
 				return SPD(playerid, D_HMENU+18, DIALOG_STYLE_LIST,
-				"[House Menu] > Сейф > Материалы", "Положить\nВзять", "ENTER", "CANCLE");
+				"[House Menu] > РЎРµР№С„ > РњР°С‚РµСЂРёР°Р»С‹", "РџРѕР»РѕР¶РёС‚СЊ\nР’Р·СЏС‚СЊ", "ENTER", "CANCLE");
 			}
 		}
 		case D_HMENU+21: {
 			if(response) {
 				SetPVarInt(playerid, "s_index", listitem);
 				return SPD(playerid, D_HMENU+22, DIALOG_STYLE_LIST,
-				"[House Menu] > Сейф > Оружие","Взять\nПоложить", "SELECT", "CANCEL");
+				"[House Menu] > РЎРµР№С„ > РћСЂСѓР¶РёРµ","Р’Р·СЏС‚СЊ\nРџРѕР»РѕР¶РёС‚СЊ", "SELECT", "CANCEL");
 			} else {
 				new hid = Pl::Info[playerid][pHouseKey];
 				SafeMenu(playerid, hid);
@@ -8358,30 +8357,30 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				switch(listitem) {
 					case 0: {
 						if(HouseInfo[hid][hGuns][idx] == 0) {
-							Send(playerid, COLOR_GREY, "* В этом слоте нет оружия!");
+							Send(playerid, COLOR_GREY, "* Р’ СЌС‚РѕРј СЃР»РѕС‚Рµ РЅРµС‚ РѕСЂСѓР¶РёСЏ!");
 							return SafeMenu(playerid, hid, 1);
 						}
 						Rac::GivePlayerWeapon(playerid, HouseInfo[hid][hGuns][idx], HouseInfo[hid][hAmmos][idx]);
 						HouseInfo[hid][hGuns][idx] = 0; HouseInfo[hid][hAmmos][idx] = 0;
-						return SPD(playerid, D_HMENU+23, 0, "[House Menu] > Сейф > Оружие", "Вы взяли оружие из сейфа!", "Назад", "Выход");
+						return SPD(playerid, D_HMENU+23, 0, "[House Menu] > РЎРµР№С„ > РћСЂСѓР¶РёРµ", "Р’С‹ РІР·СЏР»Рё РѕСЂСѓР¶РёРµ РёР· СЃРµР№С„Р°!", "РќР°Р·Р°Рґ", "Р’С‹С…РѕРґ");
 					}
 					case 1:
 					{
 						if(HouseInfo[hid][hGuns][idx] != 0)
 						{
-							Send(playerid, COLOR_GREY, "* В этом слоте уже есть оружия!");
+							Send(playerid, COLOR_GREY, "* Р’ СЌС‚РѕРј СЃР»РѕС‚Рµ СѓР¶Рµ РµСЃС‚СЊ РѕСЂСѓР¶РёСЏ!");
 							return SafeMenu(playerid, hid, 1);
 						}
 						if(HouseInfo[hid][hAmmos][idx] >= 1000)
 						{
-							Send(playerid, COLOR_GREY, "* Мало места!");
+							Send(playerid, COLOR_GREY, "* РњР°Р»Рѕ РјРµСЃС‚Р°!");
 							return SafeMenu(playerid, hid, 1);
 						}
 						HouseInfo[hid][hGuns][idx] = Rac::GetPlayerWeapon(playerid);
 						HouseInfo[hid][hAmmos][idx] = Rac::GetPlayerAmmo(playerid, HouseInfo[hid][hGuns][idx]);
 						Rac::RemovePlayerWeapon(playerid, HouseInfo[hid][hGuns][idx]);
 						return SPD(playerid, D_HMENU+23, 0,
-						"[House Menu] > Сейф > Оружие", "Вы положили оружие в сейф!", "Назад", "Выход");
+						"[House Menu] > РЎРµР№С„ > РћСЂСѓР¶РёРµ", "Р’С‹ РїРѕР»РѕР¶РёР»Рё РѕСЂСѓР¶РёРµ РІ СЃРµР№С„!", "РќР°Р·Р°Рґ", "Р’С‹С…РѕРґ");
 					}
 				}
 			}
@@ -8407,7 +8406,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					{
 						Rac::RemovePlayerFromVehicle(playerid);
 						Rac::TogglePlayerControllable(playerid, 1);
-						Send(playerid, COLOR_GRAD2, "* У Вас мало денег!");
+						Send(playerid, COLOR_GRAD2, "* РЈ Р’Р°СЃ РјР°Р»Рѕ РґРµРЅРµРі!");
 					}
 					else
 					{
@@ -8425,14 +8424,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 										PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 										format(string, sizeof(string), "~r~-$%i~n~~w~To open or close using ~g~/lock.~w~successful work!", hirefee);
 										GameTextForPlayer(playerid, string, 5000, 3);
-										Send(playerid, COLOR_GREEN, "* Вы можете доставлять продукты в бизнесы");
-										Send(playerid, COLOR_GREEN, "* Команды доставки /buyprods /sellprods");
+										Send(playerid, COLOR_GREEN, "* Р’С‹ РјРѕР¶РµС‚Рµ РґРѕСЃС‚Р°РІР»СЏС‚СЊ РїСЂРѕРґСѓРєС‚С‹ РІ Р±РёР·РЅРµСЃС‹");
+										Send(playerid, COLOR_GREEN, "* РљРѕРјР°РЅРґС‹ РґРѕСЃС‚Р°РІРєРё /buyprods /sellprods");
 									}
 									else
 									{
 										GameTextForPlayer(playerid, "~w~No charge for the boss.~n~To open or close using ~g~/lock.~w~successful work!", 5000, 3);
-										Send(playerid, COLOR_GREEN, "* Вы можете доставлять продукты в бизнесы");
-										Send(playerid, COLOR_GREEN, "* Команды доставки /buyprods /sellprods");
+										Send(playerid, COLOR_GREEN, "* Р’С‹ РјРѕР¶РµС‚Рµ РґРѕСЃС‚Р°РІР»СЏС‚СЊ РїСЂРѕРґСѓРєС‚С‹ РІ Р±РёР·РЅРµСЃС‹");
+										Send(playerid, COLOR_GREEN, "* РљРѕРјР°РЅРґС‹ РґРѕСЃС‚Р°РІРєРё /buyprods /sellprods");
 									}
 									if(HireCar[playerid] != INVALID_VEHICLE_ID)
 									{
@@ -8464,13 +8463,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				switch(listitem) {
 					case 0: {
-						SPD(playerid, D_TUNING+1, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "* Вы хотите заригистрировать тюнинг.\n\
-						Стоимость улуги: $100000", "OK", "CANCEL");
+						SPD(playerid, D_TUNING+1, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "* Р’С‹ С…РѕС‚РёС‚Рµ Р·Р°СЂРёРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ С‚СЋРЅРёРЅРі.\n\
+						РЎС‚РѕРёРјРѕСЃС‚СЊ СѓР»СѓРіРё: $100000", "OK", "CANCEL");
 					}
 					
 					case 1: {
-						SPD(playerid, D_TUNING+2, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "* Вы хотите удалить тюнинг.\n\
-						Стоимость улуги: $50000", "OK", "CANCEL");
+						SPD(playerid, D_TUNING+2, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "* Р’С‹ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ С‚СЋРЅРёРЅРі.\n\
+						РЎС‚РѕРёРјРѕСЃС‚СЊ СѓР»СѓРіРё: $50000", "OK", "CANCEL");
 					}
 				}
 			}
@@ -8479,21 +8478,21 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 		case D_TUNING+1: {
 			if(response) {
-				if(Rac::GetPlayerMoney(playerid) < 100000) return Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+				if(Rac::GetPlayerMoney(playerid) < 100000) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 				new bidx = GetIndexFromBizID(Bizz_AutoSolonClassC);
 				new house = Pl::Info[playerid][pHouseKey];
 				UpdateTuning(HouseInfo[house][hAuto], 1, house);
 				Rac::GivePlayerMoney(playerid, -100000);
 				GiveBizzProfit(bidx, 10000);
 				BizzInfo[bidx][bProds]--;
-				Send(playerid, COLOR_LIGHTBLUE, "* Тюнинг был зарегистрирован!");
+				Send(playerid, COLOR_LIGHTBLUE, "* РўСЋРЅРёРЅРі Р±С‹Р» Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ!");
 			} else {
-				SPD(playerid, D_TUNING, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "Зарегистрировать тюнинг\nУдалить тюнинг", "SELECT", "CANCEL");
+				SPD(playerid, D_TUNING, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ С‚СЋРЅРёРЅРі\nРЈРґР°Р»РёС‚СЊ С‚СЋРЅРёРЅРі", "SELECT", "CANCEL");
 			}
 		}
 		case D_TUNING+2: {
 			if(response) {
-				if(Rac::GetPlayerMoney(playerid) < 5000) return Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+				if(Rac::GetPlayerMoney(playerid) < 5000) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 				new bidx = GetIndexFromBizID(Bizz_AutoSolonClassC);
 				new hidx = Pl::Info[playerid][pHouseKey];
 				if(IsValidHouse(hidx)) {
@@ -8501,12 +8500,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					GiveBizzProfit(bidx, 5000);
 					BizzInfo[bidx][bProds]--;
 					ResetTuning(HouseInfo[hidx][hAuto], 1, hidx);
-					Send(playerid, COLOR_LIGHTBLUE, "* Тюнинг был удален!");
+					Send(playerid, COLOR_LIGHTBLUE, "* РўСЋРЅРёРЅРі Р±С‹Р» СѓРґР°Р»РµРЅ!");
 				} else {
-					Send(playerid, COLOR_GREY, "* У Вас нет дома!");
+					Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
 				}
 			} else {
-				SPD(playerid, D_TUNING, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "Зарегистрировать тюнинг\nУдалить тюнинг", "SELECT", "CANCEL");
+				SPD(playerid, D_TUNING, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Tuning", "Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ С‚СЋРЅРёРЅРі\nРЈРґР°Р»РёС‚СЊ С‚СЋРЅРёРЅРі", "SELECT", "CANCEL");
 			}
 		}
 
@@ -8514,26 +8513,26 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				switch(listitem) {
 					case 0 : {
-						SPD(playerid, D_GOTO+1,DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты > Популярные места",
-						"— Los Santos\n— San Fierro\n— Las Venturas\n— АвтоШкола\n\
-						— Тюрьма\n— Присон\n— Отель ЛС\n— Банк\n— Дальнобой\n\
-						— Маяк\n— Небоскреб Лос Сантоса\n— Гора Чиллиад\n— Рублевка", "SELECT", "CANCEL");
+						SPD(playerid, D_GOTO+1,DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": РўРµР»РµРїРѕСЂС‚С‹ > РџРѕРїСѓР»СЏСЂРЅС‹Рµ РјРµСЃС‚Р°",
+						"вЂ” Los Santos\nвЂ” San Fierro\nвЂ” Las Venturas\nвЂ” РђРІС‚РѕРЁРєРѕР»Р°\n\
+						вЂ” РўСЋСЂСЊРјР°\nвЂ” РџСЂРёСЃРѕРЅ\nвЂ” РћС‚РµР»СЊ Р›РЎ\nвЂ” Р‘Р°РЅРє\nвЂ” Р”Р°Р»СЊРЅРѕР±РѕР№\n\
+						вЂ” РњР°СЏРє\nвЂ” РќРµР±РѕСЃРєСЂРµР± Р›РѕСЃ РЎР°РЅС‚РѕСЃР°\nвЂ” Р“РѕСЂР° Р§РёР»Р»РёР°Рґ\nвЂ” Р СѓР±Р»РµРІРєР°", "SELECT", "CANCEL");
 					}
 					case 1 : {
 						dialog[0] = '\0';
 						static const family[] = {5, 6, 8, 12, 13, 14, 15, 16, 17, 18};
 						for(new i; i < sizeof family; i++) {
-							scf(dialog, string, "— %s\n", FracInfo[family[i]][fName]);
+							scf(dialog, string, "вЂ” %s\n", FracInfo[family[i]][fName]);
 						}
-						SPD(playerid, D_GOTO+2, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты > Респы банд/мафий", dialog, "SELECT", "CANCEL");
+						SPD(playerid, D_GOTO+2, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РўРµР»РµРїРѕСЂС‚С‹ > Р РµСЃРїС‹ Р±Р°РЅРґ/РјР°С„РёР№", dialog, "SELECT", "CANCEL");
 					}
 					case 2 : {
 						dialog[0] = '\0';
 						static const team[] = {1, 2, 3, 4, 7, 9, 10, 11};
 						for(new i; i < sizeof team; i++) {
-							scf(dialog, string, "— %s\n", FracInfo[team[i]][fName]);
+							scf(dialog, string, "вЂ” %s\n", FracInfo[team[i]][fName]);
 						}
-						SPD(playerid, D_GOTO+3, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты > Респы фракций", dialog, "SELECT", "CANCEL");
+						SPD(playerid, D_GOTO+3, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РўРµР»РµРїРѕСЂС‚С‹ > Р РµСЃРїС‹ С„СЂР°РєС†РёР№", dialog, "SELECT", "CANCEL");
 					}
 				}
 			}
@@ -8580,10 +8579,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						}
 					}
 					Pl::Info[playerid][pLocal] = 0;
-					Send(playerid, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы были телепортированы!");
+					Send(playerid, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Р’С‹ Р±С‹Р»Рё С‚РµР»РµРїРѕСЂС‚РёСЂРѕРІР°РЅС‹!");
 				}
 			} else {
-				SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты", "— Популярные места\n— Респы банд\n— Респы фракций", "SELECT", "CANCEL");
+				SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РўРµР»РµРїРѕСЂС‚С‹", "вЂ” РџРѕРїСѓР»СЏСЂРЅС‹Рµ РјРµСЃС‚Р°\nвЂ” Р РµСЃРїС‹ Р±Р°РЅРґ\nвЂ” Р РµСЃРїС‹ С„СЂР°РєС†РёР№", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -8614,10 +8613,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Pl::Info[playerid][pLocal] = 0;
 					Rac::SetPlayerVirtualWorld(playerid, 0);
 					Rac::SetPlayerInterior(playerid,0);
-					Send(playerid, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы были телепортированы!");
+					Send(playerid, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Р’С‹ Р±С‹Р»Рё С‚РµР»РµРїРѕСЂС‚РёСЂРѕРІР°РЅС‹!");
 				}
 			} else {
-				SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты", "— Популярные места\n— Респы банд\n— Респы фракций", "SELECT", "CANCEL");
+				SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РўРµР»РµРїРѕСЂС‚С‹", "вЂ” РџРѕРїСѓР»СЏСЂРЅС‹Рµ РјРµСЃС‚Р°\nвЂ” Р РµСЃРїС‹ Р±Р°РЅРґ\nвЂ” Р РµСЃРїС‹ С„СЂР°РєС†РёР№", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -8643,10 +8642,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Pl::Info[playerid][pLocal] = 0;
 					Rac::SetPlayerVirtualWorld(playerid, 0);
 					Rac::SetPlayerInterior(playerid,0);
-					Send(playerid, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы были телепортированы!");
+					Send(playerid, COLOR_WHITE, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": Р’С‹ Р±С‹Р»Рё С‚РµР»РµРїРѕСЂС‚РёСЂРѕРІР°РЅС‹!");
 				}
 			} else {
-				SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Телепорты", "— Популярные места\n— Респы банд\n— Респы фракций", "SELECT", "CANCEL");
+				SPD(playerid, D_GOTO, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РўРµР»РµРїРѕСЂС‚С‹", "вЂ” РџРѕРїСѓР»СЏСЂРЅС‹Рµ РјРµСЃС‚Р°\nвЂ” Р РµСЃРїС‹ Р±Р°РЅРґ\nвЂ” Р РµСЃРїС‹ С„СЂР°РєС†РёР№", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -8655,10 +8654,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!sscanf(inputtext, "i", inputtext[0])) {
 					new i = GetPVarInt(playerid, "SelectGas");
 					new veh = GetPlayerVehicleID(playerid);
-					if(!(1 <= inputtext[0] <= 100)) return Send(playerid, COLOR_GREY, "* Вы не можите заправится больше чем на 100 литров!");
-					if((floatround(AutoInfo[veh][aFuel]) + inputtext[0]) > 100) return Send(playerid, COLOR_GREY, "* В бензобак не влезит столько бензина!");
+					if(!(1 <= inputtext[0] <= 100)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ РјРѕР¶РёС‚Рµ Р·Р°РїСЂР°РІРёС‚СЃСЏ Р±РѕР»СЊС€Рµ С‡РµРј РЅР° 100 Р»РёС‚СЂРѕРІ!");
+					if((floatround(AutoInfo[veh][aFuel]) + inputtext[0]) > 100) return Send(playerid, COLOR_GREY, "* Р’ Р±РµРЅР·РѕР±Р°Рє РЅРµ РІР»РµР·РёС‚ СЃС‚РѕР»СЊРєРѕ Р±РµРЅР·РёРЅР°!");
 					new FillUP = (inputtext[0] * (BizzInfo[GetIndexFromBizID(RefillInfo[i][brBizID])][bEnterCost]/100));
-					if(Rac::GetPlayerMoney(playerid) < FillUP) return Send(playerid, COLOR_GREY, "* У Вас не хватает денег на запрваку!");
+					if(Rac::GetPlayerMoney(playerid) < FillUP) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі РЅР° Р·Р°РїСЂРІР°РєСѓ!");
 					SetTimerEx("Fillup", 250, false, "iiii", playerid, inputtext[0], FillUP, inputtext[0]);
 					Rac::TogglePlayerControllable(playerid, 0);
 					format(string, sizeof string, "~g~%i~n~~b~Please wait...", inputtext[0]);
@@ -8675,10 +8674,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new frac = GetPVarInt(playerid, "SelectedFrac");
 					SetPVarInt(playerid, "SelectedRank", inputtext[0]);
 					if(Pl::Info[playerid][pLeader] == frac || Pl::isAdmin(playerid, ADMINISTRATOR)) {
-						format( dialog, sizeof dialog, "Текущее: %s\nВведите новое название ранга.\n", RankInfo[frac][inputtext[0]]);
-						SPD(playerid, D_CRANK+1, 1, "Название ранга", dialog, "OK", "CANCEL");
+						format( dialog, sizeof dialog, "РўРµРєСѓС‰РµРµ: %s\nР’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РЅР°Р·РІР°РЅРёРµ СЂР°РЅРіР°.\n", RankInfo[frac][inputtext[0]]);
+						SPD(playerid, D_CRANK+1, 1, "РќР°Р·РІР°РЅРёРµ СЂР°РЅРіР°", dialog, "OK", "CANCEL");
 					} else {
-						Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+						Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
 					}
 				}
 			}
@@ -8689,20 +8688,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new len = strlen(inputtext);
 				new frac = GetPVarInt(playerid, "SelectedFrac"), rank = GetPVarInt(playerid, "SelectedRank");
 				if(isnull(inputtext) || inputtext[0] == ' ') {
-					Send(playerid, COLOR_GREY, "* Поле ввода пустое!");
-					format(dialog, sizeof dialog, "* Неверный ввод!\nТекущее: %s\nВведите новое название ранга.\n", RankInfo[frac][rank] );
-					SPD(playerid, D_CRANK+1, 1, "Название ранга", dialog, "OK", "CANCEL");
+					Send(playerid, COLOR_GREY, "* РџРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚РѕРµ!");
+					format(dialog, sizeof dialog, "* РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ!\nРўРµРєСѓС‰РµРµ: %s\nР’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РЅР°Р·РІР°РЅРёРµ СЂР°РЅРіР°.\n", RankInfo[frac][rank] );
+					SPD(playerid, D_CRANK+1, 1, "РќР°Р·РІР°РЅРёРµ СЂР°РЅРіР°", dialog, "OK", "CANCEL");
 				} else if(!len || len > 36) {
-					Send(playerid, COLOR_GREY, "* Макс. длина ранга состовляет 36 символов!");
-					format(dialog, sizeof dialog, "Текущее: %s\nВведите новое название ранга.\n", RankInfo[frac][rank]);
-					SPD(playerid, D_CRANK+1, 1, "Название ранга", dialog, "ENTER", "CANCLE");
+					Send(playerid, COLOR_GREY, "* РњР°РєСЃ. РґР»РёРЅР° СЂР°РЅРіР° СЃРѕСЃС‚РѕРІР»СЏРµС‚ 36 СЃРёРјРІРѕР»РѕРІ!");
+					format(dialog, sizeof dialog, "РўРµРєСѓС‰РµРµ: %s\nР’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РЅР°Р·РІР°РЅРёРµ СЂР°РЅРіР°.\n", RankInfo[frac][rank]);
+					SPD(playerid, D_CRANK+1, 1, "РќР°Р·РІР°РЅРёРµ СЂР°РЅРіР°", dialog, "ENTER", "CANCLE");
 				} else if(!regex_match_exid(inputtext, ValidText)) {
-					Send(playerid, COLOR_GREY, "* В названии ранга есть заприщеные символы!");
-					format(dialog, sizeof dialog, "Текущее: %s\nВведите новое название ранга.\n", RankInfo[frac][rank]);
-					SPD(playerid, D_CRANK+1, 1, "Название ранга", dialog, "OK", "CANCEL");
+					Send(playerid, COLOR_GREY, "* Р’ РЅР°Р·РІР°РЅРёРё СЂР°РЅРіР° РµСЃС‚СЊ Р·Р°РїСЂРёС‰РµРЅС‹Рµ СЃРёРјРІРѕР»С‹!");
+					format(dialog, sizeof dialog, "РўРµРєСѓС‰РµРµ: %s\nР’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РЅР°Р·РІР°РЅРёРµ СЂР°РЅРіР°.\n", RankInfo[frac][rank]);
+					SPD(playerid, D_CRANK+1, 1, "РќР°Р·РІР°РЅРёРµ СЂР°РЅРіР°", dialog, "OK", "CANCEL");
 				} else {
-					format(dialog, sizeof dialog, "Ранг был изменен!\n\n  Старый: %s\n  Новый: %s\n", RankInfo[frac][rank], inputtext);
-					SPD(playerid, D_CRANK+2, 0, "Название ранга", dialog, "OK", "CANCEL");
+					format(dialog, sizeof dialog, "Р Р°РЅРі Р±С‹Р» РёР·РјРµРЅРµРЅ!\n\n  РЎС‚Р°СЂС‹Р№: %s\n  РќРѕРІС‹Р№: %s\n", RankInfo[frac][rank], inputtext);
+					SPD(playerid, D_CRANK+2, 0, "РќР°Р·РІР°РЅРёРµ СЂР°РЅРіР°", dialog, "OK", "CANCEL");
 					UpdateRank(frac, rank, inputtext);
 				}
 			} else {
@@ -8716,32 +8715,32 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_BMENU: {
 			new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-			if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+			if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 			if(response) {
 				switch(listitem) {
 					case 0 : {
 						PrintBizInfo(playerid, Pl::Info[playerid][pBizKey]);
 					}
 					case 1 : {
-						SPD(playerid, D_BMENU+1, DIALOG_STYLE_LIST, "[Biz Menu] > Счет бизнеса", ""#_GREY_ARROW"Снять деньги\n"#_GREY_ARROW"Положить деньги", "ENTER", "CANCLE");
+						SPD(playerid, D_BMENU+1, DIALOG_STYLE_LIST, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", ""#_GREY_ARROW"РЎРЅСЏС‚СЊ РґРµРЅСЊРіРё\n"#_GREY_ARROW"РџРѕР»РѕР¶РёС‚СЊ РґРµРЅСЊРіРё", "ENTER", "CANCLE");
 					}
 					case 2 : {
-						format(string, sizeof(string), "* Введите стоимость(от $1 до $9999) услуг бизнеса.\n\nТекущая стоимость: $%i", BizzInfo[bidx][bEnterCost]);
-						SPD(playerid, D_BMENU+4, DIALOG_STYLE_INPUT, "[Biz Menu] > Стоимость услуг", string, "ENTER", "CANCLE");
+						format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ СЃС‚РѕРёРјРѕСЃС‚СЊ(РѕС‚ $1 РґРѕ $9999) СѓСЃР»СѓРі Р±РёР·РЅРµСЃР°.\n\nРўРµРєСѓС‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: $%i", BizzInfo[bidx][bEnterCost]);
+						SPD(playerid, D_BMENU+4, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‚РѕРёРјРѕСЃС‚СЊ СѓСЃР»СѓРі", string, "ENTER", "CANCLE");
 					}
 					case 3 : {
-						format(string, sizeof(string), "* Введите новое название бизнеса.\n\nТекущие название: %s", BizzInfo[bidx][bDescription]);
-						SPD(playerid, D_BMENU+5, DIALOG_STYLE_INPUT, "[Biz Menu] > Название бизнеса", string, "ENTER", "CANCLE");
+						format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РЅР°Р·РІР°РЅРёРµ Р±РёР·РЅРµСЃР°.\n\nРўРµРєСѓС‰РёРµ РЅР°Р·РІР°РЅРёРµ: %s", BizzInfo[bidx][bDescription]);
+						SPD(playerid, D_BMENU+5, DIALOG_STYLE_INPUT, "[Biz Menu] > РќР°Р·РІР°РЅРёРµ Р±РёР·РЅРµСЃР°", string, "ENTER", "CANCLE");
 					}
 					case 4 : {
-						format(string, sizeof(string), "* Введите сумму(от $1 до $999) по которой будут\n\
-						закупатся продукты в бизнес.\n\nТекущая сумма: $%i", BizzInfo[bidx][bPriceProd]);
-						SPD(playerid, D_BMENU+6, DIALOG_STYLE_INPUT, "[Biz Menu] > Цена за продукты", string, "ENTER", "CANCLE");
+						format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $999) РїРѕ РєРѕС‚РѕСЂРѕР№ Р±СѓРґСѓС‚\n\
+						Р·Р°РєСѓРїР°С‚СЃСЏ РїСЂРѕРґСѓРєС‚С‹ РІ Р±РёР·РЅРµСЃ.\n\nРўРµРєСѓС‰Р°СЏ СЃСѓРјРјР°: $%i", BizzInfo[bidx][bPriceProd]);
+						SPD(playerid, D_BMENU+6, DIALOG_STYLE_INPUT, "[Biz Menu] > Р¦РµРЅР° Р·Р° РїСЂРѕРґСѓРєС‚С‹", string, "ENTER", "CANCLE");
 					}
 					case 5 : {
-						format(string, sizeof(string),"* Введите ID игрока чтобы назначить нового компаньона.\n\
-						Чтобы убрать компаньона введите 255.\n\nТекущий компаньон: %s", BizzInfo[bidx][bExtortion]);
-						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > Компаньон", string, "ENTER", "CANCLE");
+						format(string, sizeof(string),"* Р’РІРµРґРёС‚Рµ ID РёРіСЂРѕРєР° С‡С‚РѕР±С‹ РЅР°Р·РЅР°С‡РёС‚СЊ РЅРѕРІРѕРіРѕ РєРѕРјРїР°РЅСЊРѕРЅР°.\n\
+						Р§С‚РѕР±С‹ СѓР±СЂР°С‚СЊ РєРѕРјРїР°РЅСЊРѕРЅР° РІРІРµРґРёС‚Рµ 255.\n\nРўРµРєСѓС‰РёР№ РєРѕРјРїР°РЅСЊРѕРЅ: %s", BizzInfo[bidx][bExtortion]);
+						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > РљРѕРјРїР°РЅСЊРѕРЅ", string, "ENTER", "CANCLE");
 					}
 				}
 			}
@@ -8750,15 +8749,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_BMENU+1: {
 			if(response) {
 				new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 				switch(listitem) {
 					case 0: {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
-						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+						format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i", BizzInfo[bidx][bSafe]);
+						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 					}
 					case 1: {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
-						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+						format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i\nРќР°Р»РёС‡РЅС‹Рµ: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
+						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 					}
 				}
 			} else {
@@ -8769,79 +8768,79 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_BMENU+2: {
 			if(response) {
 				new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 				if(sscanf(inputtext, "i", inputtext[0]) == 0) {
 					if(inputtext[0] < 1) {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
-						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+						format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i", BizzInfo[bidx][bSafe]);
+						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 					}
 					else if(inputtext[0] > 1000000) {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
-						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+						format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i", BizzInfo[bidx][bSafe]);
+						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 					}
 					else if(BizzInfo[bidx][bSafe] >= inputtext[0]) {
 						BizzInfo[bidx][bSafe] -= inputtext[0];
 						Rac::GivePlayerMoney(playerid, inputtext[0]);
-						format(string, sizeof(string), "Вы сняли: $%i\nОсталось на счету: $%i", inputtext[0], BizzInfo[bidx][bSafe]);
-						SPD(playerid, D_NONE, 0, "[Biz Menu] > Счет бизнеса", string, "OK", "");
+						format(string, sizeof(string), "Р’С‹ СЃРЅСЏР»Рё: $%i\nРћСЃС‚Р°Р»РѕСЃСЊ РЅР° СЃС‡РµС‚Сѓ: $%i", inputtext[0], BizzInfo[bidx][bSafe]);
+						SPD(playerid, D_NONE, 0, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", string, "OK", "");
 					}
 					else {
-						format(dialog, sizeof dialog, "Сейчас на счету:\t$%i\nВведите сумму которую хотите снять.", BizzInfo[bidx][bSafe]);
-						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+						format(dialog, sizeof dialog, "РЎРµР№С‡Р°СЃ РЅР° СЃС‡РµС‚Сѓ:\t$%i\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ.", BizzInfo[bidx][bSafe]);
+						SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 					}
 				} else {
-					format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите снять!\n\nТекущий баланс: $%i", BizzInfo[bidx][bSafe]);
-					SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+					format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i", BizzInfo[bidx][bSafe]);
+					SPD(playerid, D_BMENU+2, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 				}
 			} else {
-				SPD(playerid, D_BMENU+1, DIALOG_STYLE_LIST, "[Biz Menu] > Счет бизнеса", ""#_GREY_ARROW"Снять деньги\n"#_GREY_ARROW"Положить деньги", "ENTER", "CANCLE");
+				SPD(playerid, D_BMENU+1, DIALOG_STYLE_LIST, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", ""#_GREY_ARROW"РЎРЅСЏС‚СЊ РґРµРЅСЊРіРё\n"#_GREY_ARROW"РџРѕР»РѕР¶РёС‚СЊ РґРµРЅСЊРіРё", "ENTER", "CANCLE");
 			}
 		}
 		
 		case D_BMENU+3: {
 			if(response) {
 				new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 				if(sscanf(inputtext, "i", inputtext[0]) == 0) {
 					if(inputtext[0] < 1) {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
-						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+						format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i\nРќР°Р»РёС‡РЅС‹Рµ: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
+						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 					}
 					else if(Rac::GetPlayerMoney(playerid) >= inputtext[0]) {
 						BizzInfo[bidx][bSafe] += inputtext[0];
 						Rac::GivePlayerMoney(playerid, -inputtext[0]);
-						format(string, sizeof(string), "Сумма: $%i\nТекущий баланс: $%i\nНаличные: $%i", inputtext[0], BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
-						SPD(playerid, D_NONE, 0, "[Biz Menu] > Счет бизнеса", string, "OK", "");
+						format(string, sizeof(string), "РЎСѓРјРјР°: $%i\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i\nРќР°Р»РёС‡РЅС‹Рµ: $%i", inputtext[0], BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
+						SPD(playerid, D_NONE, 0, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", string, "OK", "");
 					}
 					else {
-						format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
-						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+						format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i\nРќР°Р»РёС‡РЅС‹Рµ: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
+						SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 					}
 				} else {
-					format(dialog, sizeof dialog, "* Введите сумму(от $1 до $1kk) которую хотите положить!\n\nТекущий баланс: $%i\nНаличные: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
-					SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > Счет бизнеса", dialog, "ENTER", "CANCLE");
+					format(dialog, sizeof dialog, "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $1kk) РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ!\n\nРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i\nРќР°Р»РёС‡РЅС‹Рµ: $%i", BizzInfo[bidx][bSafe], Rac::GetPlayerMoney(playerid));
+					SPD(playerid, D_BMENU+3, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", dialog, "ENTER", "CANCLE");
 				}
 			} else {
-				SPD(playerid, D_BMENU+1, DIALOG_STYLE_LIST, "[Biz Menu] > Счет бизнеса", ""#_GREY_ARROW"Снять деньги\n"#_GREY_ARROW"Положить деньги", "ENTER", "CANCLE");
+				SPD(playerid, D_BMENU+1, DIALOG_STYLE_LIST, "[Biz Menu] > РЎС‡РµС‚ Р±РёР·РЅРµСЃР°", ""#_GREY_ARROW"РЎРЅСЏС‚СЊ РґРµРЅСЊРіРё\n"#_GREY_ARROW"РџРѕР»РѕР¶РёС‚СЊ РґРµРЅСЊРіРё", "ENTER", "CANCLE");
 			}
 		}
 		
 		case D_BMENU+4 : {
 			if(response) {
 				new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 				if(!sscanf(inputtext, "i", inputtext[0])) {
 					if(1 <= inputtext[0] <= 9999) {
 						BizzInfo[bidx][bEnterCost] = inputtext[0];
-						format(string, sizeof(string), "Текущая стоимость: $%i", BizzInfo[bidx][bEnterCost]);
-						SPD(playerid, D_NONE, 0, "[Biz Menu] > Стоимость услуг", string, "OK", "");
+						format(string, sizeof(string), "РўРµРєСѓС‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: $%i", BizzInfo[bidx][bEnterCost]);
+						SPD(playerid, D_NONE, 0, "[Biz Menu] > РЎС‚РѕРёРјРѕСЃС‚СЊ СѓСЃР»СѓРі", string, "OK", "");
 					} else {
-						format(string, sizeof(string), "* Введите стоимость(от $1 до $9999) услуг бизнеса.\n\nТекущая стоимость: $%i", BizzInfo[bidx][bEnterCost]);
-						SPD(playerid, D_BMENU+4, DIALOG_STYLE_INPUT, "[Biz Menu] > Стоимость услуг", string, "ENTER", "CANCLE");
+						format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ СЃС‚РѕРёРјРѕСЃС‚СЊ(РѕС‚ $1 РґРѕ $9999) СѓСЃР»СѓРі Р±РёР·РЅРµСЃР°.\n\nРўРµРєСѓС‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: $%i", BizzInfo[bidx][bEnterCost]);
+						SPD(playerid, D_BMENU+4, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‚РѕРёРјРѕСЃС‚СЊ СѓСЃР»СѓРі", string, "ENTER", "CANCLE");
 					}
 				} else {
-					format(string, sizeof(string), "* Введите стоимость(от $1 до $9999) услуг бизнеса.\n\nТекущая стоимость: $%i", BizzInfo[bidx][bEnterCost]);
-					SPD(playerid, D_BMENU+4, DIALOG_STYLE_INPUT, "[Biz Menu] > Стоимость услуг", string, "ENTER", "CANCLE");
+					format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ СЃС‚РѕРёРјРѕСЃС‚СЊ(РѕС‚ $1 РґРѕ $9999) СѓСЃР»СѓРі Р±РёР·РЅРµСЃР°.\n\nРўРµРєСѓС‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: $%i", BizzInfo[bidx][bEnterCost]);
+					SPD(playerid, D_BMENU+4, DIALOG_STYLE_INPUT, "[Biz Menu] > РЎС‚РѕРёРјРѕСЃС‚СЊ СѓСЃР»СѓРі", string, "ENTER", "CANCLE");
 				}
 			} else {
 				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
@@ -8852,14 +8851,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new len = strlen(inputtext);
 				new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 				if(!len || len > 24 || inputtext[0] == ' ') {
-					format(string, sizeof(string), "* Введите новое название бизнеса.\n\nТекущие название: %s", BizzInfo[bidx][bDescription]);
-					SPD(playerid, D_BMENU+5, DIALOG_STYLE_INPUT, "[Biz Menu] > Название бизнеса", string, "ENTER", "CANCLE");
+					format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РЅР°Р·РІР°РЅРёРµ Р±РёР·РЅРµСЃР°.\n\nРўРµРєСѓС‰РёРµ РЅР°Р·РІР°РЅРёРµ: %s", BizzInfo[bidx][bDescription]);
+					SPD(playerid, D_BMENU+5, DIALOG_STYLE_INPUT, "[Biz Menu] > РќР°Р·РІР°РЅРёРµ Р±РёР·РЅРµСЃР°", string, "ENTER", "CANCLE");
 				} else {
 					strmid(BizzInfo[bidx][bDescription], inputtext, 0, len, 24);
-					format(string, sizeof(string), "* Название изменино!\n\nТекущие название: %s", BizzInfo[bidx][bDescription]);
-					SPD(playerid, D_NONE, 0, "[Biz Menu] > Название бизнеса", string, "OK", "");
+					format(string, sizeof(string), "* РќР°Р·РІР°РЅРёРµ РёР·РјРµРЅРёРЅРѕ!\n\nРўРµРєСѓС‰РёРµ РЅР°Р·РІР°РЅРёРµ: %s", BizzInfo[bidx][bDescription]);
+					SPD(playerid, D_NONE, 0, "[Biz Menu] > РќР°Р·РІР°РЅРёРµ Р±РёР·РЅРµСЃР°", string, "OK", "");
 				}
 			} else {
 				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
@@ -8869,22 +8868,22 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_BMENU+6: {
 			if(response) {
 				new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+				if(!IsPlayerBizOwner(playerid, bidx) && !IsPlayerBizExtortion(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 				if(sscanf(inputtext, "i", inputtext[0]) == 0) {
 					if(1 <= inputtext[0] <= 999) {
 						BizzInfo[bidx][bPriceProd] = inputtext[0];
-						format(string, sizeof(string), "Новая цена за продукты:\t$%i", BizzInfo[bidx][bPriceProd]);
-						SPD(playerid, D_NONE, 0, "[Biz Menu] > Цена за продукты", string, "OK", "");
+						format(string, sizeof(string), "РќРѕРІР°СЏ С†РµРЅР° Р·Р° РїСЂРѕРґСѓРєС‚С‹:\t$%i", BizzInfo[bidx][bPriceProd]);
+						SPD(playerid, D_NONE, 0, "[Biz Menu] > Р¦РµРЅР° Р·Р° РїСЂРѕРґСѓРєС‚С‹", string, "OK", "");
 					}
 					else {
-						format(string, sizeof(string), "* Введите сумму(от $1 до $999) по которой будут\n\
-						закупатся продукты в бизнес.\n\nТекущая сумма: $%i", BizzInfo[bidx][bPriceProd]);
-						SPD(playerid, D_BMENU+6, DIALOG_STYLE_INPUT, "[Biz Menu] > Цена за продукты", string, "ENTER", "CANCLE");
+						format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $999) РїРѕ РєРѕС‚РѕСЂРѕР№ Р±СѓРґСѓС‚\n\
+						Р·Р°РєСѓРїР°С‚СЃСЏ РїСЂРѕРґСѓРєС‚С‹ РІ Р±РёР·РЅРµСЃ.\n\nРўРµРєСѓС‰Р°СЏ СЃСѓРјРјР°: $%i", BizzInfo[bidx][bPriceProd]);
+						SPD(playerid, D_BMENU+6, DIALOG_STYLE_INPUT, "[Biz Menu] > Р¦РµРЅР° Р·Р° РїСЂРѕРґСѓРєС‚С‹", string, "ENTER", "CANCLE");
 					}
 				} else {
-					format(string, sizeof(string), "* Введите сумму(от $1 до $999) по которой будут\n\
-					закупатся продукты в бизнес.\n\nТекущая сумма: $%i", BizzInfo[bidx][bPriceProd]);
-					SPD(playerid, D_BMENU+6, DIALOG_STYLE_INPUT, "[Biz Menu] > Цена за продукты", string, "ENTER", "CANCLE");
+					format(string, sizeof(string), "* Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ(РѕС‚ $1 РґРѕ $999) РїРѕ РєРѕС‚РѕСЂРѕР№ Р±СѓРґСѓС‚\n\
+					Р·Р°РєСѓРїР°С‚СЃСЏ РїСЂРѕРґСѓРєС‚С‹ РІ Р±РёР·РЅРµСЃ.\n\nРўРµРєСѓС‰Р°СЏ СЃСѓРјРјР°: $%i", BizzInfo[bidx][bPriceProd]);
+					SPD(playerid, D_BMENU+6, DIALOG_STYLE_INPUT, "[Biz Menu] > Р¦РµРЅР° Р·Р° РїСЂРѕРґСѓРєС‚С‹", string, "ENTER", "CANCLE");
 				}
 			} else {
 				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
@@ -8895,38 +8894,38 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new player, len = strlen(inputtext);
 				new bidx = GetIndexFromBizID(Pl::Info[playerid][pBizKey]);
-				if(!IsPlayerBizOwner(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Вам не принадлежит бизнес!");
+				if(!IsPlayerBizOwner(playerid, bidx)) return Send(playerid, COLOR_GREY, "* Р’Р°Рј РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Р±РёР·РЅРµСЃ!");
 				if(sscanf(inputtext, "s[24]", string) == 0) {
 					sscanf(string, "u", player);
 					if(player == playerid) {
-						Send(playerid, COLOR_GREY, "* Вы владелец бизнеса!");
-						format(string, sizeof(string),"* Введите ID игрока чтобы назначить нового компаньона.\n\
-						Чтобы убрать компаньона введите 255.\n\nТекущий компаньон: %s", BizzInfo[bidx][bExtortion]);
-						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > Компаньон", string, "ENTER", "CANCLE");
+						Send(playerid, COLOR_GREY, "* Р’С‹ РІР»Р°РґРµР»РµС† Р±РёР·РЅРµСЃР°!");
+						format(string, sizeof(string),"* Р’РІРµРґРёС‚Рµ ID РёРіСЂРѕРєР° С‡С‚РѕР±С‹ РЅР°Р·РЅР°С‡РёС‚СЊ РЅРѕРІРѕРіРѕ РєРѕРјРїР°РЅСЊРѕРЅР°.\n\
+						Р§С‚РѕР±С‹ СѓР±СЂР°С‚СЊ РєРѕРјРїР°РЅСЊРѕРЅР° РІРІРµРґРёС‚Рµ 255.\n\nРўРµРєСѓС‰РёР№ РєРѕРјРїР°РЅСЊРѕРЅ: %s", BizzInfo[bidx][bExtortion]);
+						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > РљРѕРјРїР°РЅСЊРѕРЅ", string, "ENTER", "CANCLE");
 					}
 					else if(strval(string) == 255) {
 						strmid(BizzInfo[bidx][bExtortion], "No-one", 0, strlen("No-one"), 24);
-						format(string, sizeof(string),"* Введите ID игрока чтобы назначить нового компаньона.\n\
-						Чтобы убрать компаньона введите 255.\n\nТекущий компаньон: %s", BizzInfo[bidx][bExtortion]);
-						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > Компаньон", string, "ENTER", "CANCLE");
+						format(string, sizeof(string),"* Р’РІРµРґРёС‚Рµ ID РёРіСЂРѕРєР° С‡С‚РѕР±С‹ РЅР°Р·РЅР°С‡РёС‚СЊ РЅРѕРІРѕРіРѕ РєРѕРјРїР°РЅСЊРѕРЅР°.\n\
+						Р§С‚РѕР±С‹ СѓР±СЂР°С‚СЊ РєРѕРјРїР°РЅСЊРѕРЅР° РІРІРµРґРёС‚Рµ 255.\n\nРўРµРєСѓС‰РёР№ РєРѕРјРїР°РЅСЊРѕРЅ: %s", BizzInfo[bidx][bExtortion]);
+						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > РљРѕРјРїР°РЅСЊРѕРЅ", string, "ENTER", "CANCLE");
 					}
 					else if(!Pl::isLogged(player)) {
-						Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-						format(string, sizeof(string),"* Введите ID игрока чтобы назначить нового компаньона.\n\
-						Чтобы убрать компаньона введите 255.\n\nТекущий компаньон: %s", BizzInfo[bidx][bExtortion]);
-						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > Компаньон", string, "ENTER", "CANCLE");
+						Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
+						format(string, sizeof(string),"* Р’РІРµРґРёС‚Рµ ID РёРіСЂРѕРєР° С‡С‚РѕР±С‹ РЅР°Р·РЅР°С‡РёС‚СЊ РЅРѕРІРѕРіРѕ РєРѕРјРїР°РЅСЊРѕРЅР°.\n\
+						Р§С‚РѕР±С‹ СѓР±СЂР°С‚СЊ РєРѕРјРїР°РЅСЊРѕРЅР° РІРІРµРґРёС‚Рµ 255.\n\nРўРµРєСѓС‰РёР№ РєРѕРјРїР°РЅСЊРѕРЅ: %s", BizzInfo[bidx][bExtortion]);
+						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > РљРѕРјРїР°РЅСЊРѕРЅ", string, "ENTER", "CANCLE");
 					}
 					else {
 						Pl::Info[player][pBizKey] = BizzInfo[bidx][bID];
 						strmid(BizzInfo[bidx][bExtortion], string, 0, len, 24);
-						format(string, sizeof(string),"* Введите ID игрока чтобы назначить нового компаньона.\n\
-						Чтобы убрать компаньона введите 255.\n\nТекущий компаньон: %s", BizzInfo[bidx][bExtortion]);
-						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > Компаньон", string, "ENTER", "CANCLE");
+						format(string, sizeof(string),"* Р’РІРµРґРёС‚Рµ ID РёРіСЂРѕРєР° С‡С‚РѕР±С‹ РЅР°Р·РЅР°С‡РёС‚СЊ РЅРѕРІРѕРіРѕ РєРѕРјРїР°РЅСЊРѕРЅР°.\n\
+						Р§С‚РѕР±С‹ СѓР±СЂР°С‚СЊ РєРѕРјРїР°РЅСЊРѕРЅР° РІРІРµРґРёС‚Рµ 255.\n\nРўРµРєСѓС‰РёР№ РєРѕРјРїР°РЅСЊРѕРЅ: %s", BizzInfo[bidx][bExtortion]);
+						SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > РљРѕРјРїР°РЅСЊРѕРЅ", string, "ENTER", "CANCLE");
 					}
 				} else {
-					format(string, sizeof(string),"* Введите ID игрока чтобы назначить нового компаньона.\n\
-					Чтобы убрать компаньона введите 255.\n\nТекущий компаньон: %s", BizzInfo[bidx][bExtortion]);
-					SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > Компаньон", string, "ENTER", "CANCLE");
+					format(string, sizeof(string),"* Р’РІРµРґРёС‚Рµ ID РёРіСЂРѕРєР° С‡С‚РѕР±С‹ РЅР°Р·РЅР°С‡РёС‚СЊ РЅРѕРІРѕРіРѕ РєРѕРјРїР°РЅСЊРѕРЅР°.\n\
+					Р§С‚РѕР±С‹ СѓР±СЂР°С‚СЊ РєРѕРјРїР°РЅСЊРѕРЅР° РІРІРµРґРёС‚Рµ 255.\n\nРўРµРєСѓС‰РёР№ РєРѕРјРїР°РЅСЊРѕРЅ: %s", BizzInfo[bidx][bExtortion]);
+					SPD(playerid, D_BMENU+7, 1, "[Biz Menu] > РљРѕРјРїР°РЅСЊРѕРЅ", string, "ENTER", "CANCLE");
 				}
 			} else {
 				ShowDialog(playerid, D_BMENU, DIALOG_STYLE_LIST, "[Biz Menu]", "dialog/bmenu.txt", "ENTER", "CANCLE");
@@ -8936,23 +8935,23 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU-1 : {
 			if(response) {
 				new fracid = Pl::FracID(playerid);
-				if(strfind(inputtext, "Ранги", true) != -1) {
+				if(strfind(inputtext, "Р Р°РЅРіРё", true) != -1) {
 					ShowRankList(playerid, fracid);
 					
-				} else if(strfind(inputtext, "Транспорт", true) != -1) {
-					ShowDialog(playerid, D_LMENU, 2, "L-Menu. Транспорт", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
+				} else if(strfind(inputtext, "РўСЂР°РЅСЃРїРѕСЂС‚", true) != -1) {
+					ShowDialog(playerid, D_LMENU, 2, "L-Menu. РўСЂР°РЅСЃРїРѕСЂС‚", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 					
-				} else if(strfind(inputtext, "Ранг захвата", false) != -1) {
-					SPD(playerid, D_LMENU+8, 1, "L-Menu. Ранг захвата", "Введите ранг захвата:", "OK", "CANCEL");
+				} else if(strfind(inputtext, "Р Р°РЅРі Р·Р°С…РІР°С‚Р°", false) != -1) {
+					SPD(playerid, D_LMENU+8, 1, "L-Menu. Р Р°РЅРі Р·Р°С…РІР°С‚Р°", "Р’РІРµРґРёС‚Рµ СЂР°РЅРі Р·Р°С…РІР°С‚Р°:", "OK", "CANCEL");
 					
-				} else if(strfind(inputtext, "Черный список", true) != -1) {
+				} else if(strfind(inputtext, "Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", true) != -1) {
 					ShowLMenu(playerid, D_LMENU+9);
 					
-				} else if(strfind(inputtext, "Ранг новостей", true) != -1) {
-					SPD(playerid, D_LMENU+14, 1, "L-Menu. Ранг новостей", "Введите ранг для написания в /gov:", "OK", "CANCEL");
+				} else if(strfind(inputtext, "Р Р°РЅРі РЅРѕРІРѕСЃС‚РµР№", true) != -1) {
+					SPD(playerid, D_LMENU+14, 1, "L-Menu. Р Р°РЅРі РЅРѕРІРѕСЃС‚РµР№", "Р’РІРµРґРёС‚Рµ СЂР°РЅРі РґР»СЏ РЅР°РїРёСЃР°РЅРёСЏ РІ /gov:", "OK", "CANCEL");
 					
-				} else if(strfind(inputtext, "Управление автошколой", true) != -1) {
-					SPD(playerid, D_LMENU+10, 2, "L-Menu. Управление автошколой", "Закрыть\nОткрыть", "SELECT", "CANCEL");						
+				} else if(strfind(inputtext, "РЈРїСЂР°РІР»РµРЅРёРµ Р°РІС‚РѕС€РєРѕР»РѕР№", true) != -1) {
+					SPD(playerid, D_LMENU+10, 2, "L-Menu. РЈРїСЂР°РІР»РµРЅРёРµ Р°РІС‚РѕС€РєРѕР»РѕР№", "Р—Р°РєСЂС‹С‚СЊ\nРћС‚РєСЂС‹С‚СЊ", "SELECT", "CANCEL");						
 				}
 			}
 		}
@@ -8960,13 +8959,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU : {
 			if(response) {
 				switch(listitem) {
-					case 0 : SPD(playerid, D_LMENU+1, 0, "L-Menu: Смена цвета", "Какой цвет хотите поминять?", "[-1-]", "[-2-]");
+					case 0 : SPD(playerid, D_LMENU+1, 0, "L-Menu: РЎРјРµРЅР° С†РІРµС‚Р°", "РљР°РєРѕР№ С†РІРµС‚ С…РѕС‚РёС‚Рµ РїРѕРјРёРЅСЏС‚СЊ?", "[-1-]", "[-2-]");
 
-					case 1 : SPD(playerid, D_LMENU+4, 1, "L-Menu: Смена ранга", "Введите ранг с которого будет доступна машина.", "Enter", "Back");
+					case 1 : SPD(playerid, D_LMENU+4, 1, "L-Menu: РЎРјРµРЅР° СЂР°РЅРіР°", "Р’РІРµРґРёС‚Рµ СЂР°РЅРі СЃ РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґРµС‚ РґРѕСЃС‚СѓРїРЅР° РјР°С€РёРЅР°.", "Enter", "Back");
 					
-					case 2 : SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
+					case 2 : SPD(playerid, D_LMENU+5, 1, "L-Menu: РЎРјРµРЅР° РЅРѕРјРµСЂР°", "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РЅРѕРјРµСЂ(РјР°РєСЃ. 8 СЃРёРјРІРѕР»РѕРІ)", "Enter", "Back");
 					
-					case 3 : SPD(playerid, D_LMENU+6, 0, "L-Menu: Смена места спавна", "Сменить место спавна этого авто?", "Enter", "Back");
+					case 3 : SPD(playerid, D_LMENU+6, 0, "L-Menu: РЎРјРµРЅР° РјРµСЃС‚Р° СЃРїР°РІРЅР°", "РЎРјРµРЅРёС‚СЊ РјРµСЃС‚Рѕ СЃРїР°РІРЅР° СЌС‚РѕРіРѕ Р°РІС‚Рѕ?", "Enter", "Back");
 					
 					case 4 : {
 						if(Fc::IsEditMode(playerid)) {
@@ -8991,7 +8990,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							Ptl::Info[i][Ptl::Allowed][j] = listitem;
 						}
 						updatePickup(i);
-						Send(playerid, -1, (listitem)?("* Автошкола открыта!"):("* Автошкола закрыта!"));
+						Send(playerid, -1, (listitem)?("* РђРІС‚РѕС€РєРѕР»Р° РѕС‚РєСЂС‹С‚Р°!"):("* РђРІС‚РѕС€РєРѕР»Р° Р·Р°РєСЂС‹С‚Р°!"));
 						return 1;
 					}
 				}
@@ -9003,9 +9002,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new fracid = Pl::FracID(playerid);
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_LMENU+8, DIALOG_STYLE_INPUT, "L-Menu. Ранг захвата", "* Поле ввода пустое!\n\nВведите ранг захвата:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+8, DIALOG_STYLE_INPUT, "L-Menu. Р Р°РЅРі Р·Р°С…РІР°С‚Р°", "* РџРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚РѕРµ!\n\nР’РІРµРґРёС‚Рµ СЂР°РЅРі Р·Р°С…РІР°С‚Р°:", "OK", "CANCEL");
 				} else if(!(1 <= inputtext[0] <= RankNums[fracid])) {
-					SPD(playerid, D_LMENU+8, DIALOG_STYLE_INPUT, "L-Menu. Ранг захвата", "* Неверный ранг!\n\nВведите ранг захвата:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+8, DIALOG_STYLE_INPUT, "L-Menu. Р Р°РЅРі Р·Р°С…РІР°С‚Р°", "* РќРµРІРµСЂРЅС‹Р№ СЂР°РЅРі!\n\nР’РІРµРґРёС‚Рµ СЂР°РЅРі Р·Р°С…РІР°С‚Р°:", "OK", "CANCEL");
 				} else {
 					SetZRank(fracid, inputtext[0]);
 					ShowLMenu(playerid);
@@ -9020,9 +9019,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+9 : {
 			if(response) {
 				switch(listitem) {
-					case 0 : SPD(playerid, D_LMENU+11, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "Введите ранг добавления в ЧС:", "OK", "CANCEL");
-					case 1 : SPD(playerid, D_LMENU+12, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "Введите сумму выхода из ЧС:", "OK", "CANCEL");
-					case 2 : SPD(playerid, D_LMENU+13, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "Введите кол-во убийств для выхода из ЧС:", "OK", "CANCEL");
+					case 0 : SPD(playerid, D_LMENU+11, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "Р’РІРµРґРёС‚Рµ СЂР°РЅРі РґРѕР±Р°РІР»РµРЅРёСЏ РІ Р§РЎ:", "OK", "CANCEL");
+					case 1 : SPD(playerid, D_LMENU+12, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РІС‹С…РѕРґР° РёР· Р§РЎ:", "OK", "CANCEL");
+					case 2 : SPD(playerid, D_LMENU+13, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СѓР±РёР№СЃС‚РІ РґР»СЏ РІС‹С…РѕРґР° РёР· Р§РЎ:", "OK", "CANCEL");
 				}
 			} else {
 				ShowLMenu(playerid);
@@ -9035,9 +9034,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new fracid = Pl::FracID(playerid);
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_LMENU+11, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "* Поле ввода пустое!\nВведите ранг добавления в ЧС:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+11, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "* РџРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚РѕРµ!\nР’РІРµРґРёС‚Рµ СЂР°РЅРі РґРѕР±Р°РІР»РµРЅРёСЏ РІ Р§РЎ:", "OK", "CANCEL");
 				} else if(!(1 <= inputtext[0] <= RankNums[fracid])) {
-					SPD(playerid, D_LMENU+11, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "* Неверный ранг!\nВведите ранг добавления в ЧС:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+11, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "* РќРµРІРµСЂРЅС‹Р№ СЂР°РЅРі!\nР’РІРµРґРёС‚Рµ СЂР°РЅРі РґРѕР±Р°РІР»РµРЅРёСЏ РІ Р§РЎ:", "OK", "CANCEL");
 				} else {
 					SetBRank(fracid, inputtext[0]);
 					ShowLMenu(playerid, D_LMENU+9);
@@ -9050,9 +9049,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+12 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_LMENU+12, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "* Поле ввода пустое!\nВведите сумму выхода из ЧС:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+12, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "* РџРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚РѕРµ!\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РІС‹С…РѕРґР° РёР· Р§РЎ:", "OK", "CANCEL");
 				} else if(!(1 <= inputtext[0] <= 3000000)) {
-					SPD(playerid, D_LMENU+12, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "* Сумма должна быть от 1 до $3000000!\nВведите ранг добавления в ЧС:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+12, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "* РЎСѓРјРјР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РѕС‚ 1 РґРѕ $3000000!\nР’РІРµРґРёС‚Рµ СЂР°РЅРі РґРѕР±Р°РІР»РµРЅРёСЏ РІ Р§РЎ:", "OK", "CANCEL");
 				} else {
 					FracInfo[Pl::FracID(playerid)][fBConf][bPRICE] = inputtext[0];
 					ShowLMenu(playerid, D_LMENU+9);
@@ -9065,9 +9064,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+13 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_LMENU+13, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "* Поле ввода пустое!\nВведите кол-во убийств для выхода из ЧС:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+13, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "* РџРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚РѕРµ!\nР’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СѓР±РёР№СЃС‚РІ РґР»СЏ РІС‹С…РѕРґР° РёР· Р§РЎ:", "OK", "CANCEL");
 				} else if(!(1 <= inputtext[0] <= 25)) {
-					SPD(playerid, D_LMENU+13, DIALOG_STYLE_INPUT, "L-Menu. Черный список", "* Кол-во убийств может быть от 1 до 25!\nВведите кол-во убийств для выхода из ЧС:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+13, DIALOG_STYLE_INPUT, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", "* РљРѕР»-РІРѕ СѓР±РёР№СЃС‚РІ РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚ 1 РґРѕ 25!\nР’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СѓР±РёР№СЃС‚РІ РґР»СЏ РІС‹С…РѕРґР° РёР· Р§РЎ:", "OK", "CANCEL");
 				} else {
 					FracInfo[Pl::FracID(playerid)][fBConf][bKILLS] = inputtext[0];
 					ShowLMenu(playerid, D_LMENU+9);
@@ -9081,9 +9080,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new fracid = Pl::FracID(playerid);
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_LMENU+14, DIALOG_STYLE_INPUT, "L-Menu. Ранг новостей", "* Поле ввода пустое!\nВведите ранг для написания в /gov:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+14, DIALOG_STYLE_INPUT, "L-Menu. Р Р°РЅРі РЅРѕРІРѕСЃС‚РµР№", "* РџРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚РѕРµ!\nР’РІРµРґРёС‚Рµ СЂР°РЅРі РґР»СЏ РЅР°РїРёСЃР°РЅРёСЏ РІ /gov:", "OK", "CANCEL");
 				} else if(!(1 <= inputtext[0] <= RankNums[fracid])) {
-					SPD(playerid, D_LMENU+14, DIALOG_STYLE_INPUT, "L-Menu. Ранг новостей", "* Неверный ранг!\nВведите ранг для написания в /gov:", "OK", "CANCEL");
+					SPD(playerid, D_LMENU+14, DIALOG_STYLE_INPUT, "L-Menu. Р Р°РЅРі РЅРѕРІРѕСЃС‚РµР№", "* РќРµРІРµСЂРЅС‹Р№ СЂР°РЅРі!\nР’РІРµРґРёС‚Рµ СЂР°РЅРі РґР»СЏ РЅР°РїРёСЃР°РЅРёСЏ РІ /gov:", "OK", "CANCEL");
 				} else {
 					SetGRank(fracid, inputtext[0]);
 					ShowLMenu(playerid);
@@ -9095,9 +9094,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
 		case D_LMENU+1 : {
 			if(response) {
-				ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
+				ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: РЎРјРµРЅР° С†РІРµС‚Р°", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 			} else {
-				ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
+				ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: РЎРјРµРЅР° С†РІРµС‚Р°", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 			}
 			return 1;
 		}
@@ -9105,21 +9104,21 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+2 : {
 			if(response && Pl::Info[playerid][pLeader]) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					Send(playerid, COLOR_GREY, "* Вы оставили поле ввода пустым!");
-					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РѕСЃС‚Р°РІРёР»Рё РїРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚С‹Рј!");
+					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: РЎРјРµРЅР° С†РІРµС‚Р°", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 256) {
-					Send(playerid, COLOR_GREY, "* Вы ввели не правельный ID цвета!");
-					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РІРІРµР»Рё РЅРµ РїСЂР°РІРµР»СЊРЅС‹Р№ ID С†РІРµС‚Р°!");
+					ShowDialog(playerid, D_LMENU+2, 1, "L-Menu: РЎРјРµРЅР° С†РІРµС‚Р°", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
-						return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
+						return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ СЂРµСЃРїР°РІРЅР°!");
 					
 					if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
 						if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
 							new Float: posa, fracmoney = GetFracMoney(v_frac), cost = (ModelCost(GetVehicleModel(carid)) / 10);
 							if(!Fc::IsEditMode(playerid) && cost > fracmoney) {
-								format(string, sizeof(string), "* Недостаточно средств! Необходимо: $%i", cost);
+								format(string, sizeof(string), "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ! РќРµРѕР±С…РѕРґРёРјРѕ: $%i", cost);
 								Send(playerid, COLOR_GREY, string);
 							} else {
 								if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
@@ -9131,13 +9130,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								SetVehiclePos(Fc::Info[idx][Fc::Id][1], posx, posy, posz); SetVehicleZAngle(carid, posa);
 								SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
 								Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
-								format(string, sizeof(string),"* Цвет машины был изминен на: %d", inputtext[0]);
+								format(string, sizeof(string),"* Р¦РІРµС‚ РјР°С€РёРЅС‹ Р±С‹Р» РёР·РјРёРЅРµРЅ РЅР°: %d", inputtext[0]);
 								Send(playerid, COLOR_WHITE, string);
 								format(string, sizeof(string), "~r~-$%i", cost);
 								GameTextForPlayer(playerid, string, 5000, 1);
 							}
 						} else {
-							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
+							format(string, sizeof(string),"* Р’С‹ РЅРµ Р»РёРґРµСЂ %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 							Send(playerid, COLOR_GREY, string);
 						}
 					}
@@ -9150,21 +9149,21 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+3 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					Send(playerid, COLOR_GREY, "* Вы оставили поле ввода пустым!");
-					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РѕСЃС‚Р°РІРёР»Рё РїРѕР»Рµ РІРІРѕРґР° РїСѓСЃС‚С‹Рј!");
+					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: РЎРјРµРЅР° С†РІРµС‚Р°", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else if(inputtext[0] < 0 || inputtext[0] > 256) {
-					Send(playerid, COLOR_GREY, "* Вы ввели не правельный ID цвета!");
-					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: Смена цвета", "dialog/lmenu/colors.txt", "OK", "CANCEL");
+					Send(playerid, COLOR_GREY, "* Р’С‹ РІРІРµР»Рё РЅРµ РїСЂР°РІРµР»СЊРЅС‹Р№ ID С†РІРµС‚Р°!");
+					ShowDialog(playerid, D_LMENU+3, 1, "L-Menu: РЎРјРµРЅР° С†РІРµС‚Р°", "dialog/lmenu/colors.txt", "OK", "CANCEL");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 					if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
-						return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
+						return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ СЂРµСЃРїР°РІРЅР°!");
 						
 					if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
 						if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
 							new Float: posa, fracmoney = GetFracMoney(v_frac), cost = (ModelCost(GetVehicleModel(carid)) / 10);
 							if(!Fc::IsEditMode(playerid)) if( cost > fracmoney) {
-								format(string, sizeof(string), "* Недостаточно средств! Необходимо: $%i", cost);
+								format(string, sizeof(string), "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ! РќРµРѕР±С…РѕРґРёРјРѕ: $%i", cost);
 								Send(playerid, COLOR_GREY, string);
 							} else {
 								if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
@@ -9176,13 +9175,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
 								AutoInfo[carid][aMileage] = AutoInfo[0][aMileage];
 								Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
-								format(string, sizeof(string),"* Цвет машины был изминен на: %d", inputtext[0]);
+								format(string, sizeof(string),"* Р¦РІРµС‚ РјР°С€РёРЅС‹ Р±С‹Р» РёР·РјРёРЅРµРЅ РЅР°: %d", inputtext[0]);
 								Send(playerid, COLOR_WHITE, string);
 								format(string, sizeof(string), "~r~-$%i", cost);
 								GameTextForPlayer(playerid, string, 5000, 1);
 							}
 						} else {
-							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
+							format(string, sizeof(string),"* Р’С‹ РЅРµ Р»РёРґРµСЂ %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 							Send(playerid, COLOR_GREY, string);
 						}
 					}
@@ -9193,42 +9192,42 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_LMENU+4 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_LMENU+4, DIALOG_STYLE_INPUT, "L-Menu: Смена ранга", "Введите ранг с которого будет доступна машина.", "Enter", "Back");
+					SPD(playerid, D_LMENU+4, DIALOG_STYLE_INPUT, "L-Menu: РЎРјРµРЅР° СЂР°РЅРіР°", "Р’РІРµРґРёС‚Рµ СЂР°РЅРі СЃ РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґРµС‚ РґРѕСЃС‚СѓРїРЅР° РјР°С€РёРЅР°.", "Enter", "Back");
 				} else {
 					new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 					if( Fc::GetInfo( carid, "fi", v_frac, idx ) ) {
 						if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
 							Fc::Info[idx][Fc::RankId] = inputtext[0];
 							Fc::Update( idx );
-							format(string, sizeof(string),"* Теперь машина доступна с %d-го ранга!", inputtext[0]);
+							format(string, sizeof(string),"* РўРµРїРµСЂСЊ РјР°С€РёРЅР° РґРѕСЃС‚СѓРїРЅР° СЃ %d-РіРѕ СЂР°РЅРіР°!", inputtext[0]);
 							Send(playerid, COLOR_WHITE, string); 
 						} else {
-							format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
+							format(string, sizeof(string),"* Р’С‹ РЅРµ Р»РёРґРµСЂ %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 							Send(playerid, COLOR_GREY, string);
 						}
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Р§С‚Рѕ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
 		case D_LMENU+5 : {
 			if(response) {
 				new number[10];
-				if(sscanf(inputtext, "s[10]", number)) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
-				if(strlen(number) < 1 || strlen(number) > 8) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
-				if(!regex_match_exid(number, ValidText)) return SPD(playerid, D_LMENU+5, 1, "L-Menu: Смена номера", "Введите новый номер(макс. 8 символов)", "Enter", "Back");
+				if(sscanf(inputtext, "s[10]", number)) return SPD(playerid, D_LMENU+5, 1, "L-Menu: РЎРјРµРЅР° РЅРѕРјРµСЂР°", "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РЅРѕРјРµСЂ(РјР°РєСЃ. 8 СЃРёРјРІРѕР»РѕРІ)", "Enter", "Back");
+				if(strlen(number) < 1 || strlen(number) > 8) return SPD(playerid, D_LMENU+5, 1, "L-Menu: РЎРјРµРЅР° РЅРѕРјРµСЂР°", "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РЅРѕРјРµСЂ(РјР°РєСЃ. 8 СЃРёРјРІРѕР»РѕРІ)", "Enter", "Back");
+				if(!regex_match_exid(number, ValidText)) return SPD(playerid, D_LMENU+5, 1, "L-Menu: РЎРјРµРЅР° РЅРѕРјРµСЂР°", "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РЅРѕРјРµСЂ(РјР°РєСЃ. 8 СЃРёРјРІРѕР»РѕРІ)", "Enter", "Back");
 				
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 				if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
-					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
+					return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ СЂРµСЃРїР°РІРЅР°!");
 				
 				if(Fc::GetInfo( carid, "fi", v_frac, idx)) {
 					if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
 						new Float: posa, fracmoney = GetFracMoney(v_frac), cost = (ModelCost(GetVehicleModel(carid)) / 10);
 						if(!Fc::IsEditMode(playerid)) if(cost > fracmoney) {
-							format(string, sizeof(string), "* Недостаточно средств! Необходимо: $%i", cost);
+							format(string, sizeof(string), "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ! РќРµРѕР±С…РѕРґРёРјРѕ: $%i", cost);
 							Send(playerid, COLOR_GREY, string);
 						} else {
 							if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
@@ -9240,17 +9239,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
 							AutoInfo[Fc::Info[idx][Fc::Id][1]][aMileage] = AutoInfo[0][aMileage];
 							Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
-							Send(playerid, COLOR_WHITE, "* Номер был изменен!");
+							Send(playerid, COLOR_WHITE, "* РќРѕРјРµСЂ Р±С‹Р» РёР·РјРµРЅРµРЅ!");
 							format(string, sizeof(string), "~r~-$%i", cost);
 							GameTextForPlayer(playerid, string, 5000, 1);
 						}
 					} else {
-						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
+						format(string, sizeof(string),"* Р’С‹ РЅРµ Р»РёРґРµСЂ %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Р§С‚Рѕ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -9258,7 +9257,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 				if(!Pl::isAdmin(playerid, ADMINISTRATOR)) if(!IsInRespawn(Pl::FracID(playerid), carid))
-					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
+					return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ СЂРµСЃРїР°РІРЅР°!");
 				
 				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
 					if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
@@ -9269,14 +9268,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
 						AutoInfo[Fc::Info[idx][Fc::Id][1]][aMileage] = AutoInfo[0][aMileage];
 						Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
-						Send(playerid, COLOR_WHITE, "* Машина была припаркована!");
+						Send(playerid, COLOR_WHITE, "* РњР°С€РёРЅР° Р±С‹Р»Р° РїСЂРёРїР°СЂРєРѕРІР°РЅР°!");
 					} else {
-						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
+						format(string, sizeof(string),"* Р’С‹ РЅРµ Р»РёРґРµСЂ %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Р§С‚Рѕ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -9286,18 +9285,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				sscanf(inputtext, "P<[]>k<name_to_id>i", model_id, model_limit);
 				if(!(400 <= model_id <= 611)) return Send(playerid, COLOR_GREY, "* Unknown model id!");
 				if(Fc::GetModelCount(Pl::FracID(playerid), model_id) >= model_limit) {
-					format(string, sizeof string, "* Достигнут лимит на установку %s!", VehicleNames[model_id-400]);
+					format(string, sizeof string, "* Р”РѕСЃС‚РёРіРЅСѓС‚ Р»РёРјРёС‚ РЅР° СѓСЃС‚Р°РЅРѕРІРєСѓ %s!", VehicleNames[model_id-400]);
 					return Send(playerid, COLOR_GREY, string);
 				}
 				new idx, v_frac, carid = GetPlayerVehicleID(playerid);
 				if(!Pl::isAdmin(playerid, 5)) if(!IsInRespawn(Pl::FracID(playerid), carid))
-					return Send(playerid, COLOR_GREY, "* Вы слишком далеко от респавна!");
+					return Send(playerid, COLOR_GREY, "* Р’С‹ СЃР»РёС€РєРѕРј РґР°Р»РµРєРѕ РѕС‚ СЂРµСЃРїР°РІРЅР°!");
 				
 				if(Fc::GetInfo(carid, "fi", v_frac, idx)) {
 					if(v_frac == Pl::Info[playerid][pLeader] && !Fc::IsEditMode(playerid)) {
 						new Float: posa, fracmoney = GetFracMoney(v_frac), cost = ModelCost( model_id );
 						if(!Fc::IsEditMode(playerid)) if(cost > fracmoney) {
-							format(string, sizeof(string), "* Недостаточно средств! Необходимо: $%i", cost);
+							format(string, sizeof(string), "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ! РќРµРѕР±С…РѕРґРёРјРѕ: $%i", cost);
 							Send(playerid, COLOR_GREY, string);
 						} else {
 							if(!Fc::IsEditMode(playerid)) GiveFracMoney(v_frac, -cost);
@@ -9308,17 +9307,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							SetVehiclePos(Fc::Info[idx][Fc::Id][1], posx, posy, posz); SetVehicleZAngle(carid, posa);
 							SetVehicleNumberPlate(Fc::Info[idx][Fc::Id][1], Fc::Info[idx][Fc::Number]);
 							Rac::PutPlayerInVehicle(playerid, Fc::Info[idx][Fc::Id][1], 0);
-							Send(playerid, COLOR_WHITE, "* Вы изменили марку машины!");
+							Send(playerid, COLOR_WHITE, "* Р’С‹ РёР·РјРµРЅРёР»Рё РјР°СЂРєСѓ РјР°С€РёРЅС‹!");
 							format(string, sizeof(string), "~r~-$%i", cost);
 							GameTextForPlayer(playerid, string, 5000, 1);
 						}
 					} else {
-						format(string, sizeof(string),"* Вы не лидер %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
+						format(string, sizeof(string),"* Р’С‹ РЅРµ Р»РёРґРµСЂ %s", FracInfo[Fc::Info[idx][Fc::FracId]][fName]);
 						Send(playerid, COLOR_GREY, string);
 					}
 				}
 			} else {
-				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Что хотите изменить?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
+				ShowDialog(playerid, D_LMENU, 2, "L-Menu:  Р§С‚Рѕ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ?", "dialog/lmenu/main.txt", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -9363,7 +9362,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SetVehicleNumberPlate(Fc::Info[id][Fc::Id][1], Fc::Info[id][Fc::Number]);
 					Rac::PutPlayerInVehicle(playerid, Fc::Info[id][Fc::Id][1], 0); Fc::Update( id );
 					Iter::Add(TeamVehicles[frac_id], Fc::Info[id][Fc::Id][1]);
-					Send( playerid, COLOR_YELLOW, "* Машина добавлена!");
+					Send( playerid, COLOR_YELLOW, "* РњР°С€РёРЅР° РґРѕР±Р°РІР»РµРЅР°!");
 				}
 				cache_delete(result);
 			}
@@ -9371,8 +9370,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_SHOW_MODEL : {
 			if(response) {
-				if(!strcmp(inputtext, "Добавить", true)) {
-					ShowDialog( playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
+				if(!strcmp(inputtext, "Р”РѕР±Р°РІРёС‚СЊ", true)) {
+					ShowDialog( playerid, D_ADD_MODEL, 1, "Р”РѕР±Р°РІРёС‚СЊ", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
 				}
 				else if(strcmp(inputtext, "------------", true)) {
 					new model_id, model_limit;
@@ -9380,7 +9379,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if(!(400 <= model_id <= 611)) return Send(playerid, COLOR_GREY, "* Unknown model id!");
 					
 					SetPVarInt( playerid, "SelectModel", model_id);
-					SPD(playerid, D_EDIT_MODEL, 2, "Options", "Изменить модель\nИменить лимит\nУдалить", "Ok", "Cancel");
+					SPD(playerid, D_EDIT_MODEL, 2, "Options", "РР·РјРµРЅРёС‚СЊ РјРѕРґРµР»СЊ\nРРјРµРЅРёС‚СЊ Р»РёРјРёС‚\nРЈРґР°Р»РёС‚СЊ", "Ok", "Cancel");
 				}
 			}
 		}
@@ -9390,17 +9389,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				switch(listitem) {
 					case 0 : {
-						SPD(playerid, D_EDIT_MODEL+1, 1, "Изменить модель", "Введите новый ID или название модели.\nПример: 400 или Landstalker", "ENTER", "CANCEL");
+						SPD(playerid, D_EDIT_MODEL+1, 1, "РР·РјРµРЅРёС‚СЊ РјРѕРґРµР»СЊ", "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ ID РёР»Рё РЅР°Р·РІР°РЅРёРµ РјРѕРґРµР»Рё.\nРџСЂРёРјРµСЂ: 400 РёР»Рё Landstalker", "ENTER", "CANCEL");
 					}
 					
 					case 1 : {
-						SPD(playerid, D_EDIT_MODEL+2, 1, "Изменить лимит", "Введите лимит(от 1 до 10)", "ENTER", "CANCEL");
+						SPD(playerid, D_EDIT_MODEL+2, 1, "РР·РјРµРЅРёС‚СЊ Р»РёРјРёС‚", "Р’РІРµРґРёС‚Рµ Р»РёРјРёС‚(РѕС‚ 1 РґРѕ 10)", "ENTER", "CANCEL");
 					}
 					
 					case 2 : {
 						format(query, sizeof query, "DELETE FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", frac_id, GetPVarInt(playerid, "SelectModel"));
 						Db::tquery(connDb, query);
-						Send(playerid, COLOR_WHITE, "* Эта модель была удалена из списка доступных!");
+						Send(playerid, COLOR_WHITE, "* Р­С‚Р° РјРѕРґРµР»СЊ Р±С‹Р»Р° СѓРґР°Р»РµРЅР° РёР· СЃРїРёСЃРєР° РґРѕСЃС‚СѓРїРЅС‹С…!");
 					}
 				}
 			} else {
@@ -9413,12 +9412,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new newmodel;
 				sscanf(inputtext, "P<[]>k<name_to_id>", newmodel);
 				if(!(400 <= newmodel <= 611)) {
-					SPD(playerid, D_EDIT_MODEL+1, 1, "Изменить модель", "Введите новый ID или название модели.\nПример: 400 или Landstalker", "Ok", "Cancel");
+					SPD(playerid, D_EDIT_MODEL+1, 1, "РР·РјРµРЅРёС‚СЊ РјРѕРґРµР»СЊ", "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ ID РёР»Рё РЅР°Р·РІР°РЅРёРµ РјРѕРґРµР»Рё.\nРџСЂРёРјРµСЂ: 400 РёР»Рё Landstalker", "Ok", "Cancel");
 				} else {
 					format(query, sizeof query, "UPDATE `"#__TableFracModels__"` SET `model_id` = '%i' WHERE \
 					`frac_id` = '%i' AND `model_id` = '%i'", newmodel, GetPVarInt(playerid, "SelectFrac"), GetPVarInt(playerid, "SelectModel"));
 					Db::tquery(connDb, query);
-					Send(playerid, COLOR_WHITE, " Модель была изменена!");
+					Send(playerid, COLOR_WHITE, " РњРѕРґРµР»СЊ Р±С‹Р»Р° РёР·РјРµРЅРµРЅР°!");
 				}
 			}
 		}
@@ -9426,14 +9425,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_EDIT_MODEL+2 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_EDIT_MODEL+2, 1, "Изменить лимит", "Введите лимит(от 1 до 10)", "ENTER", "CANCEL");
+					SPD(playerid, D_EDIT_MODEL+2, 1, "РР·РјРµРЅРёС‚СЊ Р»РёРјРёС‚", "Р’РІРµРґРёС‚Рµ Р»РёРјРёС‚(РѕС‚ 1 РґРѕ 10)", "ENTER", "CANCEL");
 				} else if(!(1 <= inputtext[0] <= 10)) {
-					SPD(playerid, D_EDIT_MODEL+2, 1, "Изменить лимит", "Введите лимит(от 1 до 10)", "ENTER", "CANCEL");
+					SPD(playerid, D_EDIT_MODEL+2, 1, "РР·РјРµРЅРёС‚СЊ Р»РёРјРёС‚", "Р’РІРµРґРёС‚Рµ Р»РёРјРёС‚(РѕС‚ 1 РґРѕ 10)", "ENTER", "CANCEL");
 				} else {
 					format(query, sizeof query, "UPDATE `"#__TableFracModels__"` SET `model_limit` = '%i' WHERE \
 					`frac_id` = '%i' AND `model_id` = '%i'", inputtext[0], GetPVarInt(playerid, "SelectFrac"), GetPVarInt(playerid, "SelectModel"));
 					Db::tquery(connDb, query);
-					Send(playerid, COLOR_WHITE, " Лимит был изменен!");
+					Send(playerid, COLOR_WHITE, " Р›РёРјРёС‚ Р±С‹Р» РёР·РјРµРЅРµРЅ!");
 				}
 			}
 		}
@@ -9443,14 +9442,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new model_id;
 				sscanf(inputtext, "P<[]>k<name_to_id>", model_id);
 				if(!(400 <= model_id <= 611)){
-					ShowDialog(playerid, D_ADD_MODEL, 1, "Добавить", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
+					ShowDialog(playerid, D_ADD_MODEL, 1, "Р”РѕР±Р°РІРёС‚СЊ", "dialog/lmenu/addmodel.txt", "Ok", "Cancel");
 				} else {
 					new frac_id = GetPVarInt(playerid, "SelectFrac");
 					if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
-					if(Fc::IsThereModel(frac_id, model_id)) return Send(playerid, COLOR_RED, "* Эта модель уже есть в списке!");
+					if(Fc::IsThereModel(frac_id, model_id)) return Send(playerid, COLOR_RED, "* Р­С‚Р° РјРѕРґРµР»СЊ СѓР¶Рµ РµСЃС‚СЊ РІ СЃРїРёСЃРєРµ!");
 					format(query, sizeof query, "INSERT INTO `"#__TableFracModels__"` (`frac_id`, `model_id`) VALUES ('%i','%i')", frac_id, model_id);
 					Db::tquery(connDb, query);
-					format(string, sizeof(string), " Модель добавлена! Model_id: %i; Model_name: %s", model_id, VehicleNames[model_id-400]);
+					format(string, sizeof(string), " РњРѕРґРµР»СЊ РґРѕР±Р°РІР»РµРЅР°! Model_id: %i; Model_name: %s", model_id, VehicleNames[model_id-400]);
 					Send(playerid, COLOR_WHITE, string);
 				}
 			}
@@ -9459,8 +9458,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case TP_EDIT : {
 			if(response) {
 				switch(listitem) {
-					case 0 : SPD(playerid, TP_EDIT+1, 2, "Первый пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
-					case 1 : SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
+					case 0 : SPD(playerid, TP_EDIT+1, 2, "РџРµСЂРІС‹Р№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРўРёРї\nР’РёСЂС‚. РјРёСЂ\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
+					case 1 : SPD(playerid, TP_EDIT+2, 2, "Р’С‚РѕСЂРѕР№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРўРёРї\nР’РёСЂС‚. РјРёСЂ\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
 					case 2 : {
 						dialog[0] = '\0';
 						new portal = GetPVarInt(playerid, "selectTeleport");
@@ -9471,7 +9470,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 							}
 						}
-						SPD(playerid, TP_EDIT+9, 2, "Доступность для фракций", dialog, "SELECT", "CANCEL");
+						SPD(playerid, TP_EDIT+9, 2, "Р”РѕСЃС‚СѓРїРЅРѕСЃС‚СЊ РґР»СЏ С„СЂР°РєС†РёР№", dialog, "SELECT", "CANCEL");
 					}
 					
 					case 3 : {
@@ -9503,35 +9502,35 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case TP_EDIT+1 : {
 			if(response) {
 				switch(listitem) {
-					case 0 : SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
-					case 1 : SPD(playerid, TP_EDIT+5, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
-					case 2 : SPD(playerid, TP_EDIT+7, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
-					case 3 : Send(playerid, -1, "Встанте на то место где должен быть пикап и введите /setpic1");
+					case 0 : SPD(playerid, TP_EDIT+3, 1, "РњРѕРґРµР»СЊ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ id РѕР±СЉРµРєС‚Р°.", "ENTER", "CANCEL");
+					case 1 : SPD(playerid, TP_EDIT+5, 1, "РўРёРї РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ С‚РёРї РїРёРєР°РїР°.", "ENTER", "CANCEL");
+					case 2 : SPD(playerid, TP_EDIT+7, 1, "РњРёСЂ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ РјРёСЂ РїРёРєР°РїР°.", "ENTER", "CANCEL");
+					case 3 : Send(playerid, -1, "Р’СЃС‚Р°РЅС‚Рµ РЅР° С‚Рѕ РјРµСЃС‚Рѕ РіРґРµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРёРєР°Рї Рё РІРІРµРґРёС‚Рµ /setpic1");
 				}
 			} else {
-				format(string, sizeof string, "Telepot №%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
-				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
+				format(string, sizeof string, "Telepot в„–%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
+				SPD(playerid,TP_EDIT,2,string,"РџРµСЂС‹Р№ РїРёРєР°Рї\nР’С‚РѕСЂРѕР№ РїРёРєР°Рї\nРћС‚РєСЂС‹С‚СЊ/Р—Р°РєСЂС‹С‚СЊ\nРЈРґР°Р»РёС‚СЊ","Р’С‹Р±РѕСЂ","Р’С‹С…РѕРґ");
 			}
 		}
 		
 		case TP_EDIT+2 : {
 			if(response) {
 				switch(listitem) {
-					case 0 : SPD(playerid, TP_EDIT+4, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
-					case 1 : SPD(playerid, TP_EDIT+6, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
-					case 2 : SPD(playerid, TP_EDIT+8, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
-					case 3 : Send(playerid, -1, "Встанте на то место где должен быть пикап и введите /setpic2");
+					case 0 : SPD(playerid, TP_EDIT+4, 1, "РњРѕРґРµР»СЊ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ id РѕР±СЉРµРєС‚Р°.", "ENTER", "CANCEL");
+					case 1 : SPD(playerid, TP_EDIT+6, 1, "РўРёРї РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ С‚РёРї РїРёРєР°РїР°.", "ENTER", "CANCEL");
+					case 2 : SPD(playerid, TP_EDIT+8, 1, "РњРёСЂ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ РјРёСЂ РїРёРєР°РїР°.", "ENTER", "CANCEL");
+					case 3 : Send(playerid, -1, "Р’СЃС‚Р°РЅС‚Рµ РЅР° С‚Рѕ РјРµСЃС‚Рѕ РіРґРµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРёРєР°Рї Рё РІРІРµРґРёС‚Рµ /setpic2");
 				}
 			} else {
-				format(string, sizeof string, "Telepot №%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
-				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
+				format(string, sizeof string, "Telepot в„–%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
+				SPD(playerid,TP_EDIT,2,string,"РџРµСЂС‹Р№ РїРёРєР°Рї\nР’С‚РѕСЂРѕР№ РїРёРєР°Рї\nРћС‚РєСЂС‹С‚СЊ/Р—Р°РєСЂС‹С‚СЊ\nРЈРґР°Р»РёС‚СЊ","Р’С‹Р±РѕСЂ","Р’С‹С…РѕРґ");
 			}
 		}
 		
 		case TP_EDIT+3 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+3, 1, "РњРѕРґРµР»СЊ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ id РѕР±СЉРµРєС‚Р°.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Model][0] = inputtext[0];
@@ -9541,14 +9540,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Streamer::Update(playerid);
 				}
 			} else {
-				SPD(playerid, TP_EDIT+1, 2, "Первый пикап", "Модель\nПозиция", "SELECT", "CANCEL");
+				SPD(playerid, TP_EDIT+1, 2, "РџРµСЂРІС‹Р№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
 			}
 		}
 		
 		case TP_EDIT+4 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, TP_EDIT+3, 1, "Модель пикапа", "Введите id объекта.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+3, 1, "РњРѕРґРµР»СЊ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ id РѕР±СЉРµРєС‚Р°.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Model][1] = inputtext[0];
@@ -9558,16 +9557,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Streamer::Update(playerid);
 				}
 			} else {
-				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nПозиция", "SELECT", "CANCEL");
+				SPD(playerid, TP_EDIT+1, 2, "Р’С‚РѕСЂРѕР№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
 			}
 		}
 		
 		case TP_EDIT+5 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, TP_EDIT+5, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+5, 1, "РўРёРї РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ С‚РёРї РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else if(inputtext[0] < 1 || inputtext[0] > 23) {
-					SPD(playerid, TP_EDIT+5, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+5, 1, "РўРёРї РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ С‚РёРї РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Type][0] = inputtext[0];
@@ -9577,16 +9576,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Streamer::Update(playerid);
 				}
 			} else {
-				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
+				SPD(playerid, TP_EDIT+1, 2, "Р’С‚РѕСЂРѕР№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРўРёРї\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
 			}
 		}
 		
 		case TP_EDIT+6 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, TP_EDIT+6, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+6, 1, "РўРёРї РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ С‚РёРї РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else if(inputtext[0] < 1 || inputtext[0] > 23) {
-					SPD(playerid, TP_EDIT+6, 1, "Тип пикапа", "Введите тип пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+6, 1, "РўРёРї РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ С‚РёРї РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::Type][1] = inputtext[0];
@@ -9596,16 +9595,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Streamer::Update(playerid);
 				}
 			} else {
-				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nПозиция", "SELECT", "CANCEL");
+				SPD(playerid, TP_EDIT+2, 2, "Р’С‚РѕСЂРѕР№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРўРёРї\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
 			}
 		}
 		
 		case TP_EDIT+7 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, TP_EDIT+7, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+7, 1, "РњРёСЂ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ РјРёСЂ РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else if(inputtext[0] < 0) {
-					SPD(playerid, TP_EDIT+7, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+7, 1, "РњРёСЂ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ РјРёСЂ РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::World][0] = inputtext[0];
@@ -9616,16 +9615,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 				}
 			} else {
-				SPD(playerid, TP_EDIT+1, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
+				SPD(playerid, TP_EDIT+1, 2, "Р’С‚РѕСЂРѕР№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРўРёРї\nР’РёСЂС‚. РјРёСЂ\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
 			}
 		}
 		
 		case TP_EDIT+8 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, TP_EDIT+8, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+8, 1, "РњРёСЂ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ РјРёСЂ РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else if(inputtext[0] < 0) {
-					SPD(playerid, TP_EDIT+8, 1, "Мир пикапа", "Введите мир пикапа.", "ENTER", "CANCEL");
+					SPD(playerid, TP_EDIT+8, 1, "РњРёСЂ РїРёРєР°РїР°", "Р’РІРµРґРёС‚Рµ РјРёСЂ РїРёРєР°РїР°.", "ENTER", "CANCEL");
 				} else {
 					new teleport = GetPVarInt(playerid, "selectTeleport");
 					Ptl::Info[teleport][Ptl::World][1] = inputtext[0];
@@ -9636,7 +9635,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SetPVarInt(playerid, "selectTeleport", INVALID_ID);
 				}
 			} else { 
-				SPD(playerid, TP_EDIT+2, 2, "Второй пикап", "Модель\nТип\nВирт. мир\nПозиция", "SELECT", "CANCEL");
+				SPD(playerid, TP_EDIT+2, 2, "Р’С‚РѕСЂРѕР№ РїРёРєР°Рї", "РњРѕРґРµР»СЊ\nРўРёРї\nР’РёСЂС‚. РјРёСЂ\nРџРѕР·РёС†РёСЏ", "SELECT", "CANCEL");
 			}
 		}
 		
@@ -9652,11 +9651,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						scf(dialog,string,"[{AA3333} X {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
 					}
 				}
-				SPD(playerid, TP_EDIT+9, 2, "Доступность для фракций", dialog, "SELECT", "CANCEL");
+				SPD(playerid, TP_EDIT+9, 2, "Р”РѕСЃС‚СѓРїРЅРѕСЃС‚СЊ РґР»СЏ С„СЂР°РєС†РёР№", dialog, "SELECT", "CANCEL");
 				updatePickup(portal);
 			} else {
-				format(string, sizeof string, "Telepot №%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
-				SPD(playerid,TP_EDIT,2,string,"Перый пикап\nВторой пикап\nОткрыть/Закрыть\nУдалить","Выбор","Выход");
+				format(string, sizeof string, "Telepot в„–%i", Ptl::Info[GetPVarInt(playerid, "selectTeleport")][Ptl::Id]);
+				SPD(playerid,TP_EDIT,2,string,"РџРµСЂС‹Р№ РїРёРєР°Рї\nР’С‚РѕСЂРѕР№ РїРёРєР°Рї\nРћС‚РєСЂС‹С‚СЊ/Р—Р°РєСЂС‹С‚СЊ\nРЈРґР°Р»РёС‚СЊ","Р’С‹Р±РѕСЂ","Р’С‹С…РѕРґ");
 			}
 		}
 		
@@ -9668,13 +9667,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new Cache:result = Db::query(connDb, query, true);
 				if(cache_get_row_count()) {
 					SPD(playerid, D_CHANGE_PASS+1,DIALOG_STYLE_PASSWORD,""#__SERVER_PREFIX""#__SERVER_NAME_LC": ATTENTION PLEASE",
-					"ВНИМАНИЕ! Вы хотите изменить пароль своего аккаунта!\n\
-					Введите новый пароль и нажмите ОК!\n\n\
-					Не рекомендуется использовать простые пароли. Чтобы\n\
-					пароль был надежным, он должен содержать цифры,\n\
-					заглавные и малые буквы латинского алфавита.","ОК","ОТМЕНА");
+					"Р’РќРРњРђРќРР•! Р’С‹ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ СЃРІРѕРµРіРѕ Р°РєРєР°СѓРЅС‚Р°!\n\
+					Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ Рё РЅР°Р¶РјРёС‚Рµ РћРљ!\n\n\
+					РќРµ СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРѕСЃС‚С‹Рµ РїР°СЂРѕР»Рё. Р§С‚РѕР±С‹\n\
+					РїР°СЂРѕР»СЊ Р±С‹Р» РЅР°РґРµР¶РЅС‹Рј, РѕРЅ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ С†РёС„СЂС‹,\n\
+					Р·Р°РіР»Р°РІРЅС‹Рµ Рё РјР°Р»С‹Рµ Р±СѓРєРІС‹ Р»Р°С‚РёРЅСЃРєРѕРіРѕ Р°Р»С„Р°РІРёС‚Р°.","РћРљ","РћРўРњР•РќРђ");
 				} else {
-					Rac::Kick(playerid, "Попытка взлома аккаунта");
+					Rac::Kick(playerid, "РџРѕРїС‹С‚РєР° РІР·Р»РѕРјР° Р°РєРєР°СѓРЅС‚Р°");
 				}
 				cache_delete(result);
 			}
@@ -9682,15 +9681,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_CHANGE_PASS+1 : {
 			if(response) {
-				if(!strlen(inputtext)) Send(playerid,COLOR_LIGHTRED,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы не ввели пароль!");
+				if(!strlen(inputtext)) Send(playerid,COLOR_LIGHTRED,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Р’С‹ РЅРµ РІРІРµР»Рё РїР°СЂРѕР»СЊ!");
 				else {
 					new hash[SHA2_HASH_LEN];
 					SHA256_PassHash(inputtext, Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
 					format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", hash, Pl::Info[playerid][pID]);
 					Db::tquery(connDb, query, "", "");
-					format(string, sizeof(string), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВНИМАНИЕ! ПАРОЛЬ ИЗМЕНЕН! Ваш новый пароль: %s", inputtext);
+					format(string, sizeof(string), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Р’РќРРњРђРќРР•! РџРђР РћР›Р¬ РР—РњР•РќР•Рќ! Р’Р°С€ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ: %s", inputtext);
 					Send(playerid, COLOR_LIGHTRED, string);
-					Send(playerid, COLOR_LIGHTRED,""#__SERVER_PREFIX""#__SERVER_NAME_LC": ОБЯЗАТЕЛЬНО сделайте скриншот с новым паролем, для этого нажмите F8");
+					Send(playerid, COLOR_LIGHTRED,""#__SERVER_PREFIX""#__SERVER_NAME_LC": РћР‘РЇР—РђРўР•Р›Р¬РќРћ СЃРґРµР»Р°Р№С‚Рµ СЃРєСЂРёРЅС€РѕС‚ СЃ РЅРѕРІС‹Рј РїР°СЂРѕР»РµРј, РґР»СЏ СЌС‚РѕРіРѕ РЅР°Р¶РјРёС‚Рµ F8");
 				}
 			}
 		}
@@ -9702,20 +9701,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new letter = tolower(inputtext[0]);
 					if('a' <= letter <= 'd') {
 						if(correctAnswer[i] == letter) {
-							format(string, sizeof string, "Вопрос №%i. Ответ верный.", i);
+							format(string, sizeof string, "Р’РѕРїСЂРѕСЃ в„–%i. РћС‚РІРµС‚ РІРµСЂРЅС‹Р№.", i);
 							Send(playerid, COLOR_GREEN, string);
 						} else {
 							Pl::Info[playerid][pTest] ++;
-							format(string, sizeof string, "Вопрос №%i. Ответ не верный.", i);
+							format(string, sizeof string, "Р’РѕРїСЂРѕСЃ в„–%i. РћС‚РІРµС‚ РЅРµ РІРµСЂРЅС‹Р№.", i);
 							Send(playerid, COLOR_LIGHTRED, string);
 						}
 						if(++i >= sizeof correctAnswer) {
 							if(Pl::Info[playerid][pTest] >= 3) {
-								SendClientMessage(playerid, COLOR_WHITE, "Тест нe пройден. Допущено более 2-х ошибок.");
+								SendClientMessage(playerid, COLOR_WHITE, "РўРµСЃС‚ РЅe РїСЂРѕР№РґРµРЅ. Р”РѕРїСѓС‰РµРЅРѕ Р±РѕР»РµРµ 2-С… РѕС€РёР±РѕРє.");
 								Pl::Info[playerid][pTest] = 0; 
 							} else {
 								Pl::Info[playerid][pTest] = 999;
-								SendClientMessage(playerid, COLOR_GREEN, "* Поздравляю вы сдали теорию. Прошу встаньте в очередь к практике");
+								SendClientMessage(playerid, COLOR_GREEN, "* РџРѕР·РґСЂР°РІР»СЏСЋ РІС‹ СЃРґР°Р»Рё С‚РµРѕСЂРёСЋ. РџСЂРѕС€Сѓ РІСЃС‚Р°РЅСЊС‚Рµ РІ РѕС‡РµСЂРµРґСЊ Рє РїСЂР°РєС‚РёРєРµ");
 								AshQueue(playerid, 0);
 							}
 							SetPVarInt(playerid, "SelectedItem", -1);
@@ -9723,16 +9722,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						} else {
 							SetPVarInt(playerid, "SelectedItem", i);
 							format(string, sizeof string, "dialog/pddtest/pdd_test_%i.txt", i);
-							return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", string, "Ответ", "Отмена");
+							return ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": TEST PDD", string, "РћС‚РІРµС‚", "РћС‚РјРµРЅР°");
 						}
 					}
 				}
 				format(string, sizeof string, "dialog/pddtest/pdd_test_%i.txt", i);
-				ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": PDD TEST", string, "Ответить","Отмена");
+				ShowDialog(playerid, D_PDDTEST, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": PDD TEST", string, "РћС‚РІРµС‚РёС‚СЊ","РћС‚РјРµРЅР°");
 			} else {
 				Pl::Info[playerid][pTest] = 0;
 				SetPVarInt(playerid, "SelectedItem", -1);
-				Send(playerid, COLOR_GREY, "* Вы не сдали тест");
+				Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ СЃРґР°Р»Рё С‚РµСЃС‚");
 				return SetTimerEx(""#Rac::"TogglePlayerControllable", 50, false, "ii", playerid, 1);
 			}
 			return 1;
@@ -9765,7 +9764,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if(BizzInfo[bizz][bProds] <= 0) return GameTextForPlayer(playerid, "~r~Out Of Stock", 5000, 1);
 					switch(BizzInfo[bizz][bID]) {						
 						case Bizz_AutoSolonClassA, Bizz_AutoSolonClassB, Bizz_AutoSolonClassC, Bizz_AutoSolonClassD: {
-							if(TotalExtraVehicles[playerid] >= ExtraVehicleLimit[Pl::Info[playerid][pVip]]) return Send(playerid, COLOR_GREY, "* Вы купили макс. кол-во личного транспорта!");
+							if(TotalExtraVehicles[playerid] >= ExtraVehicleLimit[Pl::Info[playerid][pVip]]) return Send(playerid, COLOR_GREY, "* Р’С‹ РєСѓРїРёР»Рё РјР°РєСЃ. РєРѕР»-РІРѕ Р»РёС‡РЅРѕРіРѕ С‚СЂР°РЅСЃРїРѕСЂС‚Р°!");
 							new vclass;
 							switch(BizzInfo[bizz][bID]) {
 								case Bizz_AutoSolonClassA : vclass = 0;
@@ -9797,9 +9796,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						}
 					
 						case Bizz_GarageLS, Bizz_GarageSF, Bizz_GarageLV, Bizz_GarageRublovka : {
-							if(TotalExtraVehicles[playerid] <= 0) return Send(playerid, COLOR_GREY, "* У Вас нет личного транспорта!");
-							if(TotalVehicleInGarage[playerid] <= 0) return Send(playerid, COLOR_GREY, "* Вы забрали весь транспорт из гаража!");
-							if(IsPlayerTakeExtraVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Вы уже взяли транспорт из гаража!");
+							if(TotalExtraVehicles[playerid] <= 0) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ Р»РёС‡РЅРѕРіРѕ С‚СЂР°РЅСЃРїРѕСЂС‚Р°!");
+							if(TotalVehicleInGarage[playerid] <= 0) return Send(playerid, COLOR_GREY, "* Р’С‹ Р·Р°Р±СЂР°Р»Рё РІРµСЃСЊ С‚СЂР°РЅСЃРїРѕСЂС‚ РёР· РіР°СЂР°Р¶Р°!");
+							if(IsPlayerTakeExtraVehicle(playerid)) return Send(playerid, COLOR_GREY, "* Р’С‹ СѓР¶Рµ РІР·СЏР»Рё С‚СЂР°РЅСЃРїРѕСЂС‚ РёР· РіР°СЂР°Р¶Р°!");
 							Pl::Info[playerid][pLocal] = OFFSET_BIZZ + bizz;
 							
 							if(Pl::Info[playerid][pBizKey] != BizzInfo[bizz][bID]) {
@@ -9861,12 +9860,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case 2222 : {
 			if(response) {
-				if(Rac::GetPlayerMoney(playerid) < 100000) return Send(playerid, COLOR_GREY, "* У Вас не хватает денег!");
+				if(Rac::GetPlayerMoney(playerid) < 100000) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
 				if(0 <= listitem < sizeof fightStyle) {
 					Rac::GivePlayerMoney(playerid, -100000);
 					Pl::Info[playerid][pFightstyle] = fightStyle[listitem][0];
 					SetPlayerFightingStyle(playerid, fightStyle[listitem][0]);
-					format(string, sizeof string, "* Теперь вы деретесь в стиле %s. Время драться!", fightStyle[listitem][1]);
+					format(string, sizeof string, "* РўРµРїРµСЂСЊ РІС‹ РґРµСЂРµС‚РµСЃСЊ РІ СЃС‚РёР»Рµ %s. Р’СЂРµРјСЏ РґСЂР°С‚СЊСЃСЏ!", fightStyle[listitem][1]);
 					Send(playerid, COLOR_GREEN, string);
 				}
 			}
@@ -9878,7 +9877,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(0 <= listitem < sizeof fightStyle) {
 					Pl::Info[playerid][pFightstyle] = fightStyle[listitem][0];
 					SetPlayerFightingStyle(playerid, fightStyle[listitem][0]);
-					format(string, sizeof string, "* Теперь вы деретесь в стиле %s. Время драться!", fightStyle[listitem][1]);
+					format(string, sizeof string, "* РўРµРїРµСЂСЊ РІС‹ РґРµСЂРµС‚РµСЃСЊ РІ СЃС‚РёР»Рµ %s. Р’СЂРµРјСЏ РґСЂР°С‚СЊСЃСЏ!", fightStyle[listitem][1]);
 					Send(playerid, COLOR_GREEN, string);
 				}
 			}
@@ -9886,15 +9885,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case 149 : {
 			if(response) {
-				if(Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Вы сыты!");
+				if(Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GREY, "* Р’С‹ СЃС‹С‚С‹!");
 				Rac::GivePlayerHealth(playerid, EatInfo[listitem][bHP], 100.0);
-				format(string, sizeof(string), "* %s взял %s.", GetName(playerid), EatInfo[listitem][bDescription]);
+				format(string, sizeof(string), "* %s РІР·СЏР» %s.", GetName(playerid), EatInfo[listitem][bDescription]);
 				ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				format(string, sizeof(string), "~g~+ %.1f HP", EatInfo[listitem][bHP]);
 				GameTextForPlayer(playerid, string, 5000, 1);
 				
 				if(Rac::GetPlayerHealth(playerid) >= 100.0) {
-					Send(playerid, COLOR_GREY, "* Вы сыты!");
+					Send(playerid, COLOR_GREY, "* Р’С‹ СЃС‹С‚С‹!");
 				} else {
 					ShowCantina(playerid);
 				}
@@ -9904,32 +9903,32 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case 65 : {
 			if(response) {
 				Pl::Info[playerid][pSex] = 2;
-				Send(playerid, COLOR_LIGHTBLUE, "* Ок, вы девушка");
+				Send(playerid, COLOR_LIGHTBLUE, "* РћРє, РІС‹ РґРµРІСѓС€РєР°");
 			} else {
 				Pl::Info[playerid][pSex] = 1;
-				Send(playerid, COLOR_LIGHTBLUE, "* Ок, вы парень");
+				Send(playerid, COLOR_LIGHTBLUE, "* РћРє, РІС‹ РїР°СЂРµРЅСЊ");
 			}
 		}
 		
-// СИСТЕМА БАНКА.
+// РЎРРЎРўР•РњРђ Р‘РђРќРљРђ.
 		case D_BANK : {
 			if(response) {
 				switch(listitem) {
 					case 0 : {
-						format(string, sizeof(string), "Баланс счета %s: $%i", GetName(playerid), Pl::Info[playerid][pBank]);
+						format(string, sizeof(string), "Р‘Р°Р»Р°РЅСЃ СЃС‡РµС‚Р° %s: $%i", GetName(playerid), Pl::Info[playerid][pBank]);
 						SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "BALANCE", string, "OK", "CANCEL");
 					}
 					
 					case 1 : {
-						SPD(playerid, D_BANK+1, DIALOG_STYLE_INPUT, "WITHDRAW", "Введите сумму: ", "OK","CANCEL");
+						SPD(playerid, D_BANK+1, DIALOG_STYLE_INPUT, "WITHDRAW", "Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ: ", "OK","CANCEL");
 					}
 					
 					case 2 : {
-						SPD(playerid, D_BANK+2, DIALOG_STYLE_INPUT, "DEPOSIT", "Введите сумму: ", "OK","CANCEL");
+						SPD(playerid, D_BANK+2, DIALOG_STYLE_INPUT, "DEPOSIT", "Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ: ", "OK","CANCEL");
 					}
 					
 					case 3 : {
-						SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "Введите сумму перевода: ", "OK","CANCEL");
+						SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°: ", "OK","CANCEL");
 					}
 				}
 			}
@@ -9938,15 +9937,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_BANK+1 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_BANK+1, DIALOG_STYLE_INPUT, "WITHDRAW", "Неверный ввод! Повторите попытку.\nВведите сумму: ", "OK","CANCEL");
+					SPD(playerid, D_BANK+1, DIALOG_STYLE_INPUT, "WITHDRAW", "РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ! РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ: ", "OK","CANCEL");
 				} else {
 					if(inputtext[0] > 0 && Pl::Info[playerid][pBank] >= inputtext[0]) {
 						Rac::GivePlayerMoney(playerid, inputtext[0]);
 						GivePlayerBankMoney(playerid, -inputtext[0]);
-						format(string, sizeof(string), "* Вы сняли $%i со своего счета. Остаток: $%i", inputtext[0], Pl::Info[playerid][pBank]);
+						format(string, sizeof(string), "* Р’С‹ СЃРЅСЏР»Рё $%i СЃРѕ СЃРІРѕРµРіРѕ СЃС‡РµС‚Р°. РћСЃС‚Р°С‚РѕРє: $%i", inputtext[0], Pl::Info[playerid][pBank]);
 						SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "WITHDRAW", string, "OK", "CANCEL");
 					} else {
-						SPD(playerid, D_BANK+1, DIALOG_STYLE_INPUT, "WITHDRAW", "Недостаточно средств.\nВведите сумму: ", "OK","CANCEL");
+						SPD(playerid, D_BANK+1, DIALOG_STYLE_INPUT, "WITHDRAW", "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ: ", "OK","CANCEL");
 					}
 				}
 			} else {
@@ -9957,15 +9956,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_BANK+2 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_BANK+2, DIALOG_STYLE_INPUT, "DEPOSIT", "Неверный ввод! Повторите попытку.\nВведите сумму: ", "OK","CANCEL");
+					SPD(playerid, D_BANK+2, DIALOG_STYLE_INPUT, "DEPOSIT", "РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ! РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ: ", "OK","CANCEL");
 				} else {
 					if(inputtext[0] > 0 && Rac::GetPlayerMoney(playerid) >= inputtext[0]) {
 						Rac::GivePlayerMoney(playerid, -inputtext[0]);
 						GivePlayerBankMoney(playerid, inputtext[0]);
-						format(string, sizeof(string), "* Вы пополнили счет на $%i. Текущий баланс: $%i", inputtext[0], Pl::Info[playerid][pBank]);
+						format(string, sizeof(string), "* Р’С‹ РїРѕРїРѕР»РЅРёР»Рё СЃС‡РµС‚ РЅР° $%i. РўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i", inputtext[0], Pl::Info[playerid][pBank]);
 						SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "DEPOSIT", string, "OK", "CANCEL");
 					} else {
-						SPD(playerid, D_BANK+2, DIALOG_STYLE_INPUT, "DEPOSIT", "Недостаточно средств.\nВведите сумму: ", "OK","CANCEL");
+						SPD(playerid, D_BANK+2, DIALOG_STYLE_INPUT, "DEPOSIT", "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ: ", "OK","CANCEL");
 					}
 				}
 			} else {
@@ -9976,14 +9975,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_BANK+3 : {
 			if(response) {
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "Неверный ввод! Повторите попытку\nВведите сумму перевода: ", "OK","CANCEL");
+					SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ! РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°: ", "OK","CANCEL");
 				} else {
 					if(inputtext[0] > 0 && Pl::Info[playerid][pBank] >= inputtext[0]) {
 						SetPVarInt(playerid, "TransferAmount", inputtext[0]);
-						format(string, sizeof(string), "* Сумма: $%i.\nВведите ID получателя платежа:", inputtext[0]);
+						format(string, sizeof(string), "* РЎСѓРјРјР°: $%i.\nР’РІРµРґРёС‚Рµ ID РїРѕР»СѓС‡Р°С‚РµР»СЏ РїР»Р°С‚РµР¶Р°:", inputtext[0]);
 						SPD(playerid, D_BANK+4, DIALOG_STYLE_INPUT, "TRANSFER", string, "OK", "CANCEL");
 					} else {
-						SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "Недостаточно средств.\nВведите сумму перевода: ", "OK","CANCEL");
+						SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°: ", "OK","CANCEL");
 					}
 				}
 			} else {
@@ -9995,24 +9994,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new player;
 				if(sscanf(inputtext, "u", player)) {
-					format(string, sizeof(string), "* Сумма: $%i.\nВведите ID получателя платежа:", GetPVarInt(playerid, "TransferAmount"));
+					format(string, sizeof(string), "* РЎСѓРјРјР°: $%i.\nР’РІРµРґРёС‚Рµ ID РїРѕР»СѓС‡Р°С‚РµР»СЏ РїР»Р°С‚РµР¶Р°:", GetPVarInt(playerid, "TransferAmount"));
 					SPD(playerid, D_BANK+4, DIALOG_STYLE_INPUT, "TRANSFER", string, "OK", "CANCEL");
 				} else {
 					if(playerid == player) {
-						SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "TRANSFER", "Вы ввели свой ID!", "OK", "CANCEL");
+						SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "TRANSFER", "Р’С‹ РІРІРµР»Рё СЃРІРѕР№ ID!", "OK", "CANCEL");
 					} else if(Pl::isLogged(player)) {
 						SetPVarInt(playerid, "TransferPlayer", player);
 						SetTimerEx("OnPlayerBankTransfer", 1000*10, false, "i", playerid);
-						format(string, sizeof(string), "Вы собираетесь совершить перевод на сумму $%i игроку [%i]%s.\n\
-						У Вас есть 10 секунд для подтверждения платежа!", GetPVarInt(playerid, "TransferAmount"), player, GetName(player));
+						format(string, sizeof(string), "Р’С‹ СЃРѕР±РёСЂР°РµС‚РµСЃСЊ СЃРѕРІРµСЂС€РёС‚СЊ РїРµСЂРµРІРѕРґ РЅР° СЃСѓРјРјСѓ $%i РёРіСЂРѕРєСѓ [%i]%s.\n\
+						РЈ Р’Р°СЃ РµСЃС‚СЊ 10 СЃРµРєСѓРЅРґ РґР»СЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ РїР»Р°С‚РµР¶Р°!", GetPVarInt(playerid, "TransferAmount"), player, GetName(player));
 						SPD(playerid, D_BANK+5, DIALOG_STYLE_MSGBOX, "TRANSFER", string, "OK", "CANCEL");
 					} else {
-						format(string, sizeof(string), "Игрок не залогинен!\n\n* Сумма: $%i.\nВведите ID получателя платежа:", GetPVarInt(playerid, "TransferAmount"));
+						format(string, sizeof(string), "РРіСЂРѕРє РЅРµ Р·Р°Р»РѕРіРёРЅРµРЅ!\n\n* РЎСѓРјРјР°: $%i.\nР’РІРµРґРёС‚Рµ ID РїРѕР»СѓС‡Р°С‚РµР»СЏ РїР»Р°С‚РµР¶Р°:", GetPVarInt(playerid, "TransferAmount"));
 						SPD(playerid, D_BANK+4, DIALOG_STYLE_INPUT, "TRANSFER", string, "OK", "CANCEL");
 					}
 				}
 			} else {
-				SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "Введите сумму перевода: ", "OK", "CANCEL");
+				SPD(playerid, D_BANK+3, DIALOG_STYLE_INPUT, "TRANSFER", "Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°: ", "OK", "CANCEL");
 			}
 		}
 		
@@ -10020,17 +10019,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new player = GetPVarInt(playerid, "TransferPlayer");
 				if(player == INVALID_PLAYER_ID) {
-					SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "TRANSFER", "Время транзакции истекло!\nПовторите попытку.", "OK", "CANCEL");
+					SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "TRANSFER", "Р’СЂРµРјСЏ С‚СЂР°РЅР·Р°РєС†РёРё РёСЃС‚РµРєР»Рѕ!\nРџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ.", "OK", "CANCEL");
 				} else {
 					new amount = GetPVarInt(playerid, "TransferAmount");
 					GivePlayerBankMoney(playerid, -amount);
 					GivePlayerBankMoney(player, amount);
 					new bidx = OFFSET_BIZZ - bidx;
 					if(amount >= 10000 && IsValidBiz(bidx)) GiveBizzProfit(bidx, amount/99);
-					format(string, sizeof(string), "* Перевод успешно совершен!\n\
-					Сумма: $%i\nПолучатель: [%i]%s\nОтправитель: [%i]%s", amount, player, GetName(player), playerid, GetName(playerid));
+					format(string, sizeof(string), "* РџРµСЂРµРІРѕРґ СѓСЃРїРµС€РЅРѕ СЃРѕРІРµСЂС€РµРЅ!\n\
+					РЎСѓРјРјР°: $%i\nРџРѕР»СѓС‡Р°С‚РµР»СЊ: [%i]%s\nРћС‚РїСЂР°РІРёС‚РµР»СЊ: [%i]%s", amount, player, GetName(player), playerid, GetName(playerid));
 					SPD(playerid, D_BANK+33, DIALOG_STYLE_MSGBOX, "DEPOSIT", string, "OK", "CANCEL");
-					format(string, sizeof(string), "* %s[%i] перевел на ваш счет $%i", GetName(playerid), playerid, amount);
+					format(string, sizeof(string), "* %s[%i] РїРµСЂРµРІРµР» РЅР° РІР°С€ СЃС‡РµС‚ $%i", GetName(playerid), playerid, amount);
 					Send(player, COLOR_GREY, string);
 					format(string, sizeof(string), "[BANK] * %s[%i] transfer $%i to %s[%i] | %.3f kk", GetName(playerid), playerid, amount, GetName(player), player, float(amount/1000000));
 					SendToAdmin(COLOR_YELLOW, string, 1, 3);
@@ -10038,7 +10037,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SetPVarInt(playerid, "TransferPlayer", INVALID_PLAYER_ID);
 				SetPVarInt(playerid, "TransferAmount", 0);
 			} else {
-				format(string, sizeof(string), "* Сумма: $%i.\nВведите ID получателя платежа:", GetPVarInt(playerid, "TransferAmount"));
+				format(string, sizeof(string), "* РЎСѓРјРјР°: $%i.\nР’РІРµРґРёС‚Рµ ID РїРѕР»СѓС‡Р°С‚РµР»СЏ РїР»Р°С‚РµР¶Р°:", GetPVarInt(playerid, "TransferAmount"));
 				SPD(playerid, D_BANK+4, DIALOG_STYLE_INPUT, "TRANSFER", string, "OK", "CANCEL");
 			}
 		}
@@ -10046,26 +10045,26 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_BANK+33 : {
 			ShowDialog(playerid, D_BANK, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": BANK", "dialog/bankmenu.txt", "SELECT","CENCEL");
 		}
-// СИСТЕМА БАНКА. END
+// РЎРРЎРўР•РњРђ Р‘РђРќРљРђ. END
 
-// СИСТЕМА БАНКАМАТОВ
+// РЎРРЎРўР•РњРђ Р‘РђРќРљРђРњРђРўРћР’
 		case D_ATM : {
 			if(response) {
 				switch(listitem) {
 					case 0: {
-						format(dialog, sizeof dialog, "Напишите сумму, которую хотите снять со счета.\nМаксимум $100000 за одну опирацию.\n\
-						С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+						format(dialog, sizeof dialog, "РќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ СЃРѕ СЃС‡РµС‚Р°.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+						РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 						SPD(playerid, D_ATM+1, DIALOG_STYLE_INPUT,""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. WITHDRAW", dialog, "OK", "CANCEL");
 					}
 					
 					case 1: {
-						format(dialog, sizeof dialog, "Напишите сумму, которую хотите положить на счет.\nМаксимум $100000 за одну опирацию.\n\
-						С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+						format(dialog, sizeof dialog, "РќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ РЅР° СЃС‡РµС‚.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+						РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 						SPD(playerid, D_ATM+2, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. DEPOSIT", dialog, "OK", "CANCEL");
 					}
 					
 					case 2: {
-						format(dialog, sizeof dialog, "Баланс счета %s: $%i", GetName(playerid), Pl::Info[playerid][pBank]);
+						format(dialog, sizeof dialog, "Р‘Р°Р»Р°РЅСЃ СЃС‡РµС‚Р° %s: $%i", GetName(playerid), Pl::Info[playerid][pBank]);
 						SPD(playerid, D_ATM+33, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. BALANCE", dialog, "OK", "CANCEL");
 					}
 				}
@@ -10076,24 +10075,24 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new cash = 0;
 				if(sscanf(inputtext, "i", cash)) {
-					format(dialog, sizeof dialog, "* Неверный ввод! Повторите попытку!\n\
-					\nНапишите сумму, которую хотите снять со счета.\nМаксимум $100000 за одну опирацию.\n\
-					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+					format(dialog, sizeof dialog, "* РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ! РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ!\n\
+					\nРќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ СЃРѕ СЃС‡РµС‚Р°.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+					РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+1, DIALOG_STYLE_INPUT,""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. WITHDRAW", dialog, "OK", "CANCEL");
 				} else if(cash > 100000) {
-					format(dialog, sizeof dialog, "Напишите сумму, которую хотите положить на счет.\nМаксимум $100000 за одну опирацию.\n\
-					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+					format(dialog, sizeof dialog, "РќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ РЅР° СЃС‡РµС‚.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+					РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+2, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. DEPOSIT", dialog, "OK", "CANCEL");
 				} else if(cash < 100) {
-					format(dialog, sizeof dialog, "* Минимальная сумма за одну операцию состовляет 100$\n\
-					\nНапишите сумму, которую хотите снять со счета.\nМаксимум $100000 за одну опирацию.\n\
-					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+					format(dialog, sizeof dialog, "* РњРёРЅРёРјР°Р»СЊРЅР°СЏ СЃСѓРјРјР° Р·Р° РѕРґРЅСѓ РѕРїРµСЂР°С†РёСЋ СЃРѕСЃС‚РѕРІР»СЏРµС‚ 100$\n\
+					\nРќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ СЃРѕ СЃС‡РµС‚Р°.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+					РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+1, DIALOG_STYLE_INPUT,""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. WITHDRAW", dialog, "OK", "CANCEL");
 				} else if(cash > Pl::Info[playerid][pBank]) {
-					Send(playerid, COLOR_GREY, "Нельзя снять больше денег, чем на счету!");
-					format(dialog, sizeof dialog, "* Недостаточно средств на счету!\n\
-					\nНапишите сумму, которую хотите снять со счета.\nМаксимум $100000 за одну опирацию.\n\
-					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+					Send(playerid, COLOR_GREY, "РќРµР»СЊР·СЏ СЃРЅСЏС‚СЊ Р±РѕР»СЊС€Рµ РґРµРЅРµРі, С‡РµРј РЅР° СЃС‡РµС‚Сѓ!");
+					format(dialog, sizeof dialog, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚Сѓ!\n\
+					\nРќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СЃРЅСЏС‚СЊ СЃРѕ СЃС‡РµС‚Р°.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+					РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+1, DIALOG_STYLE_INPUT,""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. WITHDRAW", dialog, "OK", "CANCEL");
 				} else {
 					new proc = (cash*3)/100;
@@ -10101,7 +10100,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					GiveBizzProfit(0, proc);
 					GivePlayerBankMoney(playerid, -babki);
 					Rac::GivePlayerMoney(playerid, babki);
-					format(dialog, sizeof dialog, "* Вы сняли $%i со своего счета. Остаток: $%i", babki, Pl::Info[playerid][pBank]);
+					format(dialog, sizeof dialog, "* Р’С‹ СЃРЅСЏР»Рё $%i СЃРѕ СЃРІРѕРµРіРѕ СЃС‡РµС‚Р°. РћСЃС‚Р°С‚РѕРє: $%i", babki, Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+33, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. WITHDRAW", dialog, "OK", "CANCLE");
 				}
 			} else {
@@ -10113,31 +10112,31 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new cash;
 				if(sscanf(inputtext, "i", cash)) {
-					format(dialog, sizeof dialog, "* Неверный ввод! Повторите попытку!\n\
-					\nНапишите сумму, которую хотите положить на счет.\nМаксимум $100000 за одну опирацию.\n\
-					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+					format(dialog, sizeof dialog, "* РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ! РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ!\n\
+					\nРќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ РЅР° СЃС‡РµС‚.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+					РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+2, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. DEPOSIT", dialog, "OK", "CANCEL");
 				} else if(cash > 100000) {
-					format(dialog, sizeof dialog, "* Неверный ввод! Повторите попытку!\n\
-					\nНапишите сумму, которую хотите положить на счет.\nМаксимум $100000 за одну опирацию.\n\
-					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+					format(dialog, sizeof dialog, "* РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ! РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ!\n\
+					\nРќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ РЅР° СЃС‡РµС‚.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+					РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+2, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. DEPOSIT", dialog, "OK", "CANCEL");
 				} else if(cash < 100) {
-					format(dialog, sizeof dialog, "* Минимальная сумма за одну операцию состовляет 100$\n\
-					\nНапишите сумму, которую хотите положить на счет.\nМаксимум $100000 за одну опирацию.\n\
-					С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+					format(dialog, sizeof dialog, "* РњРёРЅРёРјР°Р»СЊРЅР°СЏ СЃСѓРјРјР° Р·Р° РѕРґРЅСѓ РѕРїРµСЂР°С†РёСЋ СЃРѕСЃС‚РѕРІР»СЏРµС‚ 100$\n\
+					\nРќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ РЅР° СЃС‡РµС‚.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+					РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 					SPD(playerid, D_ATM+2, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. DEPOSIT", dialog, "OK", "CANCEL");
 				} else {
 					cash -= ((cash * 3) / 100);
 					if(cash > Rac::GetPlayerMoney(playerid)) {
-						format(dialog, sizeof dialog, "* У Вас недостаточно средств!\n\
-						\nНапишите сумму, которую хотите положить на счет.\nМаксимум $100000 за одну опирацию.\n\
-						С каждой перечисленной суммы взымается налог в 3 процента!", Pl::Info[playerid][pBank]);
+						format(dialog, sizeof dialog, "* РЈ Р’Р°СЃ РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!\n\
+						\nРќР°РїРёС€РёС‚Рµ СЃСѓРјРјСѓ, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РїРѕР»РѕР¶РёС‚СЊ РЅР° СЃС‡РµС‚.\nРњР°РєСЃРёРјСѓРј $100000 Р·Р° РѕРґРЅСѓ РѕРїРёСЂР°С†РёСЋ.\n\
+						РЎ РєР°Р¶РґРѕР№ РїРµСЂРµС‡РёСЃР»РµРЅРЅРѕР№ СЃСѓРјРјС‹ РІР·С‹РјР°РµС‚СЃСЏ РЅР°Р»РѕРі РІ 3 РїСЂРѕС†РµРЅС‚Р°!", Pl::Info[playerid][pBank]);
 						SPD(playerid, D_ATM+2, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. DEPOSIT", dialog, "OK", "CANCEL");
 					} else {
 						GivePlayerBankMoney(playerid, cash);
 						Rac::GivePlayerMoney(playerid, -cash);
-						format(dialog, sizeof dialog, "* Вы пополнили счет на $%i. Текущий баланс: $%i", cash, Pl::Info[playerid][pBank]);
+						format(dialog, sizeof dialog, "* Р’С‹ РїРѕРїРѕР»РЅРёР»Рё СЃС‡РµС‚ РЅР° $%i. РўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ: $%i", cash, Pl::Info[playerid][pBank]);
 						SPD(playerid, D_ATM+33, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM. DEPOSIT", dialog, "OK", "CANCEL");
 					}
 				}
@@ -10149,14 +10148,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_ATM+33 : {
 			ShowDialog(playerid, D_ATM, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_C" ATM.", "dialog/atmmenu.txt", "SELECT","CENCEL");
 		}
-// СИСТЕМА БАНКАМАТОВ. END
+// РЎРРЎРўР•РњРђ Р‘РђРќРљРђРњРђРўРћР’. END
 
-// СИСТЕМА ФРАКЦИОННОГО БАНКА
+// РЎРРЎРўР•РњРђ Р¤Р РђРљР¦РРћРќРќРћР“Рћ Р‘РђРќРљРђ
 		case D_FBANK: {
 			if(response) {
 				SetPVarInt(playerid, "SelectedItem", listitem);
-				format(string, sizeof(string), "Счет %s", FracInfo[FracID[listitem]][fName]);
-				SPD(playerid, D_FBANK+1, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "БАЛАНС", "ПЕРЕВОД");
+				format(string, sizeof(string), "РЎС‡РµС‚ %s", FracInfo[FracID[listitem]][fName]);
+				SPD(playerid, D_FBANK+1, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "Р‘РђР›РђРќРЎ", "РџР•Р Р•Р’РћР”");
 			}
 		}
 		
@@ -10164,18 +10163,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new idx = GetPVarInt(playerid, "SelectedItem");
 			if(!response) {
 				if(Bl::Info[playerid][Bl::onFrac][FracID[idx]] && FracInfo[FracID[idx]][fBConf][bPRICE]) {
-					format(string, sizeof(string), "Выход из черного списка\n%s.\nСумма выхода: $%i", FracInfo[FracID[idx]][fName], FracInfo[FracID[idx]][fBConf][bPRICE]);
+					format(string, sizeof(string), "Р’С‹С…РѕРґ РёР· С‡РµСЂРЅРѕРіРѕ СЃРїРёСЃРєР°\n%s.\nРЎСѓРјРјР° РІС‹С…РѕРґР°: $%i", FracInfo[FracID[idx]][fName], FracInfo[FracID[idx]][fBConf][bPRICE]);
 					SPD(playerid, D_FBANK+4, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				} else {
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
+					format(string, sizeof(string), "РџРµСЂРµРІРѕРґ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚\n%s.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ (РѕС‚ $1 РґРѕ $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 			} else {
 				if(Pl::FracID(playerid) == FracID[idx] || EditMode{playerid}) {
-					format(string, sizeof(string), "Баланс %s:\n$%i", FracInfo[FracID[idx]][fName], GetFracMoney(FracID[idx]));
+					format(string, sizeof(string), "Р‘Р°Р»Р°РЅСЃ %s:\n$%i", FracInfo[FracID[idx]][fName], GetFracMoney(FracID[idx]));
 					SPD(playerid, D_FBANK+2, DIALOG_STYLE_MSGBOX, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				} else {
-					Send(playerid, COLOR_GREY, "* Проверять баланс счета могут только его владельцы!");
+					Send(playerid, COLOR_GREY, "* РџСЂРѕРІРµСЂСЏС‚СЊ Р±Р°Р»Р°РЅСЃ СЃС‡РµС‚Р° РјРѕРіСѓС‚ С‚РѕР»СЊРєРѕ РµРіРѕ РІР»Р°РґРµР»СЊС†С‹!");
 				}
 			}
 		}
@@ -10188,18 +10187,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				new idx = GetPVarInt(playerid, "SelectedItem");
 				if(sscanf(inputtext, "i", inputtext[0])) {
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
+					format(string, sizeof(string), "РџРµСЂРµРІРѕРґ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚\n%s.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ (РѕС‚ $1 РґРѕ $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 				
 				else if(!(1 <= inputtext[0] < 1000000)) {
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
+					format(string, sizeof(string), "РџРµСЂРµРІРѕРґ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚\n%s.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ (РѕС‚ $1 РґРѕ $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 				
 				else if(inputtext[0] > Rac::GetPlayerMoney(playerid)) {
-					Send(playerid,COLOR_GREY,"* У Вас нет столько денег!");
-					format(string, sizeof(string), "Перевод средств на счет\n%s.\nВведите сумму (от $1 до $1kk):", FracInfo[FracID[idx]][fName]);
+					Send(playerid,COLOR_GREY,"* РЈ Р’Р°СЃ РЅРµС‚ СЃС‚РѕР»СЊРєРѕ РґРµРЅРµРі!");
+					format(string, sizeof(string), "РџРµСЂРµРІРѕРґ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚\n%s.\nР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ (РѕС‚ $1 РґРѕ $1kk):", FracInfo[FracID[idx]][fName]);
 					SPD(playerid, D_FBANK+3, DIALOG_STYLE_INPUT, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Bank", string, "OK", "CANCEL");
 				}
 				
@@ -10209,12 +10208,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					GetPlayerName(playerid, plname, 24);
 					
 					if(IsAMafiaF(FracID[idx]) || IsAGangF(FracID[idx])) {
-						format(string, sizeof(string), "[TRANSFER]: Гуляй братва %s положил на счёт $%i", plname, inputtext[0]);
+						format(string, sizeof(string), "[TRANSFER]: Р“СѓР»СЏР№ Р±СЂР°С‚РІР° %s РїРѕР»РѕР¶РёР» РЅР° СЃС‡С‘С‚ $%i", plname, inputtext[0]);
 					} else {
-						format(string, sizeof(string), "[TRANSFER]: Только что %s положил на счёт $%i", plname, inputtext[0]);
+						format(string, sizeof(string), "[TRANSFER]: РўРѕР»СЊРєРѕ С‡С‚Рѕ %s РїРѕР»РѕР¶РёР» РЅР° СЃС‡С‘С‚ $%i", plname, inputtext[0]);
 					}
 					sendToFamily(FracID[idx], COLOR_AZTECAS, string);
-					format(string, sizeof(string), "* Счет %s успешно пополнен на $%i", FracInfo[FracID[idx]][fName], inputtext[0]);
+					format(string, sizeof(string), "* РЎС‡РµС‚ %s СѓСЃРїРµС€РЅРѕ РїРѕРїРѕР»РЅРµРЅ РЅР° $%i", FracInfo[FracID[idx]][fName], inputtext[0]);
 					Send(playerid, COLOR_LIGHTBLUE, string);
 				}
 					
@@ -10234,9 +10233,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						Rac::GivePlayerMoney(playerid, -exitprice);
 						Bl::Remove(playerid, FracID[idx]);
 						
-						format(string, sizeof(string), "[BLACK LIST] Терпила %s, заплатил %i$ за выход из черного списка %s", plname, exitprice, FracInfo[FracID[idx]][fName]);
+						format(string, sizeof(string), "[BLACK LIST] РўРµСЂРїРёР»Р° %s, Р·Р°РїР»Р°С‚РёР» %i$ Р·Р° РІС‹С…РѕРґ РёР· С‡РµСЂРЅРѕРіРѕ СЃРїРёСЃРєР° %s", plname, exitprice, FracInfo[FracID[idx]][fName]);
 						sendToFamily(FracID[idx], COLOR_AZTECAS, string);
-						format(string, sizeof(string), "[BLACK LIST] Вы вышли из черного списка(%s) за %i$", FracInfo[FracID[idx]][fName], exitprice);
+						format(string, sizeof(string), "[BLACK LIST] Р’С‹ РІС‹С€Р»Рё РёР· С‡РµСЂРЅРѕРіРѕ СЃРїРёСЃРєР°(%s) Р·Р° %i$", FracInfo[FracID[idx]][fName], exitprice);
 						Send(playerid, COLOR_AZTECAS, string);
 					}
 				}
@@ -10244,28 +10243,28 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				ShowFracBank(playerid);
 			}
 		}
-// СИСТЕМА ФРАКЦИОННОГО БАНКА. END
+// РЎРРЎРўР•РњРђ Р¤Р РђРљР¦РРћРќРќРћР“Рћ Р‘РђРќРљРђ. END
 
-// ПОМОЩЬ ПО ИГРЕ
+// РџРћРњРћР©Р¬ РџРћ РР“Р Р•
 		case D_REF : {
 			if(response) {
 				switch(listitem) {
-					case 0 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Уровень игрока.", "dialog/ref/level.txt", "ENTER", "");
-					case 1 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Чаты.", "dialog/ref/chat.txt", "ENTER", "");
-					case 2 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Лицензии.", "dialog/ref/licenzes.txt", "ENTER", "");
-					case 3 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Работы.", "dialog/ref/jobs.txt", "ENTER", "");
-					case 4 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Транспорт.", "dialog/ref/vehicle.txt", "ENTER", "");
-					case 5 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Дом.", "dialog/ref/home.txt", "ENTER", "");
-					case 6 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Бизнес.", "dialog/ref/biznes.txt", "ENTER", "");
-					case 7 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}Справка: Банк.", "dialog/ref/bank.txt", "ENTER", "");
+					case 0 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: РЈСЂРѕРІРµРЅСЊ РёРіСЂРѕРєР°.", "dialog/ref/level.txt", "ENTER", "");
+					case 1 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: Р§Р°С‚С‹.", "dialog/ref/chat.txt", "ENTER", "");
+					case 2 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: Р›РёС†РµРЅР·РёРё.", "dialog/ref/licenzes.txt", "ENTER", "");
+					case 3 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: Р Р°Р±РѕС‚С‹.", "dialog/ref/jobs.txt", "ENTER", "");
+					case 4 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: РўСЂР°РЅСЃРїРѕСЂС‚.", "dialog/ref/vehicle.txt", "ENTER", "");
+					case 5 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: Р”РѕРј.", "dialog/ref/home.txt", "ENTER", "");
+					case 6 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: Р‘РёР·РЅРµСЃ.", "dialog/ref/biznes.txt", "ENTER", "");
+					case 7 : ShowDialog(playerid, D_REF+1, DIALOG_STYLE_MSGBOX, "{33CCFF}РЎРїСЂР°РІРєР°: Р‘Р°РЅРє.", "dialog/ref/bank.txt", "ENTER", "");
 				}
 			}
 		}
 		
 		case D_REF+1 : {
-			ShowDialog(playerid, D_REF, DIALOG_STYLE_LIST, "{33CCFF}Справка.", "dialog/ref/main.txt", "SELECT", "CANCEL");
+			ShowDialog(playerid, D_REF, DIALOG_STYLE_LIST, "{33CCFF}РЎРїСЂР°РІРєР°.", "dialog/ref/main.txt", "SELECT", "CANCEL");
 		}
-// ПОМОЩЬ ПО ИГРЕ. END
+// РџРћРњРћР©Р¬ РџРћ РР“Р Р•. END
 
 		case D_HELP : {
 			if(response) {
@@ -10273,196 +10272,202 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new tittle[50], category[50], fracid = Pl::FracID(playerid);
 				switch(listitem) {
 					case 0 : {
-						strmid(category, "Клиентские команды", 0, 50);
+						strmid(category, "РљР»РёРµРЅС‚СЃРєРёРµ РєРѕРјР°РЅРґС‹", 0, 50);
 						LoadFile("dialog/help/client_cmd.txt", dialog);	
 					}
 					case 1 : {
-						strmid(category, "Аккаунт", 0, 50);
+						strmid(category, "РђРєРєР°СѓРЅС‚", 0, 50);
 						LoadFile("dialog/help/account.txt", dialog);
 					}
 					case 2 : {
-						strmid(category, "Общее", 0, 50);
+						strmid(category, "РћР±С‰РµРµ", 0, 50);
 						LoadFile("dialog/help/common.txt", dialog);
 					}
 					
 					case 3 : {
-						strmid(category, "Фракция", 0, 50);
+						strmid(category, "Р¤СЂР°РєС†РёСЏ", 0, 50);
 						if(fracid) {
-							if(IsAGang(playerid) || IsAMafia(playerid)) strcat(dialog, "{FFFF00}/bl - {FFFFFF}черный список\n");
+							if(IsAGang(playerid) || IsAMafia(playerid)) strcat(dialog, "{FFFF00}/bl - {FFFFFF}С‡РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє\n");
 							if(IsACop(playerid)) {
-								strcat(dialog, "{FFFF00}/arrest - {FFFFFF}арестовать игрока\n");
-								strcat(dialog, "{FFFF00}/color - {FFFFFF}одеть кепку\n");
-								strcat(dialog, "{FFFF00}/ticket - {FFFFFF}выисать штраф игроку\n");
-								strcat(dialog, "{FFFF00}/su - {FFFFFF}дать розыск игроку\n");
-								strcat(dialog, "{FFFF00}/clear - {FFFFFF}очистить розыск игроку\n");
-								strcat(dialog, "{FFFF00}/wanted - {FFFFFF}список розыскиваемых\n");
-								strcat(dialog, "{FFFF00}/cuff - {FFFFFF}надеть игроку наручники\n");
-								strcat(dialog, "{FFFF00}/uncuff - {FFFFFF}снять игроку наручники\n");
-								strcat(dialog, "{FFFF00}/tazer - {FFFFFF}ударить игрока электрошокером\n");
-								strcat(dialog, "{FFFF00}/frisk - {FFFFFF}обыскать игрока\n");
-								strcat(dialog, "{FFFF00}/mdc - {FFFFFF}посмотреть причину, по которой игроку был дан розыск\n");
-								strcat(dialog, "{FFFF00}/take - {FFFFFF}отобрать что-то у игрока\n");
+								strcat(dialog, "{FFFF00}/arrest - {FFFFFF}Р°СЂРµСЃС‚РѕРІР°С‚СЊ РёРіСЂРѕРєР°\n");
+								strcat(dialog, "{FFFF00}/color - {FFFFFF}РѕРґРµС‚СЊ РєРµРїРєСѓ\n");
+								strcat(dialog, "{FFFF00}/ticket - {FFFFFF}РІС‹РёСЃР°С‚СЊ С€С‚СЂР°С„ РёРіСЂРѕРєСѓ\n");
+								strcat(dialog, "{FFFF00}/su - {FFFFFF}РґР°С‚СЊ СЂРѕР·С‹СЃРє РёРіСЂРѕРєСѓ\n");
+								strcat(dialog, "{FFFF00}/clear - {FFFFFF}РѕС‡РёСЃС‚РёС‚СЊ СЂРѕР·С‹СЃРє РёРіСЂРѕРєСѓ\n");
+								strcat(dialog, "{FFFF00}/wanted - {FFFFFF}СЃРїРёСЃРѕРє СЂРѕР·С‹СЃРєРёРІР°РµРјС‹С…\n");
+								strcat(dialog, "{FFFF00}/cuff - {FFFFFF}РЅР°РґРµС‚СЊ РёРіСЂРѕРєСѓ РЅР°СЂСѓС‡РЅРёРєРё\n");
+								strcat(dialog, "{FFFF00}/uncuff - {FFFFFF}СЃРЅСЏС‚СЊ РёРіСЂРѕРєСѓ РЅР°СЂСѓС‡РЅРёРєРё\n");
+								strcat(dialog, "{FFFF00}/tazer - {FFFFFF}СѓРґР°СЂРёС‚СЊ РёРіСЂРѕРєР° СЌР»РµРєС‚СЂРѕС€РѕРєРµСЂРѕРј\n");
+								strcat(dialog, "{FFFF00}/frisk - {FFFFFF}РѕР±С‹СЃРєР°С‚СЊ РёРіСЂРѕРєР°\n");
+								strcat(dialog, "{FFFF00}/mdc - {FFFFFF}РїРѕСЃРјРѕС‚СЂРµС‚СЊ РїСЂРёС‡РёРЅСѓ, РїРѕ РєРѕС‚РѕСЂРѕР№ РёРіСЂРѕРєСѓ Р±С‹Р» РґР°РЅ СЂРѕР·С‹СЃРє\n");
+								strcat(dialog, "{FFFF00}/take - {FFFFFF}РѕС‚РѕР±СЂР°С‚СЊ С‡С‚Рѕ-С‚Рѕ Сѓ РёРіСЂРѕРєР°\n");
 							}
 							
 							switch(fracid) {
-								case TEAM_COP : strcat(dialog, "{FFFF00}/duty - {FFFFFF}заступить на дежурство\n");
-								case TEAM_FARMERS : strcat(dialog, "{FFFF00}/loadmac - {FFFFFF}провеить, сколько мака в амбаре\n");
-								case TEAM_TAXI : strcat(dialog, "{FFFF00}/fare - {FFFFFF}установить таксу\n");
-								case TEAM_MEDIC : {
-									strcat(dialog, "{FFFF00}/duty - {FFFFFF}заступить на дежурство\n");
-									strcat(dialog, "{FFFF00}/heal - {FFFFFF}вылечить игрока\n");
-									strcat(dialog, "{FFFF00}/accept medic - {FFFFFF}принять вызов\n");
+								case 1 : strcat(dialog, "{FFFF00}/duty - {FFFFFF}Р·Р°СЃС‚СѓРїРёС‚СЊ РЅР° РґРµР¶СѓСЂСЃС‚РІРѕ\n");
+								case 4 : {
+									strcat(dialog, "{FFFF00}/duty - {FFFFFF}Р·Р°СЃС‚СѓРїРёС‚СЊ РЅР° РґРµР¶СѓСЂСЃС‚РІРѕ\n");
+									strcat(dialog, "{FFFF00}/heal - {FFFFFF}РІС‹Р»РµС‡РёС‚СЊ РёРіСЂРѕРєР°\n");
+									strcat(dialog, "{FFFF00}/accept medic - {FFFFFF}РїСЂРёРЅСЏС‚СЊ РІС‹Р·РѕРІ\n");
 								}
-								case TEAM_PRESS : {
-									strcat(dialog, "{FFFF00}/news - {FFFFFF}послать новости в эфир\n");
-									strcat(dialog, "{FFFF00}/live - {FFFFFF}начать интервью\n");
+								case 8 : strcat(dialog, "{FFFF00}/loadmac - {FFFFFF}РїСЂРѕРІРµРёС‚СЊ, СЃРєРѕР»СЊРєРѕ РјР°РєР° РІ Р°РјР±Р°СЂРµ\n");
+								case 9 : {
+									strcat(dialog, "{FFFF00}/news - {FFFFFF}РїРѕСЃР»Р°С‚СЊ РЅРѕРІРѕСЃС‚Рё РІ СЌС„РёСЂ\n");
+									strcat(dialog, "{FFFF00}/live - {FFFFFF}РЅР°С‡Р°С‚СЊ РёРЅС‚РµСЂРІСЊСЋ\n");
 								}
-								case TEAM_LICENZERS : {
-									strcat(dialog, "{FFFF00}/startlesson - {FFFFFF}начать экзамен\n");
-									strcat(dialog, "{FFFF00}/stoplesson - {FFFFFF}завершить экзамен\n");
-									strcat(dialog, "{FFFF00}/givelicense - {FFFFFF}выдать лицензию игроку\n");
-									strcat(dialog, "{FFFF00}/take - {FFFFFF}отобрать что-то у игрока\n");
+								case 10 : strcat(dialog, "{FFFF00}/fare - {FFFFFF}СѓСЃС‚Р°РЅРѕРІРёС‚СЊ С‚Р°РєСЃСѓ\n");
+								case 11 : {
+									strcat(dialog, "{FFFF00}/startlesson - {FFFFFF}РЅР°С‡Р°С‚СЊ СЌРєР·Р°РјРµРЅ\n");
+									strcat(dialog, "{FFFF00}/stoplesson - {FFFFFF}Р·Р°РІРµСЂС€РёС‚СЊ СЌРєР·Р°РјРµРЅ\n");
+									strcat(dialog, "{FFFF00}/givelicense - {FFFFFF}РІС‹РґР°С‚СЊ Р»РёС†РµРЅР·РёСЋ РёРіСЂРѕРєСѓ\n");
+									strcat(dialog, "{FFFF00}/take - {FFFFFF}РѕС‚РѕР±СЂР°С‚СЊ С‡С‚Рѕ-С‚Рѕ Сѓ РёРіСЂРѕРєР°\n");
 								}
-								case TEAM_RIFA : {
-									strcat(dialog, "{FFFF00}/buymats - {FFFFFF}купить материалы в доках ЛС\n");
-									strcat(dialog, "{FFFF00}/sellmats - {FFFFFF}продать материалы на базе\n");
-									strcat(dialog, "{FFFF00}/loadmats - {FFFFFF}посмотреть, на сколько загружен склад\n");
+								case 17 : {
+									strcat(dialog, "{FFFF00}/buymats - {FFFFFF}РєСѓРїРёС‚СЊ РјР°С‚РµСЂРёР°Р»С‹ РІ РґРѕРєР°С… Р›РЎ\n");
+									strcat(dialog, "{FFFF00}/sellmats - {FFFFFF}РїСЂРѕРґР°С‚СЊ РјР°С‚РµСЂРёР°Р»С‹ РЅР° Р±Р°Р·Рµ\n");
+									strcat(dialog, "{FFFF00}/loadmats - {FFFFFF}РїРѕСЃРјРѕС‚СЂРµС‚СЊ, РЅР° СЃРєРѕР»СЊРєРѕ Р·Р°РіСЂСѓР¶РµРЅ СЃРєР»Р°Рґ\n");
 								}
 							}
 							if(IsAMafia(playerid)) {
-								strcat(dialog, "{FFFF00}/selldrugs - {FFFFFF}продать наркоту\n");
-								strcat(dialog, "{FFFF00}/sellgun - {FFFFFF}продать оружие\n");
+								strcat(dialog, "{FFFF00}/selldrugs - {FFFFFF}РїСЂРѕРґР°С‚СЊ РЅР°СЂРєРѕС‚Сѓ\n");
+								strcat(dialog, "{FFFF00}/sellgun - {FFFFFF}РїСЂРѕРґР°С‚СЊ РѕСЂСѓР¶РёРµ\n");
 							}
-							if(IsAGang(playerid)) strcat(dialog, "{FFFF00}/zahvat - {FFFFFF}атаковать бизнес\n");
-							strcat(dialog, "{FFFF00}/color - {FFFFFF}активировать цвет\n");
-						} else {
-							strcat(dialog, "Вам это меню не доступно!");
+							if(IsAGang(playerid)) strcat(dialog, "{FFFF00}/zahvat - {FFFFFF}Р°С‚Р°РєРѕРІР°С‚СЊ Р±РёР·РЅРµСЃ\n");
+							strcat(dialog, "{FFFF00}/color - {FFFFFF}Р°РєС‚РёРІРёСЂРѕРІР°С‚СЊ С†РІРµС‚\n");
 						}
+						else strcat(dialog, "Р’Р°Рј СЌС‚Рѕ РјРµРЅСЋ РЅРµ РґРѕСЃС‚СѓРїРЅРѕ!");
 					}
-					case 4 : {
-						strmid(category, "Работа", 0, 50);
-						switch(Pl::Info[playerid][pJob]) {
-							case JOB_DETECTIVE : strcat(dialog, "{FFFF00}/find - {FFFFFF}найти игрока\n");
-							case JOB_LAWYER : strcat(dialog, "{FFFF00}/free - {FFFFFF}выпустить игрока из тюрьмы\n");
-							case JOB_WHORE : strcat(dialog, "{FFFF00}/sex - {FFFFFF}предложить заняться сексом\n");
-							case JOB_DRUGDEALER : strcat(dialog, "{FFFF00}/selldrugs - {FFFFFF}продать наркотики игроку\n");
-							case JOB_AUTODEALER : strcat(dialog, "{FFFF00}/sellcar - {FFFFFF}продать авто игроку\n");
-							case JOB_BUSMAN : strcat(dialog, "{FFFF00}/fare - {FFFFFF}установить цену проезда\n");
-							case JOB_TRUCKER : strcat(dialog, "{FFFF00}/delivery - {FFFFFF}начать рэйс\n");
-							case JOB_THEFTAUTO : {
-								strcat(dialog, "{FFFF00}/jack - {FFFFFF}взломать замок автомобиля\n");
-								strcat(dialog, "{FFFF00}/dropcar - {FFFFFF}экспортировать автомобиль\n");
+					case 4:
+					{
+						strmid(category, "Р Р°Р±РѕС‚Р°", 0, 50);
+						switch(Pl::Info[playerid][pJob])
+						{
+							case 1: strcat(dialog, "{FFFF00}/find - {FFFFFF}РЅР°Р№С‚Рё РёРіСЂРѕРєР°\n");
+							case 2: strcat(dialog, "{FFFF00}/free - {FFFFFF}РІС‹РїСѓСЃС‚РёС‚СЊ РёРіСЂРѕРєР° РёР· С‚СЋСЂСЊРјС‹\n");
+							case 3: strcat(dialog, "{FFFF00}/sex - {FFFFFF}РїСЂРµРґР»РѕР¶РёС‚СЊ Р·Р°РЅСЏС‚СЊСЃСЏ СЃРµРєСЃРѕРј\n");
+							case 4: strcat(dialog, "{FFFF00}/selldrugs - {FFFFFF}РїСЂРѕРґР°С‚СЊ РЅР°СЂРєРѕС‚РёРєРё РёРіСЂРѕРєСѓ\n");
+							case 5: {
+								strcat(dialog, "{FFFF00}/jack - {FFFFFF}РІР·Р»РѕРјР°С‚СЊ Р·Р°РјРѕРє Р°РІС‚РѕРјРѕР±РёР»СЏ\n");
+								strcat(dialog, "{FFFF00}/dropcar - {FFFFFF}СЌРєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ Р°РІС‚РѕРјРѕР±РёР»СЊ\n");
 							}
-							case JOB_MECHANIC : {
-								strcat(dialog, "{FFFF00}/at - {FFFFFF}прицепить прицеп\n");
-								strcat(dialog, "{FFFF00}/dt - {FFFFFF}отцепить прицеп\n");
-								strcat(dialog, "{FFFF00}/duty - {FFFFFF}заступить на дежурство\n");
-								strcat(dialog, "{FFFF00}/repair - {FFFFFF}починить автомобиль\n");
-								strcat(dialog, "{FFFF00}/refill - {FFFFFF}заправить автомобиль\n");
+							case 6: {
+								strcat(dialog, "{FFFF00}/at - {FFFFFF}РїСЂРёС†РµРїРёС‚СЊ РїСЂРёС†РµРї\n");
+								strcat(dialog, "{FFFF00}/dt - {FFFFFF}РѕС‚С†РµРїРёС‚СЊ РїСЂРёС†РµРї\n");
+								strcat(dialog, "{FFFF00}/duty - {FFFFFF}Р·Р°СЃС‚СѓРїРёС‚СЊ РЅР° РґРµР¶СѓСЂСЃС‚РІРѕ\n");
+								strcat(dialog, "{FFFF00}/repair - {FFFFFF}РїРѕС‡РёРЅРёС‚СЊ Р°РІС‚РѕРјРѕР±РёР»СЊ\n");
+								strcat(dialog, "{FFFF00}/refill - {FFFFFF}Р·Р°РїСЂР°РІРёС‚СЊ Р°РІС‚РѕРјРѕР±РёР»СЊ\n");
 							}
-							case JOB_GUNDEALER : {
-								strcat(dialog, "{FFFF00}/mats - {FFFFFF}купить/переработать материалы\n");
-								strcat(dialog, "{FFFF00}/sellgun - {FFFFFF}продать оружие игроку\n");
+							case 7: {
+								strcat(dialog, "{FFFF00}/mats - {FFFFFF}РєСѓРїРёС‚СЊ/РїРµСЂРµСЂР°Р±РѕС‚Р°С‚СЊ РјР°С‚РµСЂРёР°Р»С‹\n");
+								strcat(dialog, "{FFFF00}/sellgun - {FFFFFF}РїСЂРѕРґР°С‚СЊ РѕСЂСѓР¶РёРµ РёРіСЂРѕРєСѓ\n");
 							}
-							default: strcat(dialog, "У Вас нет работы!");
+							case 8: strcat(dialog, "{FFFF00}/sellcar - {FFFFFF}РїСЂРѕРґР°С‚СЊ Р°РІС‚Рѕ РёРіСЂРѕРєСѓ\n");
+							case 9: strcat(dialog, "{FFFF00}/fare - {FFFFFF}СѓСЃС‚Р°РЅРѕРІРёС‚СЊ С†РµРЅСѓ РїСЂРѕРµР·РґР°\n");
+							case 10: strcat(dialog, "{FFFF00}/delivery - {FFFFFF}РЅР°С‡Р°С‚СЊ СЂСЌР№СЃ\n");
+							default: strcat(dialog, "РЈ Р’Р°СЃ РЅРµС‚ СЂР°Р±РѕС‚С‹!");
 						}
-						if(Pl::Info[playerid][pJob] != JOB_NONE) strcat(dialog, "{FFFF00}/quitjob - {FFFFFF}уволиться\n");
+						if(Pl::Info[playerid][pJob] > 0) strcat(dialog, "{FFFF00}/quitjob - {FFFFFF}СѓРІРѕР»РёС‚СЊСЃСЏ\n");
 					}
-					case 5: {
-						strmid(category, "Чаты", 0, 50);
-						strcat(dialog, "{FFFF00}/w (/pm) - {FFFFFF}отправить личное сообщение игроку\n");
-						strcat(dialog, "{FFFF00}/s - {FFFFFF}крикнуть\n");
-						strcat(dialog, "{FFFF00}/b - {FFFFFF}OOC чат\n");
-						if(IsAFamily(playerid)) strcat(dialog, "{FFFF00}/f - {FFFFFF}отправить сообщение в фракционный чат\n");
-						if(IsATeam(playerid) || fracid == TEAM_LICENZERS) {
-							strcat(dialog, "{FFFF00}/d - {FFFFFF}отправить сообщение в чат департамента\n");
-							strcat(dialog, "{FFFF00}/r - {FFFFFF}сказать по рации\n");
-							strcat(dialog, "{FFFF00}/m - {FFFFFF}крикнуть по мегафону\n");
-							strcat(dialog, "{FFFF00}/gov - {FFFFFF}отправить сообщение в городские новост\n");
+					case 5:
+					{
+						strmid(category, "Р§Р°С‚С‹", 0, 50);
+						strcat(dialog, "{FFFF00}/w (/pm) - {FFFFFF}РѕС‚РїСЂР°РІРёС‚СЊ Р»РёС‡РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ РёРіСЂРѕРєСѓ\n");
+						strcat(dialog, "{FFFF00}/s - {FFFFFF}РєСЂРёРєРЅСѓС‚СЊ\n");
+						strcat(dialog, "{FFFF00}/b - {FFFFFF}OOC С‡Р°С‚\n");
+						if(IsAFamily(playerid)) strcat(dialog, "{FFFF00}/f - {FFFFFF}РѕС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РІ С„СЂР°РєС†РёРѕРЅРЅС‹Р№ С‡Р°С‚\n");
+						if(IsATeam(playerid) || fracid == 11)
+						{
+							strcat(dialog, "{FFFF00}/d - {FFFFFF}РѕС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РІ С‡Р°С‚ РґРµРїР°СЂС‚Р°РјРµРЅС‚Р°\n");
+							strcat(dialog, "{FFFF00}/r - {FFFFFF}СЃРєР°Р·Р°С‚СЊ РїРѕ СЂР°С†РёРё\n");
+							strcat(dialog, "{FFFF00}/m - {FFFFFF}РєСЂРёРєРЅСѓС‚СЊ РїРѕ РјРµРіР°С„РѕРЅСѓ\n");
+							strcat(dialog, "{FFFF00}/gov - {FFFFFF}РѕС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РІ РіРѕСЂРѕРґСЃРєРёРµ РЅРѕРІРѕСЃС‚\n");
 						}
-						strcat(dialog, "{FFFF00}/ad - {FFFFFF}подать объявление\n");
-						strcat(dialog, "{FFFF00}/me - {FFFFFF}описать свое действие от 3-его лица\n");
-						strcat(dialog, "{FFFF00}/do - {FFFFFF}описать действия вокруг себя\n");
-						strcat(dialog, "{FFFF00}/try - {FFFFFF}попытаться что-то сделать\n");
-						strcat(dialog, "{FFFF00}/togooc - {FFFFFF}вкл/выкл сообщения о входе/выходе игроков\n");
-						strcat(dialog, "{FFFF00}/tognews - {FFFFFF}вкл/выкл показ новостей\n");
-						strcat(dialog, "{FFFF00}/togfam - {FFFFFF}вкл/выкл семейный чат\n");
-						strcat(dialog, "{FFFF00}/togpm - {FFFFFF}вкл/выкл личные сообщения\n");
+						strcat(dialog, "{FFFF00}/ad - {FFFFFF}РїРѕРґР°С‚СЊ РѕР±СЉСЏРІР»РµРЅРёРµ\n");
+						strcat(dialog, "{FFFF00}/me - {FFFFFF}РѕРїРёСЃР°С‚СЊ СЃРІРѕРµ РґРµР№СЃС‚РІРёРµ РѕС‚ 3-РµРіРѕ Р»РёС†Р°\n");
+						strcat(dialog, "{FFFF00}/do - {FFFFFF}РѕРїРёСЃР°С‚СЊ РґРµР№СЃС‚РІРёСЏ РІРѕРєСЂСѓРі СЃРµР±СЏ\n");
+						strcat(dialog, "{FFFF00}/try - {FFFFFF}РїРѕРїС‹С‚Р°С‚СЊСЃСЏ С‡С‚Рѕ-С‚Рѕ СЃРґРµР»Р°С‚СЊ\n");
+						strcat(dialog, "{FFFF00}/togooc - {FFFFFF}РІРєР»/РІС‹РєР» СЃРѕРѕР±С‰РµРЅРёСЏ Рѕ РІС…РѕРґРµ/РІС‹С…РѕРґРµ РёРіСЂРѕРєРѕРІ\n");
+						strcat(dialog, "{FFFF00}/tognews - {FFFFFF}РІРєР»/РІС‹РєР» РїРѕРєР°Р· РЅРѕРІРѕСЃС‚РµР№\n");
+						strcat(dialog, "{FFFF00}/togfam - {FFFFFF}РІРєР»/РІС‹РєР» СЃРµРјРµР№РЅС‹Р№ С‡Р°С‚\n");
+						strcat(dialog, "{FFFF00}/togpm - {FFFFFF}РІРєР»/РІС‹РєР» Р»РёС‡РЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ\n");
 					}
 					
 					case 6 : {
-						strmid(category, "Телефон", 0, 50);
+						strmid(category, "РўРµР»РµС„РѕРЅ", 0, 50);
 						LoadFile("dialog/help/phone.txt", dialog);
 					}
 					
 					case 7 : {
-						strmid(category, "Аренда авто", 0, 50);
+						strmid(category, "РђСЂРµРЅРґР° Р°РІС‚Рѕ", 0, 50);
 						LoadFile("dialog/help/rent_car.txt", dialog);
 					}
 					
 					case 8 : {
-						strmid(category, "Дом", 0, 50);
+						strmid(category, "Р”РѕРј", 0, 50);
 						LoadFile("dialog/help/home.txt", dialog);
 					}
 					
 					case 9 : {
-						strmid(category, "Аренда дома", 0, 50);
+						strmid(category, "РђСЂРµРЅРґР° РґРѕРјР°", 0, 50);
 						LoadFile("dialog/help/rent_home.txt", dialog);
 					}
 					
 					case 10 : {
-						strmid(category, "Бизнес", 0, 50);
+						strmid(category, "Р‘РёР·РЅРµСЃ", 0, 50);
 						LoadFile("dialog/help/biznes.txt", dialog);
 					}
 					
-					case 11 : {
-						strmid(category, "ЛИДЕРКА", 0, 50);
+					case 11:
+					{
+						strmid(category, "Р›РР”Р•Р РљРђ", 0, 50);
 						if(IsPlayerLeader(playerid) > 0) {
-							strcat(dialog, "{FFFF00}/lmenu - {FFFFFF}меню лидера\n");
-							strcat(dialog, "{FFFF00}/invite - {FFFFFF}принять игрока в свою фракцию\n");
-							strcat(dialog, "{FFFF00}/uninvite - {FFFFFF}выгнать игрока из своей фракции\n");
-							strcat(dialog, "{FFFF00}/giverank - {FFFFFF}установить ранг игроку\n");
-							strcat(dialog, "{FFFF00}/fracpay - {FFFFFF}выдать зарплату\n");
-							strcat(dialog, "{FFFF00}/vigovor - {FFFFFF}дать выговор игроку\n");
-							strcat(dialog, "{FFFF00}/unvigovor - {FFFFFF}снять выговор с игрока\n");
-							if(fracid == TEAM_GOV) {
-								strcat(dialog, "{FFFF00}/settax - {FFFFFF}установить налог\n");
-								strcat(dialog, "{FFFF00}/givetax - {FFFFFF}выдать зарплпту законникам\n");
-								strcat(dialog, "{FFFF00}/checktax - {FFFFFF}проверить казну\n");
+							strcat(dialog, "{FFFF00}/lmenu - {FFFFFF}РјРµРЅСЋ Р»РёРґРµСЂР°\n");
+							strcat(dialog, "{FFFF00}/invite - {FFFFFF}РїСЂРёРЅСЏС‚СЊ РёРіСЂРѕРєР° РІ СЃРІРѕСЋ С„СЂР°РєС†РёСЋ\n");
+							strcat(dialog, "{FFFF00}/uninvite - {FFFFFF}РІС‹РіРЅР°С‚СЊ РёРіСЂРѕРєР° РёР· СЃРІРѕРµР№ С„СЂР°РєС†РёРё\n");
+							strcat(dialog, "{FFFF00}/giverank - {FFFFFF}СѓСЃС‚Р°РЅРѕРІРёС‚СЊ СЂР°РЅРі РёРіСЂРѕРєСѓ\n");
+							strcat(dialog, "{FFFF00}/fracpay - {FFFFFF}РІС‹РґР°С‚СЊ Р·Р°СЂРїР»Р°С‚Сѓ\n");
+							strcat(dialog, "{FFFF00}/vigovor - {FFFFFF}РґР°С‚СЊ РІС‹РіРѕРІРѕСЂ РёРіСЂРѕРєСѓ\n");
+							strcat(dialog, "{FFFF00}/unvigovor - {FFFFFF}СЃРЅСЏС‚СЊ РІС‹РіРѕРІРѕСЂ СЃ РёРіСЂРѕРєР°\n");
+							if(fracid == 7) {
+								strcat(dialog, "{FFFF00}/settax - {FFFFFF}СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РЅР°Р»РѕРі\n");
+								strcat(dialog, "{FFFF00}/givetax - {FFFFFF}РІС‹РґР°С‚СЊ Р·Р°СЂРїР»РїС‚Сѓ Р·Р°РєРѕРЅРЅРёРєР°Рј\n");
+								strcat(dialog, "{FFFF00}/checktax - {FFFFFF}РїСЂРѕРІРµСЂРёС‚СЊ РєР°Р·РЅСѓ\n");
 							}
 						} else {
-							strcat(dialog, "Вы не лидер!");
+							strcat(dialog, "Р’С‹ РЅРµ Р»РёРґРµСЂ!");
 						}
 					}
-					case 12 : {
-						strmid(category, "Хелперка", 0, 50);
-						if(!IsPHelper(playerid, 1)) strcat(dialog, "Вы не хелпер!");
-						strcat(dialog, "{FFFF00}/hc - {FFFFFF}отправить текст в чат хелперов\n");
-						strcat(dialog, "{FFFF00}/ans - {FFFFFF}ответить игроку\n");
-						strcat(dialog, "{FFFF00}/hduty - {FFFFFF}заступить на дежурство\n");
-						if(IsPHelper(playerid, 2)) strcat(dialog, "{FFFF00}/hmute - {FFFFFF}дать мут игроку\n");
-						if(IsPHelper(playerid, 3)) strcat(dialog, "{FFFF00}/makehelper(1-3) - {FFFFFF}дать хелперку\n");
+					case 12:
+					{
+						strmid(category, "РҐРµР»РїРµСЂРєР°", 0, 50);
+						if(!IsPHelper(playerid, 1)) strcat(dialog, "Р’С‹ РЅРµ С…РµР»РїРµСЂ!");
+						strcat(dialog, "{FFFF00}/hc - {FFFFFF}РѕС‚РїСЂР°РІРёС‚СЊ С‚РµРєСЃС‚ РІ С‡Р°С‚ С…РµР»РїРµСЂРѕРІ\n");
+						strcat(dialog, "{FFFF00}/ans - {FFFFFF}РѕС‚РІРµС‚РёС‚СЊ РёРіСЂРѕРєСѓ\n");
+						strcat(dialog, "{FFFF00}/hduty - {FFFFFF}Р·Р°СЃС‚СѓРїРёС‚СЊ РЅР° РґРµР¶СѓСЂСЃС‚РІРѕ\n");
+						if(IsPHelper(playerid, 2)) strcat(dialog, "{FFFF00}/hmute - {FFFFFF}РґР°С‚СЊ РјСѓС‚ РёРіСЂРѕРєСѓ\n");
+						if(IsPHelper(playerid, 3)) strcat(dialog, "{FFFF00}/makehelper(1-3) - {FFFFFF}РґР°С‚СЊ С…РµР»РїРµСЂРєСѓ\n");
 					}
-					case 13 : {
-						if(!Pl::Info[playerid][pAdmin]) {
-							strcat(dialog, "Вы не админ!");
-						} else {
-							return ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > Команды админов", "dialog/help/admin.txt", "CANCEL", "");
+					case 13:
+					{
+						if(!Pl::Info[playerid][pAdmin]) strcat(dialog, "Р’С‹ РЅРµ Р°РґРјРёРЅ!");
+						else
+						{
+							return ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РџРѕРјРѕС‰СЊ > РљРѕРјР°РЅРґС‹ Р°РґРјРёРЅРѕРІ", "dialog/help/admin.txt", "CANCEL", "");
 						}
 					}
 				}
-				format(tittle, sizeof(tittle), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь > %s", category);
+				format(tittle, sizeof(tittle), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": РџРѕРјРѕС‰СЊ > %s", category);
 				SPD(playerid, D_HELP+33, 0, tittle, dialog, "BACK", "CANCEL");
 			}
 		}
 		
 		case D_HELP+33 : { 
-			ShowDialog(playerid, D_HELP, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Помощь", "dialog/help.txt", "SELECT", "CANCEL");
+			ShowDialog(playerid, D_HELP, DIALOG_STYLE_LIST,""#__SERVER_PREFIX""#__SERVER_NAME_LC": РџРѕРјРѕС‰СЊ", "dialog/help.txt", "SELECT", "CANCEL");
 		}
 		
 		case D_ARMOUR: {
 			if(response) {
-				if(Rac::GetPlayerArmour(playerid) >= 100.0 && Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GRAD2, "* Вы уже в бронежилете!");
+				if(Rac::GetPlayerArmour(playerid) >= 100.0 && Rac::GetPlayerHealth(playerid) >= 100.0) return Send(playerid, COLOR_GRAD2, "* Р’С‹ СѓР¶Рµ РІ Р±СЂРѕРЅРµР¶РёР»РµС‚Рµ!");
 				Rac::SetPlayerHealth(playerid, 100.0);
 				Rac::SetPlayerArmour(playerid, 100.0);
 				Rac::GivePlayerMoney(playerid, -500);
@@ -10475,11 +10480,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(IsABusCar(Veh)) {
 					SetPVarInt(playerid, "NextCP", 0);
 					SetPVarInt(playerid, "RouteID", listitem);
-					format(string, sizeof(string), "»» %s - %s ««\nТариф: $%i", BusRoute[listitem][0][stopName], BusRoute[listitem][BusRouteCount[listitem]-1][stopName], TransportValue[playerid]);
+					format(string, sizeof(string), "В»В» %s - %s В«В«\nРўР°СЂРёС„: $%i", BusRoute[listitem][0][stopName], BusRoute[listitem][BusRouteCount[listitem]-1][stopName], TransportValue[playerid]);
 					AttachText[Veh] = Add3DText(string, COLOR_BUS_PRICE, 0.0, 3.5, 2.8, 20.0, INVALID_PLAYER_ID, Veh, 0, 0, 0, -1);
-					format(string, sizeof(string), "Вы начали маршрут %s - %s", BusRoute[listitem][0][stopName], BusRoute[listitem][BusRouteCount[listitem]-1][stopName]);
+					format(string, sizeof(string), "Р’С‹ РЅР°С‡Р°Р»Рё РјР°СЂС€СЂСѓС‚ %s - %s", BusRoute[listitem][0][stopName], BusRoute[listitem][BusRouteCount[listitem]-1][stopName]);
 					Send(playerid, COLOR_TAXI_PRICE, string);
-					Send(playerid,COLOR_LIGHTRED, "Следуете к красному маячку на радаре.");
+					Send(playerid,COLOR_LIGHTRED, "РЎР»РµРґСѓРµС‚Рµ Рє РєСЂР°СЃРЅРѕРјСѓ РјР°СЏС‡РєСѓ РЅР° СЂР°РґР°СЂРµ.");
 					checkpointb[playerid] = CreateDynamicRaceCP(
 						2,
 						BusRoute[listitem][0][stopX],
@@ -10497,30 +10502,77 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		
 		case D_SKILL : {
 			if(response) {
-				static const skillName[][][] = {
-					{{"детектив"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо найти ещё %i игроков!"}},
-					{{"адвокат"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо освободить ещё %i игроков!"}},
-					{{"шлюха"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо обслужить ещё %i клиентов!"}},
-					{{"наркодилер"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо совершить ещё %i сделок!"}},
-					{{"автоугонщик"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо продать ещё %i машин!"}},
-					{{"репортер"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо опубликовать ещё %i новостей в /news!"}},
-					{{"механик"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо починить/заправить ещё %i машин!"}},
-					{{"автодилер"}, {"*Ваш уровень опыта по профессии %s = %i.\n*Для повышения уровня необходимо оформить ещё %i автомобилей!"}}
-				};
-				new level = GetSkillLevel(playerid, listitem);
-				if(level < 5) {
-					format(string,sizeof(string), skillName[listitem][1],
-					skillName[listitem][0], level, 50 - Pl::Info[playerid][pSkill][listitem]);
-				} else {
-					format(string,sizeof(string),"*Ваш уровень опыта по профессии %s = 5.", skillName[0][listitem]);
+				switch(listitem) {
+					case 0: {
+						new score = Pl::Info[playerid][pSkill][0];
+						new level = GetSkillLevel(playerid, 0);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё РґРµС‚РµРєС‚РёРІ = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РЅР°Р№С‚Рё РµС‰С‘ %i РёРіСЂРѕРєРѕРІ!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё РґРµС‚РµРєС‚РёРІ = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
+					
+					case 1: {
+						new score = Pl::Info[playerid][pSkill][2];
+						new level = GetSkillLevel(playerid, 2);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё Р°РґРІРѕРєР°С‚ = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ РµС‰С‘ %i РёРіСЂРѕРєРѕРІ!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё Р°РґРІРѕРєР°С‚ = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
+					
+					case 2: {
+						new score = Pl::Info[playerid][pSkill][1];
+						new level = GetSkillLevel(playerid, 1);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё С€Р»СЋС…Р° = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РѕР±СЃР»СѓР¶РёС‚СЊ РµС‰С‘ %i РєР»РёРµРЅС‚РѕРІ!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё С€Р»СЋС…Р° = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
+					
+					case 3: {
+						new score = Pl::Info[playerid][pSkill][7];
+						new level = GetSkillLevel(playerid, 7);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё РЅР°СЂРєРѕРґРёР»РµСЂ = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ СЃРѕРІРµСЂС€РёС‚СЊ РµС‰С‘ %i СЃРґРµР»РѕРє!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё РЅР°СЂРєРѕРґРёР»РµСЂ = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
+					
+					case 4: {
+						new score = Pl::Info[playerid][pSkill][4];
+						new level = GetSkillLevel(playerid, 4);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё Р°РІС‚РѕСѓРіРѕРЅС‰РёРє = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РїСЂРѕРґР°С‚СЊ РµС‰С‘ %i РјР°С€РёРЅ!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё Р°РІС‚РѕСѓРіРѕРЅС‰РёРє = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
+					
+					case 5:	{
+						new score = Pl::Info[playerid][pSkill][6];
+						new level = GetSkillLevel(playerid, 6);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё СЂРµРїРѕСЂС‚РµСЂ = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РѕРїСѓР±Р»РёРєРѕРІР°С‚СЊ РµС‰С‘ %i РЅРѕРІРѕСЃС‚РµР№ РІ /news!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё СЂРµРїРѕСЂС‚РµСЂ = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
+					
+					case 6: {
+						new score = Pl::Info[playerid][pSkill][3];
+						new level = GetSkillLevel(playerid, 3);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё РјРµС…Р°РЅРёРє = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РїРѕС‡РёРЅРёС‚СЊ/Р·Р°РїСЂР°РІРёС‚СЊ РµС‰С‘ %i РјР°С€РёРЅ!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё РјРµС…Р°РЅРёРє = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
+					
+					case 7: {
+						new score = Pl::Info[playerid][pSkill][5];
+						new level = GetSkillLevel(playerid, 5);
+						if(level < 5) format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё Р°РІС‚РѕРґРёР»РµСЂ = %i.\n*Р”Р»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РѕС„РѕСЂРјРёС‚СЊ РµС‰С‘ %i Р°РІС‚РѕРјРѕР±РёР»РµР№!", level, 50 - score);
+						else format(string,sizeof(string),"*Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РѕРїС‹С‚Р° РїРѕ РїСЂРѕС„РµСЃСЃРёРё Р°РІС‚РѕРґРёР»РµСЂ = 5.");
+						SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "РќРђР—РђР”", "Р—Р°РєСЂС‹С‚СЊ");
+					}
 				}
-				SPD(playerid, D_SKILL+1, DIALOG_STYLE_MSGBOX, "SKILL", string, "НАЗАД", "Закрыть");
 			}
 		}
 		
 		case D_SKILL+1 : {
 			if(response) {
-				ShowDialog(playerid, D_SKILL, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": SKILL", "dialog/skill.txt", "Выбор","Отмена");
+				ShowDialog(playerid, D_SKILL, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": SKILL", "dialog/skill.txt", "Р’С‹Р±РѕСЂ","РћС‚РјРµРЅР°");
 			}
 		}
 		
@@ -10528,7 +10580,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				Pl::Info[playerid][pOrigin] = listitem ? 2 : 1; 
 				Pl::SetSpawnInfo(playerid);
-				format(string, sizeof string, "* Вы будите спавнится в отеле %s.", listitem ? ("Лас Вентураса") : ("Jefferson"));
+				format(string, sizeof string, "* Р’С‹ Р±СѓРґРёС‚Рµ СЃРїР°РІРЅРёС‚СЃСЏ РІ РѕС‚РµР»Рµ %s.", listitem ? ("Р›Р°СЃ Р’РµРЅС‚СѓСЂР°СЃР°") : ("Jefferson"));
 				Send(playerid, COLOR_LIGHTBLUE, string);
 			}
 		}
@@ -10537,38 +10589,38 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				switch(listitem) {
 					case 0: {
-						if(!TaxiDrivers) return Send(playerid, COLOR_GREY, "Нет свободных таксистов!");
-						if(TransportDuty[playerid] > 0) return Send(playerid, COLOR_GREY, "Вы уже вызвали такси!");
-						format(string, sizeof(string), "[ВЫЗОВ] Клиент %s. Сообщение: %s  (( Введите /accept taxi ))", GetName(playerid), inputtext);
+						if(!TaxiDrivers) return Send(playerid, COLOR_GREY, "РќРµС‚ СЃРІРѕР±РѕРґРЅС‹С… С‚Р°РєСЃРёСЃС‚РѕРІ!");
+						if(TransportDuty[playerid] > 0) return Send(playerid, COLOR_GREY, "Р’С‹ СѓР¶Рµ РІС‹Р·РІР°Р»Рё С‚Р°РєСЃРё!");
+						format(string, sizeof(string), "[Р’Р«Р—РћР’] РљР»РёРµРЅС‚ %s. РЎРѕРѕР±С‰РµРЅРёРµ: %s  (( Р’РІРµРґРёС‚Рµ /accept taxi ))", GetName(playerid), inputtext);
 						sendToFamily(TEAM_TAXI, COLOR_AZTECAS, string);
-						Send(playerid, COLOR_LIGHTBLUE, "* Вы позвали Таксиста, ждите ответа.");
+						Send(playerid, COLOR_LIGHTBLUE, "* Р’С‹ РїРѕР·РІР°Р»Рё РўР°РєСЃРёСЃС‚Р°, Р¶РґРёС‚Рµ РѕС‚РІРµС‚Р°.");
 						TaxiCall = playerid;
 					}
 					
 					case 1: {
-						if(!Medics) return Send(playerid, COLOR_GREY, "Нет свободных медиков!");
+						if(!Medics) return Send(playerid, COLOR_GREY, "РќРµС‚ СЃРІРѕР±РѕРґРЅС‹С… РјРµРґРёРєРѕРІ!");
 						if(Iter::Count(MedicCalls)) {
 							if(Iter::Contains(MedicCalls, playerid)) {
-								Send(playerid, COLOR_GREY, "* Вы уже вызвали медика!");
+								Send(playerid, COLOR_GREY, "* Р’С‹ СѓР¶Рµ РІС‹Р·РІР°Р»Рё РјРµРґРёРєР°!");
 							}
 						} else {
-							format(string, sizeof(string), "[ВЫЗОВ] Клиент %s. Сообщение: %s  ((Введите /accept medic))", GetName(playerid), inputtext);
+							format(string, sizeof(string), "[Р’Р«Р—РћР’] РљР»РёРµРЅС‚ %s. РЎРѕРѕР±С‰РµРЅРёРµ: %s  ((Р’РІРµРґРёС‚Рµ /accept medic))", GetName(playerid), inputtext);
 							sendToFamily(TEAM_MEDIC, COLOR_AZTECAS, string);
-							Send(playerid, COLOR_LIGHTBLUE, "* Вы позвали Санитара, ждите ответа.");
+							Send(playerid, COLOR_LIGHTBLUE, "* Р’С‹ РїРѕР·РІР°Р»Рё РЎР°РЅРёС‚Р°СЂР°, Р¶РґРёС‚Рµ РѕС‚РІРµС‚Р°.");
 							Iter::Add(MedicCalls, playerid);
 						}
 					}
 					
 					case 2: {
-						if(!Mechanics) return Send(playerid, COLOR_GREY, "Нет свободных механиков!");
+						if(!Mechanics) return Send(playerid, COLOR_GREY, "РќРµС‚ СЃРІРѕР±РѕРґРЅС‹С… РјРµС…Р°РЅРёРєРѕРІ!");
 						if(Iter::Count(MechanicCalls)) {
 							if(Iter::Contains(MechanicCalls, playerid)) {
-								Send(playerid, COLOR_GREY, "* Вы уже вызвали механика!");
+								Send(playerid, COLOR_GREY, "* Р’С‹ СѓР¶Рµ РІС‹Р·РІР°Р»Рё РјРµС…Р°РЅРёРєР°!");
 							}
 						} else {
-							format(string, sizeof(string), "[ВЫЗОВ] Клиент %s. Сообщение: %s  (( Введите /accept mechanic ))", GetName(playerid), inputtext);
+							format(string, sizeof(string), "[Р’Р«Р—РћР’] РљР»РёРµРЅС‚ %s. РЎРѕРѕР±С‰РµРЅРёРµ: %s  (( Р’РІРµРґРёС‚Рµ /accept mechanic ))", GetName(playerid), inputtext);
 							SendJobMessage(JOB_MECHANIC, COLOR_AZTECAS, string);
-							Send(playerid, COLOR_LIGHTBLUE, "* Вы позвали Автомобильного Механика, ждите ответа.");
+							Send(playerid, COLOR_LIGHTBLUE, "* Р’С‹ РїРѕР·РІР°Р»Рё РђРІС‚РѕРјРѕР±РёР»СЊРЅРѕРіРѕ РњРµС…Р°РЅРёРєР°, Р¶РґРёС‚Рµ РѕС‚РІРµС‚Р°.");
 							Iter::Add(MechanicCalls, playerid);
 						}
 					}
@@ -10584,9 +10636,9 @@ public: Gm::Thread() {
 	static advTimer;
 	if(++advTimer >= ADV_TIME) {
 		advTimer = 0;
-		SendToAll(COLOR_LIGHTGREEN,"На сервере "#__SERVER_PREFIX""#__SERVER_NAME_LC" запрещено: ДБ, ДМ, Флуд, Читы, CLEO скрипты, Капс, Розжиг межрасовой розни");
-		SendToAll(COLOR_LIGHTBLUE,"Все интересующие вас вопросы, касающиеся игры вы найдете на нашем форуме: "#__SERVER_SITE"");
-		SendToAll(COLOR_DBLUE,"Если вас оскорбили, унизили, убили без причины, либо вы увидели читера или того, кто нарушает правила - то пишите /report [id] жалоба.");
+		SendToAll(COLOR_LIGHTGREEN,"РќР° СЃРµСЂРІРµСЂРµ "#__SERVER_PREFIX""#__SERVER_NAME_LC" Р·Р°РїСЂРµС‰РµРЅРѕ: Р”Р‘, Р”Рњ, Р¤Р»СѓРґ, Р§РёС‚С‹, CLEO СЃРєСЂРёРїС‚С‹, РљР°РїСЃ, Р РѕР·Р¶РёРі РјРµР¶СЂР°СЃРѕРІРѕР№ СЂРѕР·РЅРё");
+		SendToAll(COLOR_LIGHTBLUE,"Р’СЃРµ РёРЅС‚РµСЂРµСЃСѓСЋС‰РёРµ РІР°СЃ РІРѕРїСЂРѕСЃС‹, РєР°СЃР°СЋС‰РёРµСЃСЏ РёРіСЂС‹ РІС‹ РЅР°Р№РґРµС‚Рµ РЅР° РЅР°С€РµРј С„РѕСЂСѓРјРµ: "#__SERVER_SITE"");
+		SendToAll(COLOR_DBLUE,"Р•СЃР»Рё РІР°СЃ РѕСЃРєРѕСЂР±РёР»Рё, СѓРЅРёР·РёР»Рё, СѓР±РёР»Рё Р±РµР· РїСЂРёС‡РёРЅС‹, Р»РёР±Рѕ РІС‹ СѓРІРёРґРµР»Рё С‡РёС‚РµСЂР° РёР»Рё С‚РѕРіРѕ, РєС‚Рѕ РЅР°СЂСѓС€Р°РµС‚ РїСЂР°РІРёР»Р° - С‚Рѕ РїРёС€РёС‚Рµ /report [id] Р¶Р°Р»РѕР±Р°.");
 	}
 
 	static syncTimer;
@@ -10608,7 +10660,7 @@ public: Gm::Thread() {
 		if((h > ghour) || (h == 0 && ghour == 23)) {
 			ghour = h;
 			SetWorldTime(h);
-			format(temp, sizeof(temp), "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": сейчас %d:00 часа(ов).", h);
+			format(temp, sizeof(temp), "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": СЃРµР№С‡Р°СЃ %d:00 С‡Р°СЃР°(РѕРІ).", h);
 			SendToAll(COLOR_WHITE, temp);
 			SetTimer("onPayDay", 555, false);
 			
@@ -10620,13 +10672,13 @@ public: Gm::Thread() {
 			}
 		}
 		if(h == 4 && m == 0) {
-			print(" Объявление: через 1 час будет произведен автоматический рестарт сервера");
-			SendToAll(COLOR_LIGHTRED, " Объявление: через 1 час будет произведен автоматический рестарт сервера!");
+			print(" РћР±СЉСЏРІР»РµРЅРёРµ: С‡РµСЂРµР· 1 С‡Р°СЃ Р±СѓРґРµС‚ РїСЂРѕРёР·РІРµРґРµРЅ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРёР№ СЂРµСЃС‚Р°СЂС‚ СЃРµСЂРІРµСЂР°");
+			SendToAll(COLOR_LIGHTRED, " РћР±СЉСЏРІР»РµРЅРёРµ: С‡РµСЂРµР· 1 С‡Р°СЃ Р±СѓРґРµС‚ РїСЂРѕРёР·РІРµРґРµРЅ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРёР№ СЂРµСЃС‚Р°СЂС‚ СЃРµСЂРІРµСЂР°!");
 		}
 		if(h == 5 && m == 0) {
 			Gm::Info[Gm::isAutoRest] = 1;
-			print(" Внимание: автоматический рестарт сервера");
-			SendToAll(COLOR_LIGHTRED, "Внимание: автоматический рестарт сервера!");
+			print(" Р’РЅРёРјР°РЅРёРµ: Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРёР№ СЂРµСЃС‚Р°СЂС‚ СЃРµСЂРІРµСЂР°");
+			SendToAll(COLOR_LIGHTRED, "Р’РЅРёРјР°РЅРёРµ: Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРёР№ СЂРµСЃС‚Р°СЂС‚ СЃРµСЂРІРµСЂР°!");
 			SetTimerEx("GameModeInitExitFunc", 2000, false, "i", Gm::Info[Gm::isAutoRest]);
 		}
 	}
@@ -10725,8 +10777,8 @@ public: Gm::Thread() {
 						if(regex_match_exid(plname, ValidRPName)) {
 							ShowLoginForm(p, 2);
 						} else {
-							Send(p, COLOR_LIGHTRED, "Ваш ник не соответствует правилам нашего сервера");
-							Send(p, COLOR_LIGHTBLUE, "Измените свой ник по типу: Имя_Фамилия. Например: Ivan_Petrov");
+							Send(p, COLOR_LIGHTRED, "Р’Р°С€ РЅРёРє РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РїСЂР°РІРёР»Р°Рј РЅР°С€РµРіРѕ СЃРµСЂРІРµСЂР°");
+							Send(p, COLOR_LIGHTBLUE, "РР·РјРµРЅРёС‚Рµ СЃРІРѕР№ РЅРёРє РїРѕ С‚РёРїСѓ: РРјСЏ_Р¤Р°РјРёР»РёСЏ. РќР°РїСЂРёРјРµСЂ: Ivan_Petrov");
 							Kick(p);
 						}
 					} else {
@@ -10765,9 +10817,9 @@ stock vehicleStatusUpdate(playerid) {
 					GetVehicleHealth(vehicle, health);
 					if(health < 450 || AutoInfo[vehicle][aFuel] < 1.0) {
 						ToggleVehicleEngine(vehicle, 0);
-						format(string, sizeof string, "* Двигатель заглох");
+						format(string, sizeof string, "* Р”РІРёРіР°С‚РµР»СЊ Р·Р°РіР»РѕС…");
 						ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-						GameTextForPlayer(playerid, (health<450)?("~n~~n~~n~~n~~n~~n~~w~C‡OMAHO"):("~n~~n~~n~~n~~n~~n~~w~HET ЂEH€…HA"), 7000, 5);
+						GameTextForPlayer(playerid, (health<450)?("~n~~n~~n~~n~~n~~n~~w~CвЂЎOMAHO"):("~n~~n~~n~~n~~n~~n~~w~HET Р‚EHв‚¬вЂ¦HA"), 7000, 5);
 					}
 				}
 				
@@ -10819,7 +10871,7 @@ stock UnJailPlayer(i) {
 				Pl::SetFracColor(i);
 				ClearCrime(i);
 				UnJail(i, Pl::Info[i][pJailed]);
-				Send(i, COLOR_GRAD1,"* Вы заплатили свой долг обществу.");
+				Send(i, COLOR_GRAD1,"* Р’С‹ Р·Р°РїР»Р°С‚РёР»Рё СЃРІРѕР№ РґРѕР»Рі РѕР±С‰РµСЃС‚РІСѓ.");
 				format(temp, sizeof(temp), "~g~Freedom~n~~w~Try to be a better citizen");
 				GameTextForPlayer(i, temp, 5000, 1);
 			}
@@ -10829,9 +10881,9 @@ stock UnJailPlayer(i) {
 	if(WantLawyer[i] >= 1) {
 		CallLawyer[i] = 111;
 		switch(WantLawyer[i]++) {
-			case 1, 8, 15 : Send(i, COLOR_LIGHTRED, "Вы хотите Адвоката? (пишите yes (если нужен) или no (если не нужен) )");
+			case 1, 8, 15 : Send(i, COLOR_LIGHTRED, "Р’С‹ С…РѕС‚РёС‚Рµ РђРґРІРѕРєР°С‚Р°? (РїРёС€РёС‚Рµ yes (РµСЃР»Рё РЅСѓР¶РµРЅ) РёР»Рё no (РµСЃР»Рё РЅРµ РЅСѓР¶РµРЅ) )");
 			case 20 : {
-				Send(i, COLOR_LIGHTRED, "Адвоката нету. Тюремное заключение началось.");
+				Send(i, COLOR_LIGHTRED, "РђРґРІРѕРєР°С‚Р° РЅРµС‚Сѓ. РўСЋСЂРµРјРЅРѕРµ Р·Р°РєР»СЋС‡РµРЅРёРµ РЅР°С‡Р°Р»РѕСЃСЊ.");
 				WantLawyer[i] = 0;
 				CallLawyer[i] = 0;
 			}
@@ -10842,7 +10894,7 @@ stock UnJailPlayer(i) {
 #if defined __rac_included
 public onPlayerKick(playerid, reason[], reasonid) {
 	GetPlayerName(playerid, plname, 24);
-	format(temp, sizeof temp, "[античит] * %s[%i] был кикнут, причина: %s || AC%s", plname, playerid, reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
+	format(temp, sizeof temp, "[Р°РЅС‚РёС‡РёС‚] * %s[%i] Р±С‹Р» РєРёРєРЅСѓС‚, РїСЂРёС‡РёРЅР°: %s || AC%s", plname, playerid, reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
 	foreach(new i : AdminPlayers) {
 		if(playerid != i) {
 			if(Pl::isAdmin(i, 1)) {
@@ -10857,7 +10909,7 @@ public onPlayerKick(playerid, reason[], reasonid) {
 
 public onPlayerBan(playerid, reason[], reasonid) {
 	GetPlayerName(playerid, plname, 24);
-	format(temp, sizeof temp, "[античит] * %s[%i] был забанен, причина: %s || AC%s", plname, playerid, reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
+	format(temp, sizeof temp, "[Р°РЅС‚РёС‡РёС‚] * %s[%i] Р±С‹Р» Р·Р°Р±Р°РЅРµРЅ, РїСЂРёС‡РёРЅР°: %s || AC%s", plname, playerid, reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
 	foreach(new i : AdminPlayers) {
 		if(playerid != i) {
 			if(Pl::isAdmin(i, 1)) {
@@ -10979,9 +11031,9 @@ public OnPlayerStreamIn(playerid, forplayerid) {
 					}
 				}
 				getname(playerid -> plname, forplayerid -> temp);
-				format(src, sizeof(src), "[BLACK LIST] Вы были замечены, %s %s [%s]", RankInfo[fracid][Pl::Info[forplayerid][pRank]], temp, FracInfo[fracid][fName]);
+				format(src, sizeof(src), "[BLACK LIST] Р’С‹ Р±С‹Р»Рё Р·Р°РјРµС‡РµРЅС‹, %s %s [%s]", RankInfo[fracid][Pl::Info[forplayerid][pRank]], temp, FracInfo[fracid][fName]);
 				Send(playerid, COLOR_AZTECAS, src);
-				format(src, sizeof(src), "[BLACK LIST] Появился запашок черта, %s %s заметил %s", RankInfo[fracid][Pl::Info[forplayerid][pRank]], temp, plname);
+				format(src, sizeof(src), "[BLACK LIST] РџРѕСЏРІРёР»СЃСЏ Р·Р°РїР°С€РѕРє С‡РµСЂС‚Р°, %s %s Р·Р°РјРµС‚РёР» %s", RankInfo[fracid][Pl::Info[forplayerid][pRank]], temp, plname);
 				sendToFamily(fracid, COLOR_AZTECAS, src);
 			} else {
 				GetPlayerPos(playerid, posx, posy, posz);
@@ -11011,8 +11063,8 @@ public OnPlayerStreamOut(playerid, forplayerid) {
 				if(Bl::Info[playerid][Bl::Finder] == forplayerid) {
 					Bl::Info[playerid][Bl::Finder] = INVALID_PLAYER_ID;
 					GetPlayerName(playerid, plname, 24);
-					Send(playerid, COLOR_AZTECAS, "[BLACK LIST] Вам удалось скрытся!");
-					format(temp, sizeof temp, "[BLACK LIST] След был упущен, %s скрылся", plname);
+					Send(playerid, COLOR_AZTECAS, "[BLACK LIST] Р’Р°Рј СѓРґР°Р»РѕСЃСЊ СЃРєСЂС‹С‚СЃСЏ!");
+					format(temp, sizeof temp, "[BLACK LIST] РЎР»РµРґ Р±С‹Р» СѓРїСѓС‰РµРЅ, %s СЃРєСЂС‹Р»СЃСЏ", plname);
 					sendToFamily(fracid, COLOR_AZTECAS, temp);
 				}
 			} else {
@@ -11037,7 +11089,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if((newkeys & KEY_FIRE) || (newkeys & KEY_JUMP) || (newkeys & KEY_SECONDARY_ATTACK) || (newkeys & KEY_SUBMISSION)) {
 		if(KG[playerid][0]) {
 			KG[playerid][0] = 0;
-			Send(playerid, COLOR_BLUE, "* Вы уронили мешок");
+			Send(playerid, COLOR_BLUE, "* Р’С‹ СѓСЂРѕРЅРёР»Рё РјРµС€РѕРє");
 			if(IsPlayerAttachedObjectSlotUsed(playerid,1)) {
 				RemovePlayerAttachedObject(playerid,1);
 			}
@@ -11090,7 +11142,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				} else {
 					foreach(new i : Houses) {
 						if(IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[i][hgStreetPos][0], HouseInfo[i][hgStreetPos][1], HouseInfo[i][hgStreetPos][2])) {
-							if(Pl::Info[playerid][pHouseKey] != HouseInfo[i][hID]) return Send(playerid, COLOR_GREY, "* У Вас нет ключей!");
+							if(Pl::Info[playerid][pHouseKey] != HouseInfo[i][hID]) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РєР»СЋС‡РµР№!");
 							Pl::Info[playerid][pLocal] = OFFSET_HOUSE + i;
 							Rac::SetVehiclePos(veh, 616.0352, -124.1155, 997.7648);
 							SetVehicleZAngle(veh, 90.1765);
@@ -11136,10 +11188,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 							SetVehicleParamsEx(c,engine,light,alarm,doors,VehicleBonnet{c},boot,objective);
 						}
 					}
-					if(Pl::Info[playerid][pJob] == JOB_MECHANIC) {
+					if(Pl::Info[playerid][pJob] == 6) {
 						switch(GetVehicleType(GetVehicleModel(c))) {
 							case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
-								if(JobWaitTime[playerid] != 0) return Send(playerid, COLOR_GREY, "* Невозможно чинить/заправлять слишком часто, качайте скилл!");
+								if(JobWaitTime[playerid] != 0) return Send(playerid, COLOR_GREY, "* РќРµРІРѕР·РјРѕР¶РЅРѕ С‡РёРЅРёС‚СЊ/Р·Р°РїСЂР°РІР»СЏС‚СЊ СЃР»РёС€РєРѕРј С‡Р°СЃС‚Рѕ, РєР°С‡Р°Р№С‚Рµ СЃРєРёР»Р»!");
 					
 								new Float:fuel, found;
 								if(!IsAMehCar(c)) {
@@ -11148,10 +11200,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 											found=1;
 											Pl::Info[playerid][pSkill][3] ++;
 											switch(Pl::Info[playerid][pSkill][3]) {
-												case 50 : Send(playerid, COLOR_YELLOW, "* Ваш Автомобильный Навык Механика - теперь Уровень 2, Вы можете добавить больше Топлива к любым Автомобилям Игроков.");
-												case 100 : Send(playerid, COLOR_YELLOW, "* Ваш Автомобильный Навык Механика - теперь Уровень 3, Вы можете добавить больше Топлива к любым Автомобилям Игроков.");
-												case 200 : Send(playerid, COLOR_YELLOW, "* Ваш Автомобильный Навык Механика - теперь Уровень 4, Вы можете добавить больше Топлива к любым Автомобилям Игроков.");
-												case 400 : Send(playerid, COLOR_YELLOW, "* Ваш Автомобильный Навык Механика - теперь Уровень 5, Вы можете добавить больше Топлива к любым Автомобилям Игроков.");
+												case 50 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РђРІС‚РѕРјРѕР±РёР»СЊРЅС‹Р№ РќР°РІС‹Рє РњРµС…Р°РЅРёРєР° - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 2, Р’С‹ РјРѕР¶РµС‚Рµ РґРѕР±Р°РІРёС‚СЊ Р±РѕР»СЊС€Рµ РўРѕРїР»РёРІР° Рє Р»СЋР±С‹Рј РђРІС‚РѕРјРѕР±РёР»СЏРј РРіСЂРѕРєРѕРІ.");
+												case 100 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РђРІС‚РѕРјРѕР±РёР»СЊРЅС‹Р№ РќР°РІС‹Рє РњРµС…Р°РЅРёРєР° - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 3, Р’С‹ РјРѕР¶РµС‚Рµ РґРѕР±Р°РІРёС‚СЊ Р±РѕР»СЊС€Рµ РўРѕРїР»РёРІР° Рє Р»СЋР±С‹Рј РђРІС‚РѕРјРѕР±РёР»СЏРј РРіСЂРѕРєРѕРІ.");
+												case 200 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РђРІС‚РѕРјРѕР±РёР»СЊРЅС‹Р№ РќР°РІС‹Рє РњРµС…Р°РЅРёРєР° - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 4, Р’С‹ РјРѕР¶РµС‚Рµ РґРѕР±Р°РІРёС‚СЊ Р±РѕР»СЊС€Рµ РўРѕРїР»РёРІР° Рє Р»СЋР±С‹Рј РђРІС‚РѕРјРѕР±РёР»СЏРј РРіСЂРѕРєРѕРІ.");
+												case 400 : Send(playerid, COLOR_YELLOW, "* Р’Р°С€ РђРІС‚РѕРјРѕР±РёР»СЊРЅС‹Р№ РќР°РІС‹Рє РњРµС…Р°РЅРёРєР° - С‚РµРїРµСЂСЊ РЈСЂРѕРІРµРЅСЊ 5, Р’С‹ РјРѕР¶РµС‚Рµ РґРѕР±Р°РІРёС‚СЊ Р±РѕР»СЊС€Рµ РўРѕРїР»РёРІР° Рє Р»СЋР±С‹Рј РђРІС‚РѕРјРѕР±РёР»СЏРј РРіСЂРѕРєРѕРІ.");
 											}
 											break;
 										}
@@ -11174,17 +11226,17 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 									foreach(new p: vehiclePassengers[c]) {
 										if(GetPlayerState(p) == 2) {
 											found++;
-											format(temp, sizeof temp, "Механик %s починил и заправил машину %s", GetName(playerid), GetName(p));
+											format(temp, sizeof temp, "РњРµС…Р°РЅРёРє %s РїРѕС‡РёРЅРёР» Рё Р·Р°РїСЂР°РІРёР» РјР°С€РёРЅСѓ %s", GetName(playerid), GetName(p));
 											break;
 										}
 									}
 									
 									if(AutoInfo[c][aFuel] < 100.0) AutoInfo[c][aFuel] += fuel;
 									Rac::RepairVehicle(c);
-									if(!found) format(temp, sizeof temp, "Автомеханик %s починил и заправил машину", GetName(playerid));
+									if(!found) format(temp, sizeof temp, "РђРІС‚РѕРјРµС…Р°РЅРёРє %s РїРѕС‡РёРЅРёР» Рё Р·Р°РїСЂР°РІРёР» РјР°С€РёРЅСѓ", GetName(playerid));
 									ProxDetector(15.0, playerid, temp, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 								} else {
-									Send(playerid, COLOR_GREY, "* Рядом с вами нет машины механика!");
+									Send(playerid, COLOR_GREY, "* Р СЏРґРѕРј СЃ РІР°РјРё РЅРµС‚ РјР°С€РёРЅС‹ РјРµС…Р°РЅРёРєР°!");
 								}
 							}
 						}
@@ -11213,18 +11265,18 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				switch(GetVehicleType(GetVehicleModel(vehid))) {
 					case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
 						if(AutoInfo[vehid][aFuel] < 1.0) {
-							Send(playerid,COLOR_WHITE,"* Вызовите механика, нет топлива! (/service)");
-							format(src, sizeof(src), "* %s попытался завести двигатель (неудачно)", GetName(playerid));
+							Send(playerid,COLOR_WHITE,"* Р’С‹Р·РѕРІРёС‚Рµ РјРµС…Р°РЅРёРєР°, РЅРµС‚ С‚РѕРїР»РёРІР°! (/service)");
+							format(src, sizeof(src), "* %s РїРѕРїС‹С‚Р°Р»СЃСЏ Р·Р°РІРµСЃС‚Рё РґРІРёРіР°С‚РµР»СЊ (РЅРµСѓРґР°С‡РЅРѕ)", GetName(playerid));
 							ProxDetector(20.0, playerid, src, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-							GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~HET ЂEH€…HA", 5000, 5);
+							GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~HET Р‚EHв‚¬вЂ¦HA", 5000, 5);
 						} else if(Rac::GetVehicleHealth(vehid) < 450) {
-							Send(playerid,COLOR_WHITE,"* Вызовите механика, машина повреждена! (/service)");
-							format(src, sizeof(src), "* %s попытался завести двигатель (неудачно)", GetName(playerid));
+							Send(playerid,COLOR_WHITE,"* Р’С‹Р·РѕРІРёС‚Рµ РјРµС…Р°РЅРёРєР°, РјР°С€РёРЅР° РїРѕРІСЂРµР¶РґРµРЅР°! (/service)");
+							format(src, sizeof(src), "* %s РїРѕРїС‹С‚Р°Р»СЃСЏ Р·Р°РІРµСЃС‚Рё РґРІРёРіР°С‚РµР»СЊ (РЅРµСѓРґР°С‡РЅРѕ)", GetName(playerid));
 							ProxDetector(20.0, playerid, src, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-							GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~C‡OMAHO", 7000, 5);
+							GameTextForPlayer(playerid, "~n~~n~~n~~n~~n~~n~~w~CвЂЎOMAHO", 7000, 5);
 						} else {
 							ToggleVehicleEngine(vehid, !isEngined{vehid});
-							SetPlayerChatBubble(playerid, isEngined{vehid} ? ("завел двигатель") : ("заглушил двигатель"), COLOR_YELLOW, 30.0, 5000);
+							SetPlayerChatBubble(playerid, isEngined{vehid} ? ("Р·Р°РІРµР» РґРІРёРіР°С‚РµР»СЊ") : ("Р·Р°РіР»СѓС€РёР» РґРІРёРіР°С‚РµР»СЊ"), COLOR_YELLOW, 30.0, 5000);
 							GameTextForPlayer(playerid, isEngined{vehid} ? ("~w~ENGINE ~g~ON") : ("~w~ENGINE ~R~OFF"), 5000, 6);
 						}
 					}
@@ -11244,7 +11296,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_AUTO : {
 						VehicleLight{veh} = !VehicleLight{veh};
 						GameTextForPlayer(playerid, VehicleLight{veh} ? ("~w~LIGHT ~g~ON") : ("~w~LIGHT ~R~OFF"), 5000, 6);
-						SetPlayerChatBubble(playerid, VehicleLight{veh} ? ("включил фары") : ("выключил фары"), COLOR_YELLOW, 30.0, 5000);
+						SetPlayerChatBubble(playerid, VehicleLight{veh} ? ("РІРєР»СЋС‡РёР» С„Р°СЂС‹") : ("РІС‹РєР»СЋС‡РёР» С„Р°СЂС‹"), COLOR_YELLOW, 30.0, 5000);
 						GetVehicleParamsEx(veh,engine,light,alarm,doors,bonnet,boot,objective);
 						SetVehicleParamsEx(veh,engine,VehicleLight{veh},alarm,doors,bonnet,boot,objective);
 					}
@@ -11372,14 +11424,14 @@ stock ChangeName(playerid) {
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Name`='%s' WHERE `ID`='%i'", newName, Pl::Info[playerid][pID]),
 			Db::tquery(connDb, query, "", "");
 		
-		format(temp, sizeof temp, "** %s теперь изветен как %s (userid:%i)", oldName, newName, Pl::Info[playerid][pID]),
+		format(temp, sizeof temp, "** %s С‚РµРїРµСЂСЊ РёР·РІРµС‚РµРЅ РєР°Рє %s (userid:%i)", oldName, newName, Pl::Info[playerid][pID]),
 			SendLog(LOG_CHANGENAME, temp);
 			
-		format(temp, sizeof temp,"*"#__SERVER_PREFIX""#__SERVER_NAME_LC": %s теперь изветен как %s", oldName, newName),
+		format(temp, sizeof temp,"*"#__SERVER_PREFIX""#__SERVER_NAME_LC": %s С‚РµРїРµСЂСЊ РёР·РІРµС‚РµРЅ РєР°Рє %s", oldName, newName),
 			SendToAll(COLOR_LIGHTRED, temp);	
 	} else {
-		Send(playerid, COLOR_LIGHTRED, "* К сожалению при смене вашего ника произошла ошибка.");
-		Send(playerid, COLOR_LIGHTRED, "* Обратитесь к администрации: /report");
+		Send(playerid, COLOR_LIGHTRED, "* Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ РїСЂРё СЃРјРµРЅРµ РІР°С€РµРіРѕ РЅРёРєР° РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.");
+		Send(playerid, COLOR_LIGHTRED, "* РћР±СЂР°С‚РёС‚РµСЃСЊ Рє Р°РґРјРёРЅРёСЃС‚СЂР°С†РёРё: /report");
 	}
 }
 
@@ -11411,11 +11463,11 @@ public OnRconLoginAttempt(ip[], password[], success) {
 				GetPlayerIp(playerid, _ip, 16);
 				if(!strcmp(ip, _ip, true)) {
 					if(++Rac::Info[playerid][Rac::BadRconLogin] >= 2) {
-						Rac::Kick(playerid, "Попытка взлома RCON пароля.");
+						Rac::Kick(playerid, "РџРѕРїС‹С‚РєР° РІР·Р»РѕРјР° RCON РїР°СЂРѕР»СЏ.");
 						return 0;
 					} else {
 						GetPlayerName(playerid, plname, 24);
-						format(temp, sizeof temp, "[AdmWarn] * %s[%i] попытался залогинистся как RCON-админ!", plname, playerid);
+						format(temp, sizeof temp, "[AdmWarn] * %s[%i] РїРѕРїС‹С‚Р°Р»СЃСЏ Р·Р°Р»РѕРіРёРЅРёСЃС‚СЃСЏ РєР°Рє RCON-Р°РґРјРёРЅ!", plname, playerid);
 						SendToAdmin(COLOR_YELLOW, temp, 3, 3);
 						return 0;
 					}
@@ -11492,7 +11544,7 @@ stock GetGangName(gangid) {
 	static gangname[16];
 	switch(gangid) {
 		case 12, 14..18 : strmid(gangname, FracInfo[gangid][fTag], 0, 16);
-		default : strmid(gangname, "посторонний", 0, 16);
+		default : strmid(gangname, "РїРѕСЃС‚РѕСЂРѕРЅРЅРёР№", 0, 16);
 	}
 	return gangname;
 }
@@ -11534,13 +11586,13 @@ stock playerAFKUpdate(playerid) {
 			if(paused && AFKInfo[playerid][afk_Time][0] == AFK_TEXT_SET) {
 				AFKInfo[playerid][afk_State] = 1;
 				CallLocalFunction("OnPlayerAFK", "ii", playerid, 1, 0);
-				format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}секунд]", AFKInfo[playerid][afk_Time][0], MAX_AFK_TIME);
+				format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}СЃРµРєСѓРЅРґ]", AFKInfo[playerid][afk_Time][0], MAX_AFK_TIME);
 				AFKInfo[playerid][afk_Text] = Create3DTextLabel(temp, INVALID_ID, 0.00, 0.00, 10000.00, T_DIST, 0);
 				Attach3DTextLabelToPlayer(AFKInfo[playerid][afk_Text], playerid, 0.0, 0.0, 0.3);
 			}
 			
 			else if(!paused && AFKInfo[playerid][afk_Time][1] > MAX_AFK_TIME) {
-				format(temp, sizeof temp,""#__SERVER_PREFIX""#__SERVER_NAME_LC": [%d]%s был кикнут сервером, причина: AFK", playerid, GetName(playerid));
+				format(temp, sizeof temp,""#__SERVER_PREFIX""#__SERVER_NAME_LC": [%d]%s Р±С‹Р» РєРёРєРЅСѓС‚ СЃРµСЂРІРµСЂРѕРј, РїСЂРёС‡РёРЅР°: AFK", playerid, GetName(playerid));
 				SendToAll(COLOR_GREY, temp);
 				Kick(playerid);
 			}
@@ -11550,17 +11602,17 @@ stock playerAFKUpdate(playerid) {
 			if(AFKInfo[playerid][afk_Time][0] > MAX_AFK_TIME) {
 				if(Pl::isAdmin(playerid, ADMINISTRATOR)) {
 					AFKInfo[playerid][afk_Time][0] = AFK_TEXT_SET;
-					format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}секунд]", AFKInfo[playerid][afk_Time], MAX_AFK_TIME);
+					format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}СЃРµРєСѓРЅРґ]", AFKInfo[playerid][afk_Time], MAX_AFK_TIME);
 					Update3DTextLabelText(AFKInfo[playerid][afk_Text], INVALID_ID, temp);
 				}
 				
 				else {
-					format(temp, sizeof temp,""#__SERVER_PREFIX""#__SERVER_NAME_LC": [%d]%s был кикнут сервером. Причина: AFK", playerid, GetName(playerid));
+					format(temp, sizeof temp,""#__SERVER_PREFIX""#__SERVER_NAME_LC": [%d]%s Р±С‹Р» РєРёРєРЅСѓС‚ СЃРµСЂРІРµСЂРѕРј. РџСЂРёС‡РёРЅР°: AFK", playerid, GetName(playerid));
 					SendToAll(COLOR_GREY, temp);
 					Kick(playerid);
 				}
 			} else {
-				format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}секунд]", AFKInfo[playerid][afk_Time][0], MAX_AFK_TIME);
+				format(temp, sizeof temp, "{FF6347}[AFK: {ffffff}%i/%i {FF6347}СЃРµРєСѓРЅРґ]", AFKInfo[playerid][afk_Time][0], MAX_AFK_TIME);
 				Update3DTextLabelText(AFKInfo[playerid][afk_Text], INVALID_ID, temp);
 			}
 		}
@@ -11572,7 +11624,7 @@ stock playerAFKUpdate(playerid) {
 stock UpdateGangInfo() {
 	for(new p; p < sizeof(GangInfo); p++) {
 		format(src, sizeof(src),
-			"**GANG INFO**\n\n.::%s::.\nБизнесы: %i\nУважение: %i\nБанк: $%i\nЗахват с %i ранга",
+			"**GANG INFO**\n\n.::%s::.\nР‘РёР·РЅРµСЃС‹: %i\nРЈРІР°Р¶РµРЅРёРµ: %i\nР‘Р°РЅРє: $%i\nР—Р°С…РІР°С‚ СЃ %i СЂР°РЅРіР°",
 			GetGangName(GangInfo[p][fID]),
 			GangBiznes{GangInfo[p][fID]},
 			GangInfo[p][gRespect],
@@ -11623,10 +11675,10 @@ stock SetGangRespect(gangid, amount) {
 stock GetPlayerOrigin(playerid) {
 	new origin[24];
 	switch(Pl::Info[playerid][pOrigin]) {
-		case 1: strunpack(origin, !"Европа", sizeof origin);
-		case 2: strunpack(origin, !"Азиа", sizeof origin);
-		case 3: strunpack(origin, !"Америка", sizeof origin);
-		default: strunpack(origin,!"Европпа", sizeof origin);
+		case 1: strunpack(origin, !"Р•РІСЂРѕРїР°", sizeof origin);
+		case 2: strunpack(origin, !"РђР·РёР°", sizeof origin);
+		case 3: strunpack(origin, !"РђРјРµСЂРёРєР°", sizeof origin);
+		default: strunpack(origin,!"Р•РІСЂРѕРїРїР°", sizeof origin);
 	}
 	return origin;
 }
@@ -11634,8 +11686,8 @@ stock GetPlayerOrigin(playerid) {
 stock GetPlayerSex(playerid) {
 	new sex[10];
 	switch(Pl::Info[playerid][pSex]) {
-		case 1: strunpack(sex, !"Мужской", sizeof sex);
-		case 2: strunpack(sex, !"Женский", sizeof sex);
+		case 1: strunpack(sex, !"РњСѓР¶СЃРєРѕР№", sizeof sex);
+		case 2: strunpack(sex, !"Р–РµРЅСЃРєРёР№", sizeof sex);
 		default: strunpack(sex, !"-", sizeof sex);
 	}
 	return sex;
@@ -11661,9 +11713,9 @@ stock GetFracColor(fracid) {
 stock GetAdminRank(admlevel) {
 	new rank[16];
 	switch(admlevel) {
-		case 1..3: format(rank, sizeof rank, "Модератор %ilvl", admlevel);
-		case 4: strunpack(rank, !"Супермодератор");
-		case 5: strunpack(rank, !"Администратор");
+		case 1..3: format(rank, sizeof rank, "РњРѕРґРµСЂР°С‚РѕСЂ %ilvl", admlevel);
+		case 4: strunpack(rank, !"РЎСѓРїРµСЂРјРѕРґРµСЂР°С‚РѕСЂ");
+		case 5: strunpack(rank, !"РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ");
 		default: strunpack(rank, !"-");
 	}
 	return rank;
@@ -11672,10 +11724,10 @@ stock GetAdminRank(admlevel) {
 stock GetHelperRank(hlvl) {
 	new hrank[16];
 	switch(hlvl) {
-		case 1: strunpack(hrank, !"Хелпер");
-		case 2: strunpack(hrank, !"Старший Хелпер");
-		case 3: strunpack(hrank, !"Главный Хелпер");
-		default: strunpack(hrank, !"Хелпер");
+		case 1: strunpack(hrank, !"РҐРµР»РїРµСЂ");
+		case 2: strunpack(hrank, !"РЎС‚Р°СЂС€РёР№ РҐРµР»РїРµСЂ");
+		case 3: strunpack(hrank, !"Р“Р»Р°РІРЅС‹Р№ РҐРµР»РїРµСЂ");
+		default: strunpack(hrank, !"РҐРµР»РїРµСЂ");
 	}
 	return hrank;
 }
@@ -11902,7 +11954,7 @@ stock Pl::Init(playerid) {
 	Pl::Info[playerid][pSex]			= 0;
 	Pl::Info[playerid][pAge]			= 0;
 	Pl::Info[playerid][pExp]			= 0;
-	Pl::Info[playerid][pJob]			= JOB_NONE;
+	Pl::Info[playerid][pJob]			= 0;
 	Pl::Info[playerid][pBank]			= 0;
 	Pl::Info[playerid][pWait]			= 10;
 	Pl::Info[playerid][pLevel]			= 0;
@@ -12025,8 +12077,8 @@ stock Bl::Init(playerid) {
 stock ClearCrime(playerid) {
 	new len = strlen("********");
 	strmid(Pl::Crime[playerid][pVictim], "********", 0,  len, 255);
-	strmid(Pl::Crime[playerid][pAccusing], "•••••••••", 0, len, 255);
-	strmid(Pl::Crime[playerid][pAccused], "•••••••••", 0, len, 255);
+	strmid(Pl::Crime[playerid][pAccusing], "вЂўвЂўвЂўвЂўвЂўвЂўвЂўвЂўвЂў", 0, len, 255);
+	strmid(Pl::Crime[playerid][pAccused], "вЂўвЂўвЂўвЂўвЂўвЂўвЂўвЂўвЂў", 0, len, 255);
 }
 
 
@@ -12354,7 +12406,7 @@ stock ShowRankList(playerid, fracid) {
 	}
 
 	SetPVarInt(playerid, "SelectedFrac", fracid);
-	format(temp, sizeof(temp), "Ранги [%s]", FracInfo[fracid][fName]);
+	format(temp, sizeof(temp), "Р Р°РЅРіРё [%s]", FracInfo[fracid][fName]);
 	SPD(playerid, D_CRANK, DIALOG_STYLE_LIST, temp, dialog, "SELECT", "CANCLE");
 	return 1;
 }
@@ -12386,7 +12438,7 @@ stock SetFracTag(fracid, tag[]) {
 	return 1;
 }
 
-	// Бан игрока
+	// Р‘Р°РЅ РёРіСЂРѕРєР°
 stock AddBanList(playerid, adminid, mins, reason[], type = 1) {
 	new unbandate, currdate = gettime();
 	unbandate = currdate + mins * 60;
@@ -12400,30 +12452,30 @@ stock AddBanList(playerid, adminid, mins, reason[], type = 1) {
 	
 	switch(type) {
 		case 1 : {
-			format(query, sizeof query, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": %s был забанен администратором %s, причина: %s", GetName(playerid), GetName(adminid), reason);
+			format(query, sizeof query, "*"#__SERVER_PREFIX""#__SERVER_NAME_LC": %s Р±С‹Р» Р·Р°Р±Р°РЅРµРЅ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј %s, РїСЂРёС‡РёРЅР°: %s", GetName(playerid), GetName(adminid), reason);
 			SendToAll(COLOR_LIGHTRED, query);
 		}
 		case 2 : {
-			format(src, sizeof(src), "* Вы были забанены, причина: %s", reason); 
+			format(src, sizeof(src), "* Р’С‹ Р±С‹Р»Рё Р·Р°Р±Р°РЅРµРЅС‹, РїСЂРёС‡РёРЅР°: %s", reason); 
 			Send(playerid, COLOR_LIGHTRED, src);
-			format(src, sizeof(src), "[AdmWarn] * %s[%i] был забанен, причина: %s", GetName(playerid), playerid, reason);
+			format(src, sizeof(src), "[AdmWarn] * %s[%i] Р±С‹Р» Р·Р°Р±Р°РЅРµРЅ, РїСЂРёС‡РёРЅР°: %s", GetName(playerid), playerid, reason);
 			SendToAdmin(COLOR_LIGHTRED, src, 1, 3);
 		}
 		case 3 : {
-			format(src, sizeof(src), "* Вы были забанены, причина: %s", reason);
+			format(src, sizeof(src), "* Р’С‹ Р±С‹Р»Рё Р·Р°Р±Р°РЅРµРЅС‹, РїСЂРёС‡РёРЅР°: %s", reason);
 			Send(playerid, COLOR_LIGHTRED, src);
-			format(src, sizeof(src), "[античит] * %s[%i] был забанен, причина: %s", GetName(playerid), playerid, reason);
+			format(src, sizeof(src), "[Р°РЅС‚РёС‡РёС‚] * %s[%i] Р±С‹Р» Р·Р°Р±Р°РЅРµРЅ, РїСЂРёС‡РёРЅР°: %s", GetName(playerid), playerid, reason);
 			SendToAdmin(COLOR_LIGHTRED, src, 1, 1);
 		}
 		default : {
-			format(query, sizeof query, "[SBAN] Админ %s забанил игрока %s[%i], причина: %s", GetName(adminid), GetName(playerid), playerid, reason);
+			format(query, sizeof query, "[SBAN] РђРґРјРёРЅ %s Р·Р°Р±Р°РЅРёР» РёРіСЂРѕРєР° %s[%i], РїСЂРёС‡РёРЅР°: %s", GetName(adminid), GetName(playerid), playerid, reason);
 			SendToAdmin(COLOR_LIGHTBLUE, query, 1, 3);
 		}
 	}
 	return BanEx(playerid, reason);
 }
 
-	// Удаление игрока из бан-листа
+	// РЈРґР°Р»РµРЅРёРµ РёРіСЂРѕРєР° РёР· Р±Р°РЅ-Р»РёСЃС‚Р°
 stock RemoveBanList(userid) {
 	new banIp[16];
 	format(query, sizeof query, "SELECT `ip` FROM `"#__TableBanned__"` WHERE `user_id`='%i'", userid);
@@ -12471,13 +12523,13 @@ public: CheckBan(playerid) {
 				to_timestamp(date_s[0], bandate, "%d-%m-%Y, %X");
 				to_timestamp(date_s[1], unbandate, "%d-%m-%Y, %X");
 				
-				format(dialog, sizeof dialog, "* Вы были забанены!\n\n");
-				scf(dialog, temp, "Забанил: %s\n", issqlnull(aname) ? ("System") : aname);
-				scf(dialog, temp, "Причина: %s\n", reason);
-				scf(dialog, temp, "Срок бана: %i дней\n", getday(unbandate, bandate));
-				scf(dialog, temp, "Дата бана: %s\n", date_s[0]);
-				scf(dialog, temp, "Дата разбана: %s\n", date_s[1]);
-				return SPD(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" BAN. Введите /q для выхода.", dialog, "*", "");
+				format(dialog, sizeof dialog, "* Р’С‹ Р±С‹Р»Рё Р·Р°Р±Р°РЅРµРЅС‹!\n\n");
+				scf(dialog, temp, "Р—Р°Р±Р°РЅРёР»: %s\n", issqlnull(aname) ? ("System") : aname);
+				scf(dialog, temp, "РџСЂРёС‡РёРЅР°: %s\n", reason);
+				scf(dialog, temp, "РЎСЂРѕРє Р±Р°РЅР°: %i РґРЅРµР№\n", getday(unbandate, bandate));
+				scf(dialog, temp, "Р”Р°С‚Р° Р±Р°РЅР°: %s\n", date_s[0]);
+				scf(dialog, temp, "Р”Р°С‚Р° СЂР°Р·Р±Р°РЅР°: %s\n", date_s[1]);
+				return SPD(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" BAN. Р’РІРµРґРёС‚Рµ /q РґР»СЏ РІС‹С…РѕРґР°.", dialog, "*", "");
 			} else {
 				RemoveBanList(Pl::Info[playerid][pID]);
 			}
@@ -12503,16 +12555,16 @@ stock ShowPlayerBanList(adminid, pname[]) {
 		to_timestamp(date_s[0], bandate, "%d-%m-%Y, %X");
 		to_timestamp(date_s[1], unbandate, "%d-%m-%Y, %X");
 		
-		format(dialog, sizeof dialog, "* Забаненый %s\n\n", pname);
-		scf(dialog, temp, "Забанил: %s\n", issqlnull(aname) ? ("System") : aname);
-		scf(dialog, temp, "Причина: %s\n", reason);
-		scf(dialog, temp, "Срок бана: %i дней\n", getday(unbandate, bandate));
-		scf(dialog, temp, "Дата бана: %s\n", date_s[0]);
-		scf(dialog, temp, "Дата разбана: %s\n\n", date_s[1]);
+		format(dialog, sizeof dialog, "* Р—Р°Р±Р°РЅРµРЅС‹Р№ %s\n\n", pname);
+		scf(dialog, temp, "Р—Р°Р±Р°РЅРёР»: %s\n", issqlnull(aname) ? ("System") : aname);
+		scf(dialog, temp, "РџСЂРёС‡РёРЅР°: %s\n", reason);
+		scf(dialog, temp, "РЎСЂРѕРє Р±Р°РЅР°: %i РґРЅРµР№\n", getday(unbandate, bandate));
+		scf(dialog, temp, "Р”Р°С‚Р° Р±Р°РЅР°: %s\n", date_s[0]);
+		scf(dialog, temp, "Р”Р°С‚Р° СЂР°Р·Р±Р°РЅР°: %s\n\n", date_s[1]);
 		SPD(adminid, D_BANLIST, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" BANS.", dialog, "UNBAN", "OK");
 		SetPVarString(adminid, "UnbanPlayer", pname);
 	} else {
-		Send(adminid, COLOR_GREY, "* Этот игрок не забанен!");
+		Send(adminid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р·Р°Р±Р°РЅРµРЅ!");
 	}
 	cache_delete(result);
 	return 1;
@@ -12864,64 +12916,64 @@ stock Area::Init() {
 }
 
 stock Obj::Init() {
-	map::Load("maps/int_ambulance.map");		// ИНТЕРЬЕР В МАШИНЕ AMBULANCE
-	map::Load("maps/cleaners.map");				// УБОРЩИКИ УЛИЦ
-	map::Load("maps/resp_cnn.map");				// РЕСПА РЕПАРТЕРОВ
-//	map::Load("maps/bar_in_pirce.map");			// БАР НА ПИРСЕ
+	map::Load("maps/int_ambulance.map");		// РРќРўР•Р Р¬Р•Р  Р’ РњРђРЁРРќР• AMBULANCE
+	map::Load("maps/cleaners.map");				// РЈР‘РћР Р©РРљР РЈР›РР¦
+	map::Load("maps/resp_cnn.map");				// Р Р•РЎРџРђ Р Р•РџРђР РўР•Р РћР’
+//	map::Load("maps/bar_in_pirce.map");			// Р‘РђР  РќРђ РџРР РЎР•
 //	map::Load("maps/alhambra.map",11);			// ALHAMBRA
-	map::Load("maps/autovokzal.map");			// АВТОВОКЗАЛ
-	map::Load("maps/int_shamal.map");			// ИНТЕРЬЕР ШАМАЛА
-	map::Load("maps/lspd.map");					// БАЗА ПОЛИЦИИ
-	map::Load("maps/aircraft_carrier.map");		// АВИАНОСЕЦ
-	map::Load("maps/church.map",Bizz_Church);	// ЦЕРКОВЬ
-	map::Load("maps/bomjatnik.map");			// БОМЖАТНИК
-	map::Load("maps/db_pereezd.map");			// БД, ПЕРЕЕЗД
-	map::Load("maps/fbi.map");					// ФБР
-	map::Load("maps/autoshool.map");			// АВТОШКОЛА
-	map::Load("maps/mapping.map");				// МАППИНГ ПО ШТАТУ
-	map::Load("maps/sfmc_map.map");				// МЕДЕКИ
-	map::Load("maps/sd_object.map");			// SD объекты
-	map::Load("maps/vagos_object.map");			// Вагос забор
+	map::Load("maps/autovokzal.map");			// РђР’РўРћР’РћРљР—РђР›
+	map::Load("maps/int_shamal.map");			// РРќРўР•Р Р¬Р•Р  РЁРђРњРђР›Рђ
+	map::Load("maps/lspd.map");					// Р‘РђР—Рђ РџРћР›РР¦РР
+	map::Load("maps/aircraft_carrier.map");		// РђР’РРђРќРћРЎР•Р¦
+	map::Load("maps/church.map",Bizz_Church);	// Р¦Р•Р РљРћР’Р¬
+	map::Load("maps/bomjatnik.map");			// Р‘РћРњР–РђРўРќРРљ
+	map::Load("maps/db_pereezd.map");			// Р‘Р”, РџР•Р Р•Р•Р—Р”
+	map::Load("maps/fbi.map");					// Р¤Р‘Р 
+	map::Load("maps/autoshool.map");			// РђР’РўРћРЁРљРћР›Рђ
+	map::Load("maps/mapping.map");				// РњРђРџРџРРќР“ РџРћ РЁРўРђРўРЈ
+	map::Load("maps/sfmc_map.map");				// РњР•Р”Р•РљР
+	map::Load("maps/sd_object.map");			// SD РѕР±СЉРµРєС‚С‹
+	map::Load("maps/vagos_object.map");			// Р’Р°РіРѕСЃ Р·Р°Р±РѕСЂ
 	map::Load("maps/lcn_object.map");			// La Cosa Nostra
 	map::Load("maps/rm_objects.map");			// RM
 	map::Load("maps/sfpd_objects.map");			// LSPD & SFPD
-	map::Load("maps/fermers_objects.map");		// Колхоз забор
-	map::Load("maps/gov_objects.map");			// Мэрия объекты
-	map::Load("maps/cor_objects.map");			// Coronos объекты
-	map::Load("maps/otel_ls.map");				// Отель ЛС
-	map::Load("maps/grove_objects.map");		// Groove объекты
-	map::Load("maps/factory.map");				// Завод СФ (маппинг с наруже)
+	map::Load("maps/fermers_objects.map");		// РљРѕР»С…РѕР· Р·Р°Р±РѕСЂ
+	map::Load("maps/gov_objects.map");			// РњСЌСЂРёСЏ РѕР±СЉРµРєС‚С‹
+	map::Load("maps/cor_objects.map");			// Coronos РѕР±СЉРµРєС‚С‹
+	map::Load("maps/otel_ls.map");				// РћС‚РµР»СЊ Р›РЎ
+	map::Load("maps/grove_objects.map");		// Groove РѕР±СЉРµРєС‚С‹
+	map::Load("maps/factory.map");				// Р—Р°РІРѕРґ РЎР¤ (РјР°РїРїРёРЅРі СЃ РЅР°СЂСѓР¶Рµ)
 	
-	AddObject(19176,2146.1540527344,1603.0279541016,1002.4520263672,0,0,270); 						// Перегародка в инте СНН
-	AddObject(3037,238.78999329,185.72000122,1004.22198486,90.00000000,0.00000000,270.00000000);	// Перегародка в инте ФБР
-	AddObject(5302,371.95800781,155.18600464,1017.30401611,0.00000000,0.00000000,270.00000000);		// прегародка между мэрией и медиками
+	AddObject(19176,2146.1540527344,1603.0279541016,1002.4520263672,0,0,270); 						// РџРµСЂРµРіР°СЂРѕРґРєР° РІ РёРЅС‚Рµ РЎРќРќ
+	AddObject(3037,238.78999329,185.72000122,1004.22198486,90.00000000,0.00000000,270.00000000);	// РџРµСЂРµРіР°СЂРѕРґРєР° РІ РёРЅС‚Рµ Р¤Р‘Р 
+	AddObject(5302,371.95800781,155.18600464,1017.30401611,0.00000000,0.00000000,270.00000000);		// РїСЂРµРіР°СЂРѕРґРєР° РјРµР¶РґСѓ РјСЌСЂРёРµР№ Рё РјРµРґРёРєР°РјРё
 	AddObject(3749,1523.46533203,2773.23779297,15.53028965,0.00000000,0.00000000,270.00000000);		// YAKUZA
 	
-	// Дверь в Борделе
+	// Р”РІРµСЂСЊ РІ Р‘РѕСЂРґРµР»Рµ
 	AddObject(19428,968.58398438,-52.86700058,1001.87500000,0.00000000,0.00000000,0.00000000);
 	AddObject(19428,968.57702637,-54.03900146,1001.87500000,0.00000000,0.00000000,0.00000000);
 	AddObject(1491,968.49798584,-52.43099976,1000.16699219,0.00000000,0.00000000,268.00000000);
 
-	//Заглушки в инте баллас
+	//Р—Р°РіР»СѓС€РєРё РІ РёРЅС‚Рµ Р±Р°Р»Р»Р°СЃ
 	AddObject(2957,2176.69799805,1594.29797363,1000.59600830,0.00000000,0.00000000,0.00000000);
 	AddObject(2957,2224.27294922,1598.30505371,1000.59600830,0.00000000,0.00000000,0.00000000);
 	
-	// ЗАВОД
+	// Р—РђР’РћР”
 	AddObject(2957,2522.2880859,-1301.9320068,1048.9090576,0.0000000,0.0000000,270.0000000, 2); //object(chinatgaragedoor) (1)
 	AddObject(2957,2577.8959961,-1290.1700439,1044.4589844,0.0000000,0.0000000,89.7500000, 2); //object(chinatgaragedoor) (2)
 	AddObject(1499,2574.9331055,-1279.9379883,1043.1250000,0.0000000,0.0000000,0.0000000, 2); //object(gen_doorint05) (1)
 	
-	// ФИКС ВОРОТ В ИНТЕРЬЕРЕ ГАРАЖ
+	// Р¤РРљРЎ Р’РћР РћРў Р’ РРќРўР•Р Р¬Р•Р Р• Р“РђР РђР–
 	AddObject(10182,608.7999900,-123.0000000,998.7000100,0.0000000,0.0000000,0.0000000); //object(michdr) (1)
 	AddObject(10182,608.7999900,-129.3000000,998.7000100,0.0000000,0.0000000,0.0000000); //object(michdr) (2)
 	
 	SetDynamicObjectMaterialText(
 		AddObject(19482, 2217.0000, -1155.5000, 1026.4000, 0.0000, 0.0000, 90.0000), 0,
-		"F6 - чат\nTAB - список игроков\n\
-		G   - сесть в машину пассажиром\n\
-		F8  - сделать скриншот\n\
-		/вопрос - задать вопрос хелперам\n\
-		/help - доступные команды",
+		"F6 - С‡Р°С‚\nTAB - СЃРїРёСЃРѕРє РёРіСЂРѕРєРѕРІ\n\
+		G   - СЃРµСЃС‚СЊ РІ РјР°С€РёРЅСѓ РїР°СЃСЃР°Р¶РёСЂРѕРј\n\
+		F8  - СЃРґРµР»Р°С‚СЊ СЃРєСЂРёРЅС€РѕС‚\n\
+		/РІРѕРїСЂРѕСЃ - Р·Р°РґР°С‚СЊ РІРѕРїСЂРѕСЃ С…РµР»РїРµСЂР°Рј\n\
+		/help - РґРѕСЃС‚СѓРїРЅС‹Рµ РєРѕРјР°РЅРґС‹",
 		OBJECT_MATERIAL_SIZE_256x128,
 		"Arial", 18, 1, -16776961
 	);
@@ -12930,36 +12982,36 @@ stock Obj::Init() {
 }
 
 stock Pup::Init() {
-	GarageParkPickup[0] = AddPickup(1239, 14, 2014.6802,-1279.2001,23.8203, 0, "* Загнать в гараж *", 0x268DAEAA);
-	GarageParkPickup[1] = AddPickup(1239, 14, 2107.2600,2480.5522,10.8203, 0, "* Загнать в гараж *", 0x268DAEAA);
-	GarageParkPickup[2] = AddPickup(1239, 14, -2444.6260,525.1984,29.6734, 0, "* Загнать в гараж *", 0x268DAEAA);
-	GarageParkPickup[3] = AddPickup(1239, 14, -2456.4290,2292.9119,4.9844, 0, "* Загнать в гараж *", 0x268DAEAA);
+	GarageParkPickup[0] = AddPickup(1239, 14, 2014.6802,-1279.2001,23.8203, 0, "* Р—Р°РіРЅР°С‚СЊ РІ РіР°СЂР°Р¶ *", 0x268DAEAA);
+	GarageParkPickup[1] = AddPickup(1239, 14, 2107.2600,2480.5522,10.8203, 0, "* Р—Р°РіРЅР°С‚СЊ РІ РіР°СЂР°Р¶ *", 0x268DAEAA);
+	GarageParkPickup[2] = AddPickup(1239, 14, -2444.6260,525.1984,29.6734, 0, "* Р—Р°РіРЅР°С‚СЊ РІ РіР°СЂР°Р¶ *", 0x268DAEAA);
+	GarageParkPickup[3] = AddPickup(1239, 14, -2456.4290,2292.9119,4.9844, 0, "* Р—Р°РіРЅР°С‚СЊ РІ РіР°СЂР°Р¶ *", 0x268DAEAA);
 	
-	weapon1 = AddPickup(1239, 23,296.6332,-38.2177,1001.5156, -1); //аммо лс
-	weapon2 = AddPickup(1239, 23,312.2767,-166.1406,999.6010, -1); //аммо лв
-	weapon3 = AddPickup(1239, 23,291.2473,-84.0021,1001.5156, -1); //аммо лв
-	weapon4 = AddPickup(1239, 23,287.5871,-106.4027,1001.5156, -1); //аммо копы
+	weapon1 = AddPickup(1239, 23,296.6332,-38.2177,1001.5156, -1); //Р°РјРјРѕ Р»СЃ
+	weapon2 = AddPickup(1239, 23,312.2767,-166.1406,999.6010, -1); //Р°РјРјРѕ Р»РІ
+	weapon3 = AddPickup(1239, 23,291.2473,-84.0021,1001.5156, -1); //Р°РјРјРѕ Р»РІ
+	weapon4 = AddPickup(1239, 23,287.5871,-106.4027,1001.5156, -1); //Р°РјРјРѕ РєРѕРїС‹
 
-	barn[0] = AddPickup(1239, 14, -1060.2505,-1195.5034,129.5133, 0, "* Амбар *", 0x268DAEAA);
-	barn[1] = AddPickup(1239, 14, 2162.8804,-1660.0884,15.0859, 0, "* Сдача наркоты *", 0x268DAEAA);
+	barn[0] = AddPickup(1239, 14, -1060.2505,-1195.5034,129.5133, 0, "* РђРјР±Р°СЂ *", 0x268DAEAA);
+	barn[1] = AddPickup(1239, 14, 2162.8804,-1660.0884,15.0859, 0, "* РЎРґР°С‡Р° РЅР°СЂРєРѕС‚С‹ *", 0x268DAEAA);
 	
 	EstateAgency = AddPickup(1239, 23, 1721.8441,-1651.8345,20.0625, Bizz_EstateAgency);
 	
-	AddPickup(1239, 14, 2799.0696,-2356.5588,13.6368, 0, "* Склад материалов *", 0x268DAEAA);
-	AddPickup(1239, 14, -2119.6609,-178.9174,35.3203, 0, "* Продажа материалов *", 0x268DAEAA);
-	AddPickup(1239, 14, 1173.2563,-1323.3102,15.3943, 0, "* Госпиталь *", 0x268DAEAA);
-	AddPickup(1239, 14, 2029.5945,-1404.6426,17.2512, 0, "* Госпиталь *", 0x268DAEAA);
-	AddPickup(1239, 14, 597.1277,-1248.6479,18.2734, 0, "* Пакаеты для материалов *", 0x268DAEAA);
-	AddPickup(1239, 14, -2115.7246,-78.0859,35.3203, 0, "* Купить матиреалы *", 0x268DAEAA);
-	AddPickup(1239, 14, 323.0781,1118.6022,1083.8828, -1, "* Накотики *", 0x268DAEAA);
-	AddPickup(1239, 14, 253.9280,69.6094,1003.6406, -1, "* Оправдать преступника *", 0x268DAEAA); 
-	AddPickup(1239, 14, 256.7318,188.2524,1008.1719, -1, "* Оправдать преступника *", 0x268DAEAA);
+	AddPickup(1239, 14, 2799.0696,-2356.5588,13.6368, 0, "* РЎРєР»Р°Рґ РјР°С‚РµСЂРёР°Р»РѕРІ *", 0x268DAEAA);
+	AddPickup(1239, 14, -2119.6609,-178.9174,35.3203, 0, "* РџСЂРѕРґР°Р¶Р° РјР°С‚РµСЂРёР°Р»РѕРІ *", 0x268DAEAA);
+	AddPickup(1239, 14, 1173.2563,-1323.3102,15.3943, 0, "* Р“РѕСЃРїРёС‚Р°Р»СЊ *", 0x268DAEAA);
+	AddPickup(1239, 14, 2029.5945,-1404.6426,17.2512, 0, "* Р“РѕСЃРїРёС‚Р°Р»СЊ *", 0x268DAEAA);
+	AddPickup(1239, 14, 597.1277,-1248.6479,18.2734, 0, "* РџР°РєР°РµС‚С‹ РґР»СЏ РјР°С‚РµСЂРёР°Р»РѕРІ *", 0x268DAEAA);
+	AddPickup(1239, 14, -2115.7246,-78.0859,35.3203, 0, "* РљСѓРїРёС‚СЊ РјР°С‚РёСЂРµР°Р»С‹ *", 0x268DAEAA);
+	AddPickup(1239, 14, 323.0781,1118.6022,1083.8828, -1, "* РќР°РєРѕС‚РёРєРё *", 0x268DAEAA);
+	AddPickup(1239, 14, 253.9280,69.6094,1003.6406, -1, "* РћРїСЂР°РІРґР°С‚СЊ РїСЂРµСЃС‚СѓРїРЅРёРєР° *", 0x268DAEAA); 
+	AddPickup(1239, 14, 256.7318,188.2524,1008.1719, -1, "* РћРїСЂР°РІРґР°С‚СЊ РїСЂРµСЃС‚СѓРїРЅРёРєР° *", 0x268DAEAA);
 
 	//============================================================================
-	ammozakona[0] = AddPickup(1239, 23, 313.863555, -133.838562, 999.601562, -1); // Пикап покупки оружия
-	ammozakona[1] = AddPickup(1275, 23, 308.373474, -131.458786, 999.608337, 4); // Пикап маскировки
-	ammozakona[2] = AddPickup(1275, 23, 308.373474, -131.458786, 999.608337, 555); // Пикап снены одежды Армия
-	ammozakona[3] = AddPickup(1242, 23, 308.097839, -140.963485, 999.601562, 4); // Пикап хеала
+	ammozakona[0] = AddPickup(1239, 23, 313.863555, -133.838562, 999.601562, -1); // РџРёРєР°Рї РїРѕРєСѓРїРєРё РѕСЂСѓР¶РёСЏ
+	ammozakona[1] = AddPickup(1275, 23, 308.373474, -131.458786, 999.608337, 4); // РџРёРєР°Рї РјР°СЃРєРёСЂРѕРІРєРё
+	ammozakona[2] = AddPickup(1275, 23, 308.373474, -131.458786, 999.608337, 555); // РџРёРєР°Рї СЃРЅРµРЅС‹ РѕРґРµР¶РґС‹ РђСЂРјРёСЏ
+	ammozakona[3] = AddPickup(1242, 23, 308.097839, -140.963485, 999.601562, 4); // РџРёРєР°Рї С…РµР°Р»Р°
 	Streamer::AppendArrayData(1, ammozakona[3], E_STREAMER_WORLD_ID, 4);
 	Streamer::AppendArrayData(1, ammozakona[3], E_STREAMER_WORLD_ID, 15);
 	Streamer::AppendArrayData(1, ammozakona[3], E_STREAMER_WORLD_ID, 555);
@@ -12971,7 +13023,7 @@ stock Pup::Init() {
 	Parashut = AddPickup(1310,19,1544.4170,-1353.1135,329.4746,0);
 	//============================================================================
 	Bank[0] = AddPickup(1239, 23, 2308.8254,-13.2494,26.7422,-1);
-	Bank[1] = AddPickup(1239, 23, 2309.4783,-8.4624,26.7422,-1, "Счета фракций/банд/мафий", 0xFF6347AA, 0, 0, 0.9);
+	Bank[1] = AddPickup(1239, 23, 2309.4783,-8.4624,26.7422,-1, "РЎС‡РµС‚Р° С„СЂР°РєС†РёР№/Р±Р°РЅРґ/РјР°С„РёР№", 0xFF6347AA, 0, 0, 0.9);
 	testpdd = AddPickup(1239, 23, -2022.3630,-116.5412,1035.1719, 11);
 	//============================================================================
 	boj = AddPickup(1239,23,756.4068,-48.0776,1000.7802,-1);
@@ -12985,33 +13037,33 @@ stock Pup::Init() {
 	
 	fire_ext = AddPickup(366, 1,369.8291,188.5891,1008.3893,7);
 	
-	prolaps[0] = AddPickup(1275, 23, 207.0993, -129.1810,1003.5078, -1, "* Одежда *", 0x268DAEAA);
-	prolaps[1] = AddPickup(1275, 23, 209.6147, -8.2010,1005.2109, -1, "* Одежда *", 0x268DAEAA);
-	saveTuning = AddPickup(1239, 23, -1663.8300,1208.2209,7.2546, 0, "* Регистрация тюнинга *", 0x268DAEAA);
-	givepasport = AddPickup(1239, 23, 362.0381,173.6299,1008.0, 7, "* Паспортный стол *", 0x268DAEAA);
+	prolaps[0] = AddPickup(1275, 23, 207.0993, -129.1810,1003.5078, -1, "* РћРґРµР¶РґР° *", 0x268DAEAA);
+	prolaps[1] = AddPickup(1275, 23, 209.6147, -8.2010,1005.2109, -1, "* РћРґРµР¶РґР° *", 0x268DAEAA);
+	saveTuning = AddPickup(1239, 23, -1663.8300,1208.2209,7.2546, 0, "* Р РµРіРёСЃС‚СЂР°С†РёСЏ С‚СЋРЅРёРЅРіР° *", 0x268DAEAA);
+	givepasport = AddPickup(1239, 23, 362.0381,173.6299,1008.0, 7, "* РџР°СЃРїРѕСЂС‚РЅС‹Р№ СЃС‚РѕР» *", 0x268DAEAA);
 	
 	hitpickup[0] = AddPickup(1275, 23, 948.5044,2104.2209,1011.0234, 8);
 	hitpickup[1] = AddPickup(1210, 23, 963.1935,2101.9546,1011.0272, 8);
 	
-	helpp[0] = AddPickup(1239, 23, 2217.3362,-1146.7614,1025.7969, 1, "*** Помощь по игре ***", 0xFF6347AA);
-	helpp[1] = AddPickup(1239, 23, 2271.1892,1647.2826,1084.2344,  1, "*** Помощь по игре ***", 0xFF6347AA);
-	helpp[2] = AddPickup(1239, 23, 1474.5907,-1771.5734,18.7958, 0, "*** Помощь по игре ***", 0xFF6347AA);
+	helpp[0] = AddPickup(1239, 23, 2217.3362,-1146.7614,1025.7969, 1, "*** РџРѕРјРѕС‰СЊ РїРѕ РёРіСЂРµ ***", 0xFF6347AA);
+	helpp[1] = AddPickup(1239, 23, 2271.1892,1647.2826,1084.2344,  1, "*** РџРѕРјРѕС‰СЊ РїРѕ РёРіСЂРµ ***", 0xFF6347AA);
+	helpp[2] = AddPickup(1239, 23, 1474.5907,-1771.5734,18.7958, 0, "*** РџРѕРјРѕС‰СЊ РїРѕ РёРіСЂРµ ***", 0xFF6347AA);
 		
 	static const jnames[][] = {
-		{"Безработным"},
-		{"Детективом"},
-		{"Адвокатом"},
-		{"Проституткой"},
-		{"Наркодилером"},
-		{"Автоугонщиком"},
-		{"Автомехаником"},
-		{"Гандилером"},
-		{"Автодилером"},
-		{"Автобусником"},
-		{"Дальнобойщиком"}
+		{"Р‘РµР·СЂР°Р±РѕС‚РЅС‹Рј"},
+		{"Р”РµС‚РµРєС‚РёРІРѕРј"},
+		{"РђРґРІРѕРєР°С‚РѕРј"},
+		{"РџСЂРѕСЃС‚РёС‚СѓС‚РєРѕР№"},
+		{"РќР°СЂРєРѕРґРёР»РµСЂРѕРј"},
+		{"РђРІС‚РѕСѓРіРѕРЅС‰РёРєРѕРј"},
+		{"РђРІС‚РѕРјРµС…Р°РЅРёРєРѕРј"},
+		{"Р“Р°РЅРґРёР»РµСЂРѕРј"},
+		{"РђРІС‚РѕРґРёР»РµСЂРѕРј"},
+		{"РђРІС‚РѕР±СѓСЃРЅРёРєРѕРј"},
+		{"Р”Р°Р»СЊРЅРѕР±РѕР№С‰РёРєРѕРј"}
 	};
 	for(new i=1; i < sizeof(JobsInfo); i++) {
-		format(temp, sizeof temp, "*** РАБОТА ***\nЗдесь можно устроится\n%s", jnames[JobsInfo[i][jID]]);
+		format(temp, sizeof temp, "*** Р РђР‘РћРўРђ ***\nР—РґРµСЃСЊ РјРѕР¶РЅРѕ СѓСЃС‚СЂРѕРёС‚СЃСЏ\n%s", jnames[JobsInfo[i][jID]]);
 		JobsInfo[i][jP] = AddPickup(1239, 23, JobsInfo[i][jPos][0], JobsInfo[i][jPos][1], JobsInfo[i][jPos][2], JobsInfo[i][jV], temp, 0x268DAEAA);
 	}
 	
@@ -13036,31 +13088,31 @@ stock Pup::Init() {
 }
 
 stock T3d::Init() {
-	format(string_ah,sizeof(string_ah),">> Очередь допущенных к практической части экзамена: <<\n");
+	format(string_ah,sizeof(string_ah),">> РћС‡РµСЂРµРґСЊ РґРѕРїСѓС‰РµРЅРЅС‹С… Рє РїСЂР°РєС‚РёС‡РµСЃРєРѕР№ С‡Р°СЃС‚Рё СЌРєР·Р°РјРµРЅР°: <<\n");
 	ah_text = Add3DText(string_ah, 0x42aaffFF,-2036.0808,-115.1422,1036, 10.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 11);
 	
-	Add3DText("Правила Дорожного Движения\n/pdd", 0xFF6347AA, -2026.8050537,-113.6340027,1035.1550293+1, 10.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 11);
-    Add3DText("*** Продовольственный Склад ***",0xBFF600FF,2771.2314,-2437.2632,13.6377,40.0);
-	Add3DText("*** ВНИМАНИЕ ***\n\
-		Для получения водительских прав\n\
-		необходимо сдать теорию у доски\n\
-		и занять место в очереди к двери.",
+	Add3DText("РџСЂР°РІРёР»Р° Р”РѕСЂРѕР¶РЅРѕРіРѕ Р”РІРёР¶РµРЅРёСЏ\n/pdd", 0xFF6347AA, -2026.8050537,-113.6340027,1035.1550293+1, 10.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 11);
+    Add3DText("*** РџСЂРѕРґРѕРІРѕР»СЊСЃС‚РІРµРЅРЅС‹Р№ РЎРєР»Р°Рґ ***",0xBFF600FF,2771.2314,-2437.2632,13.6377,40.0);
+	Add3DText("*** Р’РќРРњРђРќРР• ***\n\
+		Р”Р»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РІРѕРґРёС‚РµР»СЊСЃРєРёС… РїСЂР°РІ\n\
+		РЅРµРѕР±С…РѕРґРёРјРѕ СЃРґР°С‚СЊ С‚РµРѕСЂРёСЋ Сѓ РґРѕСЃРєРё\n\
+		Рё Р·Р°РЅСЏС‚СЊ РјРµСЃС‚Рѕ РІ РѕС‡РµСЂРµРґРё Рє РґРІРµСЂРё.",
 		0xFF6347AA, -2024.8572, -118.6570, 1035.1719, 10.0,
 		INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, 11
 	);
 	
-	Add3DText("*** ВНИМАНИЕ ***\n\
-		Перед покупкой/продажей/обеном дома\n\
-		необходимо очистить сейф.\n\
-		Если вы покупаете дом, удостоверьтесь,\n\
-		что вы не снимаете комнату (введите /unrent)",
+	Add3DText("*** Р’РќРРњРђРќРР• ***\n\
+		РџРµСЂРµРґ РїРѕРєСѓРїРєРѕР№/РїСЂРѕРґР°Р¶РµР№/РѕР±РµРЅРѕРј РґРѕРјР°\n\
+		РЅРµРѕР±С…РѕРґРёРјРѕ РѕС‡РёСЃС‚РёС‚СЊ СЃРµР№С„.\n\
+		Р•СЃР»Рё РІС‹ РїРѕРєСѓРїР°РµС‚Рµ РґРѕРј, СѓРґРѕСЃС‚РѕРІРµСЂСЊС‚РµСЃСЊ,\n\
+		С‡С‚Рѕ РІС‹ РЅРµ СЃРЅРёРјР°РµС‚Рµ РєРѕРјРЅР°С‚Сѓ (РІРІРµРґРёС‚Рµ /unrent)",
 		0xFF6347AA, 1730.1852, -1636.3838, 20.2171, 15.0,
 		INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0
 	);
 
 	for(new p; p < sizeof GangInfo; p++) {
 		format(src, sizeof(src),
-			"*** GANG INFO ***\n\n.::%s::.\nБизнесы: %d\nУважение: %d\n Банк: $%d\nЗахват с %d ранга",
+			"*** GANG INFO ***\n\n.::%s::.\nР‘РёР·РЅРµСЃС‹: %d\nРЈРІР°Р¶РµРЅРёРµ: %d\n Р‘Р°РЅРє: $%d\nР—Р°С…РІР°С‚ СЃ %d СЂР°РЅРіР°",
 			GetGangName(GangInfo[p][fID]),
 			GangBiznes{GangInfo[p][fID]},
 			GangInfo[p][gRespect],
@@ -13070,13 +13122,13 @@ stock T3d::Init() {
 		GangInfo[p][gText] = Add3DText(src, GetFracColor(GangInfo[p][fID]), GangInfo[p][gPosX], GangInfo[p][gPosY], GangInfo[p][gPosZ], 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, 0);
 	}
 
-	format(temp, sizeof(temp),"{ffffff}Cклад:\n {f4c430}Топливо: %d литров\n{00ff00}Продукты: %d кг\n{f4c430}Металл: %d кг", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(temp, sizeof(temp),"{ffffff}CРєР»Р°Рґ:\n {f4c430}РўРѕРїР»РёРІРѕ: %d Р»РёС‚СЂРѕРІ\n{00ff00}РџСЂРѕРґСѓРєС‚С‹: %d РєРі\n{f4c430}РњРµС‚Р°Р»Р»: %d РєРі", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
 	FactoryInfo[0] = Add3DText(temp, -1, -1847.7107,113.5725,16.3751, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
-	format(temp, sizeof(temp),"{ffffff}Склад:\n {f4c430}Топливо: %d л\nПродукты: %d кг\nМеталл: %d кг", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(temp, sizeof(temp),"{ffffff}РЎРєР»Р°Рґ:\n {f4c430}РўРѕРїР»РёРІРѕ: %d Р»\nРџСЂРѕРґСѓРєС‚С‹: %d РєРі\nРњРµС‚Р°Р»Р»: %d РєРі", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
 	FactoryInfo[1] = Add3DText(temp, -1, 2565.5071,-1293.0293, 1045.0704, 40.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 2);
 	
-	Add3DText("Загрузка Продуктов\n/loadprods", 0xFF6347AA, -1857.7770, 110.9073, 15.7994, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
-	Add3DText("Разгрузка Металла и Топлива\n/unloadstuff", 0xFF6347AA, -1837.0381, 111.2696, 15.6467, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
+	Add3DText("Р—Р°РіСЂСѓР·РєР° РџСЂРѕРґСѓРєС‚РѕРІ\n/loadprods", 0xFF6347AA, -1857.7770, 110.9073, 15.7994, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
+	Add3DText("Р Р°Р·РіСЂСѓР·РєР° РњРµС‚Р°Р»Р»Р° Рё РўРѕРїР»РёРІР°\n/unloadstuff", 0xFF6347AA, -1837.0381, 111.2696, 15.6467, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
 
 	return debug("T3d::Init() - Ok! 3DTexts: %i", CountDynamic3DTextLabels());
 }
@@ -13213,26 +13265,26 @@ stock ShowOnline(playerid, id) {
 	dialogtext[0]='\0';
 	switch(id) {
 		case 0: {
-			format(dialogtext, sizeof dialogtext, "Фракция\tЛидер\n");
+			format(dialogtext, sizeof dialogtext, "Р¤СЂР°РєС†РёСЏ\tР›РёРґРµСЂ\n");
 			foreach(new i : LeaderPlayers) {
 				GetPlayerName(i, plname, 24);
 				scf(dialogtext, src, "{FFFF00}%s\t{FFFFFF}%s [id: %i]\n", FracInfo[Pl::Info[i][pLeader]][fName], plname, i);
 			}
-			if(!strlen(dialogtext)) strcat(dialogtext, "Нет лидеров онлайн!");
+			if(!strlen(dialogtext)) strcat(dialogtext, "РќРµС‚ Р»РёРґРµСЂРѕРІ РѕРЅР»Р°Р№РЅ!");
 			return SPD(playerid, D_ONLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "GrandWorld Leaders", dialogtext, "OK", "");
 		}
 		case 1: {
-			Send(playerid, COLOR_LIGHTRED, "Лицензиары онлайн:");
+			Send(playerid, COLOR_LIGHTRED, "Р›РёС†РµРЅР·РёР°СЂС‹ РѕРЅР»Р°Р№РЅ:");
 			foreach(new i: TeamPlayers[TEAM_LICENZERS]) {
 				GetPlayerName(i, plname, 24);
-				format(temp, sizeof temp, "* Лицензиар: %s. Позвонить /call %i", plname, Pl::Info[i][pNumber]);
+				format(temp, sizeof temp, "* Р›РёС†РµРЅР·РёР°СЂ: %s. РџРѕР·РІРѕРЅРёС‚СЊ /call %i", plname, Pl::Info[i][pNumber]);
 				Send(playerid, COLOR_YELLOW, temp);
 			}
 		}
 		case 2: {
 			new fracid = Pl::FracID(playerid);
 			if(fracid != 0) {
-				Send(playerid, COLOR_LIGHTRED, "Члены Вашей оганизации онлайн:");
+				Send(playerid, COLOR_LIGHTRED, "Р§Р»РµРЅС‹ Р’Р°С€РµР№ РѕРіР°РЅРёР·Р°С†РёРё РѕРЅР»Р°Р№РЅ:");
 				foreach(new i: TeamPlayers[fracid]) {
 					num ++;
 					GetPlayerName(i, plname, 24);
@@ -13252,31 +13304,31 @@ stock ShowOnline(playerid, id) {
 					Send(playerid, COLOR_YELLOW, temp);
 				}
 			} else {
-				Send(playerid, COLOR_GREY, "* Вы не состоите в этой организации!");
+				Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ СЌС‚РѕР№ РѕСЂРіР°РЅРёР·Р°С†РёРё!");
 			}
 		}
 		
 		case 3: {
-			Send(playerid, COLOR_LIGHTRED, "Адвокаты онлайн:");
+			Send(playerid, COLOR_LIGHTRED, "РђРґРІРѕРєР°С‚С‹ РѕРЅР»Р°Р№РЅ:");
 			foreach(new i: JobPlayers[2]) {
 				GetPlayerName(i, plname, 24);
-				format(temp, sizeof temp, "* Лицензиар: %s. Позвонить /call %i", plname, Pl::Info[i][pNumber]);
+				format(temp, sizeof temp, "* Р›РёС†РµРЅР·РёР°СЂ: %s. РџРѕР·РІРѕРЅРёС‚СЊ /call %i", plname, Pl::Info[i][pNumber]);
 				Send(playerid, COLOR_YELLOW, temp);
 			}
 		}
 		
 		case 4: {
-			Send(playerid, COLOR_GREY, "Админы онлайн:");
+			Send(playerid, COLOR_GREY, "РђРґРјРёРЅС‹ РѕРЅР»Р°Р№РЅ:");
 			foreach(new i : AdminPlayers) {
 				num ++;
 				GetPlayerName(i, plname, 24);
-				format(temp, sizeof temp, "* %i. Админ: %s [id: %i]", num, plname, i);
+				format(temp, sizeof temp, "* %i. РђРґРјРёРЅ: %s [id: %i]", num, plname, i);
 				Send(playerid, COLOR_GREY, temp);
 			}
 		}
 		
 		case 5: {
-			Send(playerid, COLOR_LIGHTRED, "Помощники онлайн:");
+			Send(playerid, COLOR_LIGHTRED, "РџРѕРјРѕС‰РЅРёРєРё РѕРЅР»Р°Р№РЅ:");
 			foreach(new i : HelperPlayers) {
 				num ++;
 				GetPlayerName(i, plname, 24);
@@ -13287,12 +13339,12 @@ stock ShowOnline(playerid, id) {
 		
 		case 6: {
 			new hid = Pl::Info[playerid][pHouseKey];
-			if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* У Вас нет дома!");
-			Send(playerid, COLOR_LIGHTRED, "Квартиранты онлайн:");
+			if(!IsValidHouse(hid)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРјР°!");
+			Send(playerid, COLOR_LIGHTRED, "РљРІР°СЂС‚РёСЂР°РЅС‚С‹ РѕРЅР»Р°Р№РЅ:");
 			foreach(new i: Player) {
 				if(i != playerid && Pl::isLogged(i) && hid == Pl::Info[i][pHouseKey]) {
 					GetPlayerName(i, plname, 24);
-					format(temp, sizeof temp, "* %s. Позвонить /call %i", plname, i, Pl::Info[i][pNumber]);
+					format(temp, sizeof temp, "* %s. РџРѕР·РІРѕРЅРёС‚СЊ /call %i", plname, i, Pl::Info[i][pNumber]);
 					Send(playerid, COLOR_YELLOW, temp);
 				}
 			}
@@ -13429,7 +13481,7 @@ public: _ShowOffline(playerid, id) {
 			new num, rows = cache_get_row_count(rows);
 			if(rows > 0) {
 				new leaderid, leader;
-				strcat(dialogtext, "Лидер\tПоследний везит\tФракция\n");
+				strcat(dialogtext, "Р›РёРґРµСЂ\tРџРѕСЃР»РµРґРЅРёР№ РІРµР·РёС‚\tР¤СЂР°РєС†РёСЏ\n");
 				while(rows--) {
 					cache_get_row(rows, 0, name);
 					cache_get_int(rows, 1, leader);
@@ -13446,9 +13498,9 @@ public: _ShowOffline(playerid, id) {
 			}
 			
 			if(!num) {
-				SPD(playerid, D_OFFLINE+1, 0, "Лидеры оффлайн", "• Нет лидеров оффлайн •", "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, 0, "Р›РёРґРµСЂС‹ РѕС„С„Р»Р°Р№РЅ", "вЂў РќРµС‚ Р»РёРґРµСЂРѕРІ РѕС„С„Р»Р°Р№РЅ вЂў", "OK", "CANCEL");
 			} else {
-				format(temp, sizeof temp, "Лидеры оффлайн | Лидеров: %i", num);
+				format(temp, sizeof temp, "Р›РёРґРµСЂС‹ РѕС„С„Р»Р°Р№РЅ | Р›РёРґРµСЂРѕРІ: %i", num);
 				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, temp, dialogtext, "OK", "CANCEL");
 			}
 		}
@@ -13457,7 +13509,7 @@ public: _ShowOffline(playerid, id) {
 			new num, rows = cache_get_row_count(rows);
 			if(rows) {
 				new helperid, helper;
-				strcat(dialogtext, "Хелпер\tПоследний везит\tРанг\n");
+				strcat(dialogtext, "РҐРµР»РїРµСЂ\tРџРѕСЃР»РµРґРЅРёР№ РІРµР·РёС‚\tР Р°РЅРі\n");
 				while(rows--) {
 					cache_get_row(rows, 0, name);
 					cache_get_int(rows, 1, helper);
@@ -13473,9 +13525,9 @@ public: _ShowOffline(playerid, id) {
 			}
 			
 			if(!num) {
-				SPD(playerid, D_OFFLINE+1, 0, "Хелперы оффлайн", "• Нет хелперов оффлайн •", "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, 0, "РҐРµР»РїРµСЂС‹ РѕС„С„Р»Р°Р№РЅ", "вЂў РќРµС‚ С…РµР»РїРµСЂРѕРІ РѕС„С„Р»Р°Р№РЅ вЂў", "OK", "CANCEL");
 			} else {
-				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "Хелперы оффлайн", dialogtext, "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "РҐРµР»РїРµСЂС‹ РѕС„С„Р»Р°Р№РЅ", dialogtext, "OK", "CANCEL");
 			}
 		}
 		
@@ -13483,7 +13535,7 @@ public: _ShowOffline(playerid, id) {
 			new num, rows = cache_get_row_count(rows);
 			if(rows) {
 				new adminid, admin;
-				strcat(dialogtext, "Админ\tПоследний везит\tРанг\n");
+				strcat(dialogtext, "РђРґРјРёРЅ\tРџРѕСЃР»РµРґРЅРёР№ РІРµР·РёС‚\tР Р°РЅРі\n");
 				while(rows--) {
 					cache_get_row(rows, 0, name);
 					cache_get_int(rows, 1, admin);
@@ -13499,9 +13551,9 @@ public: _ShowOffline(playerid, id) {
 			}
 			
 			if(!num) {
-				SPD(playerid, D_OFFLINE+1, 0, "Администраторы оффлайн", "• Нет админов оффлайн •", "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, 0, "РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂС‹ РѕС„С„Р»Р°Р№РЅ", "вЂў РќРµС‚ Р°РґРјРёРЅРѕРІ РѕС„С„Р»Р°Р№РЅ вЂў", "OK", "CANCEL");
 			} else {
-				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "Администраторы оффлайн", dialogtext, "OK", "CANCEL");
+				SPD(playerid, D_OFFLINE+1, DIALOG_STYLE_TABLIST_HEADERS, "РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂС‹ РѕС„С„Р»Р°Р№РЅ", dialogtext, "OK", "CANCEL");
 			}
 		}
 	}
@@ -13523,25 +13575,25 @@ stock SafeMenu(playerid, hid, type = 0) {
 			case 0: {
 				new count;
 				for(new i; i < MAX_HWEAP; i++) if(HouseInfo[hid][hGuns][i] != 0) count ++;
-				format(dialog, sizeof dialog, "Название\tКоличество\tЛимит\n"""#_GREY_ARROW"Деньги\t{33AA33}$%i{ffffff}\t{AA3333}$10000000{ffffff}\n", HouseInfo[hid][hSafe][0]);
-				scf(dialog, src, ""#_GREY_ARROW"Наркотики\t{33AA33}%i{ffffff}\t{AA3333}1000{ffffff}\n", HouseInfo[hid][hSafe][1]);
-				scf(dialog, src, ""#_GREY_ARROW"Матиреалы\t{33AA33}%i{ffffff}\t{AA3333}100000{ffffff}\n", HouseInfo[hid][hSafe][2]);
-				scf(dialog, src, ""#_GREY_ARROW"Оружие\t{33AA33}%i{ffffff}\t{AA3333}6{ffffff}\n", count);
-				scf(dialog, src, ""#_GREY_ARROW"Аптечки\t{33AA33}%i{ffffff}\t{AA3333}100{ffffff}\n", HouseInfo[hid][hSafe][3]);
-				scf(dialog, src, ""#_GREY_ARROW"Бронежилеты\t{33AA33}%i{ffffff}\t{AA3333}10{ffffff}\n", HouseInfo[hid][hSafe][4]);
-				SPD(playerid, D_HMENU+14, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > Сейф", dialog, "SELECT", "CANCEL");
+				format(dialog, sizeof dialog, "РќР°Р·РІР°РЅРёРµ\tРљРѕР»РёС‡РµСЃС‚РІРѕ\tР›РёРјРёС‚\n"""#_GREY_ARROW"Р”РµРЅСЊРіРё\t{33AA33}$%i{ffffff}\t{AA3333}$10000000{ffffff}\n", HouseInfo[hid][hSafe][0]);
+				scf(dialog, src, ""#_GREY_ARROW"РќР°СЂРєРѕС‚РёРєРё\t{33AA33}%i{ffffff}\t{AA3333}1000{ffffff}\n", HouseInfo[hid][hSafe][1]);
+				scf(dialog, src, ""#_GREY_ARROW"РњР°С‚РёСЂРµР°Р»С‹\t{33AA33}%i{ffffff}\t{AA3333}100000{ffffff}\n", HouseInfo[hid][hSafe][2]);
+				scf(dialog, src, ""#_GREY_ARROW"РћСЂСѓР¶РёРµ\t{33AA33}%i{ffffff}\t{AA3333}6{ffffff}\n", count);
+				scf(dialog, src, ""#_GREY_ARROW"РђРїС‚РµС‡РєРё\t{33AA33}%i{ffffff}\t{AA3333}100{ffffff}\n", HouseInfo[hid][hSafe][3]);
+				scf(dialog, src, ""#_GREY_ARROW"Р‘СЂРѕРЅРµР¶РёР»РµС‚С‹\t{33AA33}%i{ffffff}\t{AA3333}10{ffffff}\n", HouseInfo[hid][hSafe][4]);
+				SPD(playerid, D_HMENU+14, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > РЎРµР№С„", dialog, "SELECT", "CANCEL");
 			}
 			case 1: {
-				format(dialog, sizeof dialog, "Оружие\tКоличество\n");
+				format(dialog, sizeof dialog, "РћСЂСѓР¶РёРµ\tРљРѕР»РёС‡РµСЃС‚РІРѕ\n");
 				for(new i; i < MAX_HWEAP; i++) {
 					if(HouseInfo[hid][hGuns][i] != 0) {
 						GetWeaponName(HouseInfo[hid][hGuns][i], temp, 24);
 						scf(dialog, src, "{33AA33}%s{ffffff}\t{AA3333}%i{ffffff}\n", temp, HouseInfo[hid][hAmmos][i]);
 					} else {
-						strcat(dialog, "{33AA33}Пусто{ffffff}\t{AA3333}0{ffffff}\n");
+						strcat(dialog, "{33AA33}РџСѓСЃС‚Рѕ{ffffff}\t{AA3333}0{ffffff}\n");
 					}
 				}
-				SPD(playerid, D_HMENU+21, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > Сейф > Оружие", dialog, "SELECT", "CANCEL");
+				SPD(playerid, D_HMENU+21, DIALOG_STYLE_TABLIST_HEADERS, "[House Menu] > РЎРµР№С„ > РћСЂСѓР¶РёРµ", dialog, "SELECT", "CANCEL");
 			}
 		}
 		return 1;
@@ -13558,7 +13610,7 @@ stock ClearBiz(biz) {
 			Db::tquery(connDb, query, "", "");
 		} else {
 			Pl::Info[playerid][pBizKey] = INVALID_BIZ_ID;
-			Send(playerid, COLOR_LIGHTRED, "* Ваш бизнес был продан!");
+			Send(playerid, COLOR_LIGHTRED, "* Р’Р°С€ Р±РёР·РЅРµСЃ Р±С‹Р» РїСЂРѕРґР°РЅ!");
 		}
 		
 		if(!Pl::isLogged(targetid)) {
@@ -13566,7 +13618,7 @@ stock ClearBiz(biz) {
 			Db::tquery(connDb, query, "", "");
 		} else {
 			Pl::Info[playerid][pBizKey] = INVALID_BIZ_ID;
-			Send(targetid, COLOR_LIGHTRED, "* Ваш бизнес был продан!");
+			Send(targetid, COLOR_LIGHTRED, "* Р’Р°С€ Р±РёР·РЅРµСЃ Р±С‹Р» РїСЂРѕРґР°РЅ!");
 		}
 	}
 	BizzInfo[biz][bLocked] = 1;
@@ -13608,7 +13660,7 @@ stock ClearHouse(houseid) {
 					Veh::Destroy(ExtraVehicles[playerid][i][evID2]);
 				}
 			}
-			Send(playerid, COLOR_LIGHTRED, "* Ваш дом был продан!");
+			Send(playerid, COLOR_LIGHTRED, "* Р’Р°С€ РґРѕРј Р±С‹Р» РїСЂРѕРґР°РЅ!");
 		} else {
 			format(query, sizeof query, "UPDATE `"#__TableExtraVehicles__"` SET `park` = '%i' WHERE `park` = '%i'", PARK_GARAGE, PARK_HOME_GARAGE*houseid);
 			Db::tquery(connDb, query, "", "");
@@ -13755,13 +13807,13 @@ stock Fc::ShowModel( playerid, fracid, dialogid) {
 			cache_get_int(i, 1, model_limit);
 			scf(dialog, query, "%s [%i]\n", VehicleNames[model_id-400], model_limit);
 		}
-		if(Pl::Info[playerid][pAdmin] >= ADMINISTRATOR && dialogid != D_ADD_FC && dialogid != D_LMENU+7) strcat( dialog, "------------\nДобавить");
+		if(Pl::Info[playerid][pAdmin] >= ADMINISTRATOR && dialogid != D_ADD_FC && dialogid != D_LMENU+7) strcat( dialog, "------------\nР”РѕР±Р°РІРёС‚СЊ");
 		SPD(playerid, dialogid, DIALOG_STYLE_LIST, "Frac Models", dialog, "SELECT", "CANCEL");
 	} else {
 		if(Pl::Info[playerid][pAdmin] >= ADMINISTRATOR && dialogid != D_ADD_FC && dialogid != D_LMENU+7) {
-			SPD(playerid, dialogid, 2, "Frac Models", "Добавить", "ENTER", "CANCLE");
+			SPD(playerid, dialogid, 2, "Frac Models", "Р”РѕР±Р°РІРёС‚СЊ", "ENTER", "CANCLE");
 		} else {
-			SPD(playerid, dialogid, 0, "Frac Models", "Нет моделей для выбора!", "ok", "");
+			SPD(playerid, dialogid, 0, "Frac Models", "РќРµС‚ РјРѕРґРµР»РµР№ РґР»СЏ РІС‹Р±РѕСЂР°!", "ok", "");
 		}
 	}
 	SetPVarInt(playerid, "SelectFrac", fracid);
@@ -13997,14 +14049,14 @@ public: Bl::Check(playerid) {
 	if(rows) {
 		new name[24];
 		GetPlayerName(playerid, name, 24);
-		format(temp, sizeof temp, "[BLACK LIST] Вы находитесь в черном списке ");
+		format(temp, sizeof temp, "[BLACK LIST] Р’С‹ РЅР°С…РѕРґРёС‚РµСЃСЊ РІ С‡РµСЂРЅРѕРј СЃРїРёСЃРєРµ ");
 		for(new i, fracid, kills; i < rows; i++) {
 			sscanf(query, "p<|>ii", fracid, kills);
 			cache_get_int(i, 0, fracid);
 			cache_get_int(i, 1, kills);
 			Bl::Info[playerid][Bl::onFrac][fracid] = 1;
 			Bl::Info[playerid][Bl::Kills][fracid] = kills;
-			format(query, sizeof query, "[BLACK LIST] Запахло дичью, в штате был(а) замечен(а) %s", name);
+			format(query, sizeof query, "[BLACK LIST] Р—Р°РїР°С…Р»Рѕ РґРёС‡СЊСЋ, РІ С€С‚Р°С‚Рµ Р±С‹Р»(Р°) Р·Р°РјРµС‡РµРЅ(Р°) %s", name);
 			sendToFamily(fracid, COLOR_AZTECAS, query);
 			scf(temp, src, "%s, ", FracInfo[fracid][fName]);
 		}
@@ -14025,7 +14077,7 @@ stock Bl::Clear( ) {
 }
 
 public: Bl::Show(playerid, fracid) {
-	Send(playerid, COLOR_WHITE, "______________ Черный Список ______________");
+	Send(playerid, COLOR_WHITE, "______________ Р§РµСЂРЅС‹Р№ РЎРїРёСЃРѕРє ______________");
 	
 	new accuser[24], _date[24], reason[36];
 	new rows = cache_get_row_count();
@@ -14039,7 +14091,7 @@ public: Bl::Show(playerid, fracid) {
 			
 			if(Pl::isLogged(query[0])) {
 				GetPlayerName(query[0], plname, 24);
-				format(temp, sizeof temp, "* %s[ID: %i] | Статус: %i/%i | Дата: %s | Занес: %s | Причина: %s", plname, query[0], query[1], FracInfo[fracid][fBConf][bKILLS], _date, accuser, reason);
+				format(temp, sizeof temp, "* %s[ID: %i] | РЎС‚Р°С‚СѓСЃ: %i/%i | Р”Р°С‚Р°: %s | Р—Р°РЅРµСЃ: %s | РџСЂРёС‡РёРЅР°: %s", plname, query[0], query[1], FracInfo[fracid][fBConf][bKILLS], _date, accuser, reason);
 				Send(playerid, COLOR_AZTECAS, temp);
 			}
 		}
@@ -14097,14 +14149,14 @@ stock IsATeam(playerid, mode = 0) {
 
 stock IsAFamily(playerid) {
 	switch(Pl::FracID(playerid)) {
-		case TEAM_LCN, TEAM_YAKUZA, TEAM_FARMERS : return 1;
-		case TEAM_STREETDOGS..TEAM_VAGOS : return 1;
+		case 5, 6	: return 1;
+		case 8..20	: return 1;
 	}
 	return 0;
 }
 
 stock IsALawyer(playerid) {
-	return (Pl::Info[playerid][pJob] == JOB_LAWYER && Pl::FracID(playerid) == TEAM_GOV && Pl::Info[playerid][pRank] == 10);
+	return (Pl::Info[playerid][pJob] == 2 && Pl::FracID(playerid) == 7 && Pl::Info[playerid][pRank] == 10);
 }
 
 stock GetPayCheck(level) {
@@ -14154,13 +14206,13 @@ stock Del_Of_Iterator(playerid) {
 	if(Iter::Contains(MechanicCalls, playerid)) {
 		Iter::Remove(MechanicCalls, playerid);
 		GetPlayerName(playerid, plname, 24);
-		format(temp, sizeof(temp), "* Клиент %s, вышел из игры!", plname);
+		format(temp, sizeof(temp), "* РљР»РёРµРЅС‚ %s, РІС‹С€РµР» РёР· РёРіСЂС‹!", plname);
 		SendJobMessage(6, COLOR_AZTECAS, temp);
 	}
 	if(Iter::Contains(MedicCalls, playerid)) {
 		Iter::Remove(MedicCalls, playerid);
 		GetPlayerName(playerid, plname, 24);
-		format(temp, sizeof(temp), "* Клиент %s, вышел из игры!", plname);
+		format(temp, sizeof(temp), "* РљР»РёРµРЅС‚ %s, РІС‹С€РµР» РёР· РёРіСЂС‹!", plname);
 		sendToFamily(4, COLOR_AZTECAS, temp);
 	}
 }
@@ -14322,20 +14374,20 @@ public: onSobeitCheck(playerid) {
 	new Float:x, Float:y, Float:z;
 	GetPlayerCameraFrontVector(playerid, x, y, z);
 	Rac::TogglePlayerControllable(playerid, true);
-	format(temp, sizeof temp, "[AdmWarn] * %s[%i] прошел тест на собейт, результат - собейт %s", GetName(playerid), playerid, (y < -0.75) ? ("{AA3333}установлен"):("{33AA33}не установлен"));
+	format(temp, sizeof temp, "[AdmWarn] * %s[%i] РїСЂРѕС€РµР» С‚РµСЃС‚ РЅР° СЃРѕР±РµР№С‚, СЂРµР·СѓР»СЊС‚Р°С‚ - СЃРѕР±РµР№С‚ %s", GetName(playerid), playerid, (y < -0.75) ? ("{AA3333}СѓСЃС‚Р°РЅРѕРІР»РµРЅ"):("{33AA33}РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅ"));
 	SendToAdmin(COLOR_YELLOW, temp, 1, 3);
 }
 
 public: onPTMCheck(playerid, targetid, Float:x, Float:y, Float:z) {
 	if(Pl::isLogged(targetid)) {
 		Rac::SetPlayerPos(targetid, x, y, z);
-		format(temp, sizeof temp, "[AdmWarn] * %s[%i] прошел тест на PTM, результат - %s PTM", GetName(playerid), playerid, (GetPlayerTargetPlayer(playerid)==targetid)?("{AA3333}использует"):("{33AA33}не использует"));
+		format(temp, sizeof temp, "[AdmWarn] * %s[%i] РїСЂРѕС€РµР» С‚РµСЃС‚ РЅР° PTM, СЂРµР·СѓР»СЊС‚Р°С‚ - %s PTM", GetName(playerid), playerid, (GetPlayerTargetPlayer(playerid)==targetid)?("{AA3333}РёСЃРїРѕР»СЊР·СѓРµС‚"):("{33AA33}РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚"));
 		SendToAdmin(COLOR_YELLOW, temp, 1, 3);
 	}
 }
 
 public: onGMTest(playerid) {
-	format(temp, sizeof temp, "[AdmWarn] * %s[%i] прошел тест на GM, результат - GM %s", GetName(playerid), playerid, (GMTest{playerid})?("{AA3333}обнаружен"):("{33AA33}не обнаружен"));
+	format(temp, sizeof temp, "[AdmWarn] * %s[%i] РїСЂРѕС€РµР» С‚РµСЃС‚ РЅР° GM, СЂРµР·СѓР»СЊС‚Р°С‚ - GM %s", GetName(playerid), playerid, (GMTest{playerid})?("{AA3333}РѕР±РЅР°СЂСѓР¶РµРЅ"):("{33AA33}РЅРµ РѕР±РЅР°СЂСѓР¶РµРЅ"));
 	SendToAdmin(COLOR_YELLOW, temp, 1, 3);
 }
 
@@ -14420,9 +14472,9 @@ public: OnPlayerEndJob(playerid, jobid) {
 
 stock UpdateFactory() {
 	new string[150];
-	format(string,sizeof(string),"{ffffff}Cклад:\n {f4c430}Топливо: %d литров\n{00ff00}Продукты: %d кг\n{f4c430}Металл:%d кг",Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(string,sizeof(string),"{ffffff}CРєР»Р°Рґ:\n {f4c430}РўРѕРїР»РёРІРѕ: %d Р»РёС‚СЂРѕРІ\n{00ff00}РџСЂРѕРґСѓРєС‚С‹: %d РєРі\n{f4c430}РњРµС‚Р°Р»Р»:%d РєРі",Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
 	UpdateDynamic3DTextLabelText(FactoryInfo[0], -1, string);
-	format(string,sizeof(string),"{ffffff}Склад:\n {f4c430}Топливо: %d л\nПродукты: %d кг\nМеталл:%d кг", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(string,sizeof(string),"{ffffff}РЎРєР»Р°Рґ:\n {f4c430}РўРѕРїР»РёРІРѕ: %d Р»\nРџСЂРѕРґСѓРєС‚С‹: %d РєРі\nРњРµС‚Р°Р»Р»:%d РєРі", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
 	UpdateDynamic3DTextLabelText(FactoryInfo[1], -1, string);
 	return 1;
 }
@@ -14434,33 +14486,33 @@ stock ShowLMenu(playerid, dialogid=D_LMENU-1) {
 	switch(dialogid) {
 		case D_LMENU-1 : {
 			if(isTeamVehicle(fracid, GetPlayerVehicleID(playerid))) {
-				strcat(dialog, ""#_GREY_ARROW"Транспорт\n");
+				strcat(dialog, ""#_GREY_ARROW"РўСЂР°РЅСЃРїРѕСЂС‚\n");
 			}
-			strcat(dialog, ""#_GREY_ARROW"Ранги\n");
+			strcat(dialog, ""#_GREY_ARROW"Р Р°РЅРіРё\n");
 			switch(Pl::FracID(playerid)) {
 				case 1..4, 7, 10 : {
-					scf(dialog, temp, ""#_GREY_ARROW"Ранг новостей {AA3333}[%i]\n", GetGRank(fracid));
+					scf(dialog, temp, ""#_GREY_ARROW"Р Р°РЅРі РЅРѕРІРѕСЃС‚РµР№ {AA3333}[%i]\n", GetGRank(fracid));
 				}
 				case 5, 6, 13 : {
-					strcat(dialog, ""#_GREY_ARROW"Черный список\n");
+					strcat(dialog, ""#_GREY_ARROW"Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє\n");
 				}
 				
 				case 11 : {
-					scf(dialog, temp, ""#_GREY_ARROW"Ранг новостей {AA3333}[%i]\n", GetGRank(fracid));
-					strcat(dialog, ""#_GREY_ARROW"Управление автошколой\n");
+					scf(dialog, temp, ""#_GREY_ARROW"Р Р°РЅРі РЅРѕРІРѕСЃС‚РµР№ {AA3333}[%i]\n", GetGRank(fracid));
+					strcat(dialog, ""#_GREY_ARROW"РЈРїСЂР°РІР»РµРЅРёРµ Р°РІС‚РѕС€РєРѕР»РѕР№\n");
 				}
 				case 12, 14..19 : {
-					strcat(dialog, ""#_GREY_ARROW"Черный список\n");
-					scf(dialog, temp, ""#_GREY_ARROW"Ранг захвата {AA3333}[%i]\n", GetZRank(fracid));
+					strcat(dialog, ""#_GREY_ARROW"Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє\n");
+					scf(dialog, temp, ""#_GREY_ARROW"Р Р°РЅРі Р·Р°С…РІР°С‚Р° {AA3333}[%i]\n", GetZRank(fracid));
 				}
 			}
 			SPD(playerid, dialogid, DIALOG_STYLE_LIST, ""#__SERVER_PREFIX""#__SERVER_NAME_LC": LEADER MENU", dialog, "SELECT", "CANCEL");
 		}
 		
 		case D_LMENU+9 : {
-			format(dialog, sizeof dialog, ""#_GREY_ARROW"Ранг для добавления в ЧС {AA3333}[%i]\n"#_GREY_ARROW"Сумма выхода из ЧС {AA3333}[$%i]\n"#_GREY_ARROW"Убийств для выхода из ЧС {AA3333}[%i]",
+			format(dialog, sizeof dialog, ""#_GREY_ARROW"Р Р°РЅРі РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РІ Р§РЎ {AA3333}[%i]\n"#_GREY_ARROW"РЎСѓРјРјР° РІС‹С…РѕРґР° РёР· Р§РЎ {AA3333}[$%i]\n"#_GREY_ARROW"РЈР±РёР№СЃС‚РІ РґР»СЏ РІС‹С…РѕРґР° РёР· Р§РЎ {AA3333}[%i]",
 			GetBRank(fracid), FracInfo[fracid][fBConf][bPRICE], FracInfo[fracid][fBConf][bKILLS]);
-			SPD(playerid, D_LMENU+9, DIALOG_STYLE_LIST, "L-Menu. Черный список", dialog, "SELECT", "CANCEL");
+			SPD(playerid, D_LMENU+9, DIALOG_STYLE_LIST, "L-Menu. Р§РµСЂРЅС‹Р№ СЃРїРёСЃРѕРє", dialog, "SELECT", "CANCEL");
 		}
 	}
 	return 1;
@@ -14478,17 +14530,17 @@ stock updateBenzinTD(playerid, vehicleid) {
 
 stock ShowCantina(playerid) {
 	if(Pl::FracID(playerid) == 3) {
-		dialog = "Блюдо\n";
+		dialog = "Р‘Р»СЋРґРѕ\n";
 		for(new i; i < sizeof EatInfo; i++) {
 			scf(dialog, temp, ""#_GREY_ARROW" %s\n", EatInfo[i][bDescription], EatInfo[i][bPrice]);
 		}
 	} else {
-		dialog = "Блюдо\tЦена\n";
+		dialog = "Р‘Р»СЋРґРѕ\tР¦РµРЅР°\n";
 		for(new i; i < sizeof EatInfo; i++) {
 			scf(dialog, temp, ""#_GREY_ARROW" %s\t{33AA33}%i${FFFFFF}\n", EatInfo[i][bDescription], EatInfo[i][bPrice]);
 		}
 	}
-	return SPD(playerid, 149, DIALOG_STYLE_TABLIST_HEADERS, "Столовая", dialog, "Взять", "Отмена");
+	return SPD(playerid, 149, DIALOG_STYLE_TABLIST_HEADERS, "РЎС‚РѕР»РѕРІР°СЏ", dialog, "Р’Р·СЏС‚СЊ", "РћС‚РјРµРЅР°");
 }
 
 public: OnPlayerBankTransfer(playerid) {
@@ -14503,20 +14555,20 @@ public: OnPlayerBankTransfer(playerid) {
 stock ShowLoginForm(playerid, id) {
 	switch(id) {
 		case 0 : {
-			format(dialog, sizeof dialog, "\tДля регистрации персанажа %s\n\
-			\tвведите пароль и нажите \"REGISTER\"\n\nНе рекомендуется использовать простые пароли. Чтобы\n\
-			 Пароль был надежным, он должен содержать цифры, \nзаглавные и малые буквы латинского алфавита.", GetName(playerid));
+			format(dialog, sizeof dialog, "\tР”Р»СЏ СЂРµРіРёСЃС‚СЂР°С†РёРё РїРµСЂСЃР°РЅР°Р¶Р° %s\n\
+			\tРІРІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ Рё РЅР°Р¶РёС‚Рµ \"REGISTER\"\n\nРќРµ СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРѕСЃС‚С‹Рµ РїР°СЂРѕР»Рё. Р§С‚РѕР±С‹\n\
+			 РџР°СЂРѕР»СЊ Р±С‹Р» РЅР°РґРµР¶РЅС‹Рј, РѕРЅ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ С†РёС„СЂС‹, \nР·Р°РіР»Р°РІРЅС‹Рµ Рё РјР°Р»С‹Рµ Р±СѓРєРІС‹ Р»Р°С‚РёРЅСЃРєРѕРіРѕ Р°Р»С„Р°РІРёС‚Р°.", GetName(playerid));
 			SPD(playerid, D_REGG + 1, 1, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", dialog, "REGISTER", "CANCEL");
 		}
 		
 		case 1 : {
-			format(dialog, sizeof dialog, "Вы зашли как %s! Пожалуйста, авторизуйтесь!\nВ случаии 3-х кратного неверного ввода КИК!\n\
-			Оталось папыток ввода: %i", GetName(playerid), WrongLogin[playerid]);
-			SPD(playerid, D_AUTH, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION. Введите ваш пароль!", dialog, "LOGIN", "CANCEL");
+			format(dialog, sizeof dialog, "Р’С‹ Р·Р°С€Р»Рё РєР°Рє %s! РџРѕР¶Р°Р»СѓР№СЃС‚Р°, Р°РІС‚РѕСЂРёР·СѓР№С‚РµСЃСЊ!\nР’ СЃР»СѓС‡Р°РёРё 3-С… РєСЂР°С‚РЅРѕРіРѕ РЅРµРІРµСЂРЅРѕРіРѕ РІРІРѕРґР° РљРРљ!\n\
+			РћС‚Р°Р»РѕСЃСЊ РїР°РїС‹С‚РѕРє РІРІРѕРґР°: %i", GetName(playerid), WrongLogin[playerid]);
+			SPD(playerid, D_AUTH, DIALOG_STYLE_PASSWORD, ""#__SERVER_PREFIX""#__SERVER_NAME_C" AUTORISATION. Р’РІРµРґРёС‚Рµ РІР°С€ РїР°СЂРѕР»СЊ!", dialog, "LOGIN", "CANCEL");
 		}
 		
 		case 2 : {
-			ShowDialog(playerid, D_REGG, DIALOG_STYLE_MSGBOX, "Правила сервера", "dialog/rules.txt", "I AGREE", "CANCEL");
+			ShowDialog(playerid, D_REGG, DIALOG_STYLE_MSGBOX, "РџСЂР°РІРёР»Р° СЃРµСЂРІРµСЂР°", "dialog/rules.txt", "I AGREE", "CANCEL");
 		}
 	}
 	return 1;
@@ -14694,14 +14746,14 @@ stock ShowExtraVehiclesMenu(playerid, dialogid=D_EV_MENU) {
 				format(temp, sizeof temp, "extra[%i]", listitem++), SetPVarInt(playerid, temp, i);
 				if(ExtraVehicles[playerid][i][evID2] != INVALID_VEHICLE_ID) {
 					scf(dialog, temp, "%s %s %s\n", VehicleNames[ExtraVehicles[playerid][i][evModel] - 400],\
-					gCarLock{ExtraVehicles[playerid][i][evID2]} ? ("{AA3333}[закрыт]") : ("{33AA33}[открыт]"),\
-					ExtraVehicles[playerid][i][evPark] == PARK_HOME ? ("{33AA33}[домашний]") : (" "));
+					gCarLock{ExtraVehicles[playerid][i][evID2]} ? ("{AA3333}[Р·Р°РєСЂС‹С‚]") : ("{33AA33}[РѕС‚РєСЂС‹С‚]"),\
+					ExtraVehicles[playerid][i][evPark] == PARK_HOME ? ("{33AA33}[РґРѕРјР°С€РЅРёР№]") : (" "));
 				} else {
-					scf(dialog, temp, "%s {AA3333}[закрыт] [в гараже]\n", VehicleNames[ExtraVehicles[playerid][i][evModel] - 400]);
+					scf(dialog, temp, "%s {AA3333}[Р·Р°РєСЂС‹С‚] [РІ РіР°СЂР°Р¶Рµ]\n", VehicleNames[ExtraVehicles[playerid][i][evModel] - 400]);
 				}
 			}
-			if(!strlen(dialog)) return Send(playerid, COLOR_GREY, "* У Вас нет доп. машин!");
-			SPD(playerid, D_EV_MENU, DIALOG_STYLE_LIST, "Ваш личный транспорт", dialog, "SELECT", "CANCEL");
+			if(!strlen(dialog)) return Send(playerid, COLOR_GREY, "* РЈ Р’Р°СЃ РЅРµС‚ РґРѕРї. РјР°С€РёРЅ!");
+			SPD(playerid, D_EV_MENU, DIALOG_STYLE_LIST, "Р’Р°С€ Р»РёС‡РЅС‹Р№ С‚СЂР°РЅСЃРїРѕСЂС‚", dialog, "SELECT", "CANCEL");
 		}
 	}
 	return 1;
@@ -15012,7 +15064,7 @@ stock GetSkillLevel(playerid, skill) {
 
 stock ShowRefillDialog(playerid, biz) {
 	if(BizzInfo[biz][bProds] <= 0) return GameTextForPlayer(playerid, "~r~Out of stock", 5000, 1);
-	format(dialog, sizeof dialog, "На заправке имеется %i литров.\nСтоимость 1 литра: %i$\n\nВведите количество литров, которое хотите заправить:",
+	format(dialog, sizeof dialog, "РќР° Р·Р°РїСЂР°РІРєРµ РёРјРµРµС‚СЃСЏ %i Р»РёС‚СЂРѕРІ.\nРЎС‚РѕРёРјРѕСЃС‚СЊ 1 Р»РёС‚СЂР°: %i$\n\nР’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р»РёС‚СЂРѕРІ, РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ Р·Р°РїСЂР°РІРёС‚СЊ:",
 	BizzInfo[biz][bProds] * 10, BizzInfo[biz][bEnterCost]/100);
 	SPD(playerid, D_REFILL, DIALOG_STYLE_INPUT, BizzInfo[biz][bDescription], dialog, "ENTER", "CENCEL");
 	SetCameraBehindPlayer(playerid);
