@@ -642,7 +642,7 @@ stock AC::OnvehicleSync(playerid) {
 					if(fvar >= 40.0) {
 						AC::Info[playerid][AC::Warns][R::TELEPORT] ++;
 						if(AC::Info[playerid][AC::Warns][R::TELEPORT] >= MAX_WARNS) {
-							Rac::Kick(playerid, "Èñïîëüçîâàíèå ÷èòîâ", R::TELEPORT);
+							Rac::Kick(playerid, "Использование читов", R::TELEPORT);
 						}
 					}
 				}
