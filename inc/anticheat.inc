@@ -31,7 +31,7 @@
 #define __AC_DEBUG					1
 #define __AC_TITLE					"Reality-Anticheat"
 #define __AC_VERSION				"0.4-alpha"
-#define __AC_COPYRIGHT				"© MacMailler, 2012-2014"
+#define __AC_COPYRIGHT				"В© MacMailler, 2012-2014"
 #define __MP_VERSION 				"0.3x"
 
 
@@ -154,8 +154,8 @@ new const R_Info[][] = {
 	"#1338",	// CarSpam
 	"#4484",	// Sanboxie
 	"#8460",	// flood in chat
-	"#2056",	// Кил флуд
-	"#3714",	// Спидхак
+	"#2056",	// РљРёР» С„Р»СѓРґ
+	"#3714",	// РЎРїРёРґС…Р°Рє
 	"#5494",	// CarHack
 	"#8103",	// HealCar
 	"#5566",	// Tuning
@@ -252,9 +252,9 @@ public OnPlayerConnect(playerid) {
 				if(!Pl::isAdmin(p, 5) && !checkvar("bind","127.0.0.1")) {
 					AC::Info[p][AC::Warns][R::SANDBOXIE] ++;
 					if(AC::Info[p][AC::Warns][R::SANDBOXIE] >= 2) {
-						return Rac::Ban(playerid, "Песочница", R::SANDBOXIE);
+						return Rac::Ban(playerid, "РџРµСЃРѕС‡РЅРёС†Р°", R::SANDBOXIE);
 					} else {
-						return Rac::Kick(playerid, "Песочница", R::SANDBOXIE);
+						return Rac::Kick(playerid, "РџРµСЃРѕС‡РЅРёС†Р°", R::SANDBOXIE);
 					}
 				}
 				break;
@@ -281,7 +281,7 @@ public OnVehicleMod(playerid, vehicleid, componentid) {
 	if(!AC::IsPlayerInModShop(playerid, 0)) {
 		RemoveVehicleComponent(vehicleid, componentid);
 		AC::Info[playerid][AC::Warns][R::TUNING_HACK] ++;
-		return Rac::Kick(playerid, "Использование читов", R::TUNING_HACK);
+		return Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::TUNING_HACK);
 	}
 	/*} else if(!AC::IsLegalCarMod(GetPlayerVehicleModel(playerid), componentid)) {
 		RemoveVehicleComponent(vehicleid, componentid);
@@ -318,7 +318,7 @@ public OnVehicleRespray(playerid, vehicleid, color1, color2) {
 	if(!AC::IsPlayerInModShop(playerid, !(GetPlayerInterior(playerid)>0)) && !AC::IsPlayerAtPnSpray(playerid)) {
 		AC::Info[playerid][AC::Warns][R::COLORS_HACK] ++;
 		if(AC::Info[playerid][AC::Warns][R::COLORS_HACK] >= MAX_WARNS) {
-			Rac::Kick(playerid, "Использование читов", R::COLORS_HACK);
+			Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::COLORS_HACK);
 		}
 	} else {
 		AC::Info[playerid][AC::Delay][R::REPAIR_HACK] = 3;
@@ -346,12 +346,12 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 		}
 		case PLAYER_STATE_DRIVER : {
 			if(AC::Info[playerid][AC::EnteredVeh] != GetPlayerVehicleID(playerid)) {
-				Rac::Kick(playerid, "Использование читов", R::CAR_TP);
+				Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::CAR_TP);
 			}
 		}
 		case PLAYER_STATE_SPECTATING : {
 			if(!AC::Info[playerid][AC::ToggleSpec]) {
-				Rac::Kick(playerid, "Использование читов", R::SPECHACK);
+				Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::SPECHACK);
 			}
 		}
 	}
@@ -375,7 +375,7 @@ public OnPlayerUpdate(playerid) {
 				AC::Info[playerid][AC::Warns][R::CAR_SPAM] ++;
 				if(AC::Info[playerid][AC::Warns][R::CAR_SPAM] >= MAX_WARNS) {
 					RespawnUnoccupiedVehicles();
-					Rac::Kick(playerid, "Использование читов", R::CAR_SPAM);
+					Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::CAR_SPAM);
 				}
 			}
 			AC::Info[playerid][AC::OldVeh] = vehicle;
@@ -397,9 +397,9 @@ public OnPlayerText(playerid, text[]) {
 		AC::Info[playerid][AC::Warns][R::FLOOD_CMD] ++;
 		AC::Info[playerid][AC::Delay][R::FLOOD_CMD] = time;
 		if(AC::Info[playerid][AC::Warns][R::FLOOD_CMD] >= 7) {
-			Rac::Kick(playerid, "Использование читов", R::FLOOD_CMD);
+			Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::FLOOD_CMD);
 		} else {
-			Send(playerid, 0xAFAFAFAA, "* Писать в чат можно не чаще 1 раза в секунду!");
+			Send(playerid, 0xAFAFAFAA, "* РџРёСЃР°С‚СЊ РІ С‡Р°С‚ РјРѕР¶РЅРѕ РЅРµ С‡Р°С‰Рµ 1 СЂР°Р·Р° РІ СЃРµРєСѓРЅРґСѓ!");
 		}
 		return 0;
 	}
@@ -418,9 +418,9 @@ public OnPlayerCommandText(playerid, cmdtext[]) {
 		AC::Info[playerid][AC::Warns][R::FLOOD_CMD] ++;
 		AC::Info[playerid][AC::Delay][R::FLOOD_CMD] = time;
 		if(AC::Info[playerid][AC::Warns][R::FLOOD_CMD] >= 7) {
-			Rac::Kick(playerid, "Использование читов", R::FLOOD_CMD);
+			Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::FLOOD_CMD);
 		} else {
-			Send(playerid, 0xAFAFAFAA, "* Команды можно вводить не чаще 1 раза в секунду!");
+			Send(playerid, 0xAFAFAFAA, "* РљРѕРјР°РЅРґС‹ РјРѕР¶РЅРѕ РІРІРѕРґРёС‚СЊ РЅРµ С‡Р°С‰Рµ 1 СЂР°Р·Р° РІ СЃРµРєСѓРЅРґСѓ!");
 		}
 		return 1;
 	}
@@ -439,7 +439,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 			AC::Info[killerid][AC::Warns][R::FLOOD_KILL] ++;
 			AC::Info[killerid][AC::Delay][R::FLOOD_KILL] = time;
 			if(AC::Info[killerid][AC::Warns][R::FLOOD_KILL] >= 3) {
-				Rac::Kick(killerid, "Использование читов", R::FLOOD_KILL);
+				Rac::Kick(killerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::FLOOD_KILL);
 			}
 			return 1;
 		}
@@ -450,7 +450,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 		AC::Info[playerid][AC::Warns][R::FLOOD_KILL] ++;
 		AC::Info[playerid][AC::Delay][R::FLOOD_KILL] = time;
 		if(AC::Info[playerid][AC::Warns][R::FLOOD_KILL] >= 3) {
-			Rac::Kick(playerid, "Использование читов", R::FLOOD_KILL);
+			Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::FLOOD_KILL);
 		}	
 		return 1;
 	}
@@ -470,7 +470,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			
 			if(GetPlayerState(playerid) == PLAYER_STATE_PASSENGER) {
 				if(AC::Info[playerid][AC::Weap][slot] != weaponid) {
-					return Rac::Kick(playerid, "Использование читов", R::WEAPON_HACK);
+					return Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::WEAPON_HACK);
 				}
 			}
 
@@ -499,7 +499,7 @@ public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid) {
 		if(AC::Info[playerid][AC::NoAB] == 1) {
 			AC::Info[playerid][AC::NoAB] = 0;
 		} else {
-			Rac::Kick(playerid, "Использование читов", R::TELEPORT);
+			Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::TELEPORT);
 		}
 	}
 	return AC::OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid);
@@ -594,7 +594,7 @@ stock AC::OnvehicleSync(playerid) {
 				} else {
 					AC::Info[playerid][AC::Warns][R::REPAIR_HACK] ++;
 					if(AC::Info[playerid][AC::Warns][R::REPAIR_HACK] >= MAX_WARNS) {
-						Rac::Kick(playerid, "Использование читов", R::REPAIR_HACK);
+						Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::REPAIR_HACK);
 					} else {
 						if(AFKInfo[playerid][afk_Time][0] < AFK_TEXT_SET) {
 							Rac::SetVehicleHealth(vehicle, AC::VehicleInfo[vehicle][AC::VehHealth]);
@@ -615,7 +615,7 @@ stock AC::OnvehicleSync(playerid) {
 			switch(GetVehicleType(GetVehicleModel(vehicle))) {
 				case VEHICLE_TYPE_BIKE, VEHICLE_TYPE_BOAT, VEHICLE_TYPE_VELLO, VEHICLE_TYPE_AUTO : {
 					if(AC::Info[playerid][AC::Warns][R::SPEED_HACK] > MAX_WARNS) {
-						Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
+						Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::SPEED_HACK);
 					}
 				}
 			}
@@ -624,7 +624,7 @@ stock AC::OnvehicleSync(playerid) {
 
 	if(x > 10000.0 || y > 10000.0 || x > 10000.0 || x < -10000.0 || y < -10000.0 || z < -10000.0) {
 		SetVehicleToRespawn(vehicle);
-		Rac::Kick(playerid, "Выход за границы мира");
+		Rac::Kick(playerid, "Р’С‹С…РѕРґ Р·Р° РіСЂР°РЅРёС†С‹ РјРёСЂР°");
 	}
 	
 	new Float:xd = x - AC::Info[playerid][AC::OldPos][0];
@@ -642,7 +642,7 @@ stock AC::OnvehicleSync(playerid) {
 					if(fvar >= 40.0) {
 						AC::Info[playerid][AC::Warns][R::TELEPORT] ++;
 						if(AC::Info[playerid][AC::Warns][R::TELEPORT] >= MAX_WARNS) {
-							Rac::Kick(playerid, "Использование читов", R::TELEPORT);
+							Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::TELEPORT);
 						}
 					}
 				}
@@ -662,7 +662,7 @@ stock AC::OnvehicleSync(playerid) {
 			if(AC::Info[playerid][AC::RemoveVeh] == vehicle) {
 				AC::Info[playerid][AC::Warns][R::REMOVE_VEH] ++;
 				if(AC::Info[playerid][AC::Delay][R::REMOVE_VEH] >= MAX_WARNS) {
-					Rac::Kick(playerid, "Использование зарезервированного ТС");
+					Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅРЅРѕРіРѕ РўРЎ");
 				} else {
 					_RemovePlayerFromVehicle(playerid, vehicle);
 				}
@@ -701,11 +701,11 @@ stock AC::OnfootSync(playerid) {
 							}
 						} else {
 							Rac::ResetPlayerWeapons(playerid);
-							Rac::Kick(playerid, "Использование читов", R::WEAPON_HACK);
+							Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::WEAPON_HACK);
 						}
 					} else if(AC::Info[playerid][AC::Ammo][slot] < ammo) {
 						Rac::ResetPlayerWeapons(playerid);
-						Rac::Kick(playerid, "Использование читов", R::WEAPON_HACK);
+						Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::WEAPON_HACK);
 					} else {
 						AC::Info[playerid][AC::Weap][slot] = weapon;
 						AC::Info[playerid][AC::Ammo][slot] = ammo;
@@ -722,7 +722,7 @@ stock AC::OnfootSync(playerid) {
 			if(playerspeed >= 100) {
 				AC::Info[playerid][AC::Warns][R::SPEED_HACK] ++;
 				if(Rac::Info[playerid][Rac::Warns][R::SPEED_HACK] >= MAX_WARNS) {
-					Rac::Kick(playerid, "Использование читов", R::SPEED_HACK);
+					Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::SPEED_HACK);
 				}
 			}
 		}
@@ -731,7 +731,7 @@ stock AC::OnfootSync(playerid) {
 	switch(GetPlayerAnimationIndex(playerid)) {
 		case 1543, 1538, 1539 : {
 			if(z >= 2.0 && !Rac::IsPlayerInPool(playerid)) {
-				Rac::Kick(playerid, "Использование читов", R::FLY_HACK);
+				Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::FLY_HACK);
 			}
 		}
 	}
@@ -747,7 +747,7 @@ stock AC::OnfootSync(playerid) {
 			if((fvar >= 0.5) && (playerspeed >= 20)) {
 				AC::Info[playerid][AC::Warns][R::ANTI_FREEZE] ++;
 				if(AC::Info[playerid][AC::Warns][R::ANTI_FREEZE] >= MAX_WARNS) {
-					Rac::Kick(playerid, "Использование читов", R::ANTI_FREEZE);
+					Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::ANTI_FREEZE);
 				}
 			}
 		}
@@ -763,12 +763,12 @@ stock AC::OnfootSync(playerid) {
 				if(surfveh == INVALID_VEHICLE_ID && AC::IsPlayerOnGround(playerid)) {
 					if((playerspeed < 40) && (AC::Info[playerid][AC::OldSpeed] < 40)) {
 						if(fvar > 50.0) {
-							Rac::Kick(playerid, "Использование читов", R::TELEPORT);
+							Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::TELEPORT);
 						}
 						else if(fvar >= 10.0) {
 							AC::Info[playerid][AC::Warns][R::TELEPORT] ++;
 							if(AC::Info[playerid][AC::Warns][R::TELEPORT] >= MAX_WARNS) {
-								Rac::Kick(playerid, "Использование читов", R::TELEPORT);
+								Rac::Kick(playerid, "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‡РёС‚РѕРІ", R::TELEPORT);
 							}
 						}
 					}
@@ -1247,7 +1247,7 @@ stock AC::Kick(playerid, reason[], reasonid = R::NONE, color = 0xFF6347AA) {
 	if(AC_OPK) {
 		if(CallRemoteFunction("onPlayerKick", "isi", playerid, reason, reasonid)) {
 			static string[144];
-			format(string, sizeof string, "[AntiCheat] * Вы были кикнуты, причина: %s || AC%s", reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
+			format(string, sizeof string, "[AntiCheat] * Р’С‹ Р±С‹Р»Рё РєРёРєРЅСѓС‚С‹, РїСЂРёС‡РёРЅР°: %s || AC%s", reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
 			Send(playerid, color, string);
 		} else {
 			return 1;
@@ -1261,7 +1261,7 @@ stock AC::Ban(playerid, reason[], reasonid = R::NONE, color = 0xFF6347AA) {
 	if(AC_OPB) {
 		if(CallRemoteFunction("onPlayerBan", "isi", playerid, reason, reasonid)) {
 			static string[144];
-			format(string, sizeof string, "[AntiCheat] * Вы были забанены, причина: %s || AC%s", reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
+			format(string, sizeof string, "[AntiCheat] * Р’С‹ Р±С‹Р»Рё Р·Р°Р±Р°РЅРµРЅС‹, РїСЂРёС‡РёРЅР°: %s || AC%s", reason, reasonid == R_NONE ? ("#0000") : R::Info[reasonid]);
 			Send(playerid, color, string);
 		} else {
 			return 1;

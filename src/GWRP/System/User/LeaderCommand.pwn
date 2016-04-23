@@ -29,13 +29,13 @@
 
 
 CMD:fracpay(playerid, params[]) { new string[144];
-	if(Pl::Info[playerid][pLeader] != Pl::FracID(playerid)) return Send(playerid, COLOR_GREY, "* Вы не лидер!");
-	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /fracpay [Сумма каждому члену фракции]");
-	if(!(1000 <= params[0] <= 100000)) return Send(playerid, COLOR_GREY, "* Сумма должна быть от $1000 до $100000!");
+	if(Pl::Info[playerid][pLeader] != Pl::FracID(playerid)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ Р»РёРґРµСЂ!");
+	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Р’РІРµРґРёС‚Рµ: /fracpay [РЎСѓРјРјР° РєР°Р¶РґРѕРјСѓ С‡Р»РµРЅСѓ С„СЂР°РєС†РёРё]");
+	if(!(1000 <= params[0] <= 100000)) return Send(playerid, COLOR_GREY, "* РЎСѓРјРјР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РѕС‚ $1000 РґРѕ $100000!");
 	new fracid = Pl::FracID(playerid);
 	new price = (params[0] * Iter::Count(TeamPlayers[fracid]));
-	if(price > GetFracMoney(fracid)) return Send(playerid, COLOR_GREY, "* В казне не хватает денег!");
-	if(FracPay[fracid] != 0) return Send(playerid, COLOR_GREY, "* Зарплату можно выдавать только раз за час!");
+	if(price > GetFracMoney(fracid)) return Send(playerid, COLOR_GREY, "* Р’ РєР°Р·РЅРµ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі!");
+	if(FracPay[fracid] != 0) return Send(playerid, COLOR_GREY, "* Р—Р°СЂРїР»Р°С‚Сѓ РјРѕР¶РЅРѕ РІС‹РґР°РІР°С‚СЊ С‚РѕР»СЊРєРѕ СЂР°Р· Р·Р° С‡Р°СЃ!");
 	
 	FracPay[fracid] = 1;
 	GiveFracMoney(fracid, -price);
@@ -43,42 +43,42 @@ CMD:fracpay(playerid, params[]) { new string[144];
 	if(IsAGangF(fracid)) {
 		foreach(new i: TeamPlayers[fracid]) {
 			Rac::GivePlayerMoney(i, params[0]);
-			format(string, sizeof(string), "* Вы получили зарплату от Лидера, в размере $%i", params[0]);
+			format(string, sizeof(string), "* Р’С‹ РїРѕР»СѓС‡РёР»Рё Р·Р°СЂРїР»Р°С‚Сѓ РѕС‚ Р›РёРґРµСЂР°, РІ СЂР°Р·РјРµСЂРµ $%i", params[0]);
 			Send(i, COLOR_LIGHTBLUE, string);
 		}
 	} else {
 		foreach(new i: TeamPlayers[fracid]) {
 			GivePlayerBankMoney(i, params[0]);
-			format(string, sizeof(string), "* Вы получили зарплату от Лидера, в размере $%i", params[0]);
+			format(string, sizeof(string), "* Р’С‹ РїРѕР»СѓС‡РёР»Рё Р·Р°СЂРїР»Р°С‚Сѓ РѕС‚ Р›РёРґРµСЂР°, РІ СЂР°Р·РјРµСЂРµ $%i", params[0]);
 			Send(i, COLOR_LIGHTBLUE, string);
 		}
 	}
-	format(string, sizeof(string), " * Вы выдали зарплату членам своей фракции, в размере $%i", price);
+	format(string, sizeof(string), " * Р’С‹ РІС‹РґР°Р»Рё Р·Р°СЂРїР»Р°С‚Сѓ С‡Р»РµРЅР°Рј СЃРІРѕРµР№ С„СЂР°РєС†РёРё, РІ СЂР°Р·РјРµСЂРµ $%i", price);
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
 
 CMD:invite(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /invite [id]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(Pl::FracID(params[0]) != 0) return Send(playerid, COLOR_GREY, "* Этот игрок уже сотоит в другой организации!");
-	if(IsLegalFrac(Pl::FracID(params[0])) && !Pl::Info[params[0]][pPasport][0]) return Send(playerid, COLOR_GREY, "* У этого человека нет паспорта!");
+	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
+	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Р’РІРµРґРёС‚Рµ: /invite [id]");
+	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
+	if(Pl::FracID(params[0]) != 0) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє СѓР¶Рµ СЃРѕС‚РѕРёС‚ РІ РґСЂСѓРіРѕР№ РѕСЂРіР°РЅРёР·Р°С†РёРё!");
+	if(IsLegalFrac(Pl::FracID(params[0])) && !Pl::Info[params[0]][pPasport][0]) return Send(playerid, COLOR_GREY, "* РЈ СЌС‚РѕРіРѕ С‡РµР»РѕРІРµРєР° РЅРµС‚ РїР°СЃРїРѕСЂС‚Р°!");
 	getname(playerid -> sendername, params[0] -> playername);
 	SetPVarInt(params[0], "InvateFrac", Pl::Info[playerid][pLeader]);
-	format(string, sizeof string, "* Вы были приглашены в %s лидером %s (пишите /accept invite чтобы согласится)", FracInfo[Pl::Info[playerid][pLeader]][fName], sendername);
+	format(string, sizeof string, "* Р’С‹ Р±С‹Р»Рё РїСЂРёРіР»Р°С€РµРЅС‹ РІ %s Р»РёРґРµСЂРѕРј %s (РїРёС€РёС‚Рµ /accept invite С‡С‚РѕР±С‹ СЃРѕРіР»Р°СЃРёС‚СЃСЏ)", FracInfo[Pl::Info[playerid][pLeader]][fName], sendername);
 	Send(params[0], COLOR_LIGHTBLUE, string);
-	format(string, sizeof string, "* Вы пригласили %s в %s.", playername, FracInfo[Pl::Info[playerid][pLeader]][fName]);
+	format(string, sizeof string, "* Р’С‹ РїСЂРёРіР»Р°СЃРёР»Рё %s РІ %s.", playername, FracInfo[Pl::Info[playerid][pLeader]][fName]);
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
 
 CMD:uninvite(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
-	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Введите: /invite [id]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
-	if(Pl::Info[params[0]][pLeader] > 0) return Send(playerid, COLOR_GREY, "* Вы не можите уволить лидера!");
-	if(Pl::FracID(playerid) != Pl::FracID(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не состоит в вашей организации!");		
+	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GRAD1, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
+	if(sscanf(params, "u", params[0])) return Send(playerid, COLOR_GREY, "Р’РІРµРґРёС‚Рµ: /invite [id]");
+	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
+	if(Pl::Info[params[0]][pLeader] > 0) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ РјРѕР¶РёС‚Рµ СѓРІРѕР»РёС‚СЊ Р»РёРґРµСЂР°!");
+	if(Pl::FracID(playerid) != Pl::FracID(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ СЃРѕСЃС‚РѕРёС‚ РІ РІР°С€РµР№ РѕСЂРіР°РЅРёР·Р°С†РёРё!");		
 	Iter::Remove(TeamPlayers[Pl::Info[params[0]][pMember]], params[0]);
 	Pl::Info[params[0]][pMember] = 0;
 	Pl::Info[params[0]][pRank] = 0;
@@ -88,48 +88,48 @@ CMD:uninvite(playerid, params[]) { new string[144], sendername[24], playername[2
 		default: Pl::Info[params[0]][pChar] = 60;
 	}
 	MedicBill{params[0]} = false;
-	Pl::Info[params[0]][pJob] = JOB_NONE;
+	Pl::Info[params[0]][pJob] = 0;
 	Pl::Info[params[0]][pContractTime] = 0;
 	Pl::SetSpawnInfo(params[0]);
 	Rac::SpawnPlayer(params[0]);
 	getname(playerid -> sendername,params[0] -> playername);
-	format(string, sizeof string, "* Вы выкинули %s из своей фракции.", playername);
+	format(string, sizeof string, "* Р’С‹ РІС‹РєРёРЅСѓР»Рё %s РёР· СЃРІРѕРµР№ С„СЂР°РєС†РёРё.", playername);
 	Send(playerid, COLOR_LIGHTBLUE, string);
-	format(string, sizeof string, "* Вы были уволены из фракции %s, лидером %s.", FracInfo[Pl::Info[playerid][pLeader]][fName], sendername);
+	format(string, sizeof string, "* Р’С‹ Р±С‹Р»Рё СѓРІРѕР»РµРЅС‹ РёР· С„СЂР°РєС†РёРё %s, Р»РёРґРµСЂРѕРј %s.", FracInfo[Pl::Info[playerid][pLeader]][fName], sendername);
 	Send(params[0], COLOR_LIGHTBLUE, string);
-	Send(params[0], COLOR_LIGHTBLUE, "* Вы теперь гражданское лицо.");
+	Send(params[0], COLOR_LIGHTBLUE, "* Р’С‹ С‚РµРїРµСЂСЊ РіСЂР°Р¶РґР°РЅСЃРєРѕРµ Р»РёС†Рѕ.");
 	return 1;
 }
 
 
 CMD:giverank(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* Вы не лидер фракции!");
-	if(sscanf(params, "ud", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Введите: /giverank [id] [ранг]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
+	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ Р»РёРґРµСЂ С„СЂР°РєС†РёРё!");
+	if(sscanf(params, "ud", params[0], params[1])) return Send(playerid, COLOR_GRAD2, "Р’РІРµРґРёС‚Рµ: /giverank [id] [СЂР°РЅРі]");
+	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р·Р°Р»РѕРіРёРЅРµРЅ!");
 	new fracid = Pl::FracID(params[0]);
-	if(fracid != Pl::Info[playerid][pLeader]) return Send(playerid, COLOR_GREY, "* Этот игрок не состоит в вашей фракции!");
+	if(fracid != Pl::Info[playerid][pLeader]) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ СЃРѕСЃС‚РѕРёС‚ РІ РІР°С€РµР№ С„СЂР°РєС†РёРё!");
 	if(params[1] <= 0 || params[1] > RankNums[fracid]) {
-		format(string, sizeof string, "* В вашей фракции всего %d рангов", RankNums[fracid]);
+		format(string, sizeof string, "* Р’ РІР°С€РµР№ С„СЂР°РєС†РёРё РІСЃРµРіРѕ %d СЂР°РЅРіРѕРІ", RankNums[fracid]);
 		Send(playerid, COLOR_GREY, string);
 		return 1;
 	}
 	Pl::Info[params[0]][pRank] = params[1];
 	getname(playerid->sendername,params[0]->playername);
-	format(string, sizeof string, "* Вы были повышены/понижены в ранге лидером %s, ваш ранг: %i", sendername, params[1]);
+	format(string, sizeof string, "* Р’С‹ Р±С‹Р»Рё РїРѕРІС‹С€РµРЅС‹/РїРѕРЅРёР¶РµРЅС‹ РІ СЂР°РЅРіРµ Р»РёРґРµСЂРѕРј %s, РІР°С€ СЂР°РЅРі: %i", sendername, params[1]);
 	Send(params[0], COLOR_LIGHTBLUE, string);
-	format(string, sizeof string, "* Вы повысели %s. Теперь его ранг %i.", playername, params[1]);
+	format(string, sizeof string, "* Р’С‹ РїРѕРІС‹СЃРµР»Рё %s. РўРµРїРµСЂСЊ РµРіРѕ СЂР°РЅРі %i.", playername, params[1]);
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
 
 CMD:vigovor(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "us[24]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /vigovor [id] [reason]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
+	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
+	if(sscanf(params, "us[24]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Р’РІРµРґРёС‚Рµ: /vigovor [id] [reason]");
+	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
 
 	new fracid = Pl::FracID(playerid);
-	if(fracid != Pl::FracID(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не состоит в вашей организации!");
-	if(IsPlayerLeader(params[0]) == fracid) return Send(playerid, COLOR_GREY, "* Вы не можете дать выговор лидеру!");
+	if(fracid != Pl::FracID(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ СЃРѕСЃС‚РѕРёС‚ РІ РІР°С€РµР№ РѕСЂРіР°РЅРёР·Р°С†РёРё!");
+	if(IsPlayerLeader(params[0]) == fracid) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ РґР°С‚СЊ РІС‹РіРѕРІРѕСЂ Р»РёРґРµСЂСѓ!");
 
 	Pl::Info[params[0]][pRebuke]++;
 	getname(playerid -> sendername,params[0] -> playername);
@@ -143,38 +143,37 @@ CMD:vigovor(playerid, params[]) { new string[144], sendername[24], playername[24
 			default: Pl::Info[params[0]][pChar] = 60;
 		}
 		MedicBill{params[0]} = false;
-		Pl::Info[params[0]][pJob] = JOB_NONE;
+		Pl::Info[params[0]][pJob] = 0;
 		Pl::Info[params[0]][pContractTime] = 0;
 		Pl::Info[params[0]][pRebuke] = 0;
 		SetPlayerSkin(params[0], Pl::Info[params[0]][pChar]);
 		Pl::SetSpawnInfo(params[0]); Rac::SpawnPlayer(params[0]);
 		
-		format(string, sizeof string, "* Вы получили 4-й выговор от лидера %s и были автоматически уволены из фракции. Причина: %s", sendername, params[1]);
+		format(string, sizeof string, "* Р’С‹ РїРѕР»СѓС‡РёР»Рё 4-Р№ РІС‹РіРѕРІРѕСЂ РѕС‚ Р»РёРґРµСЂР° %s Рё Р±С‹Р»Рё Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓРІРѕР»РµРЅС‹ РёР· С„СЂР°РєС†РёРё. РџСЂРёС‡РёРЅР°: %s", sendername, params[1]);
 		Send(params[0], COLOR_LIGHTRED, string);
-		format(string, sizeof string, "* Вы дали 4-й выговор игроку %s и он был автоматически уволен из вашей фракции. Причина: %s", playername, params[1]);
+		format(string, sizeof string, "* Р’С‹ РґР°Р»Рё 4-Р№ РІС‹РіРѕРІРѕСЂ РёРіСЂРѕРєСѓ %s Рё РѕРЅ Р±С‹Р» Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓРІРѕР»РµРЅ РёР· РІР°С€РµР№ С„СЂР°РєС†РёРё. РџСЂРёС‡РёРЅР°: %s", playername, params[1]);
 		Send(playerid, COLOR_LIGHTRED, string);
 		Pl::Update(params[0]);
 	} else {
-		format(string, sizeof string, "* Вы получили выговор от лидера %s. Причина: %s", sendername, params[1]);
+		format(string, sizeof string, "* Р’С‹ РїРѕР»СѓС‡РёР»Рё РІС‹РіРѕРІРѕСЂ РѕС‚ Р»РёРґРµСЂР° %s. РџСЂРёС‡РёРЅР°: %s", sendername, params[1]);
 		Send(params[0], COLOR_LIGHTRED, string);
-		format(string, sizeof string, "* Вы дали выговор игроку %s. Причина: %s", playername, params[1]);
+		format(string, sizeof string, "* Р’С‹ РґР°Р»Рё РІС‹РіРѕРІРѕСЂ РёРіСЂРѕРєСѓ %s. РџСЂРёС‡РёРЅР°: %s", playername, params[1]);
 		Send(playerid, COLOR_LIGHTRED, string);
 	}
 	return 1;
 }
 
 CMD:unvigovor(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!Pl::isLogged(playerid)) return Send(playerid, COLOR_GREY, "* Вы не авторизованы!");
-	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
-	if(sscanf(params, "u", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /unvigovor [id]");
-	if(Pl::FracID(playerid) != Pl::FracID(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не состоит в вашей организации!");
-	if(Pl::Info[params[0]][pRebuke] <= 0) return Send(playerid, COLOR_GREY, "* У этого игрока нет выговоров");
+	if(!Pl::isLogged(playerid)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅС‹!");
+	if(IsPlayerLeader(playerid) <= 0) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
+	if(sscanf(params, "u", params[0], params[1])) return Send(playerid, COLOR_GREY, "Р’РІРµРґРёС‚Рµ: /unvigovor [id]");
+	if(Pl::FracID(playerid) != Pl::FracID(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ СЃРѕСЃС‚РѕРёС‚ РІ РІР°С€РµР№ РѕСЂРіР°РЅРёР·Р°С†РёРё!");
+	if(Pl::Info[params[0]][pRebuke] <= 0) return Send(playerid, COLOR_GREY, "* РЈ СЌС‚РѕРіРѕ РёРіСЂРѕРєР° РЅРµС‚ РІС‹РіРѕРІРѕСЂРѕРІ");
 	Pl::Info[params[0]][pRebuke] --;
 	getname(playerid -> sendername, params[0] -> playername);
-	format(string, sizeof string, "* Лидер %s снял с вас 1 выговор. ", sendername, params[1]);
+	format(string, sizeof string, "* Р›РёРґРµСЂ %s СЃРЅСЏР» СЃ РІР°СЃ 1 РІС‹РіРѕРІРѕСЂ. ", sendername, params[1]);
 	Send(params[0], COLOR_LIGHTRED, string);
-	format(string, sizeof string, "* Вы сняли 1 выговор с подчиненного %s.", params[1], playername);
+	format(string, sizeof string, "* Р’С‹ СЃРЅСЏР»Рё 1 РІС‹РіРѕРІРѕСЂ СЃ РїРѕРґС‡РёРЅРµРЅРЅРѕРіРѕ %s.", params[1], playername);
 	Send(playerid, COLOR_LIGHTRED, string);
 	return 1;
 }
-

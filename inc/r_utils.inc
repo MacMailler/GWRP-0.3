@@ -388,7 +388,7 @@ stock IsPlayerInSquare3D(playerid, Float:size, Float:x, Float:y, Float:z, virtua
 }
 
 
-stock GetCoordVehicleParams(vehicleid, paramid, &Float:x, &Float:y, &Float:z) //paramid: 0/1 - левая/правая дверь, 2/3 - капот/багажник 
+stock GetCoordVehicleParams(vehicleid, paramid, &Float:x, &Float:y, &Float:z) //paramid: 0/1 - Р»РµРІР°СЏ/РїСЂР°РІР°СЏ РґРІРµСЂСЊ, 2/3 - РєР°РїРѕС‚/Р±Р°РіР°Р¶РЅРёРє 
 {
     new modelid = GetVehicleModel(vehicleid); 
 	
