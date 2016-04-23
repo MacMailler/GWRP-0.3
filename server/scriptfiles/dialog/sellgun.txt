@@ -1,12 +1,12 @@
-Ââåäèòå: /sellgun [weaponname] [playerid]
+Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ: /sellgun [weaponname] [playerid]
 
-Îðóæèå:
+ÐžÑ€ÑƒÐ¶Ð¸Ðµ:
 
-• flowers  ( 25 )
-• sdpistol ( 100 )
-• eagle    ( 150 )
-• mp5      ( 200 )
-• Shotgun  ( 200 )
-• ak47     ( 600 )
-• m4       ( 600 )
-• rifle    ( 600 )
+â€¢ flowers  ( 25 )
+â€¢ sdpistol ( 100 )
+â€¢ eagle    ( 150 )
+â€¢ mp5      ( 200 )
+â€¢ Shotgun  ( 200 )
+â€¢ ak47     ( 600 )
+â€¢ m4       ( 600 )
+â€¢ rifle    ( 600 )
