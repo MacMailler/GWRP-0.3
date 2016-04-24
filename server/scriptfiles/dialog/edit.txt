@@ -1,20 +1,20 @@
-Р’РІРµРґРёС‚Рµ: [name] [ammount]
+Введите: [name] [ammount]
 
-РџР°СЂР°РјРµСЂС‚С‹ РґР»СЏ Р±РёР·РЅРµСЃРѕРІ:
-вЂў level
-вЂў price
-вЂў funds
-вЂў prods
-вЂў maxprods
-вЂў priceprods
+Парамерты для бизнесов:
+• level
+• price
+• funds
+• prods
+• maxprods
+• priceprods
 
-РџР°СЂР°РјРµСЂС‚С‹ РґР»СЏ РґРѕРјРѕРІ:
-вЂў level
-вЂў price
-вЂў safe
+Парамерты для домов:
+• level
+• price
+• safe
 
-РџР°СЂР°РјРµС‚СЂС‹ РјР°С€РёРЅ:
-вЂў Model
-вЂў Color1
-вЂў Color2
-вЂў Resptime
+Параметры машин:
+• Model
+• Color1
+• Color2
+• Resptime

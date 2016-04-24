@@ -29,50 +29,50 @@
 
 
 CMD:hmute(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(!IsPHelper(playerid, 2)) return Send(playerid, COLOR_GRAD1, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
-	if(sscanf(params, "us[64]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Р’РІРµРґРёС‚Рµ: /hmute [id] [reason]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
-	if(Pl::Info[params[0]][pMuted] == 2) return Send(playerid, COLOR_GREY, "* РЈ РёРіСЂРѕРєР° СѓР¶Рµ РµСЃС‚СЊ РјРѕР»С‡Р°РЅРєР°!");
+	if(!IsPHelper(playerid, 2)) return Send(playerid, COLOR_GRAD1, "* Недостаточно прав!");
+	if(sscanf(params, "us[64]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /hmute [id] [reason]");
+	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
+	if(Pl::Info[params[0]][pMuted] == 2) return Send(playerid, COLOR_GREY, "* У игрока уже есть молчанка!");
 	getname(playerid -> sendername,params[0] -> playername);
 	Pl::Info[params[0]][pMuted] = 2;
 	Pl::Info[params[0]][pMutedTime] = 180;
-	format(string, sizeof string, "*[H] %s РїРѕР»СѓС‡РёР» РјРѕР»С‡Р°РЅРєСѓ РґР»СЏ С‡Р°С‚Р° /vopros РѕС‚ С…РµР»РїРµСЂР° %s, РїСЂРёС‡РёРЅР°: %s", playername, sendername, params[1]);
+	format(string, sizeof string, "*[H] %s получил молчанку для чата /vopros от хелпера %s, причина: %s", playername, sendername, params[1]);
 	SendToHelper(COLOR_ORANGE, string);
 	return 1;
 }
 
 CMD:hduty(playerid, params[]) { new string[144], sendername[24];
-	if(!IsPHelper(playerid, 1)) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
+	if(!IsPHelper(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
 	HelperDuty{playerid} = !HelperDuty{playerid};
 	GetPlayerName(playerid, sendername, 24);
-	format(string, sizeof string, "(( [H] РҐРµР»РїРµСЂ %s %s ))", sendername, (HelperDuty{playerid})?("Р¶РґРµС‚ РІР°С€Рё РІРѕРїСЂРѕСЃС‹! (/РІРѕРїСЂРѕСЃ)"):("РЅРµ Р°РєС‚РёРІРµРЅ."));
+	format(string, sizeof string, "(( [H] Хелпер %s %s ))", sendername, (HelperDuty{playerid})?("ждет ваши вопросы! (/вопрос)"):("не активен."));
 	SendToAll(COLOR_OOC,string);
 	return 1;
 }
 
 CMD:ans(playerid, params[]) { new string[144], sendername[24], playername[24];
-	if(IsPMuted(playerid)) return Send(playerid,COLOR_GREY,"* РЈ Р’Р°СЃ РјРѕР»С‡Р°РЅРєР°!");
-	if(!IsPHelper(playerid, 1)) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
-	if(!IsAHelperDuty(playerid)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ РЅР° РґРµР¶СѓСЂСЃРёРІРµ!");
-	if(sscanf(params, "us[90]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Р’РІРµРґРёС‚Рµ: /ans [id/Name] [РѕС‚РІРµС‚]");
-	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ!");
+	if(IsPMuted(playerid)) return Send(playerid,COLOR_GREY,"* У Вас молчанка!");
+	if(!IsPHelper(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!IsAHelperDuty(playerid)) return Send(playerid, COLOR_GREY, "* Вы не на дежурсиве!");
+	if(sscanf(params, "us[90]", params[0], params[1])) return Send(playerid, COLOR_GREY, "Введите: /ans [id/Name] [ответ]");
+	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не авторизован!");
 	new answerd = GetPVarInt(params[0], "AnsweredHelper");
-	if(answerd == INVALID_PLAYER_ID) return Send(playerid, COLOR_GREY, "* Р­С‚РѕС‚ РёРіСЂРѕРє РЅРµ Р·Р°РґР°РІР°Р» РІРѕРїСЂРѕСЃРѕРІ!");
-	if(answerd != -1 && answerd != playerid) return Send(playerid, COLOR_GREY, "* Р­С‚РѕРјСѓ РёРіСЂРѕРєСѓ СѓР¶Рµ РѕС‚РІРµС‡Р°РµС‚ С…РµР»РїРµСЂ!");
+	if(answerd == INVALID_PLAYER_ID) return Send(playerid, COLOR_GREY, "* Этот игрок не задавал вопросов!");
+	if(answerd != -1 && answerd != playerid) return Send(playerid, COLOR_GREY, "* Этому игроку уже отвечает хелпер!");
 	SetPVarInt(params[0], "AnsweredHelper", playerid);
 	getname(playerid -> sendername, params[0] -> playername);
-	format(string, sizeof string, "*[H] %s РѕС‚РІРµС‚РёР»: %s", sendername, params[1]);
+	format(string, sizeof string, "*[H] %s ответил: %s", sendername, params[1]);
 	Send(params[0], COLOR_ORANGE, string);
-	format(string, sizeof string, "*[H] %s РѕС‚РІРµС‚РёР» %s[%d]: %s",sendername, playername, params[0], params[1]);
+	format(string, sizeof string, "*[H] %s ответил %s[%d]: %s",sendername, playername, params[0], params[1]);
 	SendToHelper(COLOR_ORANGE, string);
 	return 1;
 }
 
 CMD:hc(playerid, params[]) { new string[144], sendername[24];
-	if(IsPMuted(playerid)) return Send(playerid,COLOR_GREY,"* РЈ Р’Р°СЃ РјРѕР»С‡Р°РЅРєР°!");
-	if(!IsPHelper(playerid, 1)) return Send(playerid, COLOR_GREY, "* РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ!");
-	if(!IsAHelperDuty(playerid)) return Send(playerid, COLOR_GREY, "* Р’С‹ РЅРµ РЅР° РґРµР¶СѓСЂСЃРёРІРµ!");
-	if(isnull(params) || params[0] == ' ') return Send(playerid, COLOR_GRAD1, "Р’РІРµРґРёС‚Рµ: /hc [С‚РµРєСЃС‚]");
+	if(IsPMuted(playerid)) return Send(playerid,COLOR_GREY,"* У Вас молчанка!");
+	if(!IsPHelper(playerid, 1)) return Send(playerid, COLOR_GREY, "* Недостаточно прав!");
+	if(!IsAHelperDuty(playerid)) return Send(playerid, COLOR_GREY, "* Вы не на дежурсиве!");
+	if(isnull(params) || params[0] == ' ') return Send(playerid, COLOR_GRAD1, "Введите: /hc [текст]");
 	GetPlayerName(playerid, sendername, 24);
 	format(string, sizeof string, "*%i %s %s: %s", Pl::Info[playerid][pHelper], GetHelperRank(Pl::Info[playerid][pHelper]), sendername, params);
 	SendToHelper(COLOR_GREEN, string);
