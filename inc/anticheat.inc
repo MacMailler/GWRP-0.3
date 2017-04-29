@@ -799,8 +799,13 @@ public: AC::GivePlayerWeapon(playerid, weaponid, ammo) {
 		new slot = AC::GetWeaponSlot(weaponid);
 		if(slot != -1) {
 			if(AC::Info[playerid][AC::Weap][slot] != weaponid) {
-				AC::Info[playerid][AC::Weap][slot] = weaponid;
-				AC::Info[playerid][AC::Ammo][slot] = ammo;
+				if(slot == 5) {
+					AC::Info[playerid][AC::Weap][slot] = weaponid;
+					AC::Info[playerid][AC::Ammo][slot] += ammo;
+				} else {
+					AC::Info[playerid][AC::Weap][slot] = weaponid;
+					AC::Info[playerid][AC::Ammo][slot] = ammo;
+				}
 			} else {
 				AC::Info[playerid][AC::Weap][slot] = weaponid;
 				AC::Info[playerid][AC::Ammo][slot] += ammo;
