@@ -1829,25 +1829,15 @@ new cache_row[512];
 #define cache_get_float(%0,%1,%2) %2=cache_get_row_float(%0,%1)
 
 
-main() {
-	print(" ");
-	print(">> "#__GamemodeName__" "#__GamemodeVersion__" loaded!");
-	print(">>  "#__GamemodeCopyright__"");
-	print(" ");
-}
+main() {}
 
 
 public OnGameModeInit() {
-	new time;			// AntiDeAMX
-	#emit LOAD.S.pri	time
-	#emit SYSREQ.C		GetTickCount
-	#emit STOR.S.pri	time
+	new time = GetTickCount();
 	
-	if(GetMaxPlayers() > MAX_PLAYERS) panic("Количество слотов больше MAX_PLAYERS, старт игрового режима невозможен!");
-	
-	if(!LoadConf()) panic("Отсутствует файл конфигурации, старт игрового режима невозможен!");
-	
-	if(!Db::Init()) panic("Не удалось подключится к базе данных, старт игрового режима невозможен!");
+	if(GetMaxPlayers() > MAX_PLAYERS) return print("[ERROR] Количество слотов больше MAX_PLAYERS, старт игрового режима невозможен!");
+	if(!LoadConf()) return print("[ERROR] Отсутствует файл конфигурации, старт игрового режима невозможен!");
+	if(!Db::Init()) return print("[ERROR] Не удалось подключится к базе данных, старт игрового режима невозможен!");
 	
 	Db::Prepare();
 	
@@ -1945,6 +1935,11 @@ public OnGameModeInit() {
 
 	debug("OnGameModeInit() - Ok! Run time: %i (ms)", GetTickCount()-time);
 
+	print(" ");
+	print(">> "#__GamemodeName__" "#__GamemodeVersion__" loaded!");
+	print(">>  "#__GamemodeCopyright__"");
+	print(" ");
+	
 	return 1;
 }
 
@@ -3197,7 +3192,7 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 								
 								new Float:health;
 								GetVehicleHealth(Veh, health);
-								new cost = floatround((health*5.0));
+								new cost = TransportMoney[playerid] + floatround((health*5.0));
 								format(string, sizeof(string),  "* Маршрут закончен! Вы заработали $%i", cost);
 								Send(playerid, COLOR_YELLOW, string);
 								format(string, sizeof(string),  "~g~+$%i", cost);
