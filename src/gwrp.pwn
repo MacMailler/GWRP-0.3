@@ -5448,41 +5448,37 @@ stock SetPlayerWeapons(playerid) {
 		Rac::ResetPlayerWeapons(playerid);
 	    if(!Pl::Info[playerid][pJailed]) {
 			switch(Pl::FracID(playerid)) {
-				case 1..3 : {
-					Rac::GivePlayerWeapon(playerid, 3, 1);
+				case TEAM_COP, TEAM_FBI, TEAM_ARMY : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
 				}
 
-				case 5 : {
-					Rac::GivePlayerWeapon(playerid, 2, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
-				}
-				case 6 : {
-					Rac::GivePlayerWeapon(playerid, 8, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
+				case TEAM_LCN : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_GOLFCLUB, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_COLT45, 30);
 				}
 				
-				case 9 : {
-					Rac::GivePlayerWeapon(playerid, 43, 25);
+				case TEAM_YAKUZA : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_KATANA, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_COLT45, 30);
 				}
 				
-				case 10 : {
-					Rac::GivePlayerWeapon(playerid, 3, 1);
-					Rac::GivePlayerWeapon(playerid, 41, 1000);
+				case TEAM_PRESS : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_CAMERA, 25);
 				}
 				
-				case 11 : {
-					Rac::GivePlayerWeapon(playerid, 3, 1);
-					Rac::GivePlayerWeapon(playerid, 41, 1000);
+				case TEAM_TAXI : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 1000);
 				}
 				
-				case 12..19 : {
-					Rac::GivePlayerWeapon(playerid, 5, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
+				case TEAM_LICENZERS : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 1000);
 				}
 				
-				case 20 : {
-					Rac::GivePlayerWeapon(playerid, 6, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
+				case TEAM_STREETDOGS, TEAM_RUSSIAN, TEAM_GROVE, TEAM_CORONOS, TEAM_BALLAS, TEAM_RIFA, TEAM_VAGOS : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_BAT, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_COLT45, 30);
 				}
 			}
 		}
