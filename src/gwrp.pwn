@@ -56,7 +56,6 @@
 #define LOG_REPORT				"report"
 #define LOG_ADMWARN				"admwarn"
 #define LOG_PAYDAY_STATS		"debug"
-#define LOG_MYSQL_ERROR			"sqlerror"
 #define LOG_GOV_CHAT			"gov"
 #define LOG_AD_CHAT				"ad"
 #define LOG_CHANGENAME			"changename"
@@ -311,7 +310,7 @@ enum Db::e_Conf {
 	Db::KeySult[32]
 }
 new Db::Conf[Db::e_Conf];
-new connDb;
+new MySQL:connDb;
 
 enum pickupInfo {
 	pOld,
@@ -364,9 +363,8 @@ new RegEx:ValidText;
 #define	TOTAL_SAVE_BIZNES		(1)
 #define	TOTAL_SAVE_HOUSES		(2)
 #define	TOTAL_SAVE_ACCOUNT		(3)
-#define	TOTAL_QUERY_ERRORS		(4)
-#define	TOTAL_RCON_LOGINS		(5)
-new DEBUG[6];
+#define	TOTAL_RCON_LOGINS		(4)
+new Gm::DEBUG[5];
 
 // Pickup`s
 new boj;
@@ -1824,30 +1822,21 @@ new Iterator:Maps<MAX_MAPS>;
 
 
 new cache_row[512];
-#define cache_get_str(%0,%1,%2) cache_get_row(%0,%1,cache_row),sscanf(cache_row,%2)
-#define cache_get_int(%0,%1,%2) %2=cache_get_row_int(%0,%1)
-#define cache_get_float(%0,%1,%2) %2=cache_get_row_float(%0,%1)
+#define cache_get_scn(%0,%1,%2) cache_get_value_index(%0,%1,cache_row),sscanf(cache_row,%2)
+#define cache_get_str(%0,%1,%2) cache_get_value_index(%0,%1,%2)
+#define cache_get_int(%0,%1,%2) cache_get_value_index_int(%0,%1,%2)
+#define cache_get_float(%0,%1,%2) cache_get_value_index_float(%0,%1,%2)
 
 
-main() {
-	print(" ");
-	print(">> "#__GamemodeName__" "#__GamemodeVersion__" loaded!");
-	print(">>  "#__GamemodeCopyright__"");
-	print(" ");
-}
+main() {}
 
 
 public OnGameModeInit() {
-	new time;			// AntiDeAMX
-	#emit LOAD.S.pri	time
-	#emit SYSREQ.C		GetTickCount
-	#emit STOR.S.pri	time
+	new time = GetTickCount();
 	
-	if(GetMaxPlayers() > MAX_PLAYERS) panic("Количество слотов больше MAX_PLAYERS, старт игрового режима невозможен!");
-	
-	if(!LoadConf()) panic("Отсутствует файл конфигурации, старт игрового режима невозможен!");
-	
-	if(!Db::Init()) panic("Не удалось подключится к базе данных, старт игрового режима невозможен!");
+	if(GetMaxPlayers() > MAX_PLAYERS) return print("[ERROR] Количество слотов больше MAX_PLAYERS, старт игрового режима невозможен!");
+	if(!LoadConf()) return print("[ERROR] Отсутствует файл конфигурации, старт игрового режима невозможен!");
+	if(!Db::Init()) return print("[ERROR] Не удалось подключится к базе данных, старт игрового режима невозможен!");
 	
 	Db::Prepare();
 	
@@ -1945,6 +1934,11 @@ public OnGameModeInit() {
 
 	debug("OnGameModeInit() - Ok! Run time: %i (ms)", GetTickCount()-time);
 
+	print(" ");
+	print(">> "#__GamemodeName__" "#__GamemodeVersion__" loaded!");
+	print(">>  "#__GamemodeCopyright__"");
+	print(" ");
+	
 	return 1;
 }
 
@@ -2299,7 +2293,6 @@ stock SendToAdmin(color, string[], lvl = 1, log = 0) {
 		case 2: SendLog(LOG_REPORT, string);
 		case 3: SendLog(LOG_ADMWARN, string);
 		case 4: SendLog(LOG_PAYDAY_STATS, string);
-		case 5: SendLog(LOG_MYSQL_ERROR, string);
 	}
 	return 1;
 }
@@ -3197,7 +3190,7 @@ public OnPlayerEnterDynamicRaceCP(playerid, checkpointid) {
 								
 								new Float:health;
 								GetVehicleHealth(Veh, health);
-								new cost = floatround((health*5.0));
+								new cost = TransportMoney[playerid] + floatround((health*5.0));
 								format(string, sizeof(string),  "* Маршрут закончен! Вы заработали $%i", cost);
 								Send(playerid, COLOR_YELLOW, string);
 								format(string, sizeof(string),  "~g~+$%i", cost);
@@ -5204,7 +5197,7 @@ stock Update(i) {
 			SPD(i, D_NETSTAT, 0, "Server stat", dialog, "OK", "");
 		
 		} else if(Pl::NetStats[i] == 1000) {
-			Db::stat(dialog, connDb);
+			Db::stat(dialog, sizeof dialog,connDb);
 			SPD(i, D_NETSTAT, 0, "Mysql stat", dialog, "OK", "");
 		
 		} else {
@@ -5453,41 +5446,37 @@ stock SetPlayerWeapons(playerid) {
 		Rac::ResetPlayerWeapons(playerid);
 	    if(!Pl::Info[playerid][pJailed]) {
 			switch(Pl::FracID(playerid)) {
-				case 1..3 : {
-					Rac::GivePlayerWeapon(playerid, 3, 1);
+				case TEAM_COP, TEAM_FBI, TEAM_ARMY : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
 				}
 
-				case 5 : {
-					Rac::GivePlayerWeapon(playerid, 2, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
-				}
-				case 6 : {
-					Rac::GivePlayerWeapon(playerid, 8, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
+				case TEAM_LCN : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_GOLFCLUB, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_COLT45, 30);
 				}
 				
-				case 9 : {
-					Rac::GivePlayerWeapon(playerid, 43, 25);
+				case TEAM_YAKUZA : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_KATANA, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_COLT45, 30);
 				}
 				
-				case 10 : {
-					Rac::GivePlayerWeapon(playerid, 3, 1);
-					Rac::GivePlayerWeapon(playerid, 41, 1000);
+				case TEAM_PRESS : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_CAMERA, 25);
 				}
 				
-				case 11 : {
-					Rac::GivePlayerWeapon(playerid, 3, 1);
-					Rac::GivePlayerWeapon(playerid, 41, 1000);
+				case TEAM_TAXI : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 1000);
 				}
 				
-				case 12..19 : {
-					Rac::GivePlayerWeapon(playerid, 5, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
+				case TEAM_LICENZERS : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 1000);
 				}
 				
-				case 20 : {
-					Rac::GivePlayerWeapon(playerid, 6, 1);
-					Rac::GivePlayerWeapon(playerid, 22, 30);
+				case TEAM_STREETDOGS, TEAM_RUSSIAN, TEAM_GROVE, TEAM_CORONOS, TEAM_BALLAS, TEAM_RIFA, TEAM_VAGOS : {
+					Rac::GivePlayerWeapon(playerid, WEAPON_BAT, 1);
+					Rac::GivePlayerWeapon(playerid, WEAPON_COLT45, 30);
 				}
 			}
 		}
@@ -5649,7 +5638,7 @@ stock Pl::SetFracColor(playerid) {
 stock LoadSpawns() {
 	new time = GetTickCount();
 	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__TableSpawns__"` ORDER BY `id` ASC");
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			new id;
@@ -5670,7 +5659,7 @@ stock LoadSpawns() {
 stock LoadGMInfo() {
 	new time = GetTickCount();
 	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__TableStuffs__"` WHERE 1", true);
-	if(cache_get_row_count()) {
+	if(cache_num_rows()) {
 		cache_get_int(0, 0, Gm::Info[Gm::TaxValue]);
 		cache_get_int(0, 1, Gm::Info[Gm::PritonDrugs]);
 		cache_get_int(0, 2, Gm::Info[Gm::AmbarDrugs]);
@@ -5701,35 +5690,35 @@ stock LoadHouses() {
 	new time = GetTickCount();
     format(query, sizeof query, "SELECT * FROM `"#__TableHouses__"` ORDER BY `id` ASC", true);
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
-		for(new iter; iter < rows; iter++) {
+		for(new k; k < rows; k++) {
 			new i;
-			cache_get_int(iter, 0, i);
+			cache_get_int(k, 0, i);
 			HouseInfo[i][hID] = i;
 			HouseInfo[i][hVirtual] = i;
 			HouseInfo[i][hgGarage] = false;
-			cache_get_int(iter, 1, HouseInfo[i][hOwned]);
-			cache_get_int(iter, 2, HouseInfo[i][hLock]);
-			cache_get_row(iter, 3, HouseInfo[i][hOwner], connDb, 24);
-			cache_get_row(iter, 4, HouseInfo[i][hDescription], connDb, 24);
-			cache_get_int(iter, 5, HouseInfo[i][hPrice]);
-			cache_get_int(iter, 6, HouseInfo[i][hLevel]);
-			cache_get_int(iter, 7, HouseInfo[i][hInt]);
-			cache_get_int(iter, 8, HouseInfo[i][hDate]);
-			cache_get_int(iter, 9, HouseInfo[i][hTv]);
-			cache_get_str(iter, 10, "p<,>a<i>[2]", HouseInfo[i][hRent]);
-			cache_get_str(iter, 11, "p<,>a<i>[5]", HouseInfo[i][hSafe]);
-			cache_get_str(iter, 12, "p<,>a<i>[6]", HouseInfo[i][hGuns]);
-			cache_get_str(iter, 13, "p<,>a<i>[6]", HouseInfo[i][hAmmos]);
-			cache_get_str(iter, 14, "p<,>a<f>[4]", HouseInfo[i][hEnter]);
-			cache_get_str(iter, 15, "p<,>a<f>[4]", HouseInfo[i][hExit]);
-			cache_get_int(iter, 16, HouseInfo[i][hvModel]);
+			cache_get_int(k, 1, HouseInfo[i][hOwned]);
+			cache_get_int(k, 2, HouseInfo[i][hLock]);
+			cache_get_str(k, 3, HouseInfo[i][hOwner], 24);
+			cache_get_str(k, 4, HouseInfo[i][hDescription], 24);
+			cache_get_int(k, 5, HouseInfo[i][hPrice]);
+			cache_get_int(k, 6, HouseInfo[i][hLevel]);
+			cache_get_int(k, 7, HouseInfo[i][hInt]);
+			cache_get_int(k, 8, HouseInfo[i][hDate]);
+			cache_get_int(k, 9, HouseInfo[i][hTv]);
+			cache_get_scn(k, 10, "p<,>a<i>[2]", HouseInfo[i][hRent]);
+			cache_get_scn(k, 11, "p<,>a<i>[5]", HouseInfo[i][hSafe]);
+			cache_get_scn(k, 12, "p<,>a<i>[6]", HouseInfo[i][hGuns]);
+			cache_get_scn(k, 13, "p<,>a<i>[6]", HouseInfo[i][hAmmos]);
+			cache_get_scn(k, 14, "p<,>a<f>[4]", HouseInfo[i][hEnter]);
+			cache_get_scn(k, 15, "p<,>a<f>[4]", HouseInfo[i][hExit]);
+			cache_get_int(k, 16, HouseInfo[i][hvModel]);
 			
 			if(400 <= HouseInfo[i][hvModel] <= 611) {
-				cache_get_str(iter, 17, "p<,>a<i>[2]", HouseInfo[i][hvColor]);
-				cache_get_int(iter, 18, HouseInfo[i][hvPark]);
-				cache_get_str(iter, 21, "p<,>a<f>[4]", HouseInfo[i][hvSpawn]);
+				cache_get_scn(k, 17, "p<,>a<i>[2]", HouseInfo[i][hvColor]);
+				cache_get_int(k, 18, HouseInfo[i][hvPark]);
+				cache_get_scn(k, 21, "p<,>a<f>[4]", HouseInfo[i][hvSpawn]);
 				HouseInfo[i][hAuto] = Veh::Create(
 					HouseInfo[i][hvModel],
 					HouseInfo[i][hvSpawn][0],
@@ -5743,8 +5732,8 @@ stock LoadHouses() {
 				AutoInfo[HouseInfo[i][hAuto]][aOwner] = INVALID_PLAYER_ID * i;
 				SetVehicleNumber(HouseInfo[i][hAuto]);
 				ToggleVehicleDoor(HouseInfo[i][hAuto], false);
-				cache_get_float(iter, 19, AutoInfo[HouseInfo[i][hAuto]][aMileage]);
-				cache_get_str(iter, 20, "p<,>a<i>[13]i", AutoInfo[HouseInfo[i][hAuto]][aTuning], AutoInfo[HouseInfo[i][hAuto]][aPaintJob]);
+				cache_get_float(k, 19, AutoInfo[HouseInfo[i][hAuto]][aMileage]);
+				cache_get_scn(k, 20, "p<,>a<i>[13]i", AutoInfo[HouseInfo[i][hAuto]][aTuning], AutoInfo[HouseInfo[i][hAuto]][aPaintJob]);
 				AddTuning(HouseInfo[i][hAuto]);
 				switch(HouseInfo[i][hvPark]) {
 					case 1 : {
@@ -5779,12 +5768,12 @@ stock LoadHGarages() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableHouseGarages__"` ORDER BY `house` ASC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i, house; i < rows; i++) {
 			cache_get_int(i, 0, house);
-			cache_get_str(i, 1, "p<,>a<f>[4]", HouseInfo[house][hgIntPos]);
-			cache_get_str(i, 2, "p<,>a<f>[4]", HouseInfo[house][hgStreetPos]);
+			cache_get_scn(i, 1, "p<,>a<f>[4]", HouseInfo[house][hgIntPos]);
+			cache_get_scn(i, 2, "p<,>a<f>[4]", HouseInfo[house][hgStreetPos]);
 			
 			HouseInfo[house][hgGarage] = true;
 			HouseInfo[house][hgPickupInt] = CreateDynamicPickup(1318, 23, HouseInfo[house][hgIntPos][0], HouseInfo[house][hgIntPos][1], HouseInfo[house][hgIntPos][2], HouseInfo[house][hVirtual], -1, -1, 30.0);
@@ -5803,15 +5792,15 @@ stock LoadBizz() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableBusines__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, BizzInfo[i][bID]);
 			cache_get_int(i, 1, BizzInfo[i][bOwned]);
 			cache_get_int(i, 2, BizzInfo[i][bLocked]);
-			cache_get_row(i, 3, BizzInfo[i][bOwner], connDb, 24);
-			cache_get_row(i, 4, BizzInfo[i][bExtortion], connDb, 24);
-			cache_get_row(i, 5, BizzInfo[i][bDescription], connDb, 24);
+			cache_get_str(i, 3, BizzInfo[i][bOwner], 24);
+			cache_get_str(i, 4, BizzInfo[i][bExtortion], 24);
+			cache_get_str(i, 5, BizzInfo[i][bDescription], 24);
 			cache_get_int(i, 6, BizzInfo[i][bLevel]);
 			cache_get_int(i, 7, BizzInfo[i][bPrice]);
 			cache_get_int(i, 8, BizzInfo[i][bSafe]);
@@ -5821,9 +5810,9 @@ stock LoadBizz() {
 			cache_get_int(i, 12, BizzInfo[i][bMaxProds]);
 			cache_get_int(i, 13, BizzInfo[i][bPriceProd]);
 			cache_get_int(i, 14, BizzInfo[i][bInterior]);
-			cache_get_str(i, 15, "p<,>a<i>[2]", BizzInfo[i][bIcon]);
-			cache_get_str(i, 16, "p<,>a<f>[4]", BizzInfo[i][bEnter]);
-			cache_get_str(i, 17, "p<,>a<f>[4]", BizzInfo[i][bExit]);
+			cache_get_scn(i, 15, "p<,>a<i>[2]", BizzInfo[i][bIcon]);
+			cache_get_scn(i, 16, "p<,>a<f>[4]", BizzInfo[i][bEnter]);
+			cache_get_scn(i, 17, "p<,>a<f>[4]", BizzInfo[i][bExit]);
 
 			BizzInfo[i][bVirtual] = BizzInfo[i][bID];
 			
@@ -5856,12 +5845,12 @@ stock LoadGas() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableRefills__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, RefillInfo[i][brID]);
 			cache_get_int(i, 1, RefillInfo[i][brBizID]);
-			cache_get_str(i, 2, "p<,>a<f>[3]", RefillInfo[i][brPos]);
+			cache_get_scn(i, 2, "p<,>a<f>[3]", RefillInfo[i][brPos]);
 			RefillInfo[i][brPickup] = AddPickup(1650, 14, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2], 0);
 			Iter::Add(Refills, i);
 		}
@@ -5875,7 +5864,7 @@ stock LoadGangInfo() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableGangInfo__"` ORDER BY `gRespect` DESC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, GangInfo[i][fID]);
@@ -5907,19 +5896,19 @@ stock LoadFracInfo() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableFracInfo__"` ORDER BY `fID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		strmid(FracInfo[0][fName], "Civilian", 0, strlen("Civilian"), 255);
 		for(new i; i < rows; i++) {
 			new fracid;
 			cache_get_int(i, 0, fracid);
 			cache_get_int(i, 1, FracInfo[fracid][fBank]);
-			cache_get_str(i, 2, "p<,>a<i>[3]", FracInfo[fracid][fRConf]);
-			cache_get_str(i, 3, "p<,>a<i>[2]", FracInfo[fracid][fBConf]);
-			cache_get_row(i, 4, FracInfo[fracid][fName], connDb, 36);
-			cache_get_row(i, 5, FracInfo[fracid][fTag], connDb, 16);
-			cache_get_str(i, 6, "p<,>a<i>[2]a<f>[4]", FracInfo[fracid][fSpawn][fSpawnInt], FracInfo[fracid][fSpawn][fSpawnPos]);
-			cache_get_str(i, 7, "h", FracInfo[fracid][fColor]);
+			cache_get_scn(i, 2, "p<,>a<i>[3]", FracInfo[fracid][fRConf]);
+			cache_get_scn(i, 3, "p<,>a<i>[2]", FracInfo[fracid][fBConf]);
+			cache_get_str(i, 4, FracInfo[fracid][fName], 36);
+			cache_get_str(i, 5, FracInfo[fracid][fTag], 16);
+			cache_get_scn(i, 6, "p<,>a<i>[2]a<f>[4]", FracInfo[fracid][fSpawn][fSpawnInt], FracInfo[fracid][fSpawn][fSpawnPos]);
+			cache_get_scn(i, 7, "h", FracInfo[fracid][fColor]);
 			Iter::Add(Frac, fracid);
 		}
 		debug("LoadFracInfo() - Ok! Fracs: %i. Run time: %i (ms)", Iter::Count(Frac), GetTickCount()-time);
@@ -5946,16 +5935,16 @@ stock LoadFracVehicles( ) {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableFracVehicles__"` ORDER BY `ID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, Fc::Info[i][Fc::Id][0]);
 			cache_get_int(i, 1, Fc::Info[i][Fc::Model]);
 			cache_get_int(i, 2, Fc::Info[i][Fc::FracId]);
 			cache_get_int(i, 3, Fc::Info[i][Fc::RankId]);
-			cache_get_str(i, 4, "p<,>a<i>[2]", Fc::Info[i][Fc::Color]);
-			cache_get_row(i, 5, Fc::Info[i][Fc::Number], connDb, 10);
-			cache_get_str(i, 6, "p<,>a<f>[4]", Fc::Info[i][Fc::RespPos]);
+			cache_get_scn(i, 4, "p<,>a<i>[2]", Fc::Info[i][Fc::Color]);
+			cache_get_str(i, 5, Fc::Info[i][Fc::Number], 10);
+			cache_get_scn(i, 6, "p<,>a<f>[4]", Fc::Info[i][Fc::RespPos]);
 			cache_get_float(i, 7, AutoInfo[0][aMileage]);
 			
 			Fc::Info[i][Fc::Id][1] = Veh::Create(
@@ -6046,10 +6035,10 @@ stock DateProp(playerid, ...) {
 
 public: ClearBanList(currtime) {
 	new banIp[16];
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
-			cache_get_row(i, 0, banIp);
+			cache_get_str(i, 0, banIp);
 			format(query, sizeof query, "unbanip %.16s", banIp);
 			SendRconCommand(query);
 		}
@@ -6151,7 +6140,7 @@ public: onPayDay() {
 					sendf(i, src, COLOR_GREY, "* Текущий баланс: $%i", Pl::Info[i][pBank]);
 					GameTextForPlayer(i, "~y~Bank~n~~w~Paycheck", 5000, 1);
 					PlayerPlayMusic(i);
-					DEBUG[TOTAL_PLAYER_PAID] ++;
+					Gm::DEBUG[TOTAL_PLAYER_PAID] ++;
 					
 					Pl::Info[i][pPayDay] = 0;
 					Pl::Info[i][pPayCheck] = 0;
@@ -6186,13 +6175,13 @@ public: onPayDay() {
 	GiveFracMoney(7, totaltax);
 	GiveBizzProfit(bidx, totalebill);
 	
-	format(src, sizeof(src), "PAYDAY STATS: Получивших зарплату: %i, Собрано налога: $%i, Ушло на зарплату: $%i, Счета за электричество: $%i", DEBUG[TOTAL_PLAYER_PAID], totaltax, totalchecks, totalebill);
+	format(src, sizeof(src), "PAYDAY STATS: Получивших зарплату: %i, Собрано налога: $%i, Ушло на зарплату: $%i, Счета за электричество: $%i", Gm::DEBUG[TOTAL_PLAYER_PAID], totaltax, totalchecks, totalebill);
 	SendToAdmin(COLOR_YELLOW, src, 1, 4);
-	format(src, sizeof(src), "PAYDAY STATS: Сохранений аккаунтов: %i, houses:%i/biznes:%i, MySQL-ошибок: %i, Сейчас играют: %i",
-	DEBUG[TOTAL_SAVE_ACCOUNT], DEBUG[TOTAL_SAVE_HOUSES], DEBUG[TOTAL_SAVE_BIZNES], DEBUG[TOTAL_QUERY_ERRORS], Iter::Count(Player));
+	format(src, sizeof(src), "PAYDAY STATS: Сохранений аккаунтов: %i, houses:%i/biznes:%i, Сейчас играют: %i",
+	Gm::DEBUG[TOTAL_SAVE_ACCOUNT], Gm::DEBUG[TOTAL_SAVE_HOUSES], Gm::DEBUG[TOTAL_SAVE_BIZNES], Iter::Count(Player));
 	SendToAdmin(COLOR_YELLOW, src, 1, 4);
 
-	for(new i; i < sizeof(DEBUG); i++) DEBUG[i] = 0; // Clear debug
+	for(new i; i < sizeof(Gm::DEBUG); i++) Gm::DEBUG[i] = 0; // Clear debug
 	
 	return 1;
 }
@@ -6208,8 +6197,9 @@ public: onPlayerRegister(playerid) {
 public: onPlayerLogin(playerid) {
 	if(!IsPlayerConnected(playerid)) return 1;
 	
-	if(cache_get_row_count() == 1) {
-		cache_get_row(0, 1, plname);
+	if(cache_num_rows() == 1) {
+		new money;
+		cache_get_str(0, 1, plname);
 		cache_get_int(0, 3, Pl::Info[playerid][pLevel]);
 		cache_get_int(0, 4, Pl::Info[playerid][pAdmin]);
 		cache_get_int(0, 5, Pl::Info[playerid][pHelper]);
@@ -6220,7 +6210,7 @@ public: onPlayerLogin(playerid) {
 		cache_get_int(0, 10, Pl::Info[playerid][pOrigin]);
 		cache_get_int(0, 11, Pl::Info[playerid][pMuted]);
 		cache_get_int(0, 12, Pl::Info[playerid][pExp]);
-		Rac::SetPlayerMoney(playerid, cache_get_row_int(0, 13));
+		cache_get_int(0, 13, money), Rac::SetPlayerMoney(playerid, money);
 		cache_get_int(0, 14, Pl::Info[playerid][pBank]);
 		cache_get_int(0, 15, Pl::Info[playerid][pCrimes]);
 		cache_get_int(0, 16, Pl::Info[playerid][pKills]);
@@ -6242,12 +6232,12 @@ public: onPlayerLogin(playerid) {
 		cache_get_int(0, 32, Pl::Info[playerid][pRank]);
 		cache_get_int(0, 33, Pl::Info[playerid][pChar]);
 		cache_get_int(0, 34, Pl::Info[playerid][pContractTime]);
-		cache_get_str(0, 35, "p<,>a<i>[8]", Pl::Info[playerid][pSkill]);
+		cache_get_scn(0, 35, "p<,>a<i>[8]", Pl::Info[playerid][pSkill]);
 		cache_get_int(0, 36, Pl::Info[playerid][pLocal]);
 		cache_get_int(0, 37, Pl::Info[playerid][pNumber]);
 		cache_get_int(0, 38, Pl::Info[playerid][pHouseKey]);
 		cache_get_int(0, 39, Pl::Info[playerid][pBizKey]);
-		cache_get_str(0, 40, "p<,>a<i>[4]", Pl::Info[playerid][pLic]);
+		cache_get_scn(0, 40, "p<,>a<i>[4]", Pl::Info[playerid][pLic]);
 		cache_get_int(0, 41, Pl::Info[playerid][pCarTime]);
 		cache_get_int(0, 42, Pl::Info[playerid][pPayDay]);
 		cache_get_int(0, 43, Pl::Info[playerid][pPayDayHad]);
@@ -6259,7 +6249,7 @@ public: onPlayerLogin(playerid) {
 		cache_get_int(0, 49, Pl::Info[playerid][pBanned]);
 		cache_get_int(0, 50, Pl::Info[playerid][pTest]);
 		cache_get_int(0, 51, Pl::Info[playerid][pRebuke]);
-		cache_get_str(0, 52, "p<,>a<i>[3]", Pl::Info[playerid][pPasport]);
+		cache_get_scn(0, 52, "p<,>a<i>[3]", Pl::Info[playerid][pPasport]);
 		cache_get_int(0, 53, Pl::Info[playerid][pLastVisit]);
 	} else {
 		WrongLogin[playerid]--;
@@ -6386,7 +6376,7 @@ public: Pl::Update(playerid) {
 		scf(query, src, "`Online`='%i' ", Pl::Info[playerid][pLastVisit]);
 		scf(query, src, "WHERE `ID`='%i'", Pl::Info[playerid][pID]);
 		Db::tquery(connDb, query, "", "");
-		DEBUG[TOTAL_SAVE_ACCOUNT] ++;
+		Gm::DEBUG[TOTAL_SAVE_ACCOUNT] ++;
 	}
 	return 1;
 }
@@ -6419,7 +6409,7 @@ stock UpdateHouse(i) {
 	scf(query, src, "`vehicle_spawn`='%.3f,%.3f,%.3f,%.3f' ", HouseInfo[i][hvSpawn][0], HouseInfo[i][hvSpawn][1], HouseInfo[i][hvSpawn][2], HouseInfo[i][hvSpawn][3]);
 	scf(query, src, "WHERE `id`='%i'", HouseInfo[i][hID]);
 	Db::tquery(connDb, query, "", "");
-	DEBUG[TOTAL_SAVE_HOUSES]++;
+	Gm::DEBUG[TOTAL_SAVE_HOUSES]++;
 	return 1;
 }
 
@@ -6458,14 +6448,14 @@ stock Fc::Update(idx) {
 }
 
 stock UpdateBizz(i) {
-	new safeDescription[24];
-	Db::escape_string(BizzInfo[i][bDescription], safeDescription, connDb);
+	new safestr[24];
+	Db::escape_string(BizzInfo[i][bDescription], safestr, sizeof safestr, connDb);
 	format(query, sizeof query, "UPDATE `"#__TableBusines__"` SET ");
 	scf(query, src, "`owned`='%i',", BizzInfo[i][bOwned]);
 	scf(query, src, "`locked`='%i',", BizzInfo[i][bLocked]);
 	scf(query, src, "`owner`='%s',", BizzInfo[i][bOwner]);
 	scf(query, src, "`extortion`='%s',", BizzInfo[i][bExtortion]);
-	scf(query, src, "`description`='%s',", safeDescription);
+	scf(query, src, "`description`='%s',", safestr);
 	scf(query, src, "`level`='%i',", BizzInfo[i][bLevel]);
 	scf(query, src, "`price`='%i',", BizzInfo[i][bPrice]);
 	scf(query, src, "`safe`='%i',", BizzInfo[i][bSafe]);
@@ -6480,7 +6470,7 @@ stock UpdateBizz(i) {
 	scf(query, src, "`exit`='%.3f,%.3f,%.3f,%.3f' ", BizzInfo[i][bExit][0], BizzInfo[i][bExit][1], BizzInfo[i][bExit][2], BizzInfo[i][bExit][3]);
 	scf(query, src, "WHERE `id` = '%i'", BizzInfo[i][bID]);
 	Db::tquery(connDb, query, "", "");
-	DEBUG[TOTAL_SAVE_BIZNES]++;
+	Gm::DEBUG[TOTAL_SAVE_BIZNES]++;
 	return 1;
 }
 
@@ -7446,7 +7436,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							} else {
 								format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `Number` = '%i'", amount);
 								new Cache:result = Db::query(connDb, query, true);
-								if(cache_get_row_count()) {
+								if(cache_num_rows()) {
 									format(string, sizeof(string), "* Номер телефона %d уже есть у другого игрока.", amount);
 									Send(playerid, COLOR_GREY, string);
 								} else {
@@ -9666,7 +9656,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SHA256_PassHash(inputtext, Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
 				format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
 				new Cache:result = Db::query(connDb, query, true);
-				if(cache_get_row_count()) {
+				if(cache_num_rows()) {
 					SPD(playerid, D_CHANGE_PASS+1,DIALOG_STYLE_PASSWORD,""#__SERVER_PREFIX""#__SERVER_NAME_LC": ATTENTION PLEASE",
 					"ВНИМАНИЕ! Вы хотите изменить пароль своего аккаунта!\n\
 					Введите новый пароль и нажмите ОК!\n\n\
@@ -11479,8 +11469,8 @@ stock GetUserName(uid) {
 	new name[24];
 	format(query, sizeof query, "SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID` = '%i'", uid);
 	new Cache:result = Db::query(connDb, query, true);
-	if(cache_get_row_count() > 0) {
-		cache_get_row(0, 0, name);
+	if(cache_num_rows() > 0) {
+		cache_get_str(0, 0, name);
 	} else {
 		strmid(name, "-", 0, 1, 24);
 	}
@@ -11681,9 +11671,9 @@ stock GetHelperRank(hlvl) {
 }
 
 stock Db::Init() {		
-	Db::log(Db::Conf[Db::Debug] == 1 ? (LOG_ERROR | LOG_WARNING | LOG_DEBUG) : (LOG_ERROR | LOG_WARNING));
+	Db::log(Db::Conf[Db::Debug] == 1 ? (ERROR | WARNING | DEBUG) : (ERROR | WARNING));
 	
-	connDb = Db::connect(Db::Conf[Db::Host], Db::Conf[Db::User], Db::Conf[Db::Base], Db::Conf[Db::Pass]);
+	connDb = Db::connect(Db::Conf[Db::Host], Db::Conf[Db::User], Db::Conf[Db::Pass], Db::Conf[Db::Base]);
 	
 	new errno = Db::errno();
 	if(errno == 0) Db::FixCharset();
@@ -11725,12 +11715,7 @@ stock Db::FixCharset() {
 
 stock Db::Prepare() {
 	if(fexist("update.sql")) {
-		new File:fhandle = fopen("update.sql", io_read);
-		while(fread(fhandle, temp)) {
-			LoadFile(temp, query);
-			Db::query(connDb, query, false);
-		}
-		fclose(fhandle);
+		mysql_query_file(connDb, "update.sql", false);
 	}
 	return 1;
 }
@@ -12428,8 +12413,8 @@ stock RemoveBanList(userid) {
 	new banIp[16];
 	format(query, sizeof query, "SELECT `ip` FROM `"#__TableBanned__"` WHERE `user_id`='%i'", userid);
 	new Cache:result = Db::query(connDb, query, true);
-	if(cache_get_row_count()) {
-		cache_get_row(0, 0, banIp);
+	if(cache_num_rows()) {
+		cache_get_str(0, 0, banIp);
 		format(query, sizeof query, "unbanip %.16s", banIp);
 		SendRconCommand(query);
 			
@@ -12444,7 +12429,7 @@ stock RemoveBanList(userid) {
 stock isBanned(userid) {
 	format(query, sizeof query, "SELECT `user_id` FROM `"#__TableBanned__"` WHERE `user_id` = '%i'", userid);
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	cache_delete(result);
 	return rows;
 }
@@ -12457,13 +12442,13 @@ public: CheckBan(playerid) {
 		`ip`,`date`,`unbandate`,`reason` FROM `"#__TableBanned__"` WHERE `user_id`='%i'", Pl::Info[playerid][pID]);
 		
 		new Cache:result = Db::query(connDb, query, true);
-		if(cache_get_row_count()) {
-			cache_get_row(0, 0, plname);
-			cache_get_row(0, 1, aname);
-			cache_get_row(0, 2, bip);
+		if(cache_num_rows()) {
+			cache_get_str(0, 0, plname);
+			cache_get_str(0, 1, aname);
+			cache_get_str(0, 2, bip);
 			cache_get_int(0, 3, bandate);
 			cache_get_int(0, 4, unbandate);
-			cache_get_row(0, 5, reason);
+			cache_get_str(0, 5, reason);
 			cache_delete(result);
 			
 			if((unbandate-gettime()) > 0) {
@@ -12493,12 +12478,12 @@ stock ShowPlayerBanList(adminid, pname[]) {
 	(SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`admin_id`),\
 	`ip`,`date`,`unbandate`,`reason` FROM `"#__TableBanned__"` WHERE `user_id`=(SELECT `ID` FROM `"#__TableUsers__"` WHERE BINARY `Name`='%s')", pname);
 	new Cache:result = Db::query(connDb, query, true);
-	if(cache_get_row_count()) {
-		cache_get_row(0, 1, aname);
-		cache_get_row(0, 2, bip);
+	if(cache_num_rows()) {
+		cache_get_str(0, 1, aname);
+		cache_get_str(0, 2, bip);
 		cache_get_int(0, 3, bandate);
 		cache_get_int(0, 4, unbandate);
-		cache_get_row(0, 5, reason);
+		cache_get_str(0, 5, reason);
 		
 		to_timestamp(date_s[0], bandate, "%d-%m-%Y, %X");
 		to_timestamp(date_s[1], unbandate, "%d-%m-%Y, %X");
@@ -12739,7 +12724,7 @@ stock GetIDFromName(playername[]) {
 	new id = -1;
 	format(query, sizeof query, "SELECT `ID` FROM `"#__TableUsers__"` WHERE BINARY `Name` = '%s'", playername);
 	new Cache:result = Db::query(connDb, query, true);
-	if(cache_get_row_count()) {
+	if(cache_num_rows()) {
 		cache_get_int(0, 0, id);
 	}
 	cache_delete(result);
@@ -12766,31 +12751,6 @@ stock IsPlayerInBiz(playerid, Float:radi = 5.0, bizid) {
 		return (IsPlayerInRangeOfPoint(playerid, radi, BizzInfo[id][bExit][0], BizzInfo[id][bExit][1], BizzInfo[id][bExit][2]) && Pl::Info[playerid][pLocal] == (OFFSET_BIZZ + id));
 	}
 	return 0;
-}
-
-
-public OnQueryError(errorid, error[], callback[], querystr[], connectionHandle) {
-	switch(errorid) {
-		case CR_SERVER_LOST : {
-			Db::reconnect(connectionHandle);
-			Db::FixCharset();
-			
-			if(strfind(querystr, "UPDATE", true) != -1) {
-				Db::tquery(connDb, querystr, "", "");
-			}
-			
-			return 1;
-		}
-	}
-	
-	format(temp, sizeof temp, "(SQL) Query error! ( eID: %i; callback: %s )", errorid, callback),
-		SendToAdmin(COLOR_LIGHTBLUE, temp, 4, 5);
-	format(temp, sizeof temp, "(SQL) Error: %s", error),
-		SendToAdmin(COLOR_LIGHTBLUE, temp, 4, 5);
-		
-	SendLog(LOG_MYSQL_ERROR,	querystr);
-	DEBUG[TOTAL_QUERY_ERRORS]++;
-	return 1;
 }
 
 stock AddPickup(model, type, Float:x, Float:y, Float:z, vw = -1, text[] = " ", color = INVALID_ID, Float:offsetX = 0.0, Float:offsetY = 0.0, Float:offsetZ = 0.6) {
@@ -13306,7 +13266,7 @@ stock LoadVehicles() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableVehicles__"` ORDER BY `ID` ASC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i, veh; i < rows; i++) {
 			cache_get_int(i, 0, VehicleInfo[i][vID]);
@@ -13331,7 +13291,7 @@ stock LoadVehicles() {
 				VehicleInfo[i][vColor2],
 				VehicleInfo[i][vRespTime]
 			);
-			cache_get_str(i, 11, "p<,>a<i>[14]i", AutoInfo[veh][aTuning], AutoInfo[veh][aPaintJob]);
+			cache_get_scn(i, 11, "p<,>a<i>[14]i", AutoInfo[veh][aTuning], AutoInfo[veh][aPaintJob]);
 			AddTuning(veh);
 			SetVehicleNumber(veh);
 			AutoInfo[veh][aMileage] = AutoInfo[0][aMileage];
@@ -13426,14 +13386,14 @@ public: _ShowOffline(playerid, id) {
 	
 	switch(id) {
 		case 0 : {
-			new num, rows = cache_get_row_count(rows);
+			new num, rows = cache_num_rows();
 			if(rows > 0) {
 				new leaderid, leader;
 				strcat(dialogtext, "Лидер\tПоследний везит\tФракция\n");
 				while(rows--) {
-					cache_get_row(rows, 0, name);
+					cache_get_str(rows, 0, name);
 					cache_get_int(rows, 1, leader);
-					cache_get_row(rows, 2, lastdate);
+					cache_get_str(rows, 2, lastdate);
 					
 					if(IsValidFrac(leader)) {
 						leaderid = ReturnUser(name);
@@ -13454,14 +13414,14 @@ public: _ShowOffline(playerid, id) {
 		}
 		
 		case 1 : {
-			new num, rows = cache_get_row_count(rows);
+			new num, rows = cache_num_rows();
 			if(rows) {
 				new helperid, helper;
 				strcat(dialogtext, "Хелпер\tПоследний везит\tРанг\n");
 				while(rows--) {
-					cache_get_row(rows, 0, name);
+					cache_get_str(rows, 0, name);
 					cache_get_int(rows, 1, helper);
-					cache_get_row(rows, 2, lastdate);
+					cache_get_str(rows, 2, lastdate);
 					if(1 <= helper <= 3) {
 						helperid = ReturnUser(name);
 						if(!Pl::isLogged(helperid)) {
@@ -13480,14 +13440,14 @@ public: _ShowOffline(playerid, id) {
 		}
 		
 		case 2 : {
-			new num, rows = cache_get_row_count(rows);
+			new num, rows = cache_num_rows();
 			if(rows) {
 				new adminid, admin;
 				strcat(dialogtext, "Админ\tПоследний везит\tРанг\n");
 				while(rows--) {
-					cache_get_row(rows, 0, name);
+					cache_get_str(rows, 0, name);
 					cache_get_int(rows, 1, admin);
-					cache_get_row(rows, 2, lastdate);
+					cache_get_str(rows, 2, lastdate);
 					if(1 <= admin <= 5) {
 						adminid = ReturnUser(name);
 						if(!Pl::isLogged(adminid)) {
@@ -13738,7 +13698,7 @@ stock Fc::IsForbiddenVeh(modelid) {
 stock Fc::IsThereModel(fracid, modelid) {
 	format(query, sizeof query, "SELECT * FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", fracid, modelid);
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	cache_delete(result);
 	return rows > 0;
 }
@@ -13746,7 +13706,7 @@ stock Fc::IsThereModel(fracid, modelid) {
 stock Fc::ShowModel( playerid, fracid, dialogid) {
 	format(query, sizeof query, "SELECT `model_id`,`model_limit` FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i'", fracid);
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		new model_id, model_limit;
 		dialog[0] = '\0';
@@ -13852,7 +13812,7 @@ stock LoadSkins() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT `f_id`,`skin_id` FROM `frac_skins`");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, query[0]);
@@ -13870,12 +13830,12 @@ stock LoadRanks( ) {
 	format( query, sizeof query, "SELECT * FROM `"#__TableFracRanks__"` ORDER BY `r_id`");
 	new Cache:result = Db::query(connDb, query, true);
 	for(new i; i < MAX_RANK; i++) strmid(RankInfo[0][i], "-", 0, strlen("-"), 255);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i, fracid, rankid; i < rows; i++) {
 			cache_get_int(i, 0, fracid);
 			cache_get_int(i, 1, rankid);
-			cache_get_row(i, 2, RankInfo[fracid][rankid], connDb, 36);
+			cache_get_str(i, 2, RankInfo[fracid][rankid], 36);
 			RankNums[fracid] ++;
 		}
 		debug("LoadRanks() - Ok! Ranks: %i. Run time: %i (ms)", rows, GetTickCount()-time);
@@ -13888,16 +13848,16 @@ stock LoadPortals(){
 	new allowed, time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TablePickups__"` ORDER BY `id`");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
-			cache_get_str(i, 0, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Id]);
-			cache_get_str(i, 1, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Model]);
-			cache_get_str(i, 2, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Type]);
-			cache_get_str(i, 3, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Inter]);
-			cache_get_str(i, 4, "p<,>a<i>[2]", Ptl::Info[i][Ptl::World]);
-			cache_get_str(i, 5, "p<,>a<f>[4]", Ptl::Info[i][Ptl::Portal1]);
-			cache_get_str(i, 6, "p<,>a<f>[4]", Ptl::Info[i][Ptl::Portal2]);
+			cache_get_scn(i, 0, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Id]);
+			cache_get_scn(i, 1, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Model]);
+			cache_get_scn(i, 2, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Type]);
+			cache_get_scn(i, 3, "p<,>a<i>[2]", Ptl::Info[i][Ptl::Inter]);
+			cache_get_scn(i, 4, "p<,>a<i>[2]", Ptl::Info[i][Ptl::World]);
+			cache_get_scn(i, 5, "p<,>a<f>[4]", Ptl::Info[i][Ptl::Portal1]);
+			cache_get_scn(i, 6, "p<,>a<f>[4]", Ptl::Info[i][Ptl::Portal2]);
 			cache_get_int(i, 7, allowed);
 			
 			Ptl::Info[i][Ptl::Pickup][0]=_AddPickup(Ptl::Info[i][Ptl::Model][0],Ptl::Info[i][Ptl::Type][0],Ptl::Info[i][Ptl::Portal1],Ptl::Info[i][Ptl::World][0]);
@@ -13915,12 +13875,12 @@ stock LoadAntiDmZones() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableAntidmzones__"` ORDER BY `id` ASC");
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, AntiDmInfo[i][e_AntiDmZoneId]);
 			cache_get_int(i, 1, AntiDmInfo[i][e_AntiDmWorld]);
-			cache_get_str(i, 2, "a<f>[4]", AntiDmInfo[i][e_AntiDmCoord]);
+			cache_get_scn(i, 2, "a<f>[4]", AntiDmInfo[i][e_AntiDmCoord]);
 			
 			AntiDmInfo[i][e_AntiDmZone] = CreateDynamicSphere(
 				AntiDmInfo[i][e_AntiDmCoord][0],
@@ -13941,15 +13901,15 @@ stock LoadAntiDmZones() {
 stock LoadMaps() {
 	new time = GetTickCount();
 	new Cache:result = Db::query(connDb, "SELECT * FROM `maps` ORDER BY `id` ASC", true);
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		new id, mapfile[36], world, int;
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, id);
-			cache_get_row(i, 1, mapfile, 36);
+			cache_get_str(i, 1, mapfile, sizeof mapfile);
 			cache_get_int(i, 2, world);
 			cache_get_int(i, 3, int);
-			strmid(MapInfo[id][MapFile], mapfile, 0, strlen(mapfile), 36);
+			strmid(MapInfo[id][MapFile], mapfile, 0, strlen(mapfile), sizeof mapfile);
 			MapInfo[id][MapID] = map::Load(MapInfo[id][MapFile], world, int);
 			Iter::Add(Maps, id);
 		}
@@ -13993,7 +13953,7 @@ stock Bl::Update(playerid, fracid) {
 }
 
 public: Bl::Check(playerid) {
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		new name[24];
 		GetPlayerName(playerid, name, 24);
@@ -14028,14 +13988,14 @@ public: Bl::Show(playerid, fracid) {
 	Send(playerid, COLOR_WHITE, "______________ Черный Список ______________");
 	
 	new accuser[24], _date[24], reason[36];
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
-			cache_get_str(i, 0, "u", query[0]);
+			cache_get_scn(i, 0, "u", query[0]);
 			cache_get_int(i, 1, query[1]);
-			cache_get_row(i, 2, _date);
-			cache_get_row(i, 3, accuser);
-			cache_get_row(i, 4, reason);
+			cache_get_str(i, 2, _date);
+			cache_get_str(i, 3, accuser);
+			cache_get_str(i, 4, reason);
 			
 			if(Pl::isLogged(query[0])) {
 				GetPlayerName(query[0], plname, 24);
@@ -14523,15 +14483,15 @@ stock ShowLoginForm(playerid, id) {
 }
 
 public: LoadExtraVehicles(playerid) {
-	new rows = cache_get_row_count();
+	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			cache_get_int(i, 0, ExtraVehicles[playerid][i][evID1]);
 			cache_get_int(i, 1, ExtraVehicles[playerid][i][evOwner]);
 			cache_get_int(i, 2, ExtraVehicles[playerid][i][evModel]);
 			cache_get_int(i, 3, ExtraVehicles[playerid][i][evPark]);
-			cache_get_str(i, 4, "p<,>ii", ExtraVehicles[playerid][i][evColor1], ExtraVehicles[playerid][i][evColor2]);
-			cache_get_str(i, 5, "p<,>ffff", ExtraVehicles[playerid][i][evSpawnX], ExtraVehicles[playerid][i][evSpawnY], ExtraVehicles[playerid][i][evSpawnZ], ExtraVehicles[playerid][i][evSpawnA]);
+			cache_get_scn(i, 4, "p<,>ii", ExtraVehicles[playerid][i][evColor1], ExtraVehicles[playerid][i][evColor2]);
+			cache_get_scn(i, 5, "p<,>ffff", ExtraVehicles[playerid][i][evSpawnX], ExtraVehicles[playerid][i][evSpawnY], ExtraVehicles[playerid][i][evSpawnZ], ExtraVehicles[playerid][i][evSpawnA]);
 			
 			if(ExtraVehicles[playerid][i][evPark] == PARK_HOME) {
 				ExtraVehicles[playerid][i][evID2] = Veh::Create(
@@ -14744,15 +14704,15 @@ stock GetPlayerPosEx(playerid, &Float:x, &Float:y, &Float:z, &Float:a) {
 
 stock LoadGates() {
 	new Cache:result = Db::query(connDb, "SELECT * FROM `gate` ORDER BY `id` ASC", true);
-	new time = GetTickCount(), rows = cache_get_row_count();
+	new time = GetTickCount(), rows = cache_num_rows();
 	if(rows) {
-		for(new i; i < rows; i++) {
-			new id = cache_get_row_int(i, 0);
+		for(new id, i; i < rows; i++) {
+			cache_get_int(i, 0, id);
 			GateData[id][GateID] = CreateGate();
 			cache_get_int(i, 1, GateData[id][GateAttach]);
 			switch(GateData[id][GateAttach]) {
 				case GATE_ATTACH_FRAC : {
-					cache_get_row(i, 2, temp);
+					cache_get_str(i, 2, temp);
 					for(new j, len = strlen(temp); j < len;) {
 						split(src, temp, j, ',');
 						GateData[id][GateAllowed][strval(src)] = 1;
@@ -14779,14 +14739,16 @@ stock LoadGates() {
 stock LoadGateLeaf(id, gateid) {
 	format(query, sizeof query, "SELECT * FROM `gate_leaf` WHERE `gate_id` = '%i'", id);
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new value, rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			new Float:close_pos[6], Float:open_pos[6];
-			cache_get_str(i, 3, "p<,>a<f>[6]", close_pos);
-			cache_get_str(i, 4, "p<,>a<f>[6]", open_pos);
-			new leafid = AddLeafToGate(gateid, cache_get_row_int(i, 1), close_pos, open_pos);
-			SetLeafType(gateid, leafid, cache_get_row_int(i, 2));
+			cache_get_scn(i, 3, "p<,>a<f>[6]", close_pos);
+			cache_get_scn(i, 4, "p<,>a<f>[6]", open_pos);
+			cache_get_int(i, 1, value);
+			new leafid = AddLeafToGate(gateid, value, close_pos, open_pos);
+			cache_get_int(i, 2, value);
+			SetLeafType(gateid, leafid, value);
 		}
 	}
 	cache_delete(result);
@@ -14795,12 +14757,13 @@ stock LoadGateLeaf(id, gateid) {
 stock LoadGatePickup(id, gateid) {
 	format(query, sizeof query, "SELECT * FROM `gate_pickup` WHERE `gate_id` = '%i'", id);
 	new Cache:result = Db::query(connDb, query, true);
-	new rows = cache_get_row_count();
+	new value, rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
 			new Float:pos[3];
-			cache_get_str(i, 2, "p<,>a<f>[3]", pos);
-			AddPickupToGate(gateid, cache_get_row_int(i, 1), pos);
+			cache_get_scn(i, 2, "p<,>a<f>[3]", pos);
+			cache_get_int(i, 1, value);
+			AddPickupToGate(gateid, value, pos);
 		}
 	}
 	cache_delete(result);

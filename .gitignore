@@ -2,6 +2,7 @@
 ## GWRP 0.3
 #############
 /server/scriptfiles/logs/
+/server/logs/
 *.amx
 *.lst
 *.asm

@@ -743,7 +743,7 @@ CMD:setname(playerid, params[]) { new string[144];
 	if(Pl::Info[params[0]][pAdmin] > Pl::Info[playerid][pAdmin]) return Send(playerid, COLOR_LIGHTRED, "Введите: Вы не можете изминить имя админу который старше вас!");
 	format(string, sizeof string, "SELECT * FROM `"#__TableUsers__"` WHERE BINARY `Name`='%s'", params[1]);
 	new Cache:result = Db::query(connDb, string, true);
-	if(cache_get_row_count()) {
+	if(cache_num_rows()) {
 		Send(playerid,COLOR_GREY,"* Такое имя уже есть на сервере!");
 	} else {
 		SetPVarString(params[0], "NewName", params[1]);
