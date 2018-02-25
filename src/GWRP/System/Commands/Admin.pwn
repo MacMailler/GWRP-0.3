@@ -1,32 +1,6 @@
-/***
-	The MIT License (MIT)
 
-	Copyright (c) 2014 MacMailler
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
-***/
-
-#if defined __AdminCommand__
-	#endinput
-#endif
-#define __AdminCommand__
-
+#if !defined _System_Commands_Admin_
+#define _System_Commands_Admin_
 
 CMD:maps(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
@@ -156,17 +130,17 @@ CMD:unloadmap(playerid, params[]) { new string[144];
 	
 CMD:togglereg(playerid, params[]) {
 	if(!Pl::isAdmin(playerid, ADMINISTRATOR)) return Send(playerid, COLOR_GREY, "* Недастаточно прав!");
-	switch(Gm::Info[Gm::EnableReg]) {
+	switch(prop::EnableReg) {
 		case 0 : {
 			Send(playerid, COLOR_YELLOW, "* Регистрация включена!");
-			Gm::Info[Gm::EnableReg] = 1;
+			prop::EnableReg = 1;
 		}
 		case 1 : {
 			Send(playerid, COLOR_YELLOW, "* Регистрация отключена!");
-			Gm::Info[Gm::EnableReg] = 0;
+			prop::EnableReg = 0;
 		}
 	}
-	SaveStuff();
+	prop::Update();
 	return 1;
 }
 
@@ -238,7 +212,7 @@ CMD:addskin(playerid, params[]) {
 	if(!Container::Find(params[0], params[1])) return Send(playerid, COLOR_GREY, "* Skin found!");
 	Container::Add(params[0], params[1]);
 	format(query, sizeof query, "INSERT INTO `"#__TableFracSkins__"` (`f_id`,`skin_id`) VALUES ('%i','%i')", params[0], params[1]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	Send(playerid, COLOR_YELLOW, "* Скин добавлен!");
 	return 1;
 }
@@ -249,7 +223,7 @@ CMD:delskin(playerid, params[]) {
 	if(!Container::Find(params[0], params[1])) return Send(playerid, COLOR_GREY, "* Skin not found!");
 	Container::Remove(params[0], params[1]);
 	format(query, sizeof query, "DELETE FROM `"#__TableFracSkins__"` WHERE `f_id` = '%i' AND `skin_id` = '%i'", params[0], params[1]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	Send(playerid, COLOR_YELLOW, "* Скин удален!");
 	return 1;
 }
@@ -490,7 +464,7 @@ CMD:antidmzone(playerid, params[]) { new string[144];
 	if(TOTAL_ANTIDM_ZONES >= sizeof AntiDmInfo) return Send(playerid, COLOR_GREY, "* Создано макс. кол-во зон!");
 	if(sscanf(params, "f", distance)) return Send(playerid, COLOR_GREY, "Введите: /antidmzone [radius]");
 	format(string, sizeof string, "INSERT INTO `"#__TableAntidmzones__"` (`coord`) VALUES ('0.0,0.0,0.0,%.4f')", params[0]);
-	new Cache:result = Db::query(connDb, string, true);
+	new Cache:result = db::query(db::Handle, string, true);
 	if(cache_affected_rows()) {
 		new zone = TOTAL_ANTIDM_ZONES++;
 		AntiDmInfo[zone][e_AntiDmZoneId] = cache_insert_id();
@@ -523,7 +497,7 @@ CMD:addpic(playerid, params[]) { new string[144];
 		return Send(playerid, COLOR_GREY, "Введите: /addpickup [modelid] (optional [vw] [type])");
 
 	format(string, sizeof string, "INSERT INTO `"#__TablePickups__"` (`models`) VALUES ('%i,0')", params[0]);
-	new Cache:result = Db::query(connDb, string, true);
+	new Cache:result = db::query(db::Handle, string, true);
 	if(cache_affected_rows()) {
 		if(params[1] == -1) params[1] = GetPlayerVirtualWorld(playerid);
 		
@@ -662,7 +636,7 @@ CMD:addrefill(playerid, params[]) {
 	RefillInfo[i][brPickup] = AddPickup(1650, 14, RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2], 0);
 	
 	format(query, sizeof query, "INSERT INTO `"#__TableRefills__"` (`biz`, `pos`) VALUES (%i,'%.3f,%.3f,%.3f')", params[0], RefillInfo[i][brPos][0], RefillInfo[i][brPos][1], RefillInfo[i][brPos][2]);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	if(cache_affected_rows()) {
 		RefillInfo[i][brID] = cache_insert_id();
 		Send(playerid, COLOR_GREY, "* Заправка была добавлена!");
@@ -686,7 +660,7 @@ CMD:addbiz(playerid, params[]) {
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, a);
 	format(query, sizeof query, "INSERT INTO `"#__TableBusines__"` (`enter`) VALUES ('%.3f,%.3f,%.3f,%.3f')", x, y, z, a);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	if(cache_affected_rows()) {
 		new b = Iter::Count(Biznes);
 		Iter::Add(Biznes, b);
@@ -742,7 +716,7 @@ CMD:setname(playerid, params[]) { new string[144];
 	if(NameChange{params[0]}) return Send(playerid, COLOR_GREY, "* Этому игроку уже изменили ник!");
 	if(Pl::Info[params[0]][pAdmin] > Pl::Info[playerid][pAdmin]) return Send(playerid, COLOR_LIGHTRED, "Введите: Вы не можете изминить имя админу который старше вас!");
 	format(string, sizeof string, "SELECT * FROM `"#__TableUsers__"` WHERE BINARY `Name`='%s'", params[1]);
-	new Cache:result = Db::query(connDb, string, true);
+	new Cache:result = db::query(db::Handle, string, true);
 	if(cache_num_rows()) {
 		Send(playerid,COLOR_GREY,"* Такое имя уже есть на сервере!");
 	} else {
@@ -1012,9 +986,9 @@ CMD:asetpass(playerid, params[]) { new string[144], uname[24], ukey[36], uhash[S
 	if(sscanf(params, "s[24]s[36]", uname, ukey)) return Send(playerid, COLOR_GREY, "Введите: /asetpass [name] [password]");
 	new pid=ReturnUser(uname);
 	if(Pl::isLogged(pid)) {
-		SHA256_PassHash(ukey, Db::Conf[Db::KeySult], uhash, SHA2_HASH_LEN);
+		SHA256_PassHash(ukey, db::Salt, uhash, SHA2_HASH_LEN);
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", uhash, Pl::Info[pid][pID]);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 	
 		format(string, sizeof string, "* Вы изменили пароль %s, новый пароль; %s", uname, ukey);
 		Send(playerid, COLOR_LIGHTRED, string);
@@ -1027,9 +1001,9 @@ CMD:asetpass(playerid, params[]) { new string[144], uname[24], ukey[36], uhash[S
 	} else {
 		new uid = GetIDFromName(uname);
 		if(uid == -1) return Send(playerid, COLOR_GREY, "* Нет такого юзера!");
-		SHA256_PassHash(ukey, Db::Conf[Db::KeySult], uhash, SHA2_HASH_LEN);
+		SHA256_PassHash(ukey, db::Salt, uhash, SHA2_HASH_LEN);
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", uhash, uid);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 		
 		format(string, sizeof string, "* Вы изменили пароль %s, новый пароль %s", uname, ukey);
 		Send(playerid, COLOR_LIGHTRED, string);
@@ -1480,7 +1454,7 @@ CMD:unleader(playerid, params[]) { new string[144], sendername[24], playername[2
 		}
 	} else {
 		format(string, sizeof string, "UPDATE `"#__TableUsers__"` SET `Leader`='0' WHERE BINARY `Name`='%s'", playername);
-		new Cache:result = Db::query(connDb, string, true);
+		new Cache:result = db::query(db::Handle, string, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
 			format(string, sizeof string, "[AdmWarn] * %s применил команду /unleader к лидеру %s, причина: %s", sendername, playername, temp);
@@ -1504,7 +1478,7 @@ CMD:unhelper(playerid, params[]) { new string[144], sendername[24], playername[2
 		}
 	} else {
 		format(string, sizeof string, "UPDATE `"#__TableUsers__"` SET `Helper`='0' WHERE BINARY `Name`='%s'", playername);
-		new Cache:result = Db::query(connDb, string, true);
+		new Cache:result = db::query(db::Handle, string, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
 			format(string, sizeof string, "[AdmWarn] * %s применил команду /unhelper к хелперу %s, причина: %s", sendername, playername, temp);
@@ -1528,7 +1502,7 @@ CMD:unadmin(playerid, params[]) { new string[144], sendername[24], playername[24
 		}
 	} else {
 		format(string, sizeof string, "UPDATE `"#__TableUsers__"` SET `Admin`='0' WHERE BINARY `Name`='%s'", playername);
-		new Cache:result = Db::query(connDb, string, true);
+		new Cache:result = db::query(db::Handle, string, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
 			format(string, sizeof string, "[AdmWarn] * %s применил команду /unhelper к админу %s, причина: %s", sendername, playername, temp);
@@ -1639,7 +1613,7 @@ CMD:setspawn(playerid, params[]) { new string[144];
 	scf(query, string, "`spawn_z`='%.3f',", SpawnInfo[params[0]][spZ]);
 	scf(query, string, "`spawn_a`='%.3f' ", SpawnInfo[params[0]][spA]);
 	scf(query, string, "WHERE `ID` = '%i'", params[0]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	Send(playerid, COLOR_YELLOW, "* Место спавна было изменино!");
 	return 1;
 }
@@ -1674,7 +1648,7 @@ CMD:fracspawn(playerid, params[]) { new string[144];
 	scf(query, string, "%.3f,%.3f,", FracInfo[params[0]][fSpawn][fSpawnPos][0], FracInfo[params[0]][fSpawn][fSpawnPos][1]);
 	scf(query, string, "%.3f,%.3f'", FracInfo[params[0]][fSpawn][fSpawnPos][2], FracInfo[params[0]][fSpawn][fSpawnPos][3]);
 	scf(query, string, " WHERE `fID` = '%i'", params[0]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	Send(playerid, COLOR_YELLOW, "* Место спавна было изменино!");
 	return 1;
 }
@@ -2206,7 +2180,7 @@ CMD:banacc(playerid, params[]) { new string[144], sendername[24], playername[24]
 	params[0] = ReturnUser(playername);
 	if(!IsPlayerConnected(params[0])) {
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Banned` = '1' WHERE BINARY `Name` = '%s'", playername);
-		new Cache:result = Db::query(connDb, query, true);
+		new Cache:result = db::query(db::Handle, query, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
 			format(string, sizeof string, "[AdmWarn] * %s заблокировал аккаунт %s, причина: %s", sendername, playername, temp);
@@ -2231,7 +2205,7 @@ CMD:unbanacc(playerid, params[]) { new string[144], sendername[24], playername[2
 	params[0] = ReturnUser(playername);
 	if(!IsPlayerConnected(params[0])) {
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Banned` = '0' WHERE BINARY `Name` = '%s'", playername);
-		new Cache:result = Db::query(connDb, query, true);
+		new Cache:result = db::query(db::Handle, query, true);
 		if(cache_affected_rows()) {
 			GetPlayerName(playerid, sendername, 24);
 			format(string, sizeof string, "[AdmWarn] * %s разблокировал аккаунт %s. Причина: %s", sendername, playername, temp);
@@ -2294,12 +2268,12 @@ CMD:oban(playerid, params[]) { new string[144], sendername[24], playername[24];
 	
 	new unbandate, currdate = gettime(), reason[64];
 	unbandate = currdate + (params[0]*1440)*60;
-	Db::escape_string(temp, reason);
+	db::escape_string(temp, reason);
 	GetPlayerName(playerid, sendername, 24);
 	format(query, sizeof query, "INSERT INTO `"#__TableBanned__"` (`user_id`,`admin_id`,`date`,`unbandate`,`reason`) VALUES (");
 	scf(query, src, "'%i','%i',", banid, Pl::Info[playerid][pID]);
 	scf(query, src, "'%i','%i','%s')", currdate, unbandate, reason);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	
 	format(query, sizeof query, "[OFFBAN] Админ %s забанил игрока %s, причина: %s", sendername, playername, reason);
 	SendToAdmin(COLOR_LIGHTBLUE, query, 1, 3);
@@ -2757,3 +2731,5 @@ CMD:aclear(playerid, params[]) { new string[144], sendername[24], playername[24]
 	Send(params[0], COLOR_LIGHTBLUE, string);
 	return 1;
 }
+
+#endif

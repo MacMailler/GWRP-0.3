@@ -23,294 +23,9 @@
 ***/
 
 #include <a_samp>
-#include "GWRP\Core\bootstrap.pwn"
+#include "GWRP/Init.pwn"
+#include <anticheat>
 
-#define __GamemodeName__		"GWRP"
-#define __GamemodeVersion__		"0.3"
-#define __GamemodeCopyright__	"(c) MacMailler, 2012—2014"
-
-#define __DBPrefix__			""
-
-#define __TableUsers__			__DBPrefix__"users"
-#define __TableHouses__			__DBPrefix__"houses"
-#define __TableBusines__		__DBPrefix__"busines"
-#define __TableStuffs__			__DBPrefix__"stuffs"
-#define __TableSpawns__			__DBPrefix__"spawns"
-#define __TableBanned__			__DBPrefix__"banned"
-#define __TableBlacklist__		__DBPrefix__"blacklist"
-#define __TableFracInfo__		__DBPrefix__"frac_info"
-#define __TableFracModels__		__DBPrefix__"frac_models"
-#define __TableFracVehicles__	__DBPrefix__"frac_vehicles"
-#define __TableFracSkins__		__DBPrefix__"frac_skins"
-#define __TableGangInfo__		__DBPrefix__"ganginfo"
-#define __TableRefills__		__DBPrefix__"busines_refill"
-#define __TablePickups__		__DBPrefix__"pickups"
-#define __TableVehicles__		__DBPrefix__"vehicles"
-#define __TableFracRanks__		__DBPrefix__"frac_ranks"
-#define __TableAntidmzones__	__DBPrefix__"antidmzones"
-#define __TableExtraVehicles__	__DBPrefix__"extra_vehicles"
-#define __TableHouseGarages__	__DBPrefix__"houses_garage"
-
-#define LOG_ANTICHEAT			"anticheat"
-#define LOG_ADMINCHAT			"adminchat"
-#define LOG_REPORT				"report"
-#define LOG_ADMWARN				"admwarn"
-#define LOG_PAYDAY_STATS		"debug"
-#define LOG_GOV_CHAT			"gov"
-#define LOG_AD_CHAT				"ad"
-#define LOG_CHANGENAME			"changename"
-#define LOG_HELPER_CHAT			"helperchat"
-#define LOG_HOUSE				"houses"
-#define LOG_PAY					"pay"
-
-#define __SERVER_NAME_LC		"GrandWorld"
-#define __SERVER_NAME_L			"grandworld"
-#define __SERVER_NAME_C			"GRANDWORLD"
-#define __SERVER_PREFIX			"[RP]"
-#define __SERVER_SITE			"www.gwrp.net"
-
-#define MAX_FC					(300)
-#define MAX_GAS 				(64)
-#define MAX_FRAC				(19)
-#define MAX_JOBS				(12)
-#define MAX_RANK				(23)
-#define MAX_HWEAP				(6)
-#define MAX_SPAWNS				(4)
-#define MAX_BIZNES				(128)
-#define MAX_HOUSES				(1024)
-#define MAX_PORTALS				(60)
-#define MAX_AFK_TIME 			(600)
-#define MAX_ZONE_SIZE			(60.0)
-#define MAX_COMPONENT 			(14)
-#define MAX_VEHICLESex			(200)
-#define MAX_ANTIDM_ZONES		(10)
-#define MAX_FRAC_GATE			(50)
-#define MAX_REFILLS				(50)
-#define MAX_MAPS				(64)
-
-#define START_MONEY				(5000)
-#define START_LEVEL				(1)
-
-#define T_DIST 					(55.0)
-#define AFK_TEXT_SET 			(2)
-#define FC_DEF_NUMBER			"NONE"
-
-#define CHECKPOINT_NONE			(0)
-#define CHECKPOINT_HOME 		(12)
-
-#define JAILED_MAN 				(268)
-#define JAILED_WOMEN 			(69)
-
-#define INVALID_ID				(0xFFFF)
-#define INVALID_BIZ_ID			INVALID_ID
-#define INVALID_HOUSE_ID		INVALID_ID
-
-#define OFFSET_HOUSE			(INVALID_HOUSE_ID)
-#define OFFSET_BIZZ				(INVALID_HOUSE_ID + MAX_HOUSES)
-
-#define Bizz_PaintBall			(40)
-#define Bizz_EstateAgency		(38)
-#define Bizz_Church				(64)
-#define Bizz_PowerHouse			(34)
-#define Bizz_TelephoneCompany	(35)
-#define Bizz_Lottery			(31)
-#define Bizz_HouseService		(32)
-#define Bizz_RifaSklad			(37)
-#define Bizz_GarageLS			(66)
-#define Bizz_GarageLV			(67)
-#define Bizz_GarageSF 			(68)
-#define Bizz_GarageRublovka 	(83)
-#define Bizz_AutoSolonClassA	(39)
-#define Bizz_AutoSolonClassB	(36)
-#define Bizz_AutoSolonClassC	(51)
-#define Bizz_AutoSolonClassD	(69)
-#define Bizz_ProdSkladLS		(58)
-#define Bizz_ProdSkladSF		(44)
-#define Bizz_ProLaps			(7)
-
-#define TelephonePrice			500
-#define ScrathCardPrice			10000
-#define PhoneBookPrice			5000
-#define DicePrice				500
-#define CarKeyPrice				5000
-#define CandomPrice 			50
-#define CDPlayerPrice 			2500
-
-#define JOB_NONE 				(0)
-#define JOB_DETECTIVE 			(1)
-#define JOB_LAWYER 				(2)
-#define JOB_WHORE 				(3)
-#define JOB_DRUGDEALER			(4)
-#define JOB_THEFTAUTO 			(5)
-#define JOB_MECHANIC 			(6)
-#define JOB_GUNDEALER 			(7)
-#define JOB_AUTODEALER 			(8)
-#define JOB_BUSMAN 				(9)
-#define JOB_TRUCKER 			(10)
-
-#define TEAM_CIV				(0)
-#define TEAM_COP				(1)
-#define TEAM_FBI				(2)
-#define TEAM_ARMY				(3)
-#define TEAM_MEDIC				(4)
-#define TEAM_LCN				(5)
-#define TEAM_YAKUZA				(6)
-#define TEAM_GOV				(7)
-#define TEAM_FARMERS			(8)
-#define TEAM_PRESS				(9)
-#define TEAM_TAXI				(10)
-#define TEAM_LICENZERS			(11)
-#define TEAM_STREETDOGS			(12)
-#define TEAM_RUSSIAN			(13)
-#define TEAM_GROVE				(14)
-#define TEAM_CORONOS			(15)
-#define TEAM_BALLAS				(16)
-#define TEAM_RIFA				(17)
-#define TEAM_VAGOS				(18)
-
-#define D_NONE 					(10)
-#define D_ATM			 		(500)
-#define D_JOB			 		(600)
-#define D_REF			 		(700)
-#define D_WAIT					(800)
-#define D_MENU					(900)
-#define D_GIFT					(1000)
-#define D_GGUN					(1100)
-#define D_BARN					(1200)
-#define D_EDIT					(1300)
-#define D_GOTO					(1400)
-#define D_HELP					(1500)
-#define D_BANK					(1600)
-#define D_AUTH 					(1700)
-#define D_REGG 					(1800)
-#define D_MASK					(1900)
-#define D_FBANK					(2000)
-#define D_RADIO					(2100)
-#define D_BMENU					(2200)
-#define D_HMENU					(2300)
-#define D_CRANK					(2400)
-#define D_COLORS				(2500)
-#define D_REFILL 				(2600)
-#define D_EN_BIZ				(2700)
-#define D_EX_BIZ				(2800)
-#define D_ARMOUR				(3000)
-#define D_ONLINE 				(3100)
-#define D_HEALME 				(3200)
-#define D_TUNING				(3400)
-#define D_OFFLINE 				(3500)
-#define D_NETSTAT				(3600)
-#define D_SETSTAT				(3700)
-#define D_GOCLEAN				(3800)
-#define D_RENTCAR				(3900)
-#define D_BANLIST				(4000)
-#define D_WEATHER				(4100)
-#define D_PDDTEST				(4300)
-#define D_PORTABLE				(4400)
-#define D_EN_HOUSE 				(4500)
-#define D_EX_HOUSE 				(4600)
-#define D_GIVE_PASS 			(4700)
-#define D_FIGHTSTYLE 			(4800)
-#define D_CHANGE_PASS 			(4900)
-#define D_FACTORY_JOB			(5000)
-#define TP_EDIT					(5100)
-#define D_LMENU					(5200)
-#define D_ADD_FC				(5300)
-#define D_DEL_FC				(5400)
-#define D_ADD_MODEL				(5500)
-#define D_SHOW_MODEL			(5600)
-#define D_EDIT_MODEL			(5700)
-#define D_EDIT_MAPS				(5800)
-#define D_FARE					(5900)
-#define D_SKILL					(6000)
-#define D_SPAWN					(6100)
-#define D_SERVICE				(6200)
-#define D_LOGIN					(6300)
-#define D_EV_MENU				(6400)
-
-#define FIND_ICON				(0)
-#define ZAHVAT_ICON				(1)
-
-#define REFUEL_TIME				(10000)
-#define NUMBER_OF_TRUCKS		(8)
-
-#define	MODER1LVL				(1)
-#define MODER2LVL				(2)
-#define MODER3LVL				(4)
-#define SUPERMODER				(3)
-#define ADMINISTRATOR			(5)
-
-#define ADV_TIME				(600)
-#define SEC_TIMER				(900)
-#define GAINS_TIME				(900)
-
-#define Fc::					FC_
-#define Td::					TextDraw
-#define Pt:: 					PlayerTextDraw
-#define Pl::					PL_
-#define Bl::					BL_
-#define Gm::					GM_
-#define Gz::					GangZone
-#define Db::					mysql_
-#define Iter::					Iter_
-#define Ptl::					TP_
-#define PickupHndlr::			PH_
-
-#define Mnu::					MNU_
-#define T3d::					T3D_
-#define Obj::					OBJ_
-#define Veh::					VEH_
-#define Pup::					PUP_
-#define Area::					AREA_
-
-#define GetIndexFromBizID(%0)	interpolationSearch2D(BizzInfo,%0,bID,Iter::Count(Biznes))
-#define IsPlayerLeader(%0)		Pl::Info[%0][pLeader]
-#define IsValidFrac(%0)			(1 <= %0 <= MAX_FRAC)
-
-#define EXP(%0)					((Pl::Info[%0][pLevel]+1) * levelexp)
-#define costlvl(%0)				((Pl::Info[%0][pLevel]+1) * levelcost)
-#define PERCENT(%0,%1)			((%0 * %1) / 100)
-#define rndNum(%0,%1) 			(%0 + random(%1))
-#define PL_FracID(%0)			(Pl::Info[%0][pMember] | Pl::Info[%0][pLeader])
-#define rgb<%0>					(%0>>>8)
-#define GetJailedSkin(%0) 		((Pl::Info[%0][pSex]==2)?(JAILED_WOMEN):(JAILED_MAN))
-
-#define IsACop(%0) 				(TEAM_COP<=Pl::FracID(%0)<=TEAM_ARMY)
-#define IsALicenzer(%0) 		(Pl::FracID(%0)==TEAM_LICENZERS)
-#define IsPHelper(%0,%1)		(Pl::Info[%0][pHelper]>=%1)
-#define IsAHelperDuty(%0) 		(HelperDuty{%0})
-#define IsPMuted(%0) 			(Pl::Info[%0][pMuted]==1)
-
-#define IsAMehCar(%0)			(isJobVehicle(JOB_MECHANIC,%0))
-#define IsABusCar(%0)			(isJobVehicle(JOB_BUSMAN,%0))
-#define IsATruckCar(%0)			(isJobVehicle(JOB_TRUCKER,%0))
-#define IsANews(%0)				(isTeamVehicle(TEAM_PRESS,%0))
-#define IsATaxiCar(%0)			(isTeamVehicle(TEAM_TAXI,%0))
-#define IsAnAmbulance(%0)		(isTeamVehicle(TEAM_MEDIC,%0))
-#define IsATruckrifa(%0)		(isTeamVehicle(TEAM_RIFA,%0))
-#define IsACopCar(%0)			(TEAM_COP <= Fc::FracID(%0) <= TEAM_ARMY)
-#define IsACompTruck(%0)		(comptruck[0] <= %0 <= comptruck[1])
-
-#define AddObject				CreateDynamicObject
-#define Add3DText				CreateDynamic3DTextLabel
-
-#define _GREY_ARROW				"{888888}» {ffffff}"
-
-#define INFINITY 				0x7F800000
-#define REPLACE_TEXT 			"**ADBlock**"
-
-
-// MySQL handle 
-enum Db::e_Conf {
-	Db::Host[128],
-	Db::User[64],
-	Db::Base[64],
-	Db::Pass[64],
-	Db::Charset[16],
-	Db::Debug,
-	Db::KeySult[32]
-}
-new Db::Conf[Db::e_Conf];
-new MySQL:connDb;
 
 enum pickupInfo {
 	pOld,
@@ -344,15 +59,6 @@ new Menu:Ammu2Menu;
 new Menu:BurgerMenu;
 new Menu:HitmanMenu;
 new Menu:ClothesMenu;
-
-// Global string`s
-new src[512];
-new query[2048];
-new temp[255];
-new plname[24];
-new dialog[2048];
-new string_ah[512];
-new dialogtext[3000];
 
 new RegEx:ADBlock;
 new RegEx:ValidRPName;
@@ -606,13 +312,6 @@ new Iterator:Frac<MAX_FRAC>;
 
 new Iterator:MedicCalls<MAX_PLAYERS>;
 new Iterator:MechanicCalls<MAX_PLAYERS>;
-new Iterator:JobPlayers[MAX_JOBS]<MAX_PLAYERS>;
-new Iterator:JobVehicles[MAX_JOBS]<MAX_VEHICLES>;
-new Iterator:TeamPlayers[MAX_FRAC]<MAX_PLAYERS>;
-new Iterator:TeamVehicles[MAX_FRAC]<MAX_VEHICLES>;
-new Iterator:inStreamPlayers[MAX_PLAYERS]<MAX_PLAYERS>;
-new Iterator:inStreamVehicles[MAX_PLAYERS]<MAX_VEHICLES>;
-new Iterator:vehiclePassengers[MAX_VEHICLES]<MAX_PLAYERS>;
 
 new GangBiznes[MAX_FRAC char];
 new NameChange[MAX_PLAYERS char];
@@ -927,7 +626,6 @@ new SolderOnAFK[MAX_FRAC];
 new ZahvatKills[MAX_FRAC char];
 new ZahvatScore[MAX_FRAC];
 new GangOnBattle[MAX_FRAC];
-new Iterator:GangSolder[MAX_FRAC]<MAX_PLAYERS>;
 
 
 enum pInfo {
@@ -1190,25 +888,6 @@ new Iterator:GateModeKey<MAX_GATE>;
 #define gRANK	(2)
 #define bKILLS	(0)
 #define bPRICE	(1)
-
-
-enum e_GmInfo {
-	Gm::TaxValue,
-	Gm::PritonDrugs,
-	Gm::AmbarDrugs,
-	Gm::FactoryMetal,
-	Gm::FactoryFuel,
-	Gm::FactoryProds,
-	Gm::EnableReg,
-	Gm::isAutoRest,
-	
-	Gm::Hostname[36],
-	Gm::Password[36],
-	Gm::Mode[36],
-	Gm::Map[36],
-	Gm::Status
-}
-new Gm::Info[e_GmInfo];
 
 
 enum pHaul
@@ -1605,30 +1284,6 @@ new const BusRoute[][][e_BusRoute] = {
 
 new BusRouteCount[] = {5, 5, 5, 5};
 
-
-#define PARK_GARAGE (1)
-#define PARK_HOME (2)
-#define PARK_HOME_GARAGE (3)
-#define MAX_EXTRA_VEHICLES (5)
-enum e_ExtraVehicles {
-	evID1,
-	evID2,
-	evOwner,
-	evModel,
-	evPark,
-	evColor1,
-	evColor2,
-	Float:evSpawnX,
-	Float:evSpawnY,
-	Float:evSpawnZ,
-	Float:evSpawnA,
-}
-new ExtraVehicles[MAX_PLAYERS][MAX_EXTRA_VEHICLES][e_ExtraVehicles];
-new TotalExtraVehicles[MAX_PLAYERS];
-new Iterator:ExtraVehicles[MAX_PLAYERS]<MAX_EXTRA_VEHICLES>;
-new VehicleInGarage[MAX_PLAYERS][MAX_EXTRA_VEHICLES];
-new TotalVehicleInGarage[MAX_PLAYERS];
-
 new PlayerText:Td::AutoSolon;
 new Menu:AutoSolonMenu;
 new Menu:GarageMenu;
@@ -1817,130 +1472,8 @@ new Iterator:Maps<MAX_MAPS>;
 
 
 #include <r_utils>
-#include <anticheat>
-#include <gate>
-
-
-new cache_row[512];
-#define cache_get_scn(%0,%1,%2) cache_get_value_index(%0,%1,cache_row),sscanf(cache_row,%2)
-#define cache_get_str(%0,%1,%2) cache_get_value_index(%0,%1,%2)
-#define cache_get_int(%0,%1,%2) cache_get_value_index_int(%0,%1,%2)
-#define cache_get_float(%0,%1,%2) cache_get_value_index_float(%0,%1,%2)
-
 
 main() {}
-
-
-public OnGameModeInit() {
-	new time = GetTickCount();
-	
-	if(GetMaxPlayers() > MAX_PLAYERS) return print("[ERROR] Количество слотов больше MAX_PLAYERS, старт игрового режима невозможен!");
-	if(!LoadConf()) return print("[ERROR] Отсутствует файл конфигурации, старт игрового режима невозможен!");
-	if(!Db::Init()) return print("[ERROR] Не удалось подключится к базе данных, старт игрового режима невозможен!");
-	
-	Db::Prepare();
-	
-	Iter::Init(GangSolder);
-	Iter::Init(JobPlayers);
-	Iter::Init(JobVehicles);
-	Iter::Init(TeamPlayers);
-	Iter::Init(TeamVehicles);
-	Iter::Init(ExtraVehicles);
-	Iter::Init(inStreamPlayers);
-	Iter::Init(inStreamVehicles);
-	Iter::Init(vehiclePassengers);
-	
-	print(" ");
-	
-	LoadGas();
-	LoadATM();
-	LoadBizz();
-	LoadGMInfo();
-	LoadSkins();
-	LoadRanks();
-	LoadMaps();
-	LoadGates();
-	LoadSpawns();
-	LoadHouses();
-	LoadHGarages();
-	LoadPortals();
-	LoadVehicles();
-	LoadAntiDmZones();
-	LoadFracInfo();
-	LoadGangInfo();
-	LoadFracVehicles();
-	
-	print(" ");
-	
-	Veh::Init();
-	Td::Init();
-	Mnu::Init();
-	Obj::Init();
-	Pup::Init();
-	T3d::Init();
-	Area::Init();
-	
-	print(" ");
-	
-	ShowPlayerMarkers				(2);
-	LimitGlobalChatRadius			(T_DIST);
-	SetNameTagDrawDistance			(T_DIST);
-	EnableStuntBonusForAll			(false );
-	LimitPlayerMarkerRadius			(T_DIST);
-	DisableInteriorEnterExits		();
-	ManualVehicleEngineAndLights	();
-	
-	RegisterAlt("/close", "/c");
-	RegisterAlt("/shout", "/s");
-	RegisterAlt("/p", "/pickup");
-	RegisterAlt("/h", "/hangup");
-	RegisterAlt("/a", "/admin");
-	RegisterAlt("/pm", "/w");
-	RegisterAlt("/tp", "/tplist");
-	RegisterAlt("/gl", "/givelicense");
-	RegisterAlt("/sl", "/showlicenses");
-	RegisterAlt("/pas", "/pasport");
-	RegisterAlt("/vopros", "/вопрос");
-	RegisterAlt("/givegun",	"/ggun");
-	
-	foreach(new i : Frac) {
-		FracPay[i] = 0;
-		GangOnBattle[i] = INVALID_BIZ_ID;
-	}
-	
-	ValidText = regex_build("[а-яА-Яa-zA-Z0-9_,!\\.\\?\\-\\+\\(\\)\\ ]+");
-	ValidRPName = regex_build("([A-Z]{1,1})[a-z]{2,9}+_([A-Z]{1,1})[a-z]{2,9}");
-	ADBlock = regex_build("(((\\w+):\\/\\/)|(www\\.|\\,|))+(([\\w\\.\\,_-]{2,}(\\.|\\,)[\\w]{2,6})|(([\\d]{1,3}(\\b))(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}(\\s+|)(\\.|\\,|\\s)(\\s+|)[\\d]{1,3}))(((\\s+|)(\\:|\\;|\\s)(\\s+|)[\\d\\s]{2,}(\\b))|\\b)(\\/[\\w\\&amp\\;\\%_\\.\\/\\-\\~\\-]*)?");
-	
-	new m, s;
-	gettime(ghour, m, s);
-	FixHour(ghour);
-	ghour = shifthour;
-	SetWorldTime(ghour);
-	SetWeather(1 + random(5));
-	
-	SetGameModeText(Gm::Info[Gm::Mode]);
-	format(temp, sizeof temp, "mapname %s", Gm::Info[Gm::Map]), SendRconCommand(temp);
-	SendRconCommand("weburl "#__SERVER_SITE"");
-	
-	if(Gm::Info[Gm::Status] == 1) {
-		format(temp, sizeof temp, "hostname %s (private)", Gm::Info[Gm::Hostname]), SendRconCommand(temp);
-		format(temp, sizeof temp, "password %s", Gm::Info[Gm::Password]), SendRconCommand(temp);
-	} else {
-		format(temp, sizeof temp, "hostname %s", Gm::Info[Gm::Hostname]), SendRconCommand(temp);
-	}
-	
-	serverUpdate = SetTimer(""#Gm::"Thread", SEC_TIMER, true);
-
-	debug("OnGameModeInit() - Ok! Run time: %i (ms)", GetTickCount()-time);
-
-	print(" ");
-	print(">> "#__GamemodeName__" "#__GamemodeVersion__" loaded!");
-	print(">>  "#__GamemodeCopyright__"");
-	print(" ");
-	
-	return 1;
-}
 
 public OnGameModeExit() {	
 	DestroyAllDynamicCPs();
@@ -1953,8 +1486,8 @@ public OnGameModeExit() {
 	
 	regex_delete_all();
 	
-	for(;;) if(0 >= Db::unprocessed_queries(connDb)) break;
-	Db::close(connDb);
+	for(;;) if(0 >= db::unprocessed_queries(db::Handle)) break;
+	db::close(db::Handle);
 	
 	print(" ");
 	print(">> "#__GamemodeName__" "#__GamemodeVersion__" unloaded!");
@@ -1965,7 +1498,7 @@ public OnGameModeExit() {
 }
 
 public: GameModeInitExitFunc(mode) {
-	Gm::Info[Gm::isAutoRest] = mode;
+	prop::isAutoRest = mode;
 	SetGameModeText("RESTART");
 	SendRconCommand("hostname rebooting...");
 	
@@ -2005,7 +1538,7 @@ public: GameModeInitExitFunc(mode) {
 }
 
 public: GameModeExitFunc() {
-	if(Gm::Info[Gm::isAutoRest]) {
+	if(prop::isAutoRest) {
 		SendRconCommand("exit");
 	} else {
 		SendRconCommand("gmx");
@@ -2020,7 +1553,7 @@ public: OnPlayerAFK(playerid, newstate, oldstate) {
 		case 1 : {
 			if(IsValidBiz(biz) && BizzInfo[biz][bAttack] == fracid) {
 				if(IsPlayerInDynamicArea(playerid, BizzInfo[biz][bZahvatArea])) {
-					if(++SolderOnAFK[fracid] >= Iter::Count(GangSolder[fracid])) {
+					if(++SolderOnAFK[fracid] >= Iter::Count(GangSolders[fracid])) {
 						new attack = BizzInfo[biz][bAttack];
 						new defend = BizzInfo[biz][bDefend];
 						
@@ -2038,8 +1571,8 @@ public: OnPlayerAFK(playerid, newstate, oldstate) {
 						SolderOnAFK{attack} = SolderOnAFK{defend} = 0;
 						ZahvatScore[defend] = ZahvatScore[defend] = 0;
 						
-						Iter::Clear(GangSolder[attack]);
-						Iter::Clear(GangSolder[defend]);
+						Iter::Clear(GangSolders[attack]);
+						Iter::Clear(GangSolders[defend]);
 						GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
 						BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
 						BizzInfo[biz][bOnBattle] = 0;
@@ -2077,8 +1610,8 @@ public: onZahvatBizz(biz, attack, defend) {
 			Td::SetString(BizzInfo[biz][bZahvatTD], temp), Td::ShowForPlayer(p, BizzInfo[biz][bZahvatTD]);
 		}
 	} else {		
-		if((Iter::Count(GangSolder[defend]) == 0 && Iter::Count(GangSolder[attack]) > 0) && (!ZahvatKills{attack} && !ZahvatKills{defend})) {
-			ZahvatScore[attack] += Iter::Count(GangSolder[attack]);
+		if((Iter::Count(GangSolders[defend]) == 0 && Iter::Count(GangSolders[attack]) > 0) && (!ZahvatKills{attack} && !ZahvatKills{defend})) {
+			ZahvatScore[attack] += Iter::Count(GangSolders[attack]);
 			GiveGangRespect(attack, ZahvatScore[attack]);
 
 			GangBiznes{attack} ++;
@@ -2093,7 +1626,7 @@ public: onZahvatBizz(biz, attack, defend) {
 			sendToTeam(GetFracColor(attack), temp, Gangs);
 			
 		} else if(!ZahvatKills{attack} && !ZahvatKills{defend}) {
-			ZahvatScore[defend] += Iter::Count(GangSolder[defend]);
+			ZahvatScore[defend] += Iter::Count(GangSolders[defend]);
 			GiveGangRespect(defend, ZahvatScore[defend]);
 			BizzInfo[biz][bFrac] = defend;
 			Gz::StopFlashForAll(BizzInfo[biz][bZone]);
@@ -2177,8 +1710,8 @@ public: onZahvatBizz(biz, attack, defend) {
 		ZahvatKills{attack} = ZahvatKills{defend} = 0;
 		SolderOnAFK{attack} = SolderOnAFK{defend} = 0;
 		ZahvatScore[defend] = ZahvatScore[defend] = 0;
-		Iter::Clear(GangSolder[attack]);
-		Iter::Clear(GangSolder[defend]);
+		Iter::Clear(GangSolders[attack]);
+		Iter::Clear(GangSolders[defend]);
 		GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
 		BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
 		BizzInfo[biz][bOnBattle] = 0;
@@ -2551,7 +2084,7 @@ public OnPlayerConnect(playerid) {
 	slotused{playerid} = true;
 	strmid(playerIp[playerid], ip, 0, strlen(ip), 16);
 	
-	if(Gm::Info[Gm::isAutoRest]) {
+	if(prop::isAutoRest) {
 		ShowDialog(playerid, D_NONE, 0, "RESTART", "dialog/srv_restart.txt", "OK","");
 		Kick(playerid);
 	} else {
@@ -3057,7 +2590,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid) {
 		if(IsPlayerAttachedObjectSlotUsed(playerid, 1)) {
 			KG[playerid][0] =  0;
 			KG[playerid][1] += 1;
-			Gm::Info[Gm::FactoryProds] += 1;
+			prop::FactoryProds += 1;
 			ApplyAnimation(playerid,"CARRY","putdwn",4.1,0,1,1,0,1);
 			RemovePlayerAttachedObject(playerid,1);
 			Send(playerid, COLOR_YELLOW, "Продукт доставлен на склад");
@@ -3223,7 +2756,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid) {
 	
 	else if(IsValidBiz(GangOnBattle[fracid])) {
 		if(BizzInfo[GangOnBattle[fracid]][bZahvatArea] == areaid) {
-			Iter::Add(GangSolder[fracid], playerid);
+			Iter::Add(GangSolders[fracid], playerid);
 			Pl::SetFracColor(playerid);
 		}
 	}
@@ -3262,12 +2795,12 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 	else if(IsValidBiz(GangOnBattle[fracid])) {
 		new biz = GangOnBattle[fracid];
 		if(BizzInfo[biz][bZahvatArea] == areaid) {
-			Iter::Remove(GangSolder[fracid], playerid);
+			Iter::Remove(GangSolders[fracid], playerid);
 			if(ZahvatDeath[playerid] == 0) {
-				if(!Iter::Count(GangSolder[fracid]) && BizzInfo[biz][bAttack] == fracid) {
+				if(!Iter::Count(GangSolders[fracid]) && BizzInfo[biz][bAttack] == fracid) {
 					new attack = BizzInfo[biz][bAttack];
 					new defend = BizzInfo[biz][bDefend];
-					if(fracid == defend && Iter::Count(GangSolder[attack]) > 0) {
+					if(fracid == defend && Iter::Count(GangSolders[attack]) > 0) {
 						ZahvatScore[attack] ++;
 						BizzInfo[biz][bFrac] = attack;
 						GiveGangRespect(attack, ZahvatScore[attack]);
@@ -3298,8 +2831,8 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 					SolderOnAFK{attack} = SolderOnAFK{defend} = 0;
 					ZahvatScore[defend] = ZahvatScore[defend] = 0;
 					
-					Iter::Clear(GangSolder[attack]);
-					Iter::Clear(GangSolder[defend]);
+					Iter::Clear(GangSolders[attack]);
+					Iter::Clear(GangSolders[defend]);
 					GangOnBattle[attack] = GangOnBattle[defend] = INVALID_BIZ_ID;
 					BizzInfo[biz][bAttack] = BizzInfo[biz][bDefend] = 0;
 					BizzInfo[biz][bOnBattle] = 0;
@@ -3568,10 +3101,10 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 	
 			else if(FactoryPickup[0] <= pickupid <= FactoryPickup[1]) {
 				if(OnJob[playerid] == 1 && !KG[playerid][0]) {
-					if(Gm::Info[Gm::FactoryMetal] > 1 && Gm::Info[Gm::FactoryFuel] > 5) {
+					if(prop::FactoryMetal > 1 && prop::FactoryFuel > 5) {
 						KG[playerid][0] = 1;
-						Gm::Info[Gm::FactoryMetal] -= 1;
-						Gm::Info[Gm::FactoryFuel] -= 5;
+						prop::FactoryMetal -= 1;
+						prop::FactoryFuel -= 5;
 						GameTextForPlayer(playerid, "~b~ +1kg", 2000, 1);
 					} else {
 						GameTextForPlayer(playerid, "~r~no metall or benzin", 2000, 1);
@@ -5149,13 +4682,13 @@ stock Update(i) {
 		if(Rac::GetPlayerMoney(i) < 0) {
 			if(!MoneyMessage{i}) {
 				MoneyMessage{i} = true;
-				format(temp, sizeof(temp), "* У Вас задолжность штату, вы должны отдать сумму: $%d или сядете в тюрьму!", Rac::GetPlayerMoney(i));
+				format(temp, sizeof(temp), "* У Вас задолжность штату, вы должны отдать сумму: $%d или сядете в тюрьму!", Rac::GetPlayerMoney(i) * -1);
 				Send(i, COLOR_LIGHTRED, temp);
 			}
 		} else if(Pl::Info[i][pBank] < 0) {
 			if(!MoneyMessage{i}) {
 				MoneyMessage{i} = true;
-				format(temp, sizeof(temp), "* У Вас задолжность банку, вы должны отдать сумму: $%d или сядете в тюрьму!", Pl::Info[i][pBank]);
+				format(temp, sizeof(temp), "* У Вас задолжность банку, вы должны отдать сумму: $%d или сядете в тюрьму!", Pl::Info[i][pBank] * -1);
 				Send(i, COLOR_LIGHTRED, temp);
 			}
 		} else {
@@ -5197,7 +4730,7 @@ stock Update(i) {
 			SPD(i, D_NETSTAT, 0, "Server stat", dialog, "OK", "");
 		
 		} else if(Pl::NetStats[i] == 1000) {
-			Db::stat(dialog, sizeof dialog,connDb);
+			db::stat(dialog, sizeof dialog,db::Handle);
 			SPD(i, D_NETSTAT, 0, "Mysql stat", dialog, "OK", "");
 		
 		} else {
@@ -5637,7 +5170,7 @@ stock Pl::SetFracColor(playerid) {
 
 stock LoadSpawns() {
 	new time = GetTickCount();
-	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__TableSpawns__"` ORDER BY `id` ASC");
+	new Cache:result = db::query(db::Handle, "SELECT * FROM `"#__TableSpawns__"` ORDER BY `id` ASC");
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -5656,40 +5189,10 @@ stock LoadSpawns() {
 	return 1;
 }
 
-stock LoadGMInfo() {
-	new time = GetTickCount();
-	new Cache:result = Db::query(connDb, "SELECT * FROM `"#__TableStuffs__"` WHERE 1", true);
-	if(cache_num_rows()) {
-		cache_get_int(0, 0, Gm::Info[Gm::TaxValue]);
-		cache_get_int(0, 1, Gm::Info[Gm::PritonDrugs]);
-		cache_get_int(0, 2, Gm::Info[Gm::AmbarDrugs]);
-		cache_get_int(0, 3, Gm::Info[Gm::FactoryMetal]);
-		cache_get_int(0, 4, Gm::Info[Gm::FactoryFuel]);
-		cache_get_int(0, 5, Gm::Info[Gm::FactoryProds]);
-		cache_get_int(0, 6, Gm::Info[Gm::EnableReg]);
-		debug("LoadGMInfo() - Ok! Run time: %i (ms)", GetTickCount()-time);
-	}
-	cache_delete(result);
-	return 1;
-}
-
-stock SaveStuff() {
-	format(query, sizeof query, "UPDATE `"#__TableStuffs__"` SET ");
-	scf(query, temp, "`TaxValue`='%i',", Gm::Info[Gm::TaxValue]);
-	scf(query, temp, "`PDrugs`='%i',", Gm::Info[Gm::PritonDrugs]);
-	scf(query, temp, "`ADrugs`='%i',", Gm::Info[Gm::AmbarDrugs]);
-	scf(query, temp, "`fmetal`='%i',", Gm::Info[Gm::FactoryMetal]);
-	scf(query, temp, "`ffuel`='%i',", Gm::Info[Gm::FactoryFuel]);
-	scf(query, temp, "`fprods`='%i',", Gm::Info[Gm::FactoryProds]);
-	scf(query, temp, "`regged`='%i'", Gm::Info[Gm::EnableReg]);
-	Db::tquery(connDb, query, "", "");
-	return 1;
-}
-
 stock LoadHouses() {
 	new time = GetTickCount();
     format(query, sizeof query, "SELECT * FROM `"#__TableHouses__"` ORDER BY `id` ASC", true);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new k; k < rows; k++) {
@@ -5767,7 +5270,7 @@ stock LoadHGarages() {
 	
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableHouseGarages__"` ORDER BY `house` ASC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i, house; i < rows; i++) {
@@ -5791,7 +5294,7 @@ stock LoadHGarages() {
 stock LoadBizz() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableBusines__"` ORDER BY `id` ASC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -5844,7 +5347,7 @@ stock LoadBizz() {
 stock LoadGas() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableRefills__"` ORDER BY `id` ASC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -5863,7 +5366,7 @@ stock LoadGas() {
 stock LoadGangInfo() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableGangInfo__"` ORDER BY `gRespect` DESC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -5887,7 +5390,7 @@ stock SaveGI() {
 		scf(query, src, "`gPosY`='%f',", GangInfo[i][gPosY]);
 		scf(query, src, "`gPosZ`='%f' ", GangInfo[i][gPosZ]);
 		scf(query, src, "WHERE `fracID`='%i'", GangInfo[i][fID]);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 	}
 	return;
 }
@@ -5895,10 +5398,10 @@ stock SaveGI() {
 stock LoadFracInfo() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableFracInfo__"` ORDER BY `fID` ASC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
+
 	if(rows) {
-		strmid(FracInfo[0][fName], "Civilian", 0, strlen("Civilian"), 255);
 		for(new i; i < rows; i++) {
 			new fracid;
 			cache_get_int(i, 0, fracid);
@@ -5925,7 +5428,7 @@ stock UpdateFracInfo(fracid) {
 		scf(query, temp, "`fBConf`='%i,%i',", FracInfo[fracid][fBConf][bKILLS], FracInfo[fracid][fBConf][bPRICE]);
 		scf(query, temp, "`fColor`='0x%s'", hexToString(FracInfo[fracid][fColor]));
 		scf(query, temp, " WHERE `fID`='%i'", fracid);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 		return 1;
 	}
 	return 0;
@@ -5934,7 +5437,7 @@ stock UpdateFracInfo(fracid) {
 stock LoadFracVehicles( ) {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableFracVehicles__"` ORDER BY `ID` ASC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -5977,7 +5480,7 @@ public: UpdateProp() {
 	for(new i; i < TOTAL_VEHICLES; ++i) UpdateToSQL(i, 0);
 	for(new i; i < Fc::TOTAL; ++i) Fc::Update(i);
 
-	SaveStuff();
+	prop::Update();
 	
 	SaveGI();
 
@@ -6043,7 +5546,7 @@ public: ClearBanList(currtime) {
 			SendRconCommand(query);
 		}
 		format(query, sizeof query, "DELETE FROM `"#__TableBanned__"` WHERE `unbandate` <= '%i'", currtime);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 	}
 	return 1;
 }
@@ -6118,7 +5621,7 @@ public: onPayDay() {
 				
 				if(Pl::Info[i][pPayDay] >= 9) {
 					Pl::Info[i][pPayCheck] += GetPayCheck(Pl::Info[i][pLevel]);
-					tax = floatround(PERCENT(Pl::Info[i][pPayCheck], Gm::Info[Gm::TaxValue]));
+					tax = floatround(PERCENT(Pl::Info[i][pPayCheck], prop::TaxValue));
 					Pl::Info[i][pExp]++;
 					Pl::Info[i][pTime]++;
 					Send(i, 0x34c92400, "|________________ЗАРПЛАТА______________|");
@@ -6135,7 +5638,7 @@ public: onPayDay() {
 					}
 					totalchecks += Pl::Info[i][pPayCheck];
 					GivePlayerBankMoney(i, interest);
-					GivePlayerBankMoney(i, -Gm::Info[Gm::TaxValue]);
+					GivePlayerBankMoney(i, -prop::TaxValue);
 					GivePlayerBankMoney(i, Pl::Info[i][pPayCheck]);
 					sendf(i, src, COLOR_GREY, "* Текущий баланс: $%i", Pl::Info[i][pBank]);
 					GameTextForPlayer(i, "~y~Bank~n~~w~Paycheck", 5000, 1);
@@ -6304,10 +5807,10 @@ public: onPlayerLogin(playerid) {
 		PlayerLogged{playerid} = true;
 		
 		format(query, sizeof query, "SELECT * FROM `"#__TableExtraVehicles__"` WHERE `owner` = '%i' ORDER BY `id` ASC", Pl::Info[playerid][pID]);
-		Db::tquery(connDb, query, "LoadExtraVehicles", "i", playerid);
+		db::tquery(db::Handle, query, "LoadExtraVehicles", "i", playerid);
 		
 		format(query, sizeof query, "SELECT `f_id`,`mink` FROM `"#__TableBlacklist__"` WHERE `accused`='%i'", Pl::Info[playerid][pID]);
-		Db::tquery(connDb, query, ""#Bl::"Check", "i", playerid);
+		db::tquery(db::Handle, query, ""#Bl::"Check", "i", playerid);
 	}
 	return 1;
 }
@@ -6375,7 +5878,7 @@ public: Pl::Update(playerid) {
 		scf(query, src, "`Passport`='%i,%i,%i',", Pl::Info[playerid][pPasport][0], Pl::Info[playerid][pPasport][1], Pl::Info[playerid][pPasport][2]);
 		scf(query, src, "`Online`='%i' ", Pl::Info[playerid][pLastVisit]);
 		scf(query, src, "WHERE `ID`='%i'", Pl::Info[playerid][pID]);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 		Gm::DEBUG[TOTAL_SAVE_ACCOUNT] ++;
 	}
 	return 1;
@@ -6383,7 +5886,7 @@ public: Pl::Update(playerid) {
 
 stock UpdateHouse(i) {
 	new safeDiscription[28];
-	Db::escape_string(HouseInfo[i][hDescription], safeDiscription);
+	db::escape_string(HouseInfo[i][hDescription], safeDiscription);
 	format(query, sizeof query, "UPDATE `"#__TableHouses__"` SET ");
 	scf(query, src, "`owned`='%i',", HouseInfo[i][hOwned]);
 	scf(query, src, "`locked`='%i',", HouseInfo[i][hLock]);
@@ -6408,7 +5911,7 @@ stock UpdateHouse(i) {
 	}
 	scf(query, src, "`vehicle_spawn`='%.3f,%.3f,%.3f,%.3f' ", HouseInfo[i][hvSpawn][0], HouseInfo[i][hvSpawn][1], HouseInfo[i][hvSpawn][2], HouseInfo[i][hvSpawn][3]);
 	scf(query, src, "WHERE `id`='%i'", HouseInfo[i][hID]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	Gm::DEBUG[TOTAL_SAVE_HOUSES]++;
 	return 1;
 }
@@ -6418,7 +5921,7 @@ stock UpdateHouseGarage(idx) {
 	scf(query, src, "`intpos`='%.3f,%.3f,%.3f,%.3f',", HouseInfo[idx][hgIntPos][0], HouseInfo[idx][hgIntPos][1], HouseInfo[idx][hgIntPos][2], HouseInfo[idx][hgIntPos][3]);
 	scf(query, src, "`streetpos`='%.3f,%.3f,%.3f,%.3f' ", HouseInfo[idx][hgStreetPos][0], HouseInfo[idx][hgStreetPos][1], HouseInfo[idx][hgStreetPos][2], HouseInfo[idx][hgStreetPos][3]);
 	scf(query, src, "WHERE `house`='%i'", HouseInfo[idx][hID]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
@@ -6428,7 +5931,7 @@ stock DeleteHouseGarage(idx) {
 		DestroyDynamicPickup(HouseInfo[idx][hgPickupInt]);
 		DestroyDynamicPickup(HouseInfo[idx][hgPickupStreet]);
 		format(query, sizeof query, "DELETE FROM `"#__TableHouseGarages__"` WHERE `house` = '%i'", HouseInfo[idx][hID]);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 	}
 	return 1;
 }
@@ -6443,13 +5946,13 @@ stock Fc::Update(idx) {
 	scf(query, src, "`resp_pos`='%.3f,%.3f,%.3f,%.3f',", Fc::Info[idx][Fc::RespPos][0], Fc::Info[idx][Fc::RespPos][1], Fc::Info[idx][Fc::RespPos][2], Fc::Info[idx][Fc::RespPos][3]);
 	scf(query, src, "`miles`='%f' ", AutoInfo[Fc::Info[idx][Fc::Id][1]][aMileage]);
 	scf(query, src, "WHERE `ID`='%i'", Fc::Info[idx][Fc::Id][0]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
 stock UpdateBizz(i) {
 	new safestr[24];
-	Db::escape_string(BizzInfo[i][bDescription], safestr, sizeof safestr, connDb);
+	db::escape_string(BizzInfo[i][bDescription], safestr, sizeof safestr, db::Handle);
 	format(query, sizeof query, "UPDATE `"#__TableBusines__"` SET ");
 	scf(query, src, "`owned`='%i',", BizzInfo[i][bOwned]);
 	scf(query, src, "`locked`='%i',", BizzInfo[i][bLocked]);
@@ -6469,7 +5972,7 @@ stock UpdateBizz(i) {
 	scf(query, src, "`enter`='%.3f,%.3f,%.3f,%.3f',", BizzInfo[i][bEnter][0], BizzInfo[i][bEnter][1], BizzInfo[i][bEnter][2], BizzInfo[i][bEnter][3]);
 	scf(query, src, "`exit`='%.3f,%.3f,%.3f,%.3f' ", BizzInfo[i][bExit][0], BizzInfo[i][bExit][1], BizzInfo[i][bExit][2], BizzInfo[i][bExit][3]);
 	scf(query, src, "WHERE `id` = '%i'", BizzInfo[i][bID]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	Gm::DEBUG[TOTAL_SAVE_BIZNES]++;
 	return 1;
 }
@@ -6516,7 +6019,7 @@ stock SaveToSQL(idx, type = 1) {
 		scf(query, temp, "'%f','%f','%f','%f',", VehicleInfo[idx][vPosX], VehicleInfo[idx][vPosY], VehicleInfo[idx][vPosZ], VehicleInfo[idx][vPosA]);
 		scf(query, temp, "'%i','%i','%i')", VehicleInfo[idx][vColor1], VehicleInfo[idx][vColor2], VehicleInfo[idx][vRespTime]);
 
-		new Cache:result = Db::query(connDb, query, true);
+		new Cache:result = db::query(db::Handle, query, true);
 		VehicleInfo[idx][vID] = cache_insert_id();
 		cache_delete(result);
 	}
@@ -6538,7 +6041,7 @@ stock UpdateToSQL(idx, type=0) {
 			scf(query, src, "`resp`='%i',", VehicleInfo[idx][vRespTime]);
 			scf(query, src, "`job`='%i' ", VehicleInfo[idx][vJob]);
 			scf(query, src, "WHERE `ID`='%i'", VehicleInfo[idx][vID]);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 			return 1;
 		}
 	}
@@ -6549,7 +6052,7 @@ stock RemoveInSQL(idx, type=1) {
 	switch(type) {
 		case 2 : {
 			format(query, sizeof query, "DELETE FROM `"#__TableVehicles__"` WHERE `ID` = '%i'", VehicleInfo[idx][vID]);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 			return 1;
 		}
 	}
@@ -6569,7 +6072,7 @@ stock updatePickup( i ) {
 	scf(query,src,"%.4f,%.4f',", Ptl::Info[i][Ptl::Portal2][2], Ptl::Info[i][Ptl::Portal2][3]);
 	scf(query,src,"`allowed`='%i' ", arrayToBin(Ptl::Info[i][Ptl::Allowed], MAX_FRAC));
 	scf(query,src,"WHERE `id`='%i'", Ptl::Info[i][Ptl::Id]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
@@ -6581,7 +6084,7 @@ stock updateAntiDmZone(zone) {
 	scf(query,src,"%.4f,", AntiDmInfo[zone][e_AntiDmCoord][2]);
 	scf(query,src,"%.4f'", AntiDmInfo[zone][e_AntiDmCoord][3]);
 	scf(query,src," WHERE `id`='%i'", AntiDmInfo[zone][e_AntiDmZoneId]);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
@@ -6600,10 +6103,10 @@ public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
 }
 
 
-#include "GWRP\System\Admin\AdminCommand.pwn"
-#include "GWRP\System\User\UserCommand.pwn"
-#include "GWRP\System\User\LeaderCommand.pwn"
-#include "GWRP\System\User\HelperCommand.pwn"
+#include "GWRP\System\Commands\Admin.pwn"
+#include "GWRP\System\Commands\User.pwn"
+#include "GWRP\System\Commands\Leader.pwn"
+#include "GWRP\System\Commands\Helper.pwn"
 
 
 public OnPlayerText(playerid, text[]) {
@@ -6753,9 +6256,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Пример: maps/karta.map", "ENTER", "CANCEL");
 				} else {
 					new escapetext[36];
-					Db::escape_string(inputtext[0], escapetext);
+					db::escape_string(inputtext[0], escapetext);
 					format(query, sizeof query, "INSERT INTO `maps` (`map_file`) VALUES ('%s')", escapetext);
-					new Cache:result = Db::query(connDb, query, true);
+					new Cache:result = db::query(db::Handle, query, true);
 					if(cache_affected_rows()) {
 						new id = cache_insert_id();
 						Iter::Add(Maps, id);
@@ -6805,9 +6308,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					Пример: maps/karta.map", "ENTER", "CANCEL");
 				} else {
 					new escapetext[36];
-					Db::escape_string(inputtext[0], escapetext);
+					db::escape_string(inputtext[0], escapetext);
 					format(query, sizeof query, "UPDATE `maps` SET `map_file` = '%s' WHERE `id` = '%i'", escapetext, id);
-					Db::tquery(connDb, query);
+					db::tquery(db::Handle, query);
 
 					map::Destroy(MapInfo[id][MapID]);
 					MapInfo[id][MapID] = map::Load(inputtext[0], MapInfo[id][MapWorld], MapInfo[id][MapInt]);
@@ -6827,7 +6330,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_EDIT_MAPS + 4, DIALOG_STYLE_INPUT, "Изменить вирт. мир", "Введите ид виртуального мира:", "ENTER", "CANCEL");
 				} else {
 					format(query, sizeof query, "UPDATE `maps` SET `map_world` = '%i' WHERE `id` = '%i'", inputtext[0], id);
-					Db::tquery(connDb, query);
+					db::tquery(db::Handle, query);
 					map::SetWorld(MapInfo[id][MapID], inputtext[0]);
 					Send(playerid, COLOR_YELLOW, "* Виртуальный мир карты был изменен!");
 					SetPVarInt(playerid, "SelectedItem", -1);
@@ -6844,7 +6347,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SPD(playerid, D_EDIT_MAPS + 5, DIALOG_STYLE_INPUT, "Изменить интерьер", "Введите ид интерьера:", "ENTER", "CANCEL");
 				} else {
 					format(query, sizeof query, "UPDATE `maps` SET `map_int` = '%i' WHERE `id` = '%i'", inputtext[0], id);
-					Db::tquery(connDb, query);
+					db::tquery(db::Handle, query);
 					map::SetInterior(MapInfo[id][MapID], inputtext[0]);
 					Send(playerid, COLOR_YELLOW, "* Интерьер карты карты был изменен!");
 					SetPVarInt(playerid, "SelectedItem", -1);
@@ -6861,7 +6364,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new last = Iter::Count(Maps);
 				map::Destroy(MapInfo[id][MapID]);
 				format(query, sizeof query, "DELETE FROM `maps` WHERE `id` = '%i'", id);
-				Db::tquery(connDb, query);
+				db::tquery(db::Handle, query);
 				
 				if(last > id) {
 					MapInfo[id][MapID] = MapInfo[last][MapID];
@@ -6870,12 +6373,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					MapInfo[id][MapInt] = MapInfo[last][MapInt];
 					Iter::Remove(Maps, last);
 					format(query, sizeof query, "UPDATE `maps` SET `id` = '%i' WHERE `id` = '%i'", id, last);
-					Db::tquery(connDb, query);
+					db::tquery(db::Handle, query);
 				} else {
 					Iter::Remove(Maps, id);
 				}
 				format(query, sizeof query, "ALTER TABLE `maps` AUTO_INCREMENT = %i", last - 1);
-				Db::tquery(connDb, query);
+				db::tquery(db::Handle, query);
 				
 				Send(playerid, COLOR_YELLOW, "* Карта была удалена!");
 			} else {
@@ -7015,9 +6518,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA2_HASH_LEN];
-				SHA256_PassHash(inputtext[0], Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
+				SHA256_PassHash(inputtext[0], db::Salt, hash, SHA2_HASH_LEN);
 				format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
-				Db::tquery(connDb, query, "onPlayerLogin", "i", playerid);
+				db::tquery(db::Handle, query, "onPlayerLogin", "i", playerid);
 			} else {
 				ShowLoginForm(playerid, 1);
 			}
@@ -7032,10 +6535,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны зарегистрироваться!", COLOR_LIGHTRED);
 			if(!sscanf(inputtext, "s[36]", inputtext[0])) {
 				new hash[SHA2_HASH_LEN];
-				SHA256_PassHash(inputtext[0], Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
+				SHA256_PassHash(inputtext[0], db::Salt, hash, SHA2_HASH_LEN);
 				format(query, sizeof query, "INSERT INTO `"#__TableUsers__"` (`Name`,`Key`,`Fightstyle`) VALUES ('%s', '%s', '%i')",
 				GetName(playerid), hash, FightStyles[random(sizeof FightStyles)]);
-				Db::tquery(connDb, query, "onPlayerRegister", "i", playerid);
+				db::tquery(db::Handle, query, "onPlayerRegister", "i", playerid);
 			} else {
 				ShowLoginForm(playerid, 0);
 			}
@@ -7195,9 +6698,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new vehid = GetPlayerVehicleID(playerid);
 				if(!vehid) return Send(playerid,COLOR_GREY,"* Вы не в машине!");
 				if(AutoInfo[vehid][aDrugs] <= 0) return Send(playerid,COLOR_GREY,"* В вашей машине нету наркотиков!");
-				if(Gm::Info[Gm::AmbarDrugs] >= 20000) return Send(playerid,COLOR_GREY,"* Амбар переполнен! Максимум 20000 грамм.");
+				if(prop::AmbarDrugs >= 20000) return Send(playerid,COLOR_GREY,"* Амбар переполнен! Максимум 20000 грамм.");
 				inputtext[0] = AutoInfo[vehid][aDrugs]*50;
-				Gm::Info[Gm::AmbarDrugs] += AutoInfo[vehid][aDrugs]; Rac::GivePlayerMoney(playerid, inputtext[0]);
+				prop::AmbarDrugs += AutoInfo[vehid][aDrugs]; Rac::GivePlayerMoney(playerid, inputtext[0]);
 				format(string, sizeof(string), "* Вы продали %i грамм притону за %i$", AutoInfo[vehid][aDrugs], inputtext[0]);
 				Send(playerid,COLOR_LIGHTBLUE,string);
 				AutoInfo[vehid][aDrugs] = 0;
@@ -7212,9 +6715,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new vehid = GetPlayerVehicleID(playerid);
 				if( !vehid ) return Send(playerid,COLOR_GREY,"* Вы не в машине!");
 				if(AutoInfo[vehid][aDrugs] <= 0) return Send(playerid,COLOR_GREY,"* В вашей машине нету наркотиков!");
-				if(Gm::Info[Gm::AmbarDrugs] >= 20000) return Send(playerid,COLOR_GREY,"* Амбар переполнен! Максимум 20000 грамм.");
+				if(prop::AmbarDrugs >= 20000) return Send(playerid,COLOR_GREY,"* Амбар переполнен! Максимум 20000 грамм.");
 				inputtext[0] = AutoInfo[vehid][aDrugs]*70;
-				Gm::Info[Gm::PritonDrugs] += AutoInfo[vehid][aDrugs]; Rac::GivePlayerMoney(playerid, inputtext[0]);
+				prop::PritonDrugs += AutoInfo[vehid][aDrugs]; Rac::GivePlayerMoney(playerid, inputtext[0]);
 				format(string, sizeof(string), "* Вы продали %d грамм притону за %d$", AutoInfo[vehid][aDrugs], inputtext[0]);
 				Send(playerid,COLOR_LIGHTBLUE,string);
 				AutoInfo[vehid][aDrugs] = 0;
@@ -7249,7 +6752,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					else
 					{
 						AutoInfo[vehid][aDrugs] += inputtext[0];
-						Gm::Info[Gm::AmbarDrugs] -= inputtext[0];
+						prop::AmbarDrugs -= inputtext[0];
 						Rac::GivePlayerMoney(playerid, -inputtext[1]);
 						format(string, sizeof(string), "* Вы взяли %d грамм за $%d", inputtext[0], inputtext[1]);
 						Send(playerid,COLOR_LIGHTBLUE,string);
@@ -7435,7 +6938,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								Send(playerid, COLOR_GREY, "* Слишком длинный или короткий номер.");
 							} else {
 								format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `Number` = '%i'", amount);
-								new Cache:result = Db::query(connDb, query, true);
+								new Cache:result = db::query(db::Handle, query, true);
 								if(cache_num_rows()) {
 									format(string, sizeof(string), "* Номер телефона %d уже есть у другого игрока.", amount);
 									Send(playerid, COLOR_GREY, string);
@@ -7842,7 +7345,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						GameTextForPlayer(playerid, "~r~-$100000", 1000, 1);
 						PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 						format(query, sizeof query, "INSERT INTO `"#__TableHouseGarages__"` (`house`) VALUES ('%i')", HouseInfo[hid][hID]);
-						Db::tquery(connDb, query, "", "");
+						db::tquery(db::Handle, query, "", "");
 						HouseInfo[hid][hgGarage] = true;
 						Streamer_AppendArrayData(STREAMER_TYPE_PICKUP, HGaragePickup[0], E_STREAMER_WORLD_ID, HouseInfo[hid][hVirtual]);
 						Streamer_AppendArrayData(STREAMER_TYPE_PICKUP, HGaragePickup[1], E_STREAMER_WORLD_ID, HouseInfo[hid][hVirtual]);
@@ -9322,7 +8825,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				format(query, sizeof query, "INSERT INTO `"#__TableFracVehicles__"` (`model`,`frac`,`resp_pos`) VALUES \
 				('%i','%i','%.3f,%.3f,%.3f,%.3f')", model_id, frac_id, r_pos[0], r_pos[1], r_pos[2], r_pos[3]);
 				
-				new Cache:result = Db::query(connDb, query, true);
+				new Cache:result = db::query(db::Handle, query, true);
 				if(cache_affected_rows()) {
 					new id = Fc::TOTAL; Fc::TOTAL++;
 					
@@ -9389,7 +8892,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					
 					case 2 : {
 						format(query, sizeof query, "DELETE FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", frac_id, GetPVarInt(playerid, "SelectModel"));
-						Db::tquery(connDb, query);
+						db::tquery(db::Handle, query);
 						Send(playerid, COLOR_WHITE, "* Эта модель была удалена из списка доступных!");
 					}
 				}
@@ -9407,7 +8910,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				} else {
 					format(query, sizeof query, "UPDATE `"#__TableFracModels__"` SET `model_id` = '%i' WHERE \
 					`frac_id` = '%i' AND `model_id` = '%i'", newmodel, GetPVarInt(playerid, "SelectFrac"), GetPVarInt(playerid, "SelectModel"));
-					Db::tquery(connDb, query);
+					db::tquery(db::Handle, query);
 					Send(playerid, COLOR_WHITE, " Модель была изменена!");
 				}
 			}
@@ -9422,7 +8925,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				} else {
 					format(query, sizeof query, "UPDATE `"#__TableFracModels__"` SET `model_limit` = '%i' WHERE \
 					`frac_id` = '%i' AND `model_id` = '%i'", inputtext[0], GetPVarInt(playerid, "SelectFrac"), GetPVarInt(playerid, "SelectModel"));
-					Db::tquery(connDb, query);
+					db::tquery(db::Handle, query);
 					Send(playerid, COLOR_WHITE, " Лимит был изменен!");
 				}
 			}
@@ -9439,7 +8942,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if(model_id < 400 || model_id > 611) return Send(playerid, COLOR_GREY, "* Unknown model id!");
 					if(Fc::IsThereModel(frac_id, model_id)) return Send(playerid, COLOR_RED, "* Эта модель уже есть в списке!");
 					format(query, sizeof query, "INSERT INTO `"#__TableFracModels__"` (`frac_id`, `model_id`) VALUES ('%i','%i')", frac_id, model_id);
-					Db::tquery(connDb, query);
+					db::tquery(db::Handle, query);
 					format(string, sizeof(string), " Модель добавлена! Model_id: %i; Model_name: %s", model_id, VehicleNames[model_id-400]);
 					Send(playerid, COLOR_WHITE, string);
 				}
@@ -9470,7 +8973,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						DestroyDynamicPickup(Ptl::Info[i][Ptl::Pickup][0]);
 						DestroyDynamicPickup(Ptl::Info[i][Ptl::Pickup][1]);
 						format(query, sizeof query, "DELETE FROM `"#__TablePickups__"` WHERE `id`='%i'", Ptl::Info[i][Ptl::Id]);
-						Db::tquery(connDb, query, "", "");
+						db::tquery(db::Handle, query, "", "");
 						if(last > i) {
 							Iter::Remove(Portal, last);
 							CopyArray(Ptl::Info[i][Ptl::Model], Ptl::Info[last][Ptl::Model], 2);
@@ -9634,7 +9137,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(response) {
 				dialog[0] = '\0';
 				new portal = GetPVarInt(playerid, "selectTeleport");
-				Ptl::Info[portal][Ptl::Allowed][listitem + 1] = !Ptl::Info[portal][Ptl::Allowed][listitem + 1];
+				Ptl::Info[portal][Ptl::Allowed][listitem] = !Ptl::Info[portal][Ptl::Allowed][listitem];
 				foreach(new i : Frac) {
 					if(Ptl::Info[portal][Ptl::Allowed][i]) {
 						scf(dialog,string,"[{33AA33} - {ffffff}]{%h}%s\t\t{ffffff}\n", (GetFracColor(i)>>>8), FracInfo[i][fName]);
@@ -9653,9 +9156,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case D_CHANGE_PASS : {
 			if(response) {
 				new hash[SHA2_HASH_LEN];
-				SHA256_PassHash(inputtext, Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
+				SHA256_PassHash(inputtext, db::Salt, hash, SHA2_HASH_LEN);
 				format(query, sizeof query, "SELECT * FROM `"#__TableUsers__"` WHERE `ID` = '%i' AND `Key` = '%s'", Pl::Info[playerid][pID], hash);
-				new Cache:result = Db::query(connDb, query, true);
+				new Cache:result = db::query(db::Handle, query, true);
 				if(cache_num_rows()) {
 					SPD(playerid, D_CHANGE_PASS+1,DIALOG_STYLE_PASSWORD,""#__SERVER_PREFIX""#__SERVER_NAME_LC": ATTENTION PLEASE",
 					"ВНИМАНИЕ! Вы хотите изменить пароль своего аккаунта!\n\
@@ -9675,9 +9178,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if(!strlen(inputtext)) Send(playerid,COLOR_LIGHTRED,""#__SERVER_PREFIX""#__SERVER_NAME_LC": Вы не ввели пароль!");
 				else {
 					new hash[SHA2_HASH_LEN];
-					SHA256_PassHash(inputtext, Db::Conf[Db::KeySult], hash, SHA2_HASH_LEN);
+					SHA256_PassHash(inputtext, db::Salt, hash, SHA2_HASH_LEN);
 					format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Key`='%s' WHERE `ID`='%i'", hash, Pl::Info[playerid][pID]);
-					Db::tquery(connDb, query, "", "");
+					db::tquery(db::Handle, query, "", "");
 					format(string, sizeof(string), ""#__SERVER_PREFIX""#__SERVER_NAME_LC": ВНИМАНИЕ! ПАРОЛЬ ИЗМЕНЕН! Ваш новый пароль: %s", inputtext);
 					Send(playerid, COLOR_LIGHTRED, string);
 					Send(playerid, COLOR_LIGHTRED,""#__SERVER_PREFIX""#__SERVER_NAME_LC": ОБЯЗАТЕЛЬНО сделайте скриншот с новым паролем, для этого нажмите F8");
@@ -10603,7 +10106,7 @@ public: Gm::Thread() {
 			SetTimer("onPayDay", 555, false);
 			
 			format(query, sizeof query, "SELECT `ip` FROM `"#__TableBanned__"` WHERE `unbandate` <= '%i'", currtime);
-			Db::tquery(connDb, query, "ClearBanList", "i", currtime);
+			db::tquery(db::Handle, query, "ClearBanList", "i", currtime);
 			
 			foreach(new i : Frac) {
 				FracPay[i] = 0;
@@ -10614,10 +10117,10 @@ public: Gm::Thread() {
 			SendToAll(COLOR_LIGHTRED, " Объявление: через 1 час будет произведен автоматический рестарт сервера!");
 		}
 		if(h == 5 && m == 0) {
-			Gm::Info[Gm::isAutoRest] = 1;
+			prop::isAutoRest = 1;
 			print(" Внимание: автоматический рестарт сервера");
 			SendToAll(COLOR_LIGHTRED, "Внимание: автоматический рестарт сервера!");
-			SetTimerEx("GameModeInitExitFunc", 2000, false, "i", Gm::Info[Gm::isAutoRest]);
+			SetTimerEx("GameModeInitExitFunc", 2000, false, "i", prop::isAutoRest);
 		}
 	}
 	
@@ -10711,7 +10214,7 @@ public: Gm::Thread() {
 						Kick(p);
 					}
 				} else {
-					if(Gm::Info[Gm::EnableReg]) {
+					if(prop::EnableReg) {
 						if(regex_match_exid(plname, ValidRPName)) {
 							ShowLoginForm(p, 2);
 						} else {
@@ -11360,7 +10863,7 @@ stock ChangeName(playerid) {
 		}
 		
 		format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Name`='%s' WHERE `ID`='%i'", newName, Pl::Info[playerid][pID]),
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 		
 		format(temp, sizeof temp, "** %s теперь изветен как %s (userid:%i)", oldName, newName, Pl::Info[playerid][pID]),
 			SendLog(LOG_CHANGENAME, temp);
@@ -11468,7 +10971,7 @@ stock GetPIP(playerid) {
 stock GetUserName(uid) {
 	new name[24];
 	format(query, sizeof query, "SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID` = '%i'", uid);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	if(cache_num_rows() > 0) {
 		cache_get_str(0, 0, name);
 	} else {
@@ -11670,54 +11173,19 @@ stock GetHelperRank(hlvl) {
 	return hrank;
 }
 
-stock Db::Init() {		
-	Db::log(Db::Conf[Db::Debug] == 1 ? (ERROR | WARNING | DEBUG) : (ERROR | WARNING));
-	
-	connDb = Db::connect(Db::Conf[Db::Host], Db::Conf[Db::User], Db::Conf[Db::Pass], Db::Conf[Db::Base]);
-	
-	new errno = Db::errno();
-	if(errno == 0) Db::FixCharset();
-	
-	return errno == 0;
-}
-
 stock LoadConf() {
 	new iniFile = iniOpen("conf.ini");
 	if(iniFile != INI_FILE_NOT_FOUND) {
-		iniGet(iniFile, "server.hostname", Gm::Info[Gm::Hostname], 36);
-		iniGet(iniFile, "server.password", Gm::Info[Gm::Password], 36);
-		iniGet(iniFile, "server.mode", Gm::Info[Gm::Mode], 36);
-		iniGet(iniFile, "server.map", Gm::Info[Gm::Map], 36);
-		iniGetInt(iniFile, "server.status", Gm::Info[Gm::Status]);
-		
-		iniGet(iniFile, "mysql.host", Db::Conf[Db::Host], 128);
-		iniGet(iniFile, "mysql.user", Db::Conf[Db::User], 64);
-		iniGet(iniFile, "mysql.base", Db::Conf[Db::Base], 64);
-		iniGet(iniFile, "mysql.pass", Db::Conf[Db::Pass], 64);
-		iniGet(iniFile, "mysql.charset", Db::Conf[Db::Charset], 16);
-		iniGetInt(iniFile, "mysql.debug", Db::Conf[Db::Debug]);
-		iniGet(iniFile, "mysql.key_salt", Db::Conf[Db::KeySult], 32);
-		
+		iniGet(iniFile, "server.hostname", prop::Hostname, 36);
+		iniGet(iniFile, "server.password", prop::Password, 36);
+		iniGet(iniFile, "server.mode", prop::Mode, 36);
+		iniGet(iniFile, "server.map", prop::Map, 36);
+		iniGetInt(iniFile, "server.status", prop::Status);
 		iniClose(iniFile);
 		
 		return 1;
 	}
 	return 0;
-}
-
-stock Db::FixCharset() {
-	Db::set_charset(Db::Conf[Db::Charset]);
-	format(temp, sizeof temp, "SET NAMES '%s'", Db::Conf[Db::Charset]);
-	Db::query(connDb, temp, false);
-	Db::query(connDb, "SET SESSION character_set_server='utf8';", false);
-	return 1;
-}
-
-stock Db::Prepare() {
-	if(fexist("update.sql")) {
-		mysql_query_file(connDb, "update.sql", false);
-	}
-	return 1;
 }
 
 stock SetZRank(fracid, zrank) {
@@ -12274,7 +11742,7 @@ stock UpdateTuning(vehid, type, id) {
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][8], AutoInfo[vehid][aTuning][9], AutoInfo[vehid][aTuning][10], AutoInfo[vehid][aTuning][11]);
 			scf(query, src, "%d,%d,%d' ", AutoInfo[vehid][aTuning][12], AutoInfo[vehid][aTuning][13], AutoInfo[vehid][aPaintJob]);
 			scf(query, src, "WHERE `id`='%i'", id);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 		}
 		case 2: {
 			format(query, sizeof query, "UPDATE `"#__TableVehicles__"` SET `tuning`='");
@@ -12283,7 +11751,7 @@ stock UpdateTuning(vehid, type, id) {
 			scf(query, src, "%d,%d,%d,%d,", AutoInfo[vehid][aTuning][8], AutoInfo[vehid][aTuning][9], AutoInfo[vehid][aTuning][10], AutoInfo[vehid][aTuning][11]);
 			scf(query, src, "%d,%d,%d' ", AutoInfo[vehid][aTuning][12], AutoInfo[vehid][aTuning][13], AutoInfo[vehid][aPaintJob]);
 			scf(query, src, "WHERE `ID`='%d'", id);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 		}
 		default: return 0;
 	}
@@ -12296,14 +11764,14 @@ stock ResetTuning(vehid, type, id) {
 			if(IsValidHouse(id)) {
 				RemoveTuning(vehid);
 				format(query, sizeof query, "UPDATE `"#__TableHouses__"` SET `vehicle_tuning`='0,0,0,0,0,0,0,0,0,0,0,0,0,0,3' WHERE `id`='%i'", id);
-				Db::tquery(connDb, query, "", "");
+				db::tquery(db::Handle, query, "", "");
 			}
 		}
 		
 		case 2: {
 			RemoveTuning(vehid);
 			format(query, sizeof query, "UPDATE `"#__TableVehicles__"` SET `tuning`='0,0,0,0,0,0,0,0,0,0,0,0,0,0,3' WHERE `ID`='%i'", id);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 		}
 		default: return 0;
 	}
@@ -12346,28 +11814,28 @@ stock ShowRankList(playerid, fracid) {
 
 stock UpdateRank(fracid, rankid, rank[]) {
 	new escname[36];
-	Db::escape_string(rank, escname);
+	db::escape_string(rank, escname);
 	strmid(RankInfo[fracid][rankid], rank, 0, strlen(rank), 255);
 	format(query, sizeof query, "UPDATE `"#__TableFracRanks__"` SET `r_name` = '%s' WHERE `f_id` = '%i' AND `r_id` = '%i'", escname, fracid, rankid);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
 stock SetFracName(fracid, name[]) {
 	new escname[36];
-	Db::escape_string(name, escname);
+	db::escape_string(name, escname);
 	strmid(FracInfo[fracid][fName], name, 0, strlen(name), 255);
 	format(query, sizeof query, "UPDATE `"#__TableFracInfo__"` SET `fName` = '%s' WHERE `fID` = '%i'", escname, fracid);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
 stock SetFracTag(fracid, tag[]) {
 	new escname[16];
-	Db::escape_string(tag, escname);
+	db::escape_string(tag, escname);
 	strmid(FracInfo[fracid][fTag], tag, 0, strlen(tag), 255);
 	format(query, sizeof query, "UPDATE `"#__TableFracInfo__"` SET `fTag` = '%s' WHERE `fID` = '%i'", escname, fracid);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
@@ -12377,11 +11845,11 @@ stock AddBanList(playerid, adminid, mins, reason[], type = 1) {
 	unbandate = currdate + mins * 60;
 	
 	new safestr[64];
-	Db::escape_string(reason, safestr);
+	db::escape_string(reason, safestr);
 	format(query, sizeof query, "INSERT INTO `"#__TableBanned__"` (`user_id`,`admin_id`,`ip`,`date`,`unbandate`,`reason`) VALUES (");
 	scf(query, src, "'%i','%i','%s',", Pl::Info[playerid][pID], adminid==-1 ? adminid : Pl::Info[adminid][pID], GetPIP(playerid));
 	scf(query, src, "'%i','%i','%s')", currdate, unbandate, safestr);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	
 	switch(type) {
 		case 1 : {
@@ -12412,14 +11880,14 @@ stock AddBanList(playerid, adminid, mins, reason[], type = 1) {
 stock RemoveBanList(userid) {
 	new banIp[16];
 	format(query, sizeof query, "SELECT `ip` FROM `"#__TableBanned__"` WHERE `user_id`='%i'", userid);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	if(cache_num_rows()) {
 		cache_get_str(0, 0, banIp);
 		format(query, sizeof query, "unbanip %.16s", banIp);
 		SendRconCommand(query);
 			
 		format(query, sizeof query, "DELETE FROM `"#__TableBanned__"` WHERE `user_id`='%i'", userid);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 		return 1;
 	}
 	cache_delete(result);
@@ -12428,7 +11896,7 @@ stock RemoveBanList(userid) {
 
 stock isBanned(userid) {
 	format(query, sizeof query, "SELECT `user_id` FROM `"#__TableBanned__"` WHERE `user_id` = '%i'", userid);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	cache_delete(result);
 	return rows;
@@ -12441,7 +11909,7 @@ public: CheckBan(playerid) {
 		(SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`admin_id`),\
 		`ip`,`date`,`unbandate`,`reason` FROM `"#__TableBanned__"` WHERE `user_id`='%i'", Pl::Info[playerid][pID]);
 		
-		new Cache:result = Db::query(connDb, query, true);
+		new Cache:result = db::query(db::Handle, query, true);
 		if(cache_num_rows()) {
 			cache_get_str(0, 0, plname);
 			cache_get_str(0, 1, aname);
@@ -12477,7 +11945,7 @@ stock ShowPlayerBanList(adminid, pname[]) {
 	format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`user_id`),\
 	(SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`admin_id`),\
 	`ip`,`date`,`unbandate`,`reason` FROM `"#__TableBanned__"` WHERE `user_id`=(SELECT `ID` FROM `"#__TableUsers__"` WHERE BINARY `Name`='%s')", pname);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	if(cache_num_rows()) {
 		cache_get_str(0, 1, aname);
 		cache_get_str(0, 2, bip);
@@ -12723,7 +12191,7 @@ stock Pl::SetSpawnInfo(playerid) {
 stock GetIDFromName(playername[]) {
 	new id = -1;
 	format(query, sizeof query, "SELECT `ID` FROM `"#__TableUsers__"` WHERE BINARY `Name` = '%s'", playername);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	if(cache_num_rows()) {
 		cache_get_int(0, 0, id);
 	}
@@ -13030,9 +12498,9 @@ stock T3d::Init() {
 		GangInfo[p][gText] = Add3DText(src, GetFracColor(GangInfo[p][fID]), GangInfo[p][gPosX], GangInfo[p][gPosY], GangInfo[p][gPosZ], 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, 0);
 	}
 
-	format(temp, sizeof(temp),"{ffffff}Cклад:\n {f4c430}Топливо: %d литров\n{00ff00}Продукты: %d кг\n{f4c430}Металл: %d кг", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(temp, sizeof(temp),"{ffffff}Cклад:\n {f4c430}Топливо: %d литров\n{00ff00}Продукты: %d кг\n{f4c430}Металл: %d кг", prop::FactoryFuel, prop::FactoryProds, prop::FactoryMetal);
 	FactoryInfo[0] = Add3DText(temp, -1, -1847.7107,113.5725,16.3751, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
-	format(temp, sizeof(temp),"{ffffff}Склад:\n {f4c430}Топливо: %d л\nПродукты: %d кг\nМеталл: %d кг", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(temp, sizeof(temp),"{ffffff}Склад:\n {f4c430}Топливо: %d л\nПродукты: %d кг\nМеталл: %d кг", prop::FactoryFuel, prop::FactoryProds, prop::FactoryMetal);
 	FactoryInfo[1] = Add3DText(temp, -1, 2565.5071,-1293.0293, 1045.0704, 40.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 2);
 	
 	Add3DText("Загрузка Продуктов\n/loadprods", 0xFF6347AA, -1857.7770, 110.9073, 15.7994, 25.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0);
@@ -13265,7 +12733,7 @@ stock ShowOnline(playerid, id) {
 stock LoadVehicles() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableVehicles__"` ORDER BY `ID` ASC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i, veh; i < rows; i++) {
@@ -13376,7 +12844,7 @@ stock ShowOffline(playerid, id) {
 		case 1 : format(query, sizeof query, "SELECT `Name`,`Helper`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__TableUsers__"` WHERE `Helper` >= '1' ORDER BY `Helper` DESC");
 		case 2 : format(query, sizeof query, "SELECT `Name`,`Admin`,FROM_UNIXTIME(`Online`,'%%Y-%%m-%%d, %%H:%%i') FROM `"#__TableUsers__"` WHERE `Admin` >= '1' ORDER BY `Admin` DESC");
 	}
-	Db::tquery(connDb, query, "_ShowOffline", "ii", playerid, id);
+	db::tquery(db::Handle, query, "_ShowOffline", "ii", playerid, id);
 	return 1;
 }
 
@@ -13515,7 +12983,7 @@ stock ClearBiz(biz) {
 		new targetid = ReturnUser(BizzInfo[biz][bExtortion]);
 		if(!Pl::isLogged(playerid)) {
 			format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Busines` = %i WHERE `Busines` = %i", INVALID_BIZ_ID, BizzInfo[biz][bID]);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 		} else {
 			Pl::Info[playerid][pBizKey] = INVALID_BIZ_ID;
 			Send(playerid, COLOR_LIGHTRED, "* Ваш бизнес был продан!");
@@ -13523,7 +12991,7 @@ stock ClearBiz(biz) {
 		
 		if(!Pl::isLogged(targetid)) {
 			format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `Busines` = %i WHERE `Busines` = %i", INVALID_BIZ_ID, BizzInfo[biz][bID]);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 		} else {
 			Pl::Info[playerid][pBizKey] = INVALID_BIZ_ID;
 			Send(targetid, COLOR_LIGHTRED, "* Ваш бизнес был продан!");
@@ -13571,10 +13039,10 @@ stock ClearHouse(houseid) {
 			Send(playerid, COLOR_LIGHTRED, "* Ваш дом был продан!");
 		} else {
 			format(query, sizeof query, "UPDATE `"#__TableExtraVehicles__"` SET `park` = '%i' WHERE `park` = '%i'", PARK_GARAGE, PARK_HOME_GARAGE*houseid);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 			
 			format(query, sizeof query, "UPDATE `"#__TableUsers__"` SET `House` = '%i' WHERE BINARY `House` = '%i'", INVALID_HOUSE_ID, houseid);
-			Db::tquery(connDb, query, "", "");
+			db::tquery(db::Handle, query, "", "");
 		}
 	}
 	HouseInfo[houseid][hTv] = 0;
@@ -13697,7 +13165,7 @@ stock Fc::IsForbiddenVeh(modelid) {
 
 stock Fc::IsThereModel(fracid, modelid) {
 	format(query, sizeof query, "SELECT * FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i' AND `model_id` = '%i'", fracid, modelid);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	cache_delete(result);
 	return rows > 0;
@@ -13705,7 +13173,7 @@ stock Fc::IsThereModel(fracid, modelid) {
 
 stock Fc::ShowModel( playerid, fracid, dialogid) {
 	format(query, sizeof query, "SELECT `model_id`,`model_limit` FROM `"#__TableFracModels__"` WHERE `frac_id` = '%i'", fracid);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		new model_id, model_limit;
@@ -13750,7 +13218,7 @@ stock Fc::RecreateVehicle(idx) {
 stock Fc::Delete(idx) {
 	if(0 <= idx < sizeof Fc::Info) {
 		format(query, sizeof query, "DELETE FROM `"#__TableFracVehicles__"` WHERE `ID` = '%i'", Fc::Info[idx][Fc::Id][0]);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 
 		Fc::TOTAL --;
 		Veh::Destroy(Fc::Info[idx][Fc::Id][1]);
@@ -13811,7 +13279,7 @@ stock LoadSkins() {
 	
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT `f_id`,`skin_id` FROM `frac_skins`");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -13828,7 +13296,7 @@ stock LoadSkins() {
 stock LoadRanks( ) {
 	new time = GetTickCount();
 	format( query, sizeof query, "SELECT * FROM `"#__TableFracRanks__"` ORDER BY `r_id`");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	for(new i; i < MAX_RANK; i++) strmid(RankInfo[0][i], "-", 0, strlen("-"), 255);
 	new rows = cache_num_rows();
 	if(rows) {
@@ -13847,7 +13315,7 @@ stock LoadRanks( ) {
 stock LoadPortals(){
 	new allowed, time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TablePickups__"` ORDER BY `id`");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -13874,7 +13342,7 @@ stock LoadPortals(){
 stock LoadAntiDmZones() {
 	new time = GetTickCount();
 	format(query, sizeof query, "SELECT * FROM `"#__TableAntidmzones__"` ORDER BY `id` ASC");
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -13900,7 +13368,7 @@ stock LoadAntiDmZones() {
 
 stock LoadMaps() {
 	new time = GetTickCount();
-	new Cache:result = Db::query(connDb, "SELECT * FROM `maps` ORDER BY `id` ASC", true);
+	new Cache:result = db::query(db::Handle, "SELECT * FROM `maps` ORDER BY `id` ASC", true);
 	new rows = cache_num_rows();
 	if(rows) {
 		new id, mapfile[36], world, int;
@@ -13925,13 +13393,13 @@ stock LoadMaps() {
 stock Bl::Add(playerid, accuser, reason[]) {
 	new escstring[36];
 	new currtime = gettime(), fracid = Pl::FracID(accuser);
-	Db::escape_string(reason, escstring);
+	db::escape_string(reason, escstring);
 	Bl::Info[playerid][Bl::onFrac][fracid] = 1;
 	Bl::Info[playerid][Bl::Kills][fracid] = 0;
 	format(query, sizeof query, "INSERT INTO `"#__TableBlacklist__"` (`f_id`,`accused`,`date`,`accuser`,`reason`,`lastvisit`) VALUES (");
 	scf(query, src, "'%i','%i','%i',", fracid, Pl::Info[playerid][pID], currtime);
 	scf(query, src, "'%i','%s','%i')", Pl::Info[accuser][pID], escstring, currtime+DAY*15);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
@@ -13941,14 +13409,14 @@ stock Bl::Remove(playerid, fracid) {
 	format(query, sizeof query, "DELETE FROM `"#__TableBlacklist__"` WHERE `f_id`='%i' AND `accused`='%i'", fracid, Pl::Info[playerid][pID]);
 	Bl::Info[playerid][Bl::onFrac][fracid] = 0;
 	Bl::Info[playerid][Bl::Kills][fracid] = 0;
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
 stock Bl::Update(playerid, fracid) {
 	format(query, sizeof query, "UPDATE `"#__TableBlacklist__"` SET `mink`='%i' WHERE `accused`='%i' AND `f_id`='%i'",
 	Bl::Info[playerid][Bl::Kills][fracid], Pl::Info[playerid][pID], fracid);
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
@@ -13973,14 +13441,14 @@ public: Bl::Check(playerid) {
 		Send(playerid, COLOR_AZTECAS, temp);
 
 		format(query, sizeof query, "UPDATE `"#__TableBlacklist__"` SET `lastvisit` = '%i' WHERE `accused` = '%i'", (gettime()+DAY*15), Pl::Info[playerid][pID]);
-		Db::tquery(connDb, query, "", "");
+		db::tquery(db::Handle, query, "", "");
 	}
 }
 
 
 stock Bl::Clear( ) {
 	format(query, sizeof query, "DELETE FROM `"#__TableBlacklist__"` WHERE `lastvisit` <= '%i'", gettime());
-	Db::tquery(connDb, query, "", "");
+	db::tquery(db::Handle, query, "", "");
 	return 1;
 }
 
@@ -14380,9 +13848,9 @@ public: OnPlayerEndJob(playerid, jobid) {
 
 stock UpdateFactory() {
 	new string[150];
-	format(string,sizeof(string),"{ffffff}Cклад:\n {f4c430}Топливо: %d литров\n{00ff00}Продукты: %d кг\n{f4c430}Металл:%d кг",Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(string,sizeof(string),"{ffffff}Cклад:\n {f4c430}Топливо: %d литров\n{00ff00}Продукты: %d кг\n{f4c430}Металл:%d кг",prop::FactoryFuel, prop::FactoryProds, prop::FactoryMetal);
 	UpdateDynamic3DTextLabelText(FactoryInfo[0], -1, string);
-	format(string,sizeof(string),"{ffffff}Склад:\n {f4c430}Топливо: %d л\nПродукты: %d кг\nМеталл:%d кг", Gm::Info[Gm::FactoryFuel], Gm::Info[Gm::FactoryProds], Gm::Info[Gm::FactoryMetal]);
+	format(string,sizeof(string),"{ffffff}Склад:\n {f4c430}Топливо: %d л\nПродукты: %d кг\nМеталл:%d кг", prop::FactoryFuel, prop::FactoryProds, prop::FactoryMetal);
 	UpdateDynamic3DTextLabelText(FactoryInfo[1], -1, string);
 	return 1;
 }
@@ -14482,210 +13950,6 @@ stock ShowLoginForm(playerid, id) {
 	return 1;
 }
 
-public: LoadExtraVehicles(playerid) {
-	new rows = cache_num_rows();
-	if(rows) {
-		for(new i; i < rows; i++) {
-			cache_get_int(i, 0, ExtraVehicles[playerid][i][evID1]);
-			cache_get_int(i, 1, ExtraVehicles[playerid][i][evOwner]);
-			cache_get_int(i, 2, ExtraVehicles[playerid][i][evModel]);
-			cache_get_int(i, 3, ExtraVehicles[playerid][i][evPark]);
-			cache_get_scn(i, 4, "p<,>ii", ExtraVehicles[playerid][i][evColor1], ExtraVehicles[playerid][i][evColor2]);
-			cache_get_scn(i, 5, "p<,>ffff", ExtraVehicles[playerid][i][evSpawnX], ExtraVehicles[playerid][i][evSpawnY], ExtraVehicles[playerid][i][evSpawnZ], ExtraVehicles[playerid][i][evSpawnA]);
-			
-			if(ExtraVehicles[playerid][i][evPark] == PARK_HOME) {
-				ExtraVehicles[playerid][i][evID2] = Veh::Create(
-					ExtraVehicles[playerid][i][evModel],
-					ExtraVehicles[playerid][i][evSpawnX],
-					ExtraVehicles[playerid][i][evSpawnY],
-					ExtraVehicles[playerid][i][evSpawnZ],
-					ExtraVehicles[playerid][i][evSpawnA],
-					ExtraVehicles[playerid][i][evColor1],
-					ExtraVehicles[playerid][i][evColor2],
-					INFINITY
-				);
-				AutoInfo[ExtraVehicles[playerid][i][evID2]][aOwner] = playerid;
-				SetVehicleNumber(ExtraVehicles[playerid][i][evID2]);
-				SetVehicleNumber(ExtraVehicles[playerid][i][evID2]);
-				ToggleVehicleDoor(ExtraVehicles[playerid][i][evID2], false);
-				
-			} else if((ExtraVehicles[playerid][i][evPark] / Pl::Info[playerid][pHouseKey]) == PARK_HOME_GARAGE) {
-				ExtraVehicles[playerid][i][evID2] = Veh::Create(
-					ExtraVehicles[playerid][i][evModel],
-					ExtraVehicles[playerid][i][evSpawnX],
-					ExtraVehicles[playerid][i][evSpawnY],
-					ExtraVehicles[playerid][i][evSpawnZ],
-					ExtraVehicles[playerid][i][evSpawnA],
-					ExtraVehicles[playerid][i][evColor1],
-					ExtraVehicles[playerid][i][evColor2],
-					INFINITY
-				);
-				AutoInfo[ExtraVehicles[playerid][i][evID2]][aOwner] = playerid;
-				SetVehicleNumber(ExtraVehicles[playerid][i][evID2]);
-				ToggleVehicleDoor(ExtraVehicles[playerid][i][evID2], false);
-				LinkVehicleToInterior(ExtraVehicles[playerid][i][evID2], 3);
-				SetVehicleVirtualWorld(ExtraVehicles[playerid][i][evID2], Pl::Info[playerid][pHouseKey]);
-			
-			} else {
-				AddExtraVehicleToGarage(playerid, i);
-				ExtraVehicles[playerid][i][evID2] = INVALID_VEHICLE_ID;
-			}
-			Iter::Add(ExtraVehicles[playerid], i);
-		}
-		TotalExtraVehicles[playerid] = rows;
-	}
-	return 1;
-}
-
-stock AddExtraVehicle(playerid, model, Float:spawn_x, Float:spawn_y, Float:spawn_z, Float:spawn_a, color1, color2, park = PARK_GARAGE, create = 1, resptime = INFINITY) {
-	if(Pl::isLogged(playerid)) {
-		if(TotalExtraVehicles[playerid] < MAX_EXTRA_VEHICLES) {
-			new id = TotalExtraVehicles[playerid] ++;			
-			format(query, sizeof query, "INSERT INTO `"#__TableExtraVehicles__"` (`owner`,`model`,`park`,`color`,`spawn`) VALUES (");
-			scf(query, temp, "'%i',", Pl::Info[playerid][pID]);
-			scf(query, temp, "'%i',", model);
-			scf(query, temp, "'%i',", park);
-			scf(query, temp, "'%i,%i',", color1, color2);
-			scf(query, temp, "'%.3f,%.3f,%.3f,%.3f')", spawn_x, spawn_y, spawn_z, spawn_a);
-			new Cache:result = Db::query(connDb, query, true);
-			
-			ExtraVehicles[playerid][id][evID1] = cache_insert_id();
-			ExtraVehicles[playerid][id][evModel] = model;
-			ExtraVehicles[playerid][id][evOwner] = Pl::Info[playerid][pID];
-			ExtraVehicles[playerid][id][evPark] = park;
-			ExtraVehicles[playerid][id][evColor1] = color1;
-			ExtraVehicles[playerid][id][evColor2] = color2;
-			ExtraVehicles[playerid][id][evSpawnX] = spawn_x;
-			ExtraVehicles[playerid][id][evSpawnY] = spawn_y;
-			ExtraVehicles[playerid][id][evSpawnZ] = spawn_z;
-			ExtraVehicles[playerid][id][evSpawnA] = spawn_a;
-			
-			if(create) {
-				ExtraVehicles[playerid][id][evID2] = Veh::Create(model, spawn_x, spawn_y, spawn_z, spawn_a, color1, color2, resptime);
-				AutoInfo[ExtraVehicles[playerid][id][evID2]][aOwner] = playerid;
-				SetVehicleNumber(ExtraVehicles[playerid][id][evID2]);
-			} else {
-				AddExtraVehicleToGarage(playerid, id);
-				ExtraVehicles[playerid][id][evID2] = INVALID_PLAYER_ID;
-			}
-			
-			Iter::Add(ExtraVehicles[playerid], id);
-			cache_delete(result);
-			return id;
-		}
-	}
-	return INVALID_VEHICLE_ID;
-}
-
-stock AddExtraVehicleToGarage(playerid, slot) {
-	if(TotalVehicleInGarage[playerid] < MAX_EXTRA_VEHICLES) {
-		for(new i; i < TotalVehicleInGarage[playerid]; i++) {
-			if(VehicleInGarage[playerid][i] == slot) return 1;
-		}
-		VehicleInGarage[playerid][TotalVehicleInGarage[playerid]++] = slot;
-	}
-	return 1;
-}
-
-stock RemoveExtraVehicleFromGarage(playerid, slot) {
-	if(0 <= slot < MAX_EXTRA_VEHICLES) {
-		for(new i; i < TotalVehicleInGarage[playerid]; i++) {
-			if(VehicleInGarage[playerid][i] == slot) {
-				VehicleInGarage[playerid][i] = VehicleInGarage[playerid][--TotalVehicleInGarage[playerid]];
-				return 1;
-			}
-		}
-	}
-	return 1;
-}
-
-stock RemoveExtraVehicle(playerid, slot) {
-	if(0 <= slot < MAX_EXTRA_VEHICLES) {
-		format(query, sizeof query, "DELETE FROM `"#__TableExtraVehicles__"` WHERE `owner` = '%i' AND `id` = '%i'", Pl::Info[playerid][pID], ExtraVehicles[playerid][slot][evID1]);
-		Db::tquery(connDb, query, "", "");
-		
-		Veh::Destroy(ExtraVehicles[playerid][slot][evID2]);
-		new i = --TotalExtraVehicles[playerid];
-
-		ExtraVehicles[playerid][slot][evID1] = ExtraVehicles[playerid][i][evID1];
-		ExtraVehicles[playerid][slot][evID2] = ExtraVehicles[playerid][i][evID2];
-		ExtraVehicles[playerid][slot][evOwner] = ExtraVehicles[playerid][i][evOwner];
-		ExtraVehicles[playerid][slot][evModel] = ExtraVehicles[playerid][i][evModel];
-		ExtraVehicles[playerid][slot][evPark] = ExtraVehicles[playerid][i][evPark];
-		ExtraVehicles[playerid][slot][evColor1] = ExtraVehicles[playerid][i][evColor1];
-		ExtraVehicles[playerid][slot][evColor2] = ExtraVehicles[playerid][i][evColor2];
-		ExtraVehicles[playerid][slot][evSpawnX] = ExtraVehicles[playerid][i][evSpawnX];
-		ExtraVehicles[playerid][slot][evSpawnY] = ExtraVehicles[playerid][i][evSpawnY];
-		ExtraVehicles[playerid][slot][evSpawnZ] = ExtraVehicles[playerid][i][evSpawnZ];
-		ExtraVehicles[playerid][slot][evSpawnA] = ExtraVehicles[playerid][i][evSpawnA];
-		RemoveExtraVehicleFromGarage(playerid, i);
-		Iter::Remove(ExtraVehicles[playerid], i);
-		
-		if(ExtraVehicles[playerid][slot][evPark] == PARK_GARAGE) {
-			AddExtraVehicleToGarage(playerid, slot);
-		} else {
-			RemoveExtraVehicleFromGarage(playerid, slot);
-		}
-		return 1;
-	}
-	return 0;
-}
-
-stock UpdateExtraVehicle(playerid, slot) {
-	if(0 <= slot < MAX_EXTRA_VEHICLES) {
-		format(query, sizeof query, "UPDATE `"#__TableExtraVehicles__"` SET ");
-		scf(query, temp, "`owner`='%i',", ExtraVehicles[playerid][slot][evOwner]);
-		scf(query, temp, "`model`='%i',", ExtraVehicles[playerid][slot][evModel]);
-		scf(query, temp, "`park`='%i',", ExtraVehicles[playerid][slot][evPark]);
-		scf(query, temp, "`color`='%i,%i',", ExtraVehicles[playerid][slot][evColor1], ExtraVehicles[playerid][slot][evColor2]);
-		scf(query, temp, "`spawn`='%.3f,%.3f,%.3f,%.3f' ", ExtraVehicles[playerid][slot][evSpawnX], ExtraVehicles[playerid][slot][evSpawnY], ExtraVehicles[playerid][slot][evSpawnZ], ExtraVehicles[playerid][slot][evSpawnA]);
-		scf(query, temp, "WHERE `id` = '%i'", ExtraVehicles[playerid][slot][evID1]);
-		Db::tquery(connDb, query, "", "");
-	}
-	return 1;
-}
-
-stock ShowExtraVehiclesMenu(playerid, dialogid=D_EV_MENU) {
-	switch(dialogid) {
-		case D_EV_MENU : {
-			dialog[0] = '\0';
-			new listitem;
-			foreach(new i : ExtraVehicles[playerid]) {
-				format(temp, sizeof temp, "extra[%i]", listitem++), SetPVarInt(playerid, temp, i);
-				if(ExtraVehicles[playerid][i][evID2] != INVALID_VEHICLE_ID) {
-					scf(dialog, temp, "%s %s %s\n", VehicleNames[ExtraVehicles[playerid][i][evModel] - 400],\
-					gCarLock{ExtraVehicles[playerid][i][evID2]} ? ("{AA3333}[закрыт]") : ("{33AA33}[открыт]"),\
-					ExtraVehicles[playerid][i][evPark] == PARK_HOME ? ("{33AA33}[домашний]") : (" "));
-				} else {
-					scf(dialog, temp, "%s {AA3333}[закрыт] [в гараже]\n", VehicleNames[ExtraVehicles[playerid][i][evModel] - 400]);
-				}
-			}
-			if(!strlen(dialog)) return Send(playerid, COLOR_GREY, "* У Вас нет доп. машин!");
-			SPD(playerid, D_EV_MENU, DIALOG_STYLE_LIST, "Ваш личный транспорт", dialog, "SELECT", "CANCEL");
-		}
-	}
-	return 1;
-}
-
-
-stock IsPlayerTakeExtraVehicle(playerid) {
-	foreach(new i : ExtraVehicles[playerid]) {
-		if(ExtraVehicles[playerid][i][evID2] != INVALID_VEHICLE_ID && ExtraVehicles[playerid][i][evPark] == PARK_GARAGE) {
-			return 1;
-		}
-	}
-	return 0;
-}
-
-stock GetIdxExtraVehicleFromVehicleID(playerid, vehicleid) {
-	foreach(new i : ExtraVehicles[playerid]) {
-		if(ExtraVehicles[playerid][i][evID2] == vehicleid) {
-			return i;
-		}
-	}
-	return -1;
-}
-
 stock IsPlayerInHouseGarage(playerid) {
 	return (IsPlayerInRangeOfPoint(playerid, 10.0, 616.0352, -124.1155, 997.7648) && Pl::Info[playerid][pLocal] == (OFFSET_HOUSE + Pl::Info[playerid][pHouseKey]));
 }
@@ -14703,7 +13967,7 @@ stock GetPlayerPosEx(playerid, &Float:x, &Float:y, &Float:z, &Float:a) {
 }
 
 stock LoadGates() {
-	new Cache:result = Db::query(connDb, "SELECT * FROM `gate` ORDER BY `id` ASC", true);
+	new Cache:result = db::query(db::Handle, "SELECT * FROM `gate` ORDER BY `id` ASC", true);
 	new time = GetTickCount(), rows = cache_num_rows();
 	if(rows) {
 		for(new id, i; i < rows; i++) {
@@ -14738,7 +14002,7 @@ stock LoadGates() {
 
 stock LoadGateLeaf(id, gateid) {
 	format(query, sizeof query, "SELECT * FROM `gate_leaf` WHERE `gate_id` = '%i'", id);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new value, rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -14756,7 +14020,7 @@ stock LoadGateLeaf(id, gateid) {
 
 stock LoadGatePickup(id, gateid) {
 	format(query, sizeof query, "SELECT * FROM `gate_pickup` WHERE `gate_id` = '%i'", id);
-	new Cache:result = Db::query(connDb, query, true);
+	new Cache:result = db::query(db::Handle, query, true);
 	new value, rows = cache_num_rows();
 	if(rows) {
 		for(new i; i < rows; i++) {
@@ -14835,7 +14099,7 @@ stock GiveBizzProfit(biz, money) {
 }
 
 stock AddHouse(level, price, Float:enter[4]) {
-	new Cache:result = Db::query(connDb, "INSERT INTO `houses` (`owner`) VALUES ('The State')", true);
+	new Cache:result = db::query(db::Handle, "INSERT INTO `houses` (`owner`) VALUES ('The State')", true);
 	if(cache_affected_rows()) {
 		new h = Iter::Count(Houses) + 1;
 		Iter::Add(Houses, h);
@@ -14861,9 +14125,9 @@ stock DeleteHouse(h) {
 	new last = Iter::Count(Houses);
 	
 	format(query, sizeof query, "DELETE FROM `houses` WHERE `id` = '%i'", HouseInfo[h][hID]);
-	Db::query(connDb, query, false);
+	db::query(db::Handle, query, false);
 	format(query, sizeof query, "UPDATE `users` SET `House` = '%i' WHERE `House` = '%i'", INVALID_HOUSE_ID, HouseInfo[h][hID]);
-	Db::query(connDb, query, false);
+	db::query(db::Handle, query, false);
 	
 	DestroyDynamicPickup(HouseInfo[h][hPickup]);
 	DestroyDynamicMapIcon(HouseInfo[h][hMapIcon]);
@@ -14875,16 +14139,16 @@ stock DeleteHouse(h) {
 	if(last > h) {
 		Iter::Remove(Houses, last);
 		format(query, sizeof query, "UPDATE `houses` SET `id` = '%i' WHERE `id` = '%i'", h, last);
-		Db::query(connDb, query, false);
+		db::query(db::Handle, query, false);
 		format(query, sizeof query, "UPDATE `users` SET `House` = '%i' WHERE `House` = '%i'", h, last);
-		Db::query(connDb, query, false);
+		db::query(db::Handle, query, false);
 
 		playerid = ReturnUser(HouseInfo[last][hOwner]);
 		if(Pl::isLogged(playerid)) Pl::Info[playerid][pHouseKey] = h;
 		
 		if(HouseInfo[last][hgGarage]) {
 			format(query, sizeof query, "UPDATE `houses_garage` SET `house` = '%i' WHERE `house` = '%i'", h, last);
-			Db::tquery(connDb, query);
+			db::tquery(db::Handle, query);
 			
 		}
 		HouseInfo[h][hOwned] = HouseInfo[last][hOwned];
@@ -14923,7 +14187,7 @@ stock DeleteHouse(h) {
 	}
 	
 	format(query, sizeof query, "ALTER TABLE `houses` AUTO_INCREMENT = %i", last < 1 ? 1 : last);
-	Db::query(connDb, query, false);
+	db::query(db::Handle, query, false);
 	return 1;
 }
 

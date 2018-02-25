@@ -1,7 +1,7 @@
 /***
 	The MIT License (MIT)
 
-	Copyright (c) 2014 MacMailler
+	Copyright (c) 2018 MacMailler
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,10 @@
 	SOFTWARE.
 ***/
 
-#if defined __UserCommand__
+#if defined _System_Commands_User_
 	#endinput
 #endif
-#define __UserCommand__
+#define _System_Commands_User_
 
 
 CMD:mycar(playerid, params[]) {
@@ -131,7 +131,7 @@ CMD:bl(playerid, params[]) { new string[144], sendername[24], playername[24];
 	if(sscanf(params, "uS(none)[36]", params[0], params[1])) {
 		format(query, sizeof query, "SELECT (SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`accused`),`mink`,FROM_UNIXTIME(`date`),\
 		(SELECT `Name` FROM `"#__TableUsers__"` WHERE `ID`=`accuser`),`reason` FROM `"#__TableBlacklist__"` WHERE `f_id`='%i'", fracid);
-		Db::tquery(connDb, query, ""#Bl::"Show", "ii", playerid, fracid);
+		db::tquery(db::Handle, query, ""#Bl::"Show", "ii", playerid, fracid);
 		return 1;
 	}
 	if(!Pl::isLogged(params[0])) return Send(playerid, COLOR_GREY, "* Этот игрок не залогинен!");
@@ -1437,9 +1437,9 @@ CMD:settax(playerid, params[]) { new string[144];
 	if(Pl::Info[playerid][pLeader] != 7) return Send(playerid, COLOR_GREY, "* Вы не мэр!");
 	if(sscanf(params, "i", params[0])) return Send(playerid, COLOR_GREY, "Введите: /settax [ammount]");
 	if(params[0] < 1 || params[0] > 20) return Send(playerid, COLOR_GREY, "* Налог, возможен, от 1 и до 20 процентов!");
-	Gm::Info[Gm::TaxValue] = params[0];
-	SaveStuff();
-	format(string, sizeof string, "* Наложен налог - %i процентов от зарплаты, на каждего жителя штата.", Gm::Info[Gm::TaxValue]);
+	prop::TaxValue = params[0];
+	prop::Update();
+	format(string, sizeof string, "* Наложен налог - %i процентов от зарплаты, на каждего жителя штата.", prop::TaxValue);
 	Send(playerid, COLOR_LIGHTBLUE, string);
 	return 1;
 }
@@ -2011,9 +2011,9 @@ CMD:loadmats(playerid, params[]) { new string[144];
 
 CMD:loadmac(playerid, params[]) { new string[144];
 	if(!isPlayerInPickup(playerid,barn[0])) return Send(playerid,COLOR_LIGHTRED2,"* Вы не у амбара!");
-	format(string, sizeof string, "* В амбаре %d грамм", Gm::Info[Gm::AmbarDrugs]);
+	format(string, sizeof string, "* В амбаре %d грамм", prop::AmbarDrugs);
 	Send(playerid,COLOR_LIGHTBLUE,string);
-	format(string, sizeof string, "* В притоне %d грамм", Gm::Info[Gm::PritonDrugs]);
+	format(string, sizeof string, "* В притоне %d грамм", prop::PritonDrugs);
 	Send(playerid,COLOR_LIGHTBLUE,string);
 	
 	return 1;
@@ -2056,7 +2056,7 @@ CMD:get(playerid, params[]) { new string[144];
 			if(Pl::Info[playerid][pJob] != JOB_DRUGDEALER) return Send(playerid, COLOR_GREY, "* Вы не наркодилер!");
 			if(Pl::Info[playerid][pDrugs] > 15) return Send(playerid, COLOR_GREY, "* У Вас уже есть наркотики, продаете их сначала!");
 			if(!IsPlayerInRangeOfPoint(playerid, 2.0, 323.0342,1118.5804,1083.8828)) return Send(playerid, COLOR_GREY, "* Вы не в притоне!");
-			if((Gm::Info[Gm::PritonDrugs] - params[0]) < 0) return Send(playerid, COLOR_GREY,"* В притоне нехватает наркотиков.");
+			if((prop::PritonDrugs - params[0]) < 0) return Send(playerid, COLOR_GREY,"* В притоне нехватает наркотиков.");
 			new tel, price;
 			switch(Pl::Info[playerid][pSkill][7]) {
 				case 0..50 : {
@@ -2087,7 +2087,7 @@ CMD:get(playerid, params[]) { new string[144];
 			Send(playerid, COLOR_LIGHTBLUE, string);
 			Rac::GivePlayerMoney(playerid, -price);
 			Pl::Info[playerid][pDrugs] = Pl::Info[playerid][pDrugs] + params[0];
-			Gm::Info[Gm::PritonDrugs] -= params[0];
+			prop::PritonDrugs -= params[0];
 			
 		} else if(strcmp(params[1], "fuel", false) == 0) {
 			new gas;

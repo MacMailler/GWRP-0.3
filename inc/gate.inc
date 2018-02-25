@@ -41,6 +41,9 @@
 #define STATUS_CLOSE (0)
 #define STATUS_OPEN (1)
 
+forward GateOpen(gateid);
+forward GateClose(gateid);
+
 
 enum eGateInfo {
 	eObject,
@@ -71,7 +74,7 @@ stock AddLeafToGate(gateid, model, Float:pos[6], Float:movePos[6], virtualworld=
 	if(0 <= gateid < GateCount) {
 		if(GateLeafCount[gateid] < sizeof GateInfo[]) {
 			new leafid = GateLeafCount[gateid]++;
-			GateInfo[gateid][leafid][eObject] = AddObject(model, pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], virtualworld, interiorid, playerid, streamdist);
+			GateInfo[gateid][leafid][eObject] = CreateDynamicObject(model, pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], virtualworld, interiorid, playerid, streamdist);
 			GateInfo[gateid][leafid][eType] = TYPE_LEAF;
 			GateStatusData[gateid] = STATUS_CLOSE;
 			for(new i; i < 6; i++) {
@@ -96,7 +99,7 @@ stock AddPickupToGate(gateid, model, Float:pos[3], virtualworld=-1, interiorid=-
 	return 0;
 }
 
-public: GateOpen(gateid) {
+public GateOpen(gateid) {
 	if(0 <= gateid < GateCount) {
 		if(GateStatusData[gateid] == STATUS_CLOSE) {
 			GateStatusData[gateid] = STATUS_OPEN;
@@ -135,7 +138,7 @@ public: GateOpen(gateid) {
 	return 0;
 }
 
-public: GateClose(gateid) {
+public GateClose(gateid) {
 	if(0 <= gateid < GateCount) {
 		if(GateStatusData[gateid] == STATUS_OPEN) {
 			GateStatusData[gateid] = STATUS_CLOSE;
