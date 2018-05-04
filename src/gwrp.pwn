@@ -172,7 +172,6 @@
 #define D_ATM			 		(500)
 #define D_JOB			 		(600)
 #define D_REF			 		(700)
-#define D_WAIT					(800)
 #define D_MENU					(900)
 #define D_GIFT					(1000)
 #define D_GGUN					(1100)
@@ -983,8 +982,7 @@ enum pInfo {
 	pFightstyle,
 	pPasport[3],
 	pLastVisit,
-	
-	pWait,
+
 	pUpdate,
 	pHunger,
 	pCamPos,
@@ -2565,10 +2563,28 @@ public OnPlayerConnect(playerid) {
 		ForceClassSelection(playerid);
 		Rac::TogglePlayerSpectating(playerid, true);
 		Rac::TogglePlayerSpectating(playerid, false);
-	
-		format(dialog, sizeof dialog, "Дождитесь полной загрузки игры и нажмите ENTER!\n\
-		Осталось секунд: %i", Pl::Info[playerid][pWait]);
-		SPD(playerid, D_WAIT, 0, "Подождите...", dialog, "ENTER", "");
+		
+		GetPlayerName(playerid, plname, 24);
+		if((Pl::Info[playerid][pID] = GetIDFromName(plname)) != -1) {
+			if(!CheckBan(playerid)) {
+				ShowLoginForm(playerid, 1);
+			} else {
+				Kick(playerid);
+			}
+		} else {
+			if(Gm::Info[Gm::EnableReg]) {
+				if(regex_match_exid(plname, ValidRPName)) {
+					ShowLoginForm(playerid, 2);
+				} else {
+					Send(playerid, COLOR_LIGHTRED, "Ваш ник не соответствует правилам нашего сервера");
+					Send(playerid, COLOR_LIGHTBLUE, "Измените свой ник по типу: Имя_Фамилия. Например: Ivan_Petrov");
+					Kick(playerid);
+				}
+			} else {
+				ShowDialog(playerid, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", "dialog/noregged.txt", "OK", "");
+				Kick(playerid);
+			}
+		}
 	}
 	return 1;
 }
@@ -7000,16 +7016,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			}
 		}
 		
-		case D_WAIT : {
-			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);	
-			if(Pl::Info[playerid][pWait] > 0) {
-				format(dialog, sizeof dialog, "Дождитесь полной загрузки игры и нажмите ENTER!\n\
-				Осталось секунд: %i", Pl::Info[playerid][pWait]);
-				SPD(playerid, D_WAIT, 0, "Подождите...",dialog, "ENTER", "");
-			}
-			return 1;
-		}
-		
 		case D_AUTH : {
 			if(!WrongLogin[playerid]) return Rac::Kick(playerid, "Попытка взлома аккаунта");
 			if(!response) return KickEx(playerid, "Для игры на сервере, Вы должны авторизоватся!", COLOR_LIGHTRED);
@@ -10701,40 +10707,14 @@ public: Gm::Thread() {
 	}
 	
     foreach(new p : Player) {
-		if(Pl::Info[p][pWait] > 0) {
-			if(--Pl::Info[p][pWait] == 0) {
-				GetPlayerName(p, plname, 24);
-				if((Pl::Info[p][pID] = GetIDFromName(plname)) != -1) {
-					if(!CheckBan(p)) {
-						ShowLoginForm(p, 1);
-					} else {
-						Kick(p);
-					}
-				} else {
-					if(Gm::Info[Gm::EnableReg]) {
-						if(regex_match_exid(plname, ValidRPName)) {
-							ShowLoginForm(p, 2);
-						} else {
-							Send(p, COLOR_LIGHTRED, "Ваш ник не соответствует правилам нашего сервера");
-							Send(p, COLOR_LIGHTBLUE, "Измените свой ник по типу: Имя_Фамилия. Например: Ivan_Petrov");
-							Kick(p);
-						}
-					} else {
-						ShowDialog(p, D_NONE, 0, ""#__SERVER_PREFIX""#__SERVER_NAME_C" REGISTRATION", "dialog/noregged.txt", "OK", "");
-						Kick(p);
-					}
-				}
-			}
-		} else {
-			if(Pl::isLogged(p)) {
-				Update(p);
-				UnJailPlayer(p);
-				playerAFKUpdate(p);
-				vehicleStatusUpdate(p);
-				playerSpectateUpdate(p);
-				PoppyCollection(p);
-				OnPlayerPickupExit(p);
-			}
+		if(Pl::isLogged(p)) {
+			Update(p);
+			UnJailPlayer(p);
+			playerAFKUpdate(p);
+			vehicleStatusUpdate(p);
+			playerSpectateUpdate(p);
+			PoppyCollection(p);
+			OnPlayerPickupExit(p);
 		}
     }
 }
@@ -11889,7 +11869,6 @@ stock Pl::Init(playerid) {
 	Pl::Info[playerid][pExp]			= 0;
 	Pl::Info[playerid][pJob]			= JOB_NONE;
 	Pl::Info[playerid][pBank]			= 0;
-	Pl::Info[playerid][pWait]			= 10;
 	Pl::Info[playerid][pLevel]			= 0;
 	Pl::Info[playerid][pAdmin]			= 0;
 	Pl::Info[playerid][pKills]			= 0;
