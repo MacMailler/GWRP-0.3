@@ -15,3 +15,5 @@ crashinfo.txt
 mysql_log.txt
 server_log.txt
 samp.ban
+conf.ini
+/.vscode
